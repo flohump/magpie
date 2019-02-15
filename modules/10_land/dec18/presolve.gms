@@ -5,13 +5,28 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 vm_land.l(j,land) = pcm_land(j,land);
+
+*The following bounds are needed for generating meaningful values in v10_lu_transitions
+*These bounds can be moved to the respective land modules in the future (different bounds for different realizations)
+
+*forestry can only increase
 v10_lu_transitions.fx(j,"forestry",land_to10) = 0;
 v10_lu_transitions.up(j,"forestry","forestry") = Inf;
+
+*No afforestation on natveg areas
+v10_lu_transitions.fx(j,"primforest","forestry") = 0;
+v10_lu_transitions.fx(j,"secdforest","forestry") = 0;
+v10_lu_transitions.fx(j,"other","forestry") = 0;
+
+*primforest can only decrease
 v10_lu_transitions.fx(j,land_from10,"primforest") = 0;
-*v10_lu_transitions.up(j,"primforest","primforest")$(pcm_land(j,"primforest") > 0) = Inf;
 v10_lu_transitions.up(j,"primforest","primforest") = Inf;
-*v10_lu_transitions.fx(j,land_from10,"secdforest") = 0;
-*v10_lu_transitions.up(j,"secdforest","secdforest") = Inf;
+
+*secdforest can only decrease (during optimization)
+v10_lu_transitions.fx(j,land_from10,"secdforest") = 0;
+v10_lu_transitions.up(j,"secdforest","secdforest") = Inf;
+
+*urban land is fixed
 v10_lu_transitions.fx(j,land_from10,"urban") = 0;
 v10_lu_transitions.fx(j,"urban",land_to10) = 0;
 v10_lu_transitions.fx(j,"urban","urban") = pcm_land(j,"urban");
