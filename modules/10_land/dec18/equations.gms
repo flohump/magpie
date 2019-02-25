@@ -12,8 +12,8 @@
 
 *' The following two equations calculate the land expansion and land contraction.
 
- q10_landexpansion(j2,land) ..
-        vm_landexpansion(j2,land) =g= vm_land(j2,land)-pcm_land(j2,land);
+ q10_landexpansion(j2,land_to10) ..
+        vm_landexpansion(j2,land_to10) =e= sum(land_from10$(not sameas(land_from10,land_to10)), v10_lu_transitions(j2,land_from10,land_to10));
  q10_landreduction(j2,land) ..
         v10_landreduction(j2,land) =g= pcm_land(j2,land)-vm_land(j2,land);
 
@@ -35,3 +35,5 @@ sum(land_from10, v10_lu_transitions(j2,land_from10,land_to10)) =e= vm_land(j2,la
 
 q10_transition_from(j2,land_from10) ..
 sum(land_to10, v10_lu_transitions(j2,land_from10,land_to10)) =e= pcm_land(j2,land_from10);
+
+

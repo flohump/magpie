@@ -21,28 +21,28 @@ cfg$results_folder <- "output/:title:"
 cfg$recalibrate <- FALSE
 
 ##SSP2
-cfg$title <- "SSP2_NPI_notrans_01"
-cfg$gms$land <- "feb15"
-cfg <- setScenario(cfg,c("SSP2","NPI"))
-cfg$gms$c56_pollutant_prices <- "SSP2-Ref-SPA0-V15-REMIND-MAGPIE"
-cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
-start_run(cfg,codeCheck=FALSE)
+# cfg$title <- "SSP2_NPI_notrans_01"
+# cfg$gms$land <- "feb15"
+# cfg <- setScenario(cfg,c("SSP2","NPI"))
+# cfg$gms$c56_pollutant_prices <- "SSP2-Ref-SPA0-V15-REMIND-MAGPIE"
+# cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
+# start_run(cfg,codeCheck=FALSE)
 
 ##SSP2
-cfg$title <- "SSP2_NPI_trans_01"
+cfg$title <- "SSP2_NPI_trans_02"
 cfg$gms$land <- "dec18"
 cfg <- setScenario(cfg,c("SSP2","NPI"))
 cfg$gms$c56_pollutant_prices <- "SSP2-Ref-SPA0-V15-REMIND-MAGPIE"
 cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
 start_run(cfg,codeCheck=FALSE)
 
-cfg$title <- "SSP2_NDC_trans_01"
-cfg$gms$land <- "dec18"
-cfg <- setScenario(cfg,c("SSP2","NDC"))
-cfg$gms$c56_pollutant_prices <- "SSP2-Ref-SPA0-V15-REMIND-MAGPIE"
-cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
-start_run(cfg,codeCheck=FALSE)
-
+# cfg$title <- "SSP2_NDC_trans_01"
+# cfg$gms$land <- "dec18"
+# cfg <- setScenario(cfg,c("SSP2","NDC"))
+# cfg$gms$c56_pollutant_prices <- "SSP2-Ref-SPA0-V15-REMIND-MAGPIE"
+# cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
+# start_run(cfg,codeCheck=FALSE)
+# 
 
 # cfg$title <- paste("SSP2_26",res,sep="_")
 # cfg <- setScenario(cfg,c("SSP2","NDC"))

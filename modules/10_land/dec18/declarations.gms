@@ -23,7 +23,7 @@ positive variables
 
 equations
  q10_land(j)                    Land conversion constraint (mio. ha)
- q10_landexpansion(j,land)      Land expansion constraint (mio. ha)
+ q10_landexpansion(j,land_to10)      Land expansion constraint (mio. ha)
  q10_landreduction(j,land)      Land reduction constraint (mio. ha)
  q10_landdiff                   Land difference constraint (mio. ha)
  q10_transition_matrix(j)		Land transition constraint cell area (mio. ha)
@@ -39,7 +39,7 @@ parameters
  ov10_landreduction(t,j,land,type)                   Land reduction (mio. ha)
  ov10_lu_transitions(t,j,land_from10,land_to10,type) Land transitions between time steps (mio. ha)
  oq10_land(t,j,type)                                 Land conversion constraint (mio. ha)
- oq10_landexpansion(t,j,land,type)                   Land expansion constraint (mio. ha)
+ oq10_landexpansion(t,j,land_to10,type)              Land expansion constraint (mio. ha)
  oq10_landreduction(t,j,land,type)                   Land reduction constraint (mio. ha)
  oq10_landdiff(t,type)                               Land difference constraint (mio. ha)
  oq10_transition_matrix(t,j,type)                    Land transition constraint cell area (mio. ha)
