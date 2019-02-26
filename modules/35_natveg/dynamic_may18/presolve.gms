@@ -119,5 +119,9 @@ else
 	p35_carbon_density_other(t,j,"old",c_pools) = pm_carbon_density_ac(t,j,"acx",c_pools);
 );
 
+*update fm_carbon_density
+fm_carbon_density(t,j,"secdforest",c_pools) = m_weightedmean(p35_carbon_density_secdforest(t,j,land35,c_pools),pc35_secdforest(j,land35),land35);
+fm_carbon_density(t,j,"other",c_pools) = m_weightedmean(p35_carbon_density_other(t,j,land35,c_pools),pc35_other(j,land35),land35);
+
 p35_min_forest(t,j)$(p35_min_forest(t,j) > vm_land.l(j,"primforest") + vm_land.l(j,"secdforest")) = vm_land.l(j,"primforest") + vm_land.l(j,"secdforest");
 p35_min_other(t,j)$(p35_min_other(t,j) > vm_land.l(j,"other")) = vm_land.l(j,"other");

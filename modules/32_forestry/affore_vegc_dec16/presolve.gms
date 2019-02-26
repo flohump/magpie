@@ -23,7 +23,7 @@ v32_land.lo(j,"new") = 0;
 v32_land.up(j,"new") = f32_aff_mask(j) * sum(land, pcm_land(j,land));
 
 *' Endogenous afforestation is limited to cells with vegetation carbon density above 20 tC/ha.
-v32_land.fx(j,"new")$(fm_carbon_density(t,j,"forestry","vegc") <= 20) = 0;
+v32_land.fx(j,"new")$(pm_carbon_density_ac(t,j,"acx","vegc") <= 20) = 0;
 *' @stop
 
 * Mapping `ac_land32` between age classes `ac` and forest land types `land32` depending on
@@ -69,6 +69,8 @@ p32_carbon_density(t,j,"prot",c_pools) = m_weightedmean(pm_carbon_density_ac(t,j
 p32_carbon_density(t,j,"grow",c_pools) = m_weightedmean(pm_carbon_density_ac(t,j,ac,c_pools),p32_land(t,j,ac,"before"),(ac_land32(ac,"grow")));
 p32_carbon_density(t,j,"old",c_pools) = pm_carbon_density_ac(t,j,"acx",c_pools);
 
+*update fm_carbon_density
+fm_carbon_density(t,j,"forestry",c_pools) = m_weightedmean(p32_carbon_density(t,j,land32,c_pools),pc32_land(j,land32),land32);
 
 
 *** EOF presolve.gms ***
