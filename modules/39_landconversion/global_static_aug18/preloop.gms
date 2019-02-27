@@ -7,7 +7,7 @@
 s39_cost_establish = 8000;
 s39_cost_clearing = 5;
 
-i39_cost_establish(land) = 1;
+i39_cost_establish(land) = 100;
 i39_cost_establish(land_establish39) = s39_cost_establish;
 
 i39_cost_clearing(land) = 0;
