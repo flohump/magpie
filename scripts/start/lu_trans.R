@@ -29,7 +29,7 @@ cfg$recalibrate <- FALSE
 # start_run(cfg,codeCheck=FALSE)
 
 ##SSP2
-cfg$title <- "SSP2_NPI_trans_03"
+cfg$title <- "SSP2_NPI_trans_05"
 cfg$gms$land <- "dec18"
 cfg <- setScenario(cfg,c("SSP2","NPI"))
 cfg$gms$c56_pollutant_prices <- "SSP2-Ref-SPA0-V15-REMIND-MAGPIE"
