@@ -29,7 +29,7 @@ cfg$recalibrate <- FALSE
 # start_run(cfg,codeCheck=FALSE)
 
 ##SSP2
-cfg$title <- "SSP2_Ref_noCC_01"
+cfg$title <- "SSP2_Ref_noCC_02"
 cfg$gms$land <- "dec18"
 cfg <- setScenario(cfg,c("SSP2","NPI"))
 cfg$gms$c56_pollutant_prices <- "SSP2-Ref-SPA0-V15-REMIND-MAGPIE"
@@ -37,7 +37,7 @@ cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
 start_run(cfg,codeCheck=FALSE)
 
 ##SSP2
-cfg$title <- "SSP2_Ref_CC_01"
+cfg$title <- "SSP2_Ref_CC_02"
 cfg$gms$land <- "dec18"
 cfg <- setScenario(cfg,c("SSP2","NPI"))
 cfg$gms$c56_pollutant_prices <- "SSP2-Ref-SPA0-V15-REMIND-MAGPIE"
@@ -49,7 +49,7 @@ cfg$gms$c59_som_scenario  <- "cc"
 start_run(cfg,codeCheck=FALSE)
 
 ##SSP2
-cfg$title <- "SSP2_26_CC_01"
+cfg$title <- "SSP2_26_CC_02"
 cfg$gms$land <- "dec18"
 cfg <- setScenario(cfg,c("SSP2","NDC"))
 cfg$gms$c56_pollutant_prices <- "SSP2-26-SPA2-V15-REMIND-MAGPIE"
