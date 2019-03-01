@@ -10,8 +10,8 @@ vm_land.l(j,land) = pcm_land(j,land);
 *These bounds can be moved to the respective land modules in the future (different bounds for different realizations)
 
 *forestry can only increase
-v10_lu_transitions.fx(j,"forestry",land_to10) = 0;
-v10_lu_transitions.up(j,"forestry","forestry") = Inf;
+*v10_lu_transitions.fx(j,"forestry",land_to10) = 0;
+*v10_lu_transitions.up(j,"forestry","forestry") = Inf;
 
 *No afforestation on natveg areas
 v10_lu_transitions.fx(j,"primforest","forestry") = 0;
@@ -19,18 +19,18 @@ v10_lu_transitions.fx(j,"secdforest","forestry") = 0;
 v10_lu_transitions.fx(j,"other","forestry") = 0;
 
 *primforest can only decrease
-v10_lu_transitions.fx(j,land_from10,"primforest") = 0;
-v10_lu_transitions.up(j,"primforest","primforest") = Inf;
+*v10_lu_transitions.fx(j,land_from10,"primforest") = 0;
+*v10_lu_transitions.up(j,"primforest","primforest") = Inf;
 
 *secdforest can only decrease (during optimization)
-v10_lu_transitions.fx(j,land_from10,"secdforest") = 0;
-v10_lu_transitions.up(j,"secdforest","secdforest") = Inf;
+*v10_lu_transitions.fx(j,land_from10,"secdforest") = 0;
+*v10_lu_transitions.up(j,"secdforest","secdforest") = Inf;
 
 *conversions within natveg are not allowed
-v10_lu_transitions.fx(j,"primforest","other") = 0;
+*v10_lu_transitions.fx(j,"primforest","other") = 0;
 v10_lu_transitions.fx(j,"secdforest","other") = 0;
 
 *urban land is fixed
-v10_lu_transitions.fx(j,land_from10,"urban") = 0;
-v10_lu_transitions.fx(j,"urban",land_to10) = 0;
-v10_lu_transitions.fx(j,"urban","urban") = pcm_land(j,"urban");
+*v10_lu_transitions.fx(j,land_from10,"urban") = 0;
+*v10_lu_transitions.fx(j,"urban",land_to10) = 0;
+*v10_lu_transitions.fx(j,"urban","urban") = pcm_land(j,"urban");
