@@ -10,12 +10,18 @@
  q10_land(j2) ..
 		sum(land, vm_land(j2,land)) =e= sum(land, pm_land_start(j2,land));
 
+ q10_cost_lu_trans(j2) ..
+        vm_cost_lu_trans(j2) =e= sum(land, vm_landexpansion(j2,land) + v10_landreduction(j2,land) - v10_landremain(j2,land));
+
+ q10_landremain(j2,land_to10) ..
+        v10_landremain(j2,land_to10) =e= sum(land_from10$(sameas(land_from10,land_to10)), v10_lu_transitions(j2,land_from10,land_to10));
+
 *' The following two equations calculate the land expansion and land contraction.
 
  q10_landexpansion(j2,land_to10) ..
         vm_landexpansion(j2,land_to10) =e= sum(land_from10$(not sameas(land_from10,land_to10)), v10_lu_transitions(j2,land_from10,land_to10));
  q10_landreduction(j2,land_from10) ..
-        vm_landreduction(j2,land_from10) =e= sum(land_to10$(not sameas(land_from10,land_to10)), v10_lu_transitions(j2,land_from10,land_to10));
+        v10_landreduction(j2,land_from10) =e= sum(land_to10$(not sameas(land_from10,land_to10)), v10_lu_transitions(j2,land_from10,land_to10));
 
 *' The gross changes in land are calculated based on land expansion, land
 *' contraction and land changes from within the modules [35_natveg]
@@ -23,7 +29,7 @@
 
  q10_landdiff ..
 		vm_landdiff =e= sum((j2,land), vm_landexpansion(j2,land)
-                                 + vm_landreduction(j2,land))
+                                 + v10_landreduction(j2,land))
                                  + vm_landdiff_natveg
                                  + vm_landdiff_forestry;
 

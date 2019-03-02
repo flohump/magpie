@@ -27,6 +27,7 @@
                    + vm_costs_overrate_cropdiff(i2)
                    + vm_bioenergy_utility(i2)
                    + vm_processing_substitution_cost(i2)
+                   + sum(cell(i2,j2), vm_cost_lu_trans(j2))
                    ;
 
 *' The total regional production cost calculation is based on the sum of different
