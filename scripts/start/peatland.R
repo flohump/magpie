@@ -24,7 +24,7 @@ cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=
                            getOption("magpie_repos"))
 
 cfg$gms$peatland  <- "ipcc_2014_mar19"
-prefix <- "T52"
+prefix <- "T53"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
