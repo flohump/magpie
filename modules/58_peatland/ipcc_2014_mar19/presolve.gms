@@ -44,4 +44,6 @@ else
 	);
 );
 
+pc58_peatland_area(j) = sum((status58,land58), pc58_peatland_man(j,status58,land58)) + pc58_peatland_intact(j);
+
 pc58_peatland_cost_past(j) = p58_peatland_cost_past(t,j);

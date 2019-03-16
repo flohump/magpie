@@ -99,6 +99,10 @@ $title magpie
 * md5sum: 94bd2a7403bd2f8695cfdf535b60b11a
 * Repository: /Users/flo/OneDrive/Dokumente/PIK/Development/input_data/
 * 
+* Used data set: peatland_input_v1.tgz
+* md5sum: b1847803c422ab9c77ddf874428e16b9
+* Repository: /Users/flo/OneDrive/Dokumente/PIK/Development/input_data/
+* 
 * Low resolution: c200
 * High resolution: 0.5
 * 
@@ -130,7 +134,7 @@ $title magpie
 * 
 * 
 * 
-* Last modification (input data): Sat Mar 16 15:11:31 2019
+* Last modification (input data): Sat Mar 16 15:15:40 2019
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 

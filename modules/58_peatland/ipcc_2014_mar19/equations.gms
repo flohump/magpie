@@ -6,12 +6,12 @@
 
  q58_peatland_area(j2) ..
 	sum((status58,land58), v58_peatland_man(j2,status58,land58)) + v58_peatland_intact(j2) =e= 
-	sum((status58,land58), pc58_peatland_man(j2,status58,land58)) + pc58_peatland_intact(j2);
+	pc58_peatland_area(j2);
 
  q58_peatland_degrad(j2,land58) ..
 	v58_peatland_man(j2,"degrad",land58) + v58_peatland_missing(j2) =e=
 	pc58_peatland_man(j2,"degrad",land58)
-  + ((vm_land(j2,land58) - pcm_land(j2,land58))/pc58_man_land(j2) * (sum((status58,land58), pc58_peatland_man(j2,status58,land58)) + pc58_peatland_intact(j2)))$(s58_before_2015=0);
+  + ((vm_land(j2,land58) - pcm_land(j2,land58))/pc58_man_land(j2) * pc58_peatland_area(j2))$(s58_before_2015=0);
 
  q58_peatland_transition(j2,land58) ..
 	sum(status58, v58_peatland_man_diff(j2,status58,land58)) =g= 0;
