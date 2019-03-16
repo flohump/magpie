@@ -5,7 +5,8 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 parameters
- pc58_peatland_area(j)								Total peatland area (mio. ha)
+ p58_land_area(j)									Total land area (mio. ha)
+ p58_peatland_area(j)								Total peatland area (mio. ha)
  p58_ipcc_wetland_ef(climate58,land58,emis58,status58) 	Wetland GWP100 emission factors (t CO2eq per ha)
  pc58_man_land(j)									Total managed land (mio. ha)
  pc58_man_land_shr(j,land58)						Share of total managed land (1)
