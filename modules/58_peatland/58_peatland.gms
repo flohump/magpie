@@ -12,5 +12,6 @@
 
 *###################### R SECTION START (MODULETYPES) ##########################
 $Ifi "%peatland%" == "ipcc_2014" $include "./modules/58_peatland/ipcc_2014.gms"
+$Ifi "%peatland%" == "ipcc_2014_mar19" $include "./modules/58_peatland/ipcc_2014_mar19.gms"
 $Ifi "%peatland%" == "off" $include "./modules/58_peatland/off.gms"
 *###################### R SECTION END (MODULETYPES) ############################

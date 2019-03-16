@@ -1,0 +1,87 @@
+*** |  (C) 2008-2018 Potsdam Institute for Climate Impact Research (PIK),
+*** |  authors, and contributors see AUTHORS file
+*** |  This file is part of MAgPIE and licensed under GNU AGPL Version 3
+*** |  or later. See LICENSE file or go to http://www.gnu.org/licenses/
+*** |  Contact: magpie@pik-potsdam.de
+
+p58_peatland_cost_past(t2,j) = p58_peatland_cost_past(t2,j) + v58_peatland_cost_annuity.l(j);
+
+pc58_peatland_man(j,status58,land58) = v58_peatland_man.l(j,status58,land58);
+pc58_peatland_intact(j) = v58_peatland_intact.l(j);
+
+s58_before_2015$(m_year(t) >= 2015) = 0;
+
+*#################### R SECTION START (OUTPUT DEFINITIONS) #####################
+ ov58_peatland_emis(t,j,climate58,status58,land58,emis58,"marginal")        = v58_peatland_emis.m(j,climate58,status58,land58,emis58);
+ ov58_peatland_man_diff(t,j,status58,land58,"marginal")                     = v58_peatland_man_diff.m(j,status58,land58);
+ ov58_peatland_missing(t,j,"marginal")                                      = v58_peatland_missing.m(j);
+ ov_peatland_emis(t,j,"marginal")                                           = vm_peatland_emis.m(j);
+ ov_peatland_ghgsaving(t,j,"marginal")                                      = vm_peatland_ghgsaving.m(j);
+ ov_peatland_cost(t,j,"marginal")                                           = vm_peatland_cost.m(j);
+ ov58_peatland_man(t,j,status58,land58,"marginal")                          = v58_peatland_man.m(j,status58,land58);
+ ov58_peatland_intact(t,j,"marginal")                                       = v58_peatland_intact.m(j);
+ ov58_peatland_cost_annuity(t,j,"marginal")                                 = v58_peatland_cost_annuity.m(j);
+ oq58_peatland_area(t,j,"marginal")                                         = q58_peatland_area.m(j);
+ oq58_peatland_degrad(t,j,land58,"marginal")                                = q58_peatland_degrad.m(j,land58);
+ oq58_peatland_transition(t,j,land58,"marginal")                            = q58_peatland_transition.m(j,land58);
+ oq58_peatland_man_diff(t,j,status58,land58,"marginal")                     = q58_peatland_man_diff.m(j,status58,land58);
+ oq58_peatland_cost(t,j,"marginal")                                         = q58_peatland_cost.m(j);
+ oq58_peatland_cost_annuity(t,j,"marginal")                                 = q58_peatland_cost_annuity.m(j);
+ oq58_peatland_emis_detail(t,j,climate58,status58,land58,emis58,"marginal") = q58_peatland_emis_detail.m(j,climate58,status58,land58,emis58);
+ oq58_peatland_emis(t,j,"marginal")                                         = q58_peatland_emis.m(j);
+ oq58_peatland_ghgsaving(t,j,"marginal")                                    = q58_peatland_ghgsaving.m(j);
+ ov58_peatland_emis(t,j,climate58,status58,land58,emis58,"level")           = v58_peatland_emis.l(j,climate58,status58,land58,emis58);
+ ov58_peatland_man_diff(t,j,status58,land58,"level")                        = v58_peatland_man_diff.l(j,status58,land58);
+ ov58_peatland_missing(t,j,"level")                                         = v58_peatland_missing.l(j);
+ ov_peatland_emis(t,j,"level")                                              = vm_peatland_emis.l(j);
+ ov_peatland_ghgsaving(t,j,"level")                                         = vm_peatland_ghgsaving.l(j);
+ ov_peatland_cost(t,j,"level")                                              = vm_peatland_cost.l(j);
+ ov58_peatland_man(t,j,status58,land58,"level")                             = v58_peatland_man.l(j,status58,land58);
+ ov58_peatland_intact(t,j,"level")                                          = v58_peatland_intact.l(j);
+ ov58_peatland_cost_annuity(t,j,"level")                                    = v58_peatland_cost_annuity.l(j);
+ oq58_peatland_area(t,j,"level")                                            = q58_peatland_area.l(j);
+ oq58_peatland_degrad(t,j,land58,"level")                                   = q58_peatland_degrad.l(j,land58);
+ oq58_peatland_transition(t,j,land58,"level")                               = q58_peatland_transition.l(j,land58);
+ oq58_peatland_man_diff(t,j,status58,land58,"level")                        = q58_peatland_man_diff.l(j,status58,land58);
+ oq58_peatland_cost(t,j,"level")                                            = q58_peatland_cost.l(j);
+ oq58_peatland_cost_annuity(t,j,"level")                                    = q58_peatland_cost_annuity.l(j);
+ oq58_peatland_emis_detail(t,j,climate58,status58,land58,emis58,"level")    = q58_peatland_emis_detail.l(j,climate58,status58,land58,emis58);
+ oq58_peatland_emis(t,j,"level")                                            = q58_peatland_emis.l(j);
+ oq58_peatland_ghgsaving(t,j,"level")                                       = q58_peatland_ghgsaving.l(j);
+ ov58_peatland_emis(t,j,climate58,status58,land58,emis58,"upper")           = v58_peatland_emis.up(j,climate58,status58,land58,emis58);
+ ov58_peatland_man_diff(t,j,status58,land58,"upper")                        = v58_peatland_man_diff.up(j,status58,land58);
+ ov58_peatland_missing(t,j,"upper")                                         = v58_peatland_missing.up(j);
+ ov_peatland_emis(t,j,"upper")                                              = vm_peatland_emis.up(j);
+ ov_peatland_ghgsaving(t,j,"upper")                                         = vm_peatland_ghgsaving.up(j);
+ ov_peatland_cost(t,j,"upper")                                              = vm_peatland_cost.up(j);
+ ov58_peatland_man(t,j,status58,land58,"upper")                             = v58_peatland_man.up(j,status58,land58);
+ ov58_peatland_intact(t,j,"upper")                                          = v58_peatland_intact.up(j);
+ ov58_peatland_cost_annuity(t,j,"upper")                                    = v58_peatland_cost_annuity.up(j);
+ oq58_peatland_area(t,j,"upper")                                            = q58_peatland_area.up(j);
+ oq58_peatland_degrad(t,j,land58,"upper")                                   = q58_peatland_degrad.up(j,land58);
+ oq58_peatland_transition(t,j,land58,"upper")                               = q58_peatland_transition.up(j,land58);
+ oq58_peatland_man_diff(t,j,status58,land58,"upper")                        = q58_peatland_man_diff.up(j,status58,land58);
+ oq58_peatland_cost(t,j,"upper")                                            = q58_peatland_cost.up(j);
+ oq58_peatland_cost_annuity(t,j,"upper")                                    = q58_peatland_cost_annuity.up(j);
+ oq58_peatland_emis_detail(t,j,climate58,status58,land58,emis58,"upper")    = q58_peatland_emis_detail.up(j,climate58,status58,land58,emis58);
+ oq58_peatland_emis(t,j,"upper")                                            = q58_peatland_emis.up(j);
+ oq58_peatland_ghgsaving(t,j,"upper")                                       = q58_peatland_ghgsaving.up(j);
+ ov58_peatland_emis(t,j,climate58,status58,land58,emis58,"lower")           = v58_peatland_emis.lo(j,climate58,status58,land58,emis58);
+ ov58_peatland_man_diff(t,j,status58,land58,"lower")                        = v58_peatland_man_diff.lo(j,status58,land58);
+ ov58_peatland_missing(t,j,"lower")                                         = v58_peatland_missing.lo(j);
+ ov_peatland_emis(t,j,"lower")                                              = vm_peatland_emis.lo(j);
+ ov_peatland_ghgsaving(t,j,"lower")                                         = vm_peatland_ghgsaving.lo(j);
+ ov_peatland_cost(t,j,"lower")                                              = vm_peatland_cost.lo(j);
+ ov58_peatland_man(t,j,status58,land58,"lower")                             = v58_peatland_man.lo(j,status58,land58);
+ ov58_peatland_intact(t,j,"lower")                                          = v58_peatland_intact.lo(j);
+ ov58_peatland_cost_annuity(t,j,"lower")                                    = v58_peatland_cost_annuity.lo(j);
+ oq58_peatland_area(t,j,"lower")                                            = q58_peatland_area.lo(j);
+ oq58_peatland_degrad(t,j,land58,"lower")                                   = q58_peatland_degrad.lo(j,land58);
+ oq58_peatland_transition(t,j,land58,"lower")                               = q58_peatland_transition.lo(j,land58);
+ oq58_peatland_man_diff(t,j,status58,land58,"lower")                        = q58_peatland_man_diff.lo(j,status58,land58);
+ oq58_peatland_cost(t,j,"lower")                                            = q58_peatland_cost.lo(j);
+ oq58_peatland_cost_annuity(t,j,"lower")                                    = q58_peatland_cost_annuity.lo(j);
+ oq58_peatland_emis_detail(t,j,climate58,status58,land58,emis58,"lower")    = q58_peatland_emis_detail.lo(j,climate58,status58,land58,emis58);
+ oq58_peatland_emis(t,j,"lower")                                            = q58_peatland_emis.lo(j);
+ oq58_peatland_ghgsaving(t,j,"lower")                                       = q58_peatland_ghgsaving.lo(j);
+*##################### R SECTION END (OUTPUT DEFINITIONS) ######################
