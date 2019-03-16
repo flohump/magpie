@@ -19,7 +19,7 @@ source("scripts/start_functions.R")
 source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 
-cfg$input <- c(cfg$input,"peatland_input_v1.tgz")
+#cfg$input <- c(cfg$input,"peatland_input_v1.tgz")
 cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=NULL,"/p/projects/landuse/users/florianh/data"=NULL),
                            getOption("magpie_repos"))
 
