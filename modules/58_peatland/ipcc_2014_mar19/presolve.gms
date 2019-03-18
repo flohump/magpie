@@ -29,8 +29,7 @@ else
 	v58_peatland_man.up(j,"degrad",land58) = Inf;
 	v58_peatland_man.up(j,"unused",land58) = Inf;
 *	v58_peatland_man.up(j,"rewet",land58) = sum(status58, pc58_peatland_man(j,status58,land58))*s58_rewetting_switch;
-	v58_peatland_man.up(j,"rewet",land58)$(s58_rewetting_switch=0) = 0;
-	v58_peatland_man.up(j,"rewet",land58)$(s58_rewetting_switch=1) = Inf;
+	v58_peatland_man.up(j,"rewet",land58) = s58_rewetting_switch;
 	v58_peatland_man.l(j,status58,land58) = pc58_peatland_man(j,status58,land58);
 	v58_peatland_intact.lo(j) = 0;
 	v58_peatland_intact.up(j) = pc58_peatland_intact(j);

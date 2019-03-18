@@ -20,11 +20,13 @@ source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 
 #cfg$input <- c(cfg$input,"peatland_input_v1.tgz")
-cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=NULL,"/p/projects/landuse/users/florianh/data"=NULL),
+cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=NULL,"scp://cluster.pik-potsdam.de/p/projects/landuse/users/florianh/data"=NULL),
                            getOption("magpie_repos"))
 
 cfg$gms$peatland  <- "ipcc_2014_mar19"
-prefix <- "T54"
+prefix <- "T55"
+
+cfg$gms$s58_peatland_policy_horizon  <- 200
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
