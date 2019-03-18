@@ -24,7 +24,7 @@ cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=
                            getOption("magpie_repos"))
 
 cfg$gms$peatland  <- "ipcc_2014_mar19"
-prefix <- "T58"
+prefix <- "T59"
 
 cfg$gms$s58_peatland_policy_horizon  <- 200
 
