@@ -7,10 +7,10 @@
 parameters
  p58_land_area(j)									Total land area (mio. ha)
  p58_peatland_area(j)								Total peatland area (mio. ha)
- p58_ipcc_wetland_ef(climate58,land58,emis58,status58) 	Wetland GWP100 emission factors (t CO2eq per ha)
+ p58_ipcc_wetland_ef(climate58,land58,emis58,man58) 	Wetland GWP100 emission factors (t CO2eq per ha)
  pc58_man_land(j)									Total managed land (mio. ha)
  pc58_man_land_shr(j,land58)						Share of total managed land (1)
- pc58_peatland_man(j,status58,land58)				Managed peatland (mio. ha)
+ pc58_peatland_man(j,man58,land58)				Managed peatland (mio. ha)
  pc58_peatland_intact(j)							Intact peatland (mio. ha)
  p58_peatland_cell_shr(t,j)							Peatland cell share (1)
  p58_peatland_ratio(t,j,land58)						Ratio of managed peatland and managed land (1)
@@ -21,51 +21,51 @@ parameters
 ;
 
 equations
- q58_peatland_area(j)											Constraint peatland transitions (mio. ha per time step)
+ q58_transition_matrix(j)
+ q58_transition_to(j,to58)
+ q58_transition_from(j,from58)
  q58_peatland_degrad(j,land58)									Degrading peatland area constraint (mio. ha)
- q58_peatland_transition(j,land58)								Constraint peatland transitions (mio. ha per time step)
- q58_peatland_man_diff(j,status58,land58)						Change in managed peatland compared to previous time step (mio. ha per time step)
  q58_peatland_cost(j)											One-time and recurring cost of managed peatland (mio. USD05MER per yr)
  q58_peatland_cost_annuity(j)									Annuity costs of managed peatland expansion in the current timestep (mio. USD05MER per yr)
- q58_peatland_emis_detail(j,climate58,status58,land58,emis58)	Detailed GHG emissions from managed peatland (t CO2eq per year)
+ q58_peatland_emis_detail(j,climate58,man58,land58,emis58)	Detailed GHG emissions from managed peatland (t CO2eq per year)
  q58_peatland_emis(j)											GHG emissions from managed peatland (t CO2eq per year)
  q58_peatland_ghgsaving(j)										Peatland policy GHG emission saving (t CO2eq per year)
 ;
 
 variables
- v58_peatland_emis(j,climate58,status58,land58,emis58)	Detailed GHG emissions from managed peatland (t CO2eq per year)
- v58_peatland_man_diff(j,status58,land58)               Change in managed peatland compared to previous time step (mio. ha per time step)
+ v58_peatland_emis(j,climate58,man58,land58,emis58)	Detailed GHG emissions from managed peatland (t CO2eq per year)
 ;
 
 positive variables
+ v58_lu_transitions(j,from58,to58)
  v58_peatland_missing(j)					blub
  vm_peatland_emis(j) 						GHG emissions from managed peatland (t CO2eq per year)
  vm_peatland_ghgsaving(j) 					Peatland policy GHG emission saving (t CO2eq per year)
  vm_peatland_cost(j)						One-time and recurring cost of managed peatland (mio. USD05MER per yr)
- v58_peatland_man(j,status58,land58)		Managed peatland (mio. ha)
+ v58_peatland_man(j,man58,land58)		Managed peatland (mio. ha)
  v58_peatland_intact(j)						Intact peatland (mio. ha)
  v58_peatland_cost_annuity(j)				Annuity costs of managed peatland expansion in the current timestep (mio. USD05MER per yr)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov58_peatland_emis(t,j,climate58,status58,land58,emis58,type)        Detailed GHG emissions from managed peatland (t CO2eq per year)
- ov58_peatland_man_diff(t,j,status58,land58,type)                     Change in managed peatland compared to previous time step (mio. ha per time step)
- ov58_peatland_missing(t,j,type)                                      blub
- ov_peatland_emis(t,j,type)                                           GHG emissions from managed peatland (t CO2eq per year)
- ov_peatland_ghgsaving(t,j,type)                                      Peatland policy GHG emission saving (t CO2eq per year)
- ov_peatland_cost(t,j,type)                                           One-time and recurring cost of managed peatland (mio. USD05MER per yr)
- ov58_peatland_man(t,j,status58,land58,type)                          Managed peatland (mio. ha)
- ov58_peatland_intact(t,j,type)                                       Intact peatland (mio. ha)
- ov58_peatland_cost_annuity(t,j,type)                                 Annuity costs of managed peatland expansion in the current timestep (mio. USD05MER per yr)
- oq58_peatland_area(t,j,type)                                         Constraint peatland transitions (mio. ha per time step)
- oq58_peatland_degrad(t,j,land58,type)                                Degrading peatland area constraint (mio. ha)
- oq58_peatland_transition(t,j,land58,type)                            Constraint peatland transitions (mio. ha per time step)
- oq58_peatland_man_diff(t,j,status58,land58,type)                     Change in managed peatland compared to previous time step (mio. ha per time step)
- oq58_peatland_cost(t,j,type)                                         One-time and recurring cost of managed peatland (mio. USD05MER per yr)
- oq58_peatland_cost_annuity(t,j,type)                                 Annuity costs of managed peatland expansion in the current timestep (mio. USD05MER per yr)
- oq58_peatland_emis_detail(t,j,climate58,status58,land58,emis58,type) Detailed GHG emissions from managed peatland (t CO2eq per year)
- oq58_peatland_emis(t,j,type)                                         GHG emissions from managed peatland (t CO2eq per year)
- oq58_peatland_ghgsaving(t,j,type)                                    Peatland policy GHG emission saving (t CO2eq per year)
+ ov58_peatland_emis(t,j,climate58,man58,land58,emis58,type)        Detailed GHG emissions from managed peatland (t CO2eq per year)
+ ov58_lu_transitions(t,j,from58,to58,type)                         
+ ov58_peatland_missing(t,j,type)                                   blub
+ ov_peatland_emis(t,j,type)                                        GHG emissions from managed peatland (t CO2eq per year)
+ ov_peatland_ghgsaving(t,j,type)                                   Peatland policy GHG emission saving (t CO2eq per year)
+ ov_peatland_cost(t,j,type)                                        One-time and recurring cost of managed peatland (mio. USD05MER per yr)
+ ov58_peatland_man(t,j,man58,land58,type)                          Managed peatland (mio. ha)
+ ov58_peatland_intact(t,j,type)                                    Intact peatland (mio. ha)
+ ov58_peatland_cost_annuity(t,j,type)                              Annuity costs of managed peatland expansion in the current timestep (mio. USD05MER per yr)
+ oq58_transition_matrix(t,j,type)                                  
+ oq58_transition_to(t,j,to58,type)                                 
+ oq58_transition_from(t,j,from58,type)                             
+ oq58_peatland_degrad(t,j,land58,type)                             Degrading peatland area constraint (mio. ha)
+ oq58_peatland_cost(t,j,type)                                      One-time and recurring cost of managed peatland (mio. USD05MER per yr)
+ oq58_peatland_cost_annuity(t,j,type)                              Annuity costs of managed peatland expansion in the current timestep (mio. USD05MER per yr)
+ oq58_peatland_emis_detail(t,j,climate58,man58,land58,emis58,type) Detailed GHG emissions from managed peatland (t CO2eq per year)
+ oq58_peatland_emis(t,j,type)                                      GHG emissions from managed peatland (t CO2eq per year)
+ oq58_peatland_ghgsaving(t,j,type)                                 Peatland policy GHG emission saving (t CO2eq per year)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

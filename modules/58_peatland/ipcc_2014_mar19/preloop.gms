@@ -11,8 +11,8 @@ p58_mapping_cell_climate(j,climate58) = sum(clcl_climate58(clcl,climate58),pm_cl
 
 p58_ipcc_wetland_ef(climate58,land58,emis58,ef58) = f58_ipcc_wetland_ef(climate58,land58,emis58,ef58);
 p58_ipcc_wetland_ef(climate58,land58,emis58,"unused") = f58_ipcc_wetland_ef(climate58,land58,emis58,"degrad");
-p58_ipcc_wetland_ef(climate58,land58,"ch4",status58) = p58_ipcc_wetland_ef(climate58,land58,"ch4",status58)/34*28;
-p58_ipcc_wetland_ef(climate58,land58,"n2o",status58) = p58_ipcc_wetland_ef(climate58,land58,"n2o",status58)/298*265;
+p58_ipcc_wetland_ef(climate58,land58,"ch4",man58) = p58_ipcc_wetland_ef(climate58,land58,"ch4",man58)/34*28;
+p58_ipcc_wetland_ef(climate58,land58,"n2o",man58) = p58_ipcc_wetland_ef(climate58,land58,"n2o",man58)/298*265;
 
 $ontext
 p58_emis_factor("boreal","degrad","crop") = 33.4;
