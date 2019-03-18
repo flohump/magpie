@@ -9,7 +9,7 @@ if(m_year(t) < 2015,
 	v58_peatland_man.fx(j,man58,land58) = 0;
 	pc58_peatland_intact(j) = 0;
 	v58_peatland_intact.fx(j) = 0;
-	v58_lu_transitions.fx(j2,from58,to58) = 0;
+	v58_lu_transitions.fx(j2,from58,to58)$(not sameas(from58,to58)) = 0;
 	s58_before_2015 = 1;
 else
 	if(s58_before_2015 = 1,
@@ -25,7 +25,7 @@ else
 	v58_peatland_man.fx(j,man58,land58) = pc58_peatland_man(j,man58,land58);
 	v58_peatland_intact.fx(j) = pc58_peatland_intact(j);
 	p58_peatland_ratio(t,j,land58) = 0;
-	v58_lu_transitions.fx(j2,from58,to58) = 0;
+	v58_lu_transitions.fx(j2,from58,to58)$(not sameas(from58,to58)) = 0;
 	else
 	v58_peatland_man.lo(j,man58,land58) = 0;
 	v58_peatland_man.up(j,"degrad",land58) = Inf;
@@ -36,7 +36,7 @@ else
 	v58_peatland_intact.up(j) = pc58_peatland_intact(j);
 	v58_peatland_intact.l(j) = pc58_peatland_intact(j);
 	
-	v58_lu_transitions.fx(j2,from58,to58) = 0;
+	v58_lu_transitions.fx(j2,from58,to58)$(not sameas(from58,to58)) = 0;
 	v58_lu_transitions.up(j2,"intact","degrad_crop") = Inf;
 	v58_lu_transitions.up(j2,"intact","degrad_past") = Inf;
 	v58_lu_transitions.up(j2,"intact","degrad_forestry") = Inf;
