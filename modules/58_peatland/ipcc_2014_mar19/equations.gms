@@ -14,12 +14,15 @@
 	v58_peatland_man(j2,"degrad","crop")$(sameas(to58,"degrad_crop"))
 	+ v58_peatland_man(j2,"degrad","past")$(sameas(to58,"degrad_past"))
 	+ v58_peatland_man(j2,"degrad","forestry")$(sameas(to58,"degrad_forestry"))
+	+ v58_peatland_man(j2,"degrad","secdforest")$(sameas(to58,"degrad_secdforest"))
 	+ v58_peatland_man(j2,"unused","crop")$(sameas(to58,"unused_crop"))
 	+ v58_peatland_man(j2,"unused","past")$(sameas(to58,"unused_past"))
 	+ v58_peatland_man(j2,"unused","forestry")$(sameas(to58,"unused_forestry"))
+	+ v58_peatland_man(j2,"unused","secdforest")$(sameas(to58,"unused_secdforest"))
 	+ v58_peatland_man(j2,"rewet","crop")$(sameas(to58,"rewet_crop"))
 	+ v58_peatland_man(j2,"rewet","past")$(sameas(to58,"rewet_past"))
 	+ v58_peatland_man(j2,"rewet","forestry")$(sameas(to58,"rewet_forestry"))
+	+ v58_peatland_man(j2,"rewet","secdforest")$(sameas(to58,"rewet_secdforest"))
 	+ v58_peatland_intact(j2)$(sameas(to58,"intact"));
 
  q58_transition_from(j2,from58) ..
@@ -27,12 +30,15 @@
 	pc58_peatland_man(j2,"degrad","crop")$(sameas(from58,"degrad_crop"))
 	+ pc58_peatland_man(j2,"degrad","past")$(sameas(from58,"degrad_past"))
 	+ pc58_peatland_man(j2,"degrad","forestry")$(sameas(from58,"degrad_forestry"))
+	+ pc58_peatland_man(j2,"degrad","secdforest")$(sameas(from58,"degrad_secdforest"))
 	+ pc58_peatland_man(j2,"unused","crop")$(sameas(from58,"unused_crop"))
 	+ pc58_peatland_man(j2,"unused","past")$(sameas(from58,"unused_past"))
 	+ pc58_peatland_man(j2,"unused","forestry")$(sameas(from58,"unused_forestry"))
+	+ pc58_peatland_man(j2,"unused","secdforest")$(sameas(from58,"unused_secdforest"))
 	+ pc58_peatland_man(j2,"rewet","crop")$(sameas(from58,"rewet_crop"))
 	+ pc58_peatland_man(j2,"rewet","past")$(sameas(from58,"rewet_past"))
 	+ pc58_peatland_man(j2,"rewet","forestry")$(sameas(from58,"rewet_forestry"))
+	+ pc58_peatland_man(j2,"rewet","secdforest")$(sameas(from58,"rewet_secdforest"))
 	+ pc58_peatland_intact(j2)$(sameas(from58,"intact"));
 
 

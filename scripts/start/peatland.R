@@ -11,9 +11,19 @@
 
 library(lucode)
 library(magclass)
+library(gdx)
 
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
+
+
+getInput <- function(gdx) {
+  a <- readGDX(gdx,"f56_pollutant_prices_coupling")
+  write.magpie(a,"modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3")
+  a <- readGDX(gdx,"f60_bioenergy_dem_coupling")
+  write.magpie(a,"modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv")
+}
+
 
 #start MAgPIE run
 source("config/default.cfg")
@@ -24,46 +34,43 @@ cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=
                            getOption("magpie_repos"))
 
 cfg$gms$peatland  <- "ipcc_2014_mar19"
-prefix <- "T59"
-
+cfg$gms$c56_pollutant_prices <- "coupling"
+cfg$gms$c60_2ndgen_biodem <- "coupling"
+cfg$gms$s56_ghgprice_start <- 2020
 cfg$gms$s58_peatland_policy_horizon  <- 200
+
+prefix <- "T60"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
 cfg <- setScenario(cfg,c("SSP2","NPI"))
-cfg$gms$c56_pollutant_prices <- "SSP2-Ref-SPA0-V15-REMIND-MAGPIE"
-cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
+getInput("/p/projects/remind/runs/magpie4-2019-03-15-develop/output/r8423-C_NPi-mag-4/fulldata.gdx")
 cfg$gms$s56_peatland_policy <- 0
 cfg$gms$s58_rewetting_switch  <- 0
 start_run(cfg,codeCheck=FALSE)
 
+getInput("/p/projects/remind/runs/magpie4-2019-03-15-develop/output/r8423-C_Budg600-mag-2/fulldata.gdx")
+
 cfg$title <- paste(prefix,"CPol",sep="_")
 cfg <- setScenario(cfg,c("SSP2","NDC"))
-cfg$gms$c56_pollutant_prices <- "SSP2-26-SPA2-V15-REMIND-MAGPIE"
-cfg$gms$c60_2ndgen_biodem <- "SSP2-26-SPA2"
 cfg$gms$s56_peatland_policy <- 0
 cfg$gms$s58_rewetting_switch  <- 0
 start_run(cfg,codeCheck=FALSE)
 
 cfg$title <- paste(prefix,"CPol+Pprot",sep="_")
 cfg <- setScenario(cfg,c("SSP2","NDC"))
-cfg$gms$c56_pollutant_prices <- "SSP2-26-SPA2-V15-REMIND-MAGPIE"
-cfg$gms$c60_2ndgen_biodem <- "SSP2-26-SPA2"
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- 0
 start_run(cfg,codeCheck=FALSE)
 
 cfg$title <- paste(prefix,"CPol+Pprot+Prestor",sep="_")
 cfg <- setScenario(cfg,c("SSP2","NDC"))
-cfg$gms$c56_pollutant_prices <- "SSP2-26-SPA2-V15-REMIND-MAGPIE"
-cfg$gms$c60_2ndgen_biodem <- "SSP2-26-SPA2"
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- Inf
 start_run(cfg,codeCheck=FALSE)
 
 cfg$title <- paste(prefix,"CPol+Pprot_nobio",sep="_")
 cfg <- setScenario(cfg,c("SSP2","NDC"))
-cfg$gms$c56_pollutant_prices <- "SSP2-26-SPA2-V15-REMIND-MAGPIE"
 cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- 0
@@ -71,7 +78,6 @@ start_run(cfg,codeCheck=FALSE)
 
 cfg$title <- paste(prefix,"CPol+Pprot+Prestor_nobio",sep="_")
 cfg <- setScenario(cfg,c("SSP2","NDC"))
-cfg$gms$c56_pollutant_prices <- "SSP2-26-SPA2-V15-REMIND-MAGPIE"
 cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- Inf

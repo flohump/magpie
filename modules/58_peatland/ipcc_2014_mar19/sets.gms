@@ -5,32 +5,7 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 sets
-  stat58 Peatland status
-    / intact, 
-    degrad_crop, degrad_past, degrad_forestry, 
-    unused_crop, unused_past, unused_forestry, 
-    rewet_crop, rewet_past, rewet_forestry /
-
-  from58(stat58) Peatland status
-    / intact, 
-    degrad_crop, degrad_past, degrad_forestry, 
-    unused_crop, unused_past, unused_forestry, 
-    rewet_crop, rewet_past, rewet_forestry /
-
-  to58(stat58) Peatland status
-    / intact, 
-    degrad_crop, degrad_past, degrad_forestry, 
-    unused_crop, unused_past, unused_forestry, 
-    rewet_crop, rewet_past, rewet_forestry /
-
-  stat_man58(stat58) Peatland status
-    / degrad_crop, degrad_past, degrad_forestry, 
-    unused_crop, unused_past, unused_forestry, 
-    rewet_crop, rewet_past, rewet_forestry /
-
-  stat_rewet58(to58) Peatland status
-    / rewet_crop, rewet_past, rewet_forestry /
-
+ 
   man58 Peatland status managed
     / degrad, unused, rewet /
   
@@ -38,19 +13,31 @@ sets
     / degrad, rewet /
 
   land58(land) Managed land types
-    / crop, past, forestry /
+    / crop, past, forestry, secdforest /
 
-   man58_land58(stat_man58,man58,land58) Mapping man58_land58
-  /degrad_crop      . (degrad) . (crop)
-   degrad_past      . (degrad) . (past)
-   degrad_forestry  . (degrad) . (forestry)
-   unused_crop      . (unused) . (crop)
-   unused_past      . (unused) . (past)
-   unused_forestry  . (unused) . (forestry)
-   rewet_crop       . (rewet)  . (crop)
-   rewet_past       . (rewet)  . (past)
-   rewet_forestry   . (rewet)  . (forestry)
-   /
+  land_ini58(land58) Managed land types for ini
+    / crop, past, secdforest /
+
+  stat58 Peatland status
+    / intact, 
+    degrad_crop, degrad_past, degrad_forestry, degrad_secdforest, 
+    unused_crop, unused_past, unused_forestry, unused_secdforest, 
+    rewet_crop, rewet_past, rewet_forestry, rewet_secdforest /
+
+  from58(stat58) Peatland status
+    / intact, 
+    degrad_crop, degrad_past, degrad_forestry, degrad_secdforest, 
+    unused_crop, unused_past, unused_forestry, unused_secdforest, 
+    rewet_crop, rewet_past, rewet_forestry, rewet_secdforest /
+
+  to58(stat58) Peatland status
+    / intact, 
+    degrad_crop, degrad_past, degrad_forestry, degrad_secdforest, 
+    unused_crop, unused_past, unused_forestry, unused_secdforest, 
+    rewet_crop, rewet_past, rewet_forestry, rewet_secdforest /
+
+  stat_rewet58(to58) Peatland status
+    / rewet_crop, rewet_past, rewet_forestry /
 
   climate58 Climate classes
 	/ tropical, temperate, boreal /
