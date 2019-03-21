@@ -67,19 +67,51 @@ cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- 0
 start_run(cfg,codeCheck=FALSE)
 
-cfg$title <- paste(prefix,"CPol+Pprot+Prestor",sep="_")
+cfg$title <- paste(prefix,"CPol+Pprot+Prestor80",sep="_")
+cfg$gms$s58_peatland_policy_horizon  <- 80
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- Inf
 start_run(cfg,codeCheck=FALSE)
 
-cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
-
-cfg$title <- paste(prefix,"CPol+Pprot_nobio",sep="_")
-cfg$gms$s56_peatland_policy <- 1
-cfg$gms$s58_rewetting_switch  <- 0
-start_run(cfg,codeCheck=FALSE)
-
-cfg$title <- paste(prefix,"CPol+Pprot+Prestor_nobio",sep="_")
+cfg$title <- paste(prefix,"CPol+Pprot+Prestor100",sep="_")
+cfg$gms$s58_peatland_policy_horizon  <- 100
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- Inf
 start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"CPol+Pprot+Prestor150",sep="_")
+cfg$gms$s58_peatland_policy_horizon  <- 150
+cfg$gms$s56_peatland_policy <- 1
+cfg$gms$s58_rewetting_switch  <- Inf
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"CPol+Pprot+Prestor200",sep="_")
+cfg$gms$s58_peatland_policy_horizon  <- 200
+cfg$gms$s56_peatland_policy <- 1
+cfg$gms$s58_rewetting_switch  <- Inf
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"CPol+Pprot+Prestor500",sep="_")
+cfg$gms$s58_peatland_policy_horizon  <- 500
+cfg$gms$s56_peatland_policy <- 1
+cfg$gms$s58_rewetting_switch  <- Inf
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"CPol+Pprot+Prestor1000",sep="_")
+cfg$gms$s58_peatland_policy_horizon  <- 1000
+cfg$gms$s56_peatland_policy <- 1
+cfg$gms$s58_rewetting_switch  <- Inf
+start_run(cfg,codeCheck=FALSE)
+
+
+# cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
+# 
+# cfg$title <- paste(prefix,"CPol+Pprot_nobio",sep="_")
+# cfg$gms$s56_peatland_policy <- 1
+# cfg$gms$s58_rewetting_switch  <- 0
+# start_run(cfg,codeCheck=FALSE)
+# 
+# cfg$title <- paste(prefix,"CPol+Pprot+Prestor_nobio",sep="_")
+# cfg$gms$s56_peatland_policy <- 1
+# cfg$gms$s58_rewetting_switch  <- Inf
+# start_run(cfg,codeCheck=FALSE)
