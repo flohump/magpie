@@ -36,10 +36,10 @@ cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=
 cfg$gms$peatland  <- "ipcc_2014_mar19"
 cfg$gms$c56_pollutant_prices <- "coupling"
 cfg$gms$c60_2ndgen_biodem <- "coupling"
-cfg$gms$s56_ghgprice_start <- 2020
-cfg$gms$s58_peatland_policy_horizon  <- 500
+cfg$gms$s56_ghgprice_start <- 2015
+cfg$gms$s58_peatland_policy_horizon  <- 80
 
-prefix <- "T65"
+prefix <- "T66"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
@@ -54,7 +54,7 @@ start_run(cfg,codeCheck=FALSE)
 #getInput("/p/projects/remind/runs/magpie4-2019-03-15-develop/output/r8423-C_Budg600-mag-4/fulldata.gdx")
 cfg$gms$c56_pollutant_prices <- "SSP2-26-SPA2-V15-REMIND-MAGPIE"
 cfg$gms$c60_2ndgen_biodem <- "SSP2-26-SPA2"
-cfg <- setScenario(cfg,c("SSP2","NPI"))
+cfg <- setScenario(cfg,c("SSP2","NDC"))
 
 
 cfg$title <- paste(prefix,"CPol",sep="_")
