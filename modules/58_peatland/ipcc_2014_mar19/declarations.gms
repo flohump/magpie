@@ -24,6 +24,8 @@ equations
  q58_transition_matrix(j)
  q58_transition_to(j,to58)
  q58_transition_from(j,from58)
+ q58_expansion(j,to58)
+ q58_reduction(j,from58)
  q58_peatland_degrad(j,land58)									Degrading peatland area constraint (mio. ha)
  q58_peatland_cost(j)											One-time and recurring cost of managed peatland (mio. USD05MER per yr)
  q58_peatland_cost_annuity(j)									Annuity costs of managed peatland expansion in the current timestep (mio. USD05MER per yr)
@@ -38,6 +40,8 @@ variables
 
 positive variables
  v58_lu_transitions(j,from58,to58)
+ v58_expansion(j,stat58)
+ v58_reduction(j,stat58)
  v58_peatland_missing(j)					blub
  vm_peatland_emis(j) 						GHG emissions from managed peatland (t CO2eq per year)
  vm_peatland_ghgsaving(j) 					Peatland policy GHG emission saving (t CO2eq per year)
@@ -51,6 +55,8 @@ positive variables
 parameters
  ov58_peatland_emis(t,j,climate58,man58,land58,emis58,type)        Detailed GHG emissions from managed peatland (t CO2eq per year)
  ov58_lu_transitions(t,j,from58,to58,type)                         
+ ov58_expansion(t,j,stat58,type)                                   
+ ov58_reduction(t,j,stat58,type)                                   
  ov58_peatland_missing(t,j,type)                                   blub
  ov_peatland_emis(t,j,type)                                        GHG emissions from managed peatland (t CO2eq per year)
  ov_peatland_ghgsaving(t,j,type)                                   Peatland policy GHG emission saving (t CO2eq per year)
@@ -61,6 +67,8 @@ parameters
  oq58_transition_matrix(t,j,type)                                  
  oq58_transition_to(t,j,to58,type)                                 
  oq58_transition_from(t,j,from58,type)                             
+ oq58_expansion(t,j,to58,type)                                     
+ oq58_reduction(t,j,from58,type)                                   
  oq58_peatland_degrad(t,j,land58,type)                             Degrading peatland area constraint (mio. ha)
  oq58_peatland_cost(t,j,type)                                      One-time and recurring cost of managed peatland (mio. USD05MER per yr)
  oq58_peatland_cost_annuity(t,j,type)                              Annuity costs of managed peatland expansion in the current timestep (mio. USD05MER per yr)

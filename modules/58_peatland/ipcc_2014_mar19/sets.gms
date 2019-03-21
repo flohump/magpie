@@ -13,28 +13,28 @@ sets
     / degrad, rewet /
 
   land58(land) Managed land types
-    / crop, past, forestry, secdforest /
+    / crop, past, forestry /
 
   land_ini58(land58) Managed land types for ini
-    / crop, past, secdforest /
+    / crop, past /
 
   stat58 Peatland status
     / intact, 
-    degrad_crop, degrad_past, degrad_forestry, degrad_secdforest, 
-    unused_crop, unused_past, unused_forestry, unused_secdforest, 
-    rewet_crop, rewet_past, rewet_forestry, rewet_secdforest /
+    degrad_crop, degrad_past, degrad_forestry, 
+    unused_crop, unused_past, unused_forestry, 
+    rewet_crop, rewet_past, rewet_forestry /
 
   from58(stat58) Peatland status
     / intact, 
-    degrad_crop, degrad_past, degrad_forestry, degrad_secdforest, 
-    unused_crop, unused_past, unused_forestry, unused_secdforest, 
-    rewet_crop, rewet_past, rewet_forestry, rewet_secdforest /
+    degrad_crop, degrad_past, degrad_forestry, 
+    unused_crop, unused_past, unused_forestry, 
+    rewet_crop, rewet_past, rewet_forestry /
 
   to58(stat58) Peatland status
     / intact, 
-    degrad_crop, degrad_past, degrad_forestry, degrad_secdforest, 
-    unused_crop, unused_past, unused_forestry, unused_secdforest, 
-    rewet_crop, rewet_past, rewet_forestry, rewet_secdforest /
+    degrad_crop, degrad_past, degrad_forestry, 
+    unused_crop, unused_past, unused_forestry, 
+    rewet_crop, rewet_past, rewet_forestry /
 
   stat_rewet58(to58) Peatland status
     / rewet_crop, rewet_past, rewet_forestry /

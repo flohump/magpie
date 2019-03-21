@@ -43,15 +43,12 @@ else
 	v58_lu_transitions.up(j2,"degrad_crop","unused_crop") = Inf;
 	v58_lu_transitions.up(j2,"degrad_past","unused_past") = Inf;
 	v58_lu_transitions.up(j2,"degrad_forestry","unused_forestry") = Inf;
-	v58_lu_transitions.up(j2,"degrad_secdforest","unused_secdforest") = Inf;
 	v58_lu_transitions.up(j2,"degrad_crop","rewet_crop") = Inf;
 	v58_lu_transitions.up(j2,"degrad_past","rewet_past") = Inf;
 	v58_lu_transitions.up(j2,"degrad_forestry","rewet_forestry") = Inf;
-	v58_lu_transitions.up(j2,"degrad_secdforest","rewet_secdforest") = Inf;
 	v58_lu_transitions.up(j2,"unused_crop","rewet_crop") = Inf;
 	v58_lu_transitions.up(j2,"unused_past","rewet_past") = Inf;
 	v58_lu_transitions.up(j2,"unused_forestry","rewet_forestry") = Inf;
-	v58_lu_transitions.up(j2,"unused_secdforest","rewet_secdforest") = Inf;
 	v58_lu_transitions.up(j2,"unused_crop","degrad_crop") = Inf;
 	v58_lu_transitions.up(j2,"unused_crop","degrad_past") = Inf;
 	v58_lu_transitions.up(j2,"unused_crop","degrad_forestry") = Inf;
@@ -61,9 +58,6 @@ else
 	v58_lu_transitions.up(j2,"unused_forestry","degrad_crop") = Inf;
 	v58_lu_transitions.up(j2,"unused_forestry","degrad_past") = Inf;
 	v58_lu_transitions.up(j2,"unused_forestry","degrad_forestry") = Inf;
-	v58_lu_transitions.up(j2,"unused_secdforest","degrad_crop") = Inf;
-	v58_lu_transitions.up(j2,"unused_secdforest","degrad_past") = Inf;
-	v58_lu_transitions.up(j2,"unused_secdforest","degrad_forestry") = Inf;
 			
 	p58_peatland_cell_shr(t,j) = (sum((man58,land58), pc58_peatland_man(j,man58,land58)) + pc58_peatland_intact(j))/sum(land, pcm_land(j,land));
 *	p58_peatland_ratio(t,j,land58) = p58_peatland_cell_shr(t,j);

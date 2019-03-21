@@ -39,7 +39,7 @@ cfg$gms$c60_2ndgen_biodem <- "coupling"
 cfg$gms$s56_ghgprice_start <- 2020
 cfg$gms$s58_peatland_policy_horizon  <- 500
 
-prefix <- "T64"
+prefix <- "T65"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
