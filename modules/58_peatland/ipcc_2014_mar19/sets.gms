@@ -12,32 +12,35 @@ sets
   ef58(man58) Peatland ef categories
     / degrad, rewet /
 
-  land58(land) Managed land types
+  land_all58(land) Managed land types
     / crop, past, forestry /
+
+  land58(land_all58) Managed land types
+    / crop, past /
 
   land_ini58(land58) Managed land types for ini
     / crop, past /
 
   stat58 Peatland status
     / intact, 
-    degrad_crop, degrad_past, degrad_forestry, 
-    unused_crop, unused_past, unused_forestry, 
-    rewet_crop, rewet_past, rewet_forestry /
+    degrad_crop, degrad_past,
+    unused_crop, unused_past,
+    rewet_crop, rewet_past /
 
   from58(stat58) Peatland status
     / intact, 
-    degrad_crop, degrad_past, degrad_forestry, 
-    unused_crop, unused_past, unused_forestry, 
-    rewet_crop, rewet_past, rewet_forestry /
+    degrad_crop, degrad_past,
+    unused_crop, unused_past,
+    rewet_crop, rewet_past /
 
   to58(stat58) Peatland status
     / intact, 
-    degrad_crop, degrad_past, degrad_forestry, 
-    unused_crop, unused_past, unused_forestry, 
-    rewet_crop, rewet_past, rewet_forestry /
+    degrad_crop, degrad_past,
+    unused_crop, unused_past,
+    rewet_crop, rewet_past /
 
   stat_rewet58(to58) Peatland status
-    / rewet_crop, rewet_past, rewet_forestry /
+    / rewet_crop, rewet_past /
 
   climate58 Climate classes
 	/ tropical, temperate, boreal /
