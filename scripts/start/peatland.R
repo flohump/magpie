@@ -39,7 +39,7 @@ cfg$gms$c60_2ndgen_biodem <- "coupling"
 cfg$gms$s56_ghgprice_start <- 2015
 cfg$gms$s58_peatland_policy_horizon  <- 80
 
-prefix <- "T68"
+prefix <- "T69"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
@@ -67,26 +67,12 @@ cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- 0
 start_run(cfg,codeCheck=FALSE)
 
-cfg$title <- paste(prefix,"CPol+Pprot+Prestor80",sep="_")
-cfg$gms$s58_peatland_policy_horizon  <- 80
-cfg$gms$s56_peatland_policy <- 1
-cfg$gms$s58_rewetting_switch  <- Inf
-start_run(cfg,codeCheck=FALSE)
-
-cfg$title <- paste(prefix,"CPol+Pprot+Prestor100",sep="_")
-cfg$gms$s58_peatland_policy_horizon  <- 100
-cfg$gms$s56_peatland_policy <- 1
-cfg$gms$s58_rewetting_switch  <- Inf
-start_run(cfg,codeCheck=FALSE)
-
-cfg$title <- paste(prefix,"CPol+Pprot+Prestor200",sep="_")
-cfg$gms$s58_peatland_policy_horizon  <- 200
+cfg$title <- paste(prefix,"CPol+Pprot+Prestor",sep="_")
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- Inf
 start_run(cfg,codeCheck=FALSE)
 
 
-cfg$gms$s58_peatland_policy_horizon  <- 80
 cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
 
 cfg$title <- paste(prefix,"CPol+Pprot_nobio",sep="_")
