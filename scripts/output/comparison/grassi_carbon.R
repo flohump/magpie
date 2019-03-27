@@ -9,6 +9,7 @@
 #########################
 # Version 1.0, Florian Humpenoeder
 #
+library(magpie4)
 library(lucode)
 library(magclass)
 library(quitte)
