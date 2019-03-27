@@ -37,6 +37,7 @@ cfg$gms$peatland  <- "ipcc_2014_mar19"
 cfg$gms$c56_pollutant_prices <- "coupling"
 cfg$gms$c60_2ndgen_biodem <- "coupling"
 cfg$gms$s56_ghgprice_start <- 2015
+cfg$gms$c56_emis_policy <- "redd"
 cfg$gms$s58_peatland_policy_horizon  <- 80
 
 prefix <- "T70"
@@ -73,14 +74,14 @@ cfg$gms$s58_rewetting_switch  <- Inf
 start_run(cfg,codeCheck=FALSE)
 
 
-# cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
-# 
-# cfg$title <- paste(prefix,"CPol+Pprot_nobio",sep="_")
-# cfg$gms$s56_peatland_policy <- 1
-# cfg$gms$s58_rewetting_switch  <- 0
-# start_run(cfg,codeCheck=FALSE)
-# 
-# cfg$title <- paste(prefix,"CPol+Pprot+Prestor_nobio",sep="_")
-# cfg$gms$s56_peatland_policy <- 1
-# cfg$gms$s58_rewetting_switch  <- Inf
-# start_run(cfg,codeCheck=FALSE)
+cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
+
+cfg$title <- paste(prefix,"CPol+Pprot_nobio",sep="_")
+cfg$gms$s56_peatland_policy <- 1
+cfg$gms$s58_rewetting_switch  <- 0
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"CPol+Pprot+Prestor_nobio",sep="_")
+cfg$gms$s56_peatland_policy <- 1
+cfg$gms$s58_rewetting_switch  <- Inf
+start_run(cfg,codeCheck=FALSE)
