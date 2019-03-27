@@ -100,7 +100,7 @@ for (i in 1:length(outputdirs)) {
     #read-in reporting file
     a <- reportGrassi(gdx)
     #add to reporting csv file
-    write.report(a,file = rep_file,model = "MAgPIE",scenario = scen,append = TRUE)
+    write.report(a,file = paste0("output/",rep_file),model = "MAgPIE",scenario = scen,append = TRUE)
   } else missing <- c(missing,outputdirs[i])
 }
 if (!is.null(missing)) {
