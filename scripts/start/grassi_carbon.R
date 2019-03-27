@@ -28,49 +28,33 @@ getInput <- function(gdx) {
   write.magpie(a,"modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv")
 }
 
+cfg$gms$land <- "dec18"
 cfg$gms$c56_pollutant_prices <- "coupling"
 cfg$gms$c60_2ndgen_biodem <- "coupling"
-
-#SSP2 Ref noCC
-cfg$title <- "SSP2_Ref_noCC_06"
 cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp8p5-co2_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz",
                "rev4.14_690d3718e151be1b450b394c1064b1c5_magpie.tgz",
                "rev4.14_690d3718e151be1b450b394c1064b1c5_validation.tgz",
                "additional_data_rev3.65.tgz",
                "calibration_H12_c200_12Sep18.tgz")
-cfg$gms$land <- "dec18"
-cfg <- setScenario(cfg,c("SSP2","NPI"))
-getInput("/p/projects/remind/runs/magpie_40-develop-2019-02-25-macfix/output/r8375-C_Base-mag-10/fulldata.gdx")
-start_run(cfg,codeCheck=FALSE)
-
-#SSP2 Ref CC
-cfg$title <- "SSP2_Ref_RCP85_06"
-cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp8p5-co2_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz",
-               "rev4.14_690d3718e151be1b450b394c1064b1c5_magpie.tgz",
-               "rev4.14_690d3718e151be1b450b394c1064b1c5_validation.tgz",
-               "additional_data_rev3.65.tgz",
-               "calibration_H12_c200_12Sep18.tgz")
-cfg$gms$land <- "dec18"
-cfg <- setScenario(cfg,c("SSP2","NPI"))
-getInput("/p/projects/remind/runs/magpie_40-develop-2019-02-25-macfix/output/r8375-C_Base-mag-10/fulldata.gdx")
+#turn on CC
 cfg$gms$c14_yields_scenario  <- "cc"
 cfg$gms$c42_watdem_scenario  <- "cc"
 cfg$gms$c52_carbon_scenario  <- "cc"
 cfg$gms$c59_som_scenario  <- "cc"
-start_run(cfg,codeCheck=FALSE)
 
-##SSP2 26 CC
-cfg$title <- "SSP2_26_RCP26_06"
-cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz",
-               "rev4.14_690d3718e151be1b450b394c1064b1c5_magpie.tgz",
-               "rev4.14_690d3718e151be1b450b394c1064b1c5_validation.tgz",
-               "additional_data_rev3.65.tgz",
-               "calibration_H12_c200_12Sep18.tgz")
-cfg$gms$land <- "dec18"
-cfg <- setScenario(cfg,c("SSP2","NDC"))
-getInput("/p/projects/remind/runs/magpie_40-develop-2019-02-25-macfix/output/r8375-C_Budg600-mag-10/fulldata.gdx")
-cfg$gms$c14_yields_scenario  <- "cc"
-cfg$gms$c42_watdem_scenario  <- "cc"
-cfg$gms$c52_carbon_scenario  <- "cc"
-cfg$gms$c59_som_scenario  <- "cc"
-start_run(cfg,codeCheck=FALSE)
+for (climatemodel in c("IPSL_CM5A_LR","NorESM1_M","GFDL_ESM2M","MIROC_ESM_CHEM","HadGEM2_ES")) {
+  #SSP2 Ref CC
+  # cfg$title <- paste0("SSP2-Ref-",climatemodel,"-rev07")
+  # cfg$input[1] <- paste0("isimip_rcp-",climatemodel,"-rcp8p5-co2_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz")
+  # cfg <- setScenario(cfg,c("SSP2","NPI"))
+  # getInput("/p/projects/remind/runs/magpie4-2019-03-15-develop/output/r8423-C_NPi-mag-7/fulldata.gdx")
+  # start_run(cfg,codeCheck=FALSE)
+  
+  ##SSP2 26 CC
+  cfg$title <- paste0("SSP2-26-",climatemodel,"-rev07")
+  cfg$input[1] <- paste0("isimip_rcp-",climatemodel,"-rcp2p6-co2_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz")
+  cfg <- setScenario(cfg,c("SSP2","NDC"))
+  getInput("/p/projects/remind/runs/magpie4-2019-03-15-develop/output/r8423-C_Budg600-mag-7/fulldata.gdx")
+  start_run(cfg,codeCheck=FALSE)
+}
+  
