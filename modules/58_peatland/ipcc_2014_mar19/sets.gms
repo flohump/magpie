@@ -16,7 +16,7 @@ sets
     / crop, past, forestry /
 
   land_ini58(land58) Managed land types for ini
-    / crop, past /
+    / crop, past, forestry /
 
   stat58 Peatland status
     / intact, 

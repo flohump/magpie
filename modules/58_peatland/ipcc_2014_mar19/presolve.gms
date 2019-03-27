@@ -13,8 +13,9 @@ if(m_year(t) < 2015,
 	s58_before_2015 = 1;
 else
 	if(s58_before_2015 = 1,
-	pc58_man_land(j) = sum(land_ini58, pcm_land(j,land_ini58));
-	pc58_man_land_shr(j,land_ini58)$(pc58_man_land(j)>0) = pcm_land(j,land_ini58)/pc58_man_land(j);
+	pc58_helper(j,land_ini58) = vm_land.l(j,land_ini58) - vm_land.lo(j,land_ini58);
+	pc58_man_land(j) = sum(land_ini58, pc58_helper(j,land_ini58));
+	pc58_man_land_shr(j,land_ini58)$(pc58_man_land(j)>0) = pc58_helper(j,land_ini58)/pc58_man_land(j);
 	pc58_man_land_shr(j,land_ini58)$(pc58_man_land(j)=0) = 1/card(land_ini58);
 	p58_excess_peatland(t,j,land_ini58) = f58_peatland_degrad(j)*pc58_man_land_shr(j,land_ini58) - pcm_land(j,land_ini58);
     p58_excess_peatland(t,j,land_ini58)$(p58_excess_peatland(t,j,land_ini58) < 0) = 0;
