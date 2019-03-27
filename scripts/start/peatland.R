@@ -39,9 +39,9 @@ cfg$gms$c60_2ndgen_biodem <- "coupling"
 cfg$gms$s56_ghgprice_start <- 2015
 cfg$gms$c56_emis_policy <- "ssp"
 cfg$gms$s58_peatland_policy_horizon  <- 80
-cfg$gms$land <- "feb15"
+cfg$gms$land <- "dec18"
 
-prefix <- "T71"
+prefix <- "T72"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
