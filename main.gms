@@ -95,6 +95,14 @@ $title magpie
 * md5sum: b3d2e9928cedd5ab97c5de52c1289c23
 * Repository: https://rse.pik-potsdam.de/data/magpie/public
 * 
+* Used data set: additional_data_rev3.68_FH.tgz
+* md5sum: cec9b624d7a6b998272356848a1da20e
+* Repository: /Users/flo/OneDrive/Dokumente/PIK/Development/input_data/
+* 
+* Used data set: peatland_input_v1.tgz
+* md5sum: b1847803c422ab9c77ddf874428e16b9
+* Repository: /Users/flo/OneDrive/Dokumente/PIK/Development/input_data/
+* 
 * Low resolution: c200
 * High resolution: 0.5
 * 
@@ -126,7 +134,7 @@ $title magpie
 * 
 * 
 * 
-* Last modification (input data): Thu Mar 21 12:20:40 2019
+* Last modification (input data): Thu Mar 28 11:55:09 2019
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 
@@ -198,6 +206,7 @@ $setglobal phosphorus  off
 $setglobal awms  ipcc2006_aug16
 $setglobal ghg_policy  price_jan19
 $setglobal maccs  on_sep16
+$setglobal peatland  ipcc_2014_mar19
 $setglobal som  off
 
 $setglobal bioenergy  1stgen_priced_dec18

@@ -9,6 +9,7 @@ scalars
   s56_limit_ch4_n2o_price upper limit for CH4 and N2O GHG prices (USD05MER per tC) / 1000 /
   s56_cprice_red_factor reduction factor for CO2 price (-) / 0.5 /
   s56_ghgprice_start start year for ghg price phase in / 2025 /
+  s56_peatland_policy 1=on 0=off (binary) / 0 /
 ;
 
 $setglobal c56_pollutant_prices  SSP2-Ref-SPA0-V15-REMIND-MAGPIE
