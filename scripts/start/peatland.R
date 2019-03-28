@@ -34,14 +34,15 @@ cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=
                            getOption("magpie_repos"))
 
 cfg$gms$peatland  <- "ipcc_2014_mar19"
+cfg$gms$peatland  <- "off"
 cfg$gms$c56_pollutant_prices <- "coupling"
 cfg$gms$c60_2ndgen_biodem <- "coupling"
 cfg$gms$s56_ghgprice_start <- 2015
-cfg$gms$c56_emis_policy <- "ssp"
+cfg$gms$c56_emis_policy <- "redd"
 cfg$gms$s58_peatland_policy_horizon  <- 80
 cfg$gms$land <- "dec18"
 
-prefix <- "T72"
+prefix <- "T73"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
