@@ -20,7 +20,7 @@ p80_modelstat(t) = 1;
 
 magpie.optfile   = s80_optfile ;
 magpie.scaleopt  = 1 ;
-magpie.solprint  = 0 ;
+magpie.solprint  = 1 ;
 magpie.holdfixed = 1 ;
 
 $onecho > conopt4.opt
