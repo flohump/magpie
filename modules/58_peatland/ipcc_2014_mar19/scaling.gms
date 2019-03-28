@@ -4,5 +4,7 @@
 *** |  or later. See LICENSE file or go to http://www.gnu.org/licenses/
 *** |  Contact: magpie@pik-potsdam.de
 
-v13_cost_tc.scale(i) = 10e7;
-v13_tech_cost_annuity.scale(i) = 10e5;
+v58_expansion.scale(j,stat58) = 10e-3;
+v58_reduction.scale(j,stat58) = 10e-3;
+v58_peatland_missing.scale(j) = 10e-4;
+vm_peatland_ghgsaving.scale(j) = 10e4;

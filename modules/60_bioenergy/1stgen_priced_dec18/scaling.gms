@@ -4,5 +4,5 @@
 *** |  or later. See LICENSE file or go to http://www.gnu.org/licenses/
 *** |  Contact: magpie@pik-potsdam.de
 
-v13_cost_tc.scale(i) = 10e7;
-v13_tech_cost_annuity.scale(i) = 10e5;
+v60_2ndgen_bioenergy_dem_dedicated.scale(i,kall) = 10e3;
+vm_bioenergy_utility.scale(i) = 10e4;
