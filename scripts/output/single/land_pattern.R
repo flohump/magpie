@@ -5,6 +5,7 @@
 
 library(magpie4)
 library(luplot)
+library(ggplot2)
 
 ############################# BASIC CONFIGURATION #############################
 if(!exists("source_include")) {
