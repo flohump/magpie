@@ -5,6 +5,7 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 parameters
+ pc58_peatland_degrad_left(j)
  pc58_helper(j,land_ini58)
  p58_land_area(j)									Total land area (mio. ha)
  p58_peatland_area(j)								Total peatland area (mio. ha)

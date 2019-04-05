@@ -47,7 +47,7 @@ cfg$gms$c56_emis_policy <- "redd"
 cfg$gms$s58_peatland_policy_horizon  <- 80
 cfg$gms$land <- "dec18"
 
-prefix <- "T77"
+prefix <- "T79"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
