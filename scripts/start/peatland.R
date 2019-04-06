@@ -46,8 +46,9 @@ cfg$gms$s56_ghgprice_start <- 2020
 cfg$gms$c56_emis_policy <- "redd"
 cfg$gms$s58_peatland_policy_horizon  <- 80
 cfg$gms$land <- "dec18"
+cfg$gms$s80_optfile <- 1
 
-prefix <- "T80"
+prefix <- "T81"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
