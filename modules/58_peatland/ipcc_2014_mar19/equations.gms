@@ -50,7 +50,7 @@
         v58_lu_transitions(j2,from58,to58));
 
  q58_peatland_degrad(j2,land58) ..
-	v58_peatland_man(j2,"degrad",land58) + v58_peatland_missing(j2) =e=
+	v58_peatland_man(j2,"degrad",land58) + v58_peatland_missing(j2) =g=
 	pc58_peatland_man(j2,"degrad",land58)
   + ((vm_land(j2,land58) - pcm_land(j2,land58))/p58_land_area(j2) * p58_peatland_area(j2))$(s58_before_2015=0);
 
