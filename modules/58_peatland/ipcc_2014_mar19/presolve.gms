@@ -12,6 +12,8 @@ if(m_year(t) < 2015,
 	v58_lu_transitions.fx(j2,from58,to58)$(not sameas(from58,to58)) = 0;
 	s58_before_2015 = 1;
 else
+	p58_peatland_area(j) = f58_peatland_degrad(j) + f58_peatland_intact(j);
+	p58_land_area(j) = sum(land, pcm_land(j,land));
 	if(s58_before_2015 = 1,
 $ontext
 	pc58_helper(j,land_ini58) = vm_land.l(j,land_ini58) - vm_land.lo(j,land_ini58);
@@ -28,11 +30,11 @@ $offtext
 
 	pc58_peatland_man(j,man58,land58) = 0;
 
-	pc58_peatland_man(j,"degrad","crop") = min(pc58_peatland_degrad_left(j),pcm_land(j,"crop"));
+	pc58_peatland_man(j,"degrad","crop") = min(pc58_peatland_degrad_left(j),pcm_land(j,"crop")/p58_land_area(j)*p58_peatland_area(j));
 	pc58_peatland_degrad_left(j) = pc58_peatland_degrad_left(j)-pc58_peatland_man(j,"degrad","crop");
-	pc58_peatland_man(j,"degrad","past") = min(pc58_peatland_degrad_left(j),pcm_land(j,"past"));
+	pc58_peatland_man(j,"degrad","past") = min(pc58_peatland_degrad_left(j),pcm_land(j,"past")/p58_land_area(j)*p58_peatland_area(j));
 	pc58_peatland_degrad_left(j) = pc58_peatland_degrad_left(j)-pc58_peatland_man(j,"degrad","past");
-	pc58_peatland_man(j,"degrad","forestry") = min(pc58_peatland_degrad_left(j),pcm_land(j,"forestry"));
+	pc58_peatland_man(j,"degrad","forestry") = min(pc58_peatland_degrad_left(j),pcm_land(j,"forestry")/p58_land_area(j)*p58_peatland_area(j));
 	pc58_peatland_degrad_left(j) = pc58_peatland_degrad_left(j)-pc58_peatland_man(j,"degrad","forestry");
 	
 	pc58_peatland_man(j,"unused",land_ini58) = pc58_peatland_degrad_left(j)/card(land_ini58);
@@ -83,7 +85,5 @@ $offtext
 	);
 );
 
-p58_peatland_area(j) = sum((man58,land58), pc58_peatland_man(j,man58,land58)) + pc58_peatland_intact(j);
-p58_land_area(j) = sum(land, pcm_land(j,land));
 
 pc58_peatland_cost_past(j) = p58_peatland_cost_past(t,j);
