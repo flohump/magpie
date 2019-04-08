@@ -27,7 +27,7 @@ magpie.holdfixed = 1 ;
 $onecho > conopt4.opt
 Lim_Pre_Msg = 50
 Tol_Feas_Tria = 1.0e-6
-Tol_Feas_Min = 3.e-13
+Tol_Feas_Min = 1.e-5
 $offecho
 
 repeat(
