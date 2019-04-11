@@ -17,11 +17,15 @@ library(gdx)
 source("scripts/start_functions.R")
 
 
-getInput <- function(gdx) {
-  a <- readGDX(gdx,"f56_pollutant_prices_coupling")
-  write.magpie(a,"modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3")
-  a <- readGDX(gdx,"f60_bioenergy_dem_coupling")
-  write.magpie(a,"modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv")
+getInput <- function(gdx,ghg_price=TRUE,biodem=TRUE) {
+  if(ghg_price) {
+    a <- readGDX(gdx,"f56_pollutant_prices_coupling")
+    write.magpie(a,"modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3")
+  }
+  if(biodem) {
+    a <- readGDX(gdx,"f60_bioenergy_dem_coupling")
+    write.magpie(a,"modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv")
+  }
 }
 
 
@@ -48,7 +52,7 @@ cfg$gms$s58_peatland_policy_horizon  <- 80
 cfg$gms$land <- "dec18"
 cfg$gms$s80_optfile <- 1
 
-prefix <- "T85"
+prefix <- "T86"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
@@ -66,30 +70,31 @@ getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-
 cfg <- setScenario(cfg,c("SSP2","NDC"))
 
 
-cfg$title <- paste(prefix,"CPol",sep="_")
+cfg$title <- paste(prefix,"RCP1p9",sep="_")
 cfg$gms$s56_peatland_policy <- 0
 cfg$gms$s58_rewetting_switch  <- 0
 start_run(cfg,codeCheck=FALSE)
 
-cfg$title <- paste(prefix,"CPol+Pprot",sep="_")
+cfg$title <- paste(prefix,"RCP1p9+PeatProt",sep="_")
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- 0
 start_run(cfg,codeCheck=FALSE)
 
-cfg$title <- paste(prefix,"CPol+Pprot+Prestor",sep="_")
+cfg$title <- paste(prefix,"RCP1p9+PeatRestor",sep="_")
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- Inf
 start_run(cfg,codeCheck=FALSE)
 
 
-cfg$gms$c60_2ndgen_biodem <- "SSP2-Ref-SPA0"
+getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_NPi-mag-4/fulldata.gdx",biodem=TRUE)
+cfg$gms$c56_emis_policy <- "none"
 
-cfg$title <- paste(prefix,"CPol+Pprot_nobio",sep="_")
+cfg$title <- paste(prefix,"Ref+PeatProt",sep="_")
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- 0
 start_run(cfg,codeCheck=FALSE)
 
-cfg$title <- paste(prefix,"CPol+Pprot+Prestor_nobio",sep="_")
+cfg$title <- paste(prefix,"Ref+PeatRestor",sep="_")
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- Inf
 start_run(cfg,codeCheck=FALSE)
