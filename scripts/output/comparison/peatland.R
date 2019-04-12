@@ -24,13 +24,11 @@ if(!exists("source_include")) {
 cat("\nStarting output generation\n")
 
 x <- list()
-x$emis_p <- NULL
+x$emis_co2_cell_annual <- NULL
+x$emis_all_reg_annual <- NULL
 x$area_p <- NULL
 x$area_p_total <- NULL
-x$peatland_shr <- NULL
-x$peatland_ratio <- NULL
 x$land <- NULL
-x$emis_lu <- NULL
 x$fprice <- NULL
 
 missing <- NULL
@@ -56,12 +54,6 @@ for (i in 1:length(outputdirs)) {
     load(path(outputdirs[i],"config.Rdata"))
     scen <- cfg$title
     
-    #read emis_p
-    a <- readGDX(gdx,"ov58_peatland_emis",select=list(type="level"))
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
-    a <- a/1000
-    x$emis_p <- mbind(x$emis_p,a)
-    
     #read area_p
     a <- readGDX(gdx,"ov58_peatland_man",select=list(type="level"))
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
@@ -76,39 +68,44 @@ for (i in 1:length(outputdirs)) {
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$area_p_total <- mbind(x$area_p_total,a)
     
-    #read peatland_shr
-    a <- readGDX(gdx,"p58_peatland_cell_shr")
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
-    x$peatland_shr <- mbind(x$peatland_shr,a)
-    
-    #read peatland_ratio
-    a <- readGDX(gdx,"p58_peatland_ratio")
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
-    x$peatland_ratio <- mbind(x$peatland_ratio,a)
-    
     #read land
     a <- land(gdx,level="cell")
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$land <- mbind(x$land,a)
-    
-    #read emis_lu
-    co2 <- setNames(emisCO2(gdx,level = "regglo",unit="gas",cc = TRUE),"co2")
+
+    #emis_p_reg
+    emis_p_reg <- readGDX(gdx,"ov58_peatland_emis",select=list(type="level"))
+    emis_p_reg <- superAggregate(emis_p_reg,level="reg")
+    emis_p_reg[,,"ch4"] <- emis_p_reg[,,"ch4"]/28
+    emis_p_reg[,,"n2o"] <- emis_p_reg[,,"ch4"]/265
+    emis_p_reg <- add_dimension(emis_p_reg,dim = 3.1,add = "scenario",nm = scen)
+
+    #emis_lu_reg
+    co2 <- setNames(emisCO2(gdx,level = "reg",unit="gas",cc = TRUE),"co2")
     doc <- setNames(co2,"doc")
     doc[,,] <- NA
-    ch4 <- setNames(Emissions(gdx,level="regglo",type="ch4",unit="gas")*28,"ch4")
-    n2o <- setNames(Emissions(gdx,level="regglo",type="n2o_n",unit="gas")*265,"n2o")
-    a <- mbind(co2,doc,ch4,n2o)/1000
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
-    x$emis_lu <- mbind(x$emis_lu,a)
+    ch4 <- setNames(Emissions(gdx,level="reg",type="ch4",unit="gas")*28,"ch4")
+    n2o <- setNames(Emissions(gdx,level="reg",type="n2o_n",unit="gas")*265,"n2o")
+    emis_lu_reg <- mbind(co2,doc,ch4,n2o)
+    emis_lu_reg <- add_dimension(emis_lu_reg,dim = 3.1,add = "scenario",nm = scen)
 
-    #read emis_co2_cell
-    co2 <- setNames(emisCO2(gdx,level = "cell",unit="gas",cc = TRUE),"co2")
-    doc <- setNames(co2,"doc")
-    doc[,,] <- 0
-    a <- mbind(co2,doc)/1000
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
-    x$emis_co2_cell <- mbind(x$emis_co2_cell,a)
+    lu <- add_dimension(emis_lu_reg,dim = 3.2,add = "GHG emission","Land-use change & Agriculture")
+    peat <- add_dimension(dimSums(emis_p_reg,dim=c(1,3.4)),dim = 3.2,add = "GHG emission","Peatland")
+    x$emis_all_reg_annual <- mbind(x$emis_all_reg_annual,mbind(lu,peat))
     
+    #emis_p_cell_co2
+    emis_p_cell <- readGDX(gdx,"ov58_peatland_emis",select=list(type="level"))
+    emis_p_cell <- dimSums(emis_p_cell[,,c("co2","doc")],dim=3.2)
+    emis_p_cell <- add_dimension(emis_p_cell,dim = 3.1,add = "scenario",nm = scen)
+    
+    #emis_lu_cell_co2
+    emis_lu_cell <- setNames(emisCO2(gdx,level = "cell",unit="gas",cc = TRUE),"co2")
+    emis_lu_cell <- add_dimension(emis_lu_cell*map_cell_clim,dim = 3.1,add = "scenario",nm = scen)
+    
+    lu <- add_dimension(emis_lu_cell,dim = 3.2,add = "GHG emission","Land-use change")
+    peat <- add_dimension(dimSums(emis_p_cell,dim=c(1,3.4)),dim = 3.2,add = "GHG emission","Peatland")
+    x$emis_co2_cell_annual <- mbind(x$emis_co2_cell_annual,mbind(lu,peat))
+
     #read fprice
     a <- priceIndex(gdx,level="regglo", products="kfo", baseyear = "y2010")
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
@@ -126,21 +123,16 @@ x$emis_fac <- readGDX(gdx,"f58_ipcc_wetland_ef")
 x$map_cell_clim <- readGDX(gdx,"p58_mapping_cell_climate")
 
 #add emis_all
-afolu <- add_dimension(x$emis_lu["GLO",,],dim = 3.2,add = "GHG emission","Land-use change")
-peat <- add_dimension(dimSums(x$emis_p,dim=c(1,3.2,3.3,3.4)),dim = 3.2,add = "GHG emission","Peatland")
-net <- add_dimension(dimSums(mbind(afolu,peat),dim = 3.2),dim=3.2,add = "GHG emission","AFOLU")
-x$emis_all <- mbind(afolu,peat,net)
 
 #add emis_all_cum
 x$emis_all_cum <- calcEmisCum(x$emis_all)
 
-#add emis_all_co2_cell
+#add emis_all_co2_cell###
 afolu <- add_dimension(dimSums(x$emis_co2_cell,dim=3.2)*x$map_cell_clim,dim = 3.2,add = "CO2 emission","Land-use change")
 #names(dimnames(afolu)) <- c("j.cell","t","scenario.CO2 emission.emis58.climate58")
 #afolu <- clean_magpie(afolu)
-peat <- add_dimension(dimSums(x$emis_p,dim=c(3.3,3.4,3.5)),dim = 3.2,add = "CO2 emission","Peatland")
-net <- add_dimension(dimSums(mbind(afolu,peat),dim = 3.2),dim=3.2,add = "CO2 emission","AFOLU")
-x$emis_all_co2_cell <- mbind(afolu,peat,net)
+peat <- add_dimension(dimSums(x$emis_p,dim=c(3.5)),dim = 3.2,add = "CO2 emission","Peatland")
+x$emis_all_co2_cell <- mbind(afolu,peat)
 
 #dimSums(x$emis_all_co2_cell,dim=1,na.rm=T)[,,"T18_26"][,,"boreal"]
 #dimSums(afolu,dim=1,na.rm=T)[,,"T18_26"][,,"boreal"]

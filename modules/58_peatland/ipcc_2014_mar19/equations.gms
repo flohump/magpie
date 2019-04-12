@@ -49,6 +49,8 @@
         sum(to58$(not sameas(from58,to58)), 
         v58_lu_transitions(j2,from58,to58));
 
+*future peatland degradation scales proportionally with changes of managed land
+*Example: if 5% of the area in a cell is converted to cropland, 5% of the total peatland area is degraded
  q58_peatland_degrad(j2,land58) ..
 	v58_peatland_man(j2,"degrad",land58) + v58_peatland_missing(j2) =g=
 	pc58_peatland_man(j2,"degrad",land58)
@@ -66,14 +68,14 @@
     sum((from58,stat_rewet58), v58_lu_transitions(j2,from58,stat_rewet58) * s58_rewet_cost_onetime)
 	* sum(cell(i2,j2),pm_interest(i2)/(1+pm_interest(i2)));
 
- q58_peatland_emis_detail(j2,climate58,man58,land58,emis58) ..
-	v58_peatland_emis(j2,climate58,man58,land58,emis58) =e=
-	v58_peatland_man(j2,man58,land58) * p58_ipcc_wetland_ef(climate58,land58,emis58,man58) *
-                 p58_mapping_cell_climate(j2,climate58);
+ q58_peatland_emis_detail(j2,climate58,emis58) ..
+	v58_peatland_emis(j2,climate58,emis58) =e=
+	sum((man58,land58), v58_peatland_man(j2,man58,land58) * p58_ipcc_wetland_ef(climate58,land58,emis58,man58) *
+                 p58_mapping_cell_climate(j2,climate58));
 
  q58_peatland_emis(j2) ..
 	vm_peatland_emis(j2) =e=
-	sum((climate58,man58,land58,emis58), v58_peatland_emis(j2,climate58,man58,land58,emis58));
+	sum((climate58,emis58), v58_peatland_emis(j2,climate58,emis58));
 
  q58_peatland_ghgsaving(j2) ..
 	vm_peatland_ghgsaving(j2) =e=

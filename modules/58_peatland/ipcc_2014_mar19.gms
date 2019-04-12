@@ -19,6 +19,7 @@ $Ifi "%phase%" == "sets" $include "./modules/58_peatland/ipcc_2014_mar19/sets.gm
 $Ifi "%phase%" == "declarations" $include "./modules/58_peatland/ipcc_2014_mar19/declarations.gms"
 $Ifi "%phase%" == "input" $include "./modules/58_peatland/ipcc_2014_mar19/input.gms"
 $Ifi "%phase%" == "equations" $include "./modules/58_peatland/ipcc_2014_mar19/equations.gms"
+$Ifi "%phase%" == "scaling" $include "./modules/58_peatland/ipcc_2014_mar19/scaling.gms"
 $Ifi "%phase%" == "preloop" $include "./modules/58_peatland/ipcc_2014_mar19/preloop.gms"
 $Ifi "%phase%" == "presolve" $include "./modules/58_peatland/ipcc_2014_mar19/presolve.gms"
 $Ifi "%phase%" == "postsolve" $include "./modules/58_peatland/ipcc_2014_mar19/postsolve.gms"
