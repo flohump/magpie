@@ -5,6 +5,8 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 parameters
+ p58_scaling_factor(j)								Scaling factor for managed peatland (1)
+ p58_intact_ratio(t,j)								Ratio of intact and total peatland (1)
  p58_peatland_degrad_left(j)						Helper for peatland initialization (mio. ha)
  p58_land_area(j)									Total land area (mio. ha)
  p58_peatland_area(j)								Total peatland area (mio. ha)
@@ -40,7 +42,7 @@ positive variables
  v58_lu_transitions(j,from58,to58)			Peatland transitions (mio. ha)
  v58_expansion(j,stat58)					Peatland expansion (mio. ha)
  v58_reduction(j,stat58)					Peatland reduction (mio. ha)
- v58_peatland_missing(j)					Missing peatland area (mio. ha)
+ v58_peatland_missing(j,land58)					Missing peatland area (mio. ha)
  vm_peatland_emis(j) 						GHG emissions from managed peatland (t CO2eq per year)
  vm_peatland_ghgsaving(j) 					Peatland policy GHG emission saving (t CO2eq per year)
  vm_peatland_cost(j)						One-time and recurring cost of managed peatland (mio. USD05MER per yr)
@@ -55,7 +57,7 @@ parameters
  ov58_lu_transitions(t,j,from58,to58,type)            Peatland transitions (mio. ha)
  ov58_expansion(t,j,stat58,type)                      Peatland expansion (mio. ha)
  ov58_reduction(t,j,stat58,type)                      Peatland reduction (mio. ha)
- ov58_peatland_missing(t,j,type)                      Missing peatland area (mio. ha)
+ ov58_peatland_missing(t,j,land58,type)               Missing peatland area (mio. ha)
  ov_peatland_emis(t,j,type)                           GHG emissions from managed peatland (t CO2eq per year)
  ov_peatland_ghgsaving(t,j,type)                      Peatland policy GHG emission saving (t CO2eq per year)
  ov_peatland_cost(t,j,type)                           One-time and recurring cost of managed peatland (mio. USD05MER per yr)

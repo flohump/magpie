@@ -52,7 +52,7 @@ cfg$gms$s58_peatland_policy_horizon  <- 80
 cfg$gms$land <- "dec18"
 cfg$gms$s80_optfile <- 1
 
-prefix <- "T87"
+prefix <- "T88"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")

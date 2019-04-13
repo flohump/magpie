@@ -13,21 +13,26 @@ if(m_year(t) < 2015,
 	v58_lu_transitions.fx(j2,from58,to58)$(not sameas(from58,to58)) = 0;
 	s58_before_2015 = 1;
 else
+	pc58_peatland_intact(j)$(s58_before_2015 = 1) = f58_peatland_intact(j);
+	
 	p58_peatland_area(j) = f58_peatland_degrad(j) + f58_peatland_intact(j);
 	p58_land_area(j) = sum(land, pcm_land(j,land));
+	p58_intact_ratio(t,j) = 0;
+	p58_intact_ratio(t,j)$(p58_peatland_area(j) > 0) = pc58_peatland_intact(j)/p58_peatland_area(j);
+	p58_scaling_factor(j) = 1/p58_land_area(j)*p58_peatland_area(j)*p58_intact_ratio(t,j)
 	
 	if(s58_before_2015 = 1,
 *Initialize peatland area	
 	pc58_peatland_man(j,man58,land58) = 0;
 	p58_peatland_degrad_left(j) = f58_peatland_degrad(j);
-*First, all degraded peatland is assigned to cropland, but pcm_land(j,"crop") is the upper limit.
-	pc58_peatland_man(j,"degrad","crop") = min(p58_peatland_degrad_left(j),pcm_land(j,"crop")/p58_land_area(j)*p58_peatland_area(j));
+*First, all degraded peatland is assigned to cropland using a scaling factor which accounts for the ratio of peatland and land area.
+	pc58_peatland_man(j,"degrad","crop") = min(p58_peatland_degrad_left(j),pcm_land(j,"crop")*p58_scaling_factor(j));
 	p58_peatland_degrad_left(j) = p58_peatland_degrad_left(j)-pc58_peatland_man(j,"degrad","crop");
-*Second, the remaining undistributed degraded peatland is assigned to pasture but pcm_land(j,"past") is the upper limit.
-	pc58_peatland_man(j,"degrad","past") = min(p58_peatland_degrad_left(j),pcm_land(j,"past")/p58_land_area(j)*p58_peatland_area(j));
+*Second, the remaining undistributed degraded peatland is assigned to pasture using a scaling factor which accounts for the ratio of peatland and land area.
+	pc58_peatland_man(j,"degrad","past") = min(p58_peatland_degrad_left(j),pcm_land(j,"past")*p58_scaling_factor(j));
 	p58_peatland_degrad_left(j) = p58_peatland_degrad_left(j)-pc58_peatland_man(j,"degrad","past");
-*Third, the remaining undistributed degraded peatland is assigned to forestry but pcm_land(j,"forestry") is the upper limit.
-	pc58_peatland_man(j,"degrad","forestry") = min(p58_peatland_degrad_left(j),pcm_land(j,"forestry")/p58_land_area(j)*p58_peatland_area(j));
+*Third, the remaining undistributed degraded peatland is assigned to forestry using a scaling factor which accounts for the ratio of peatland and land area.
+	pc58_peatland_man(j,"degrad","forestry") = min(p58_peatland_degrad_left(j),pcm_land(j,"forestry")*p58_scaling_factor(j));
 	p58_peatland_degrad_left(j) = p58_peatland_degrad_left(j)-pc58_peatland_man(j,"degrad","forestry");
 *Finally, the remaining undistributed degraded peatland is equally distributed among crop, past and forestry.
 	pc58_peatland_man(j,"unused",land58) = p58_peatland_degrad_left(j)/card(land58);

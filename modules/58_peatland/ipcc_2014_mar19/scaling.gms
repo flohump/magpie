@@ -6,5 +6,5 @@
 
 v58_expansion.scale(j,stat58) = 10e-3;
 v58_reduction.scale(j,stat58) = 10e-3;
-v58_peatland_missing.scale(j) = 10e-4;
+v58_peatland_missing.scale(j,land58) = 10e-4;
 vm_peatland_ghgsaving.scale(j) = 10e4;
