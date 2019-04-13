@@ -52,7 +52,7 @@ cfg$gms$s58_peatland_policy_horizon  <- 80
 cfg$gms$land <- "dec18"
 cfg$gms$s80_optfile <- 1
 
-prefix <- "T88"
+prefix <- "T89"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
@@ -86,7 +86,7 @@ cfg$gms$s58_rewetting_switch  <- Inf
 start_run(cfg,codeCheck=FALSE)
 
 
-getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_NPi-mag-4/fulldata.gdx",biodem=TRUE)
+getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_NPi-mag-4/fulldata.gdx",biodem=TRUE,ghg_price = FALSE)
 cfg$gms$c56_emis_policy <- "none"
 
 cfg$title <- paste(prefix,"Ref+PeatProt",sep="_")
