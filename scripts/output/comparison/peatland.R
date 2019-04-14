@@ -11,6 +11,7 @@
 #
 library(lucode)
 library(magpie4)
+library(luscale)
 
 options(error=function()traceback(2))
 
