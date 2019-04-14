@@ -52,7 +52,7 @@ cfg$gms$s58_peatland_policy_horizon  <- 80
 cfg$gms$land <- "dec18"
 cfg$gms$s80_optfile <- 1
 
-prefix <- "T89"
+prefix <- "T90"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
@@ -92,9 +92,11 @@ cfg$gms$c56_emis_policy <- "none"
 cfg$title <- paste(prefix,"Ref+PeatProt",sep="_")
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- 0
+cfg$gms$s56_aff_policy <- 0
 start_run(cfg,codeCheck=FALSE)
 
 cfg$title <- paste(prefix,"Ref+PeatRestor",sep="_")
 cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- Inf
+cfg$gms$s56_aff_policy <- 0
 start_run(cfg,codeCheck=FALSE)

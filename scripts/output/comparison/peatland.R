@@ -29,6 +29,8 @@ x$emis_all_glo_annual <- NULL
 x$area_pman_clim_detail <- NULL
 x$area_p_clim <- NULL
 x$area_p_cell <- NULL
+x$area_p_map <- NULL
+x$area_p_map_ratio <- NULL
 x$land_clim <- NULL
 x$fprice <- NULL
 x$tau <- NULL
@@ -74,8 +76,22 @@ for (i in 1:length(outputdirs)) {
     b <- readGDX(gdx,"ov58_peatland_intact",select=list(type="level"))
     getNames(b) <- "intact"
     a <- mbind(a,b)
+    
+    #interpolate
+    p <- a[,getYears(a,as.integer = T)>=2015,]
+    p_ini_lr <- setYears(p[,1,],NULL)
+    p_ini_hr <- read.magpie("/p/projects/landuse/users/florianh/data/PeatArea_0.5.mz")
+    peat_hr <- interpolate(p,p_ini_lr,p_ini_hr,spam = path(outputdirs[i],"0.5-to-c200_sum.spam"))
+    p <- add_dimension(p,dim = 3.1,add = "scenario",nm = scen)
+    x$area_p_map <- mbind(x$area_p_map,p)
+    
+    p <- collapseNames(p[,,"degrad"])/dimSums(p,dim=3.2)
+    x$area_p_map_ratio <- mbind(x$area_p_map_ratio,p)
+    
+    
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$area_p_cell <- mbind(x$area_p_cell,a)
+    
     
     #area_p_clim
     a <- dimSums(a*map_cell_clim,dim=1)
@@ -150,6 +166,11 @@ x$map_cell_clim <- readGDX(gdx,"p58_mapping_cell_climate")
 x$emis_co2_clim_cum <- calcEmisCum(x$emis_co2_clim_annual)
 
 x$area_p_clim_change <- x$area_p_clim-setYears(x$area_p_clim[,1,],NULL)
+
+write.magpie(x$area_p_map_ratio,"output/peatland_degrad_ratio.nc",comment = "unit: Degradation Ratio")
+
+x$area_p_map_ratio_change <- x$area_p_map_ratio-setYears(x$area_p_map_ratio[,1,],NULL)
+write.magpie(x$area_p_map_ratio_change,"output/peatland_degrad_ratio_change.nc",comment = "unit: Change of Degradation Ratio")
 
 x$land_clim_change <- x$land_clim-setYears(x$land_clim[,1,],NULL)
 
