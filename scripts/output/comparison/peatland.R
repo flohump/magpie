@@ -168,10 +168,10 @@ x$emis_co2_clim_cum <- calcEmisCum(x$emis_co2_clim_annual)
 
 x$area_p_clim_change <- x$area_p_clim-setYears(x$area_p_clim[,1,],NULL)
 
-write.magpie(x$area_p_map_ratio,"output/peatland_degrad_ratio.nc",comment = "unit: Degradation Ratio")
+write.magpie(x$area_p_map_ratio,"output/map_degrad_ratio.nc",comment = "unit: Degradation Ratio")
 
 x$area_p_map_ratio_change <- x$area_p_map_ratio-setYears(x$area_p_map_ratio[,1,],NULL)
-write.magpie(x$area_p_map_ratio_change,"output/peatland_degrad_ratio_change.nc",comment = "unit: Change of Degradation Ratio")
+write.magpie(x$area_p_map_ratio_change,"output/map_degrad_ratio_change.nc",comment = "unit: Change of Degradation Ratio")
 
 x$land_clim_change <- x$land_clim-setYears(x$land_clim[,1,],NULL)
 
