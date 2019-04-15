@@ -83,11 +83,11 @@ for (i in 1:length(outputdirs)) {
     p_ini_lr <- setYears(p[,1,],NULL)
     p_ini_hr <- read.magpie("/p/projects/landuse/users/florianh/data/PeatArea_0.5.mz")
     peat_hr <- interpolate(p,p_ini_lr,p_ini_hr,spam = path(outputdirs[i],"0.5-to-c200_sum.spam"))
-    p <- add_dimension(p,dim = 3.1,add = "scenario",nm = scen)
-    x$area_p_map <- mbind(x$area_p_map,p)
+    peat_hr <- add_dimension(peat_hr,dim = 3.1,add = "scenario",nm = scen)
+    x$area_p_map <- mbind(x$area_p_map,peat_hr)
     
-    p <- collapseNames(p[,,"degrad"])/dimSums(p,dim=3.2)
-    x$area_p_map_ratio <- mbind(x$area_p_map_ratio,p)
+    peat_hr_ratio <- collapseNames(peat_hr[,,"degrad"])/dimSums(peat_hr,dim=3.2)
+    x$area_p_map_ratio <- mbind(x$area_p_map_ratio,peat_hr_ratio)
     
     
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
