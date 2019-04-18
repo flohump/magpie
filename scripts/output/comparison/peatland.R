@@ -27,6 +27,7 @@ cat("\nStarting output generation\n")
 x <- list()
 x$emis_co2_clim_annual <- NULL
 x$emis_all_glo_annual <- NULL
+x$emis_p_glo <- NULL
 x$area_pman_clim_detail <- NULL
 x$area_p_clim <- NULL
 x$area_p_cell <- NULL
@@ -110,16 +111,18 @@ for (i in 1:length(outputdirs)) {
     #emis_p_glo
     emis_p_glo <- readGDX(gdx,"ov58_peatland_emis",select=list(type="level"))
     emis_p_glo <- dimSums(emis_p_glo,dim=1)
-    emis_p_glo[,,"ch4"] <- emis_p_glo[,,"ch4"]/28
-    emis_p_glo[,,"n2o"] <- emis_p_glo[,,"ch4"]/265
     emis_p_glo <- add_dimension(emis_p_glo,dim = 3.1,add = "scenario",nm = scen)
+    x$emis_p_glo <- mbind(x$emis_p_glo,emis_p_glo)
 
+    emis_p_glo[,,"ch4"] <- emis_p_glo[,,"ch4"]/28
+    emis_p_glo[,,"n2o"] <- emis_p_glo[,,"n2o"]/265
+    
     #emis_lu_glo
     co2 <- setNames(emisCO2(gdx,level = "glo",unit="gas",cc = TRUE),"co2")
     doc <- setNames(co2,"doc")
     doc[,,] <- NA
-    ch4 <- setNames(Emissions(gdx,level="glo",type="ch4",unit="gas")*28,"ch4")
-    n2o <- setNames(Emissions(gdx,level="glo",type="n2o_n",unit="gas")*265,"n2o")
+    ch4 <- setNames(Emissions(gdx,level="glo",type="ch4",unit="gas"),"ch4")
+    n2o <- setNames(Emissions(gdx,level="glo",type="n2o_n",unit="gas"),"n2o")
     emis_lu_glo <- mbind(co2,doc,ch4,n2o)
     emis_lu_glo <- add_dimension(emis_lu_glo,dim = 3.1,add = "scenario",nm = scen)
 
