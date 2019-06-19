@@ -16,4 +16,5 @@
 
 *###################### R SECTION START (MODULETYPES) ##########################
 $Ifi "%land%" == "feb15" $include "./modules/10_land/feb15.gms"
+$Ifi "%land%" == "dec18" $include "./modules/10_land/dec18.gms"
 *###################### R SECTION END (MODULETYPES) ############################

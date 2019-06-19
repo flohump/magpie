@@ -93,7 +93,7 @@ $title magpie
 *##################### R SECTION START (VERSION INFO) ##########################
 * 
 * Used data set: magpie4.1_default_apr19.tgz
-* md5sum: ea3959be0d5a45cf50cfc232571dc9bd
+* md5sum: 5c38bb1083bd66010c2104c9d40553f4
 * Repository: https://rse.pik-potsdam.de/data/magpie/public
 * 
 * Low resolution: c200
@@ -127,7 +127,7 @@ $title magpie
 * 
 * 
 * 
-* Last modification (input data): Sat Apr 27 13:45:25 2019
+* Last modification (input data): Wed Jun 19 15:25:45 2019
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 
@@ -161,7 +161,7 @@ scalars
 *******************************MODULE SETUP*************************************
 
 $setglobal drivers  aug17
-$setglobal land  feb15
+$setglobal land  dec18
 $setglobal costs  default
 $setglobal interest_rate  reg_feb18
 $setglobal tc  endo_jun18

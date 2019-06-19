@@ -19,6 +19,7 @@ positive variables
  vm_land(j,land)                  Land area of the different land types (mio. ha)
  vm_landexpansion(j,land)         Land expansion (mio. ha)
  v10_landreduction(j,land)        Land reduction (mio. ha)
+ vm_cost_land_transition(j)		  Costs for lu transitions (mio. USD05MER per yr)
 ;
 
 equations
