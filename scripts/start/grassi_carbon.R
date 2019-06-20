@@ -26,7 +26,8 @@ cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp8p5-co2_rev34_c200_690d3718e151be1b45
                "rev4.18_690d3718e151be1b450b394c1064b1c5_magpie.tgz",
                "rev4.18_690d3718e151be1b450b394c1064b1c5_validation.tgz",
                "additional_data_rev3.67.tgz",
-               "calibration_H12_c200_12Sep18.tgz")
+#               "calibration_H12_c200_12Sep18.tgz",
+               "calibration_H12_c200_LPJmL5_LAI_20Jun19.tgz")
 
 #turn on CC
 cfg$gms$c14_yields_scenario  <- "cc"
@@ -34,7 +35,7 @@ cfg$gms$c42_watdem_scenario  <- "cc"
 cfg$gms$c52_carbon_scenario  <- "cc"
 cfg$gms$c59_som_scenario  <- "cc"
 
-cfg$recalibrate <- TRUE
+cfg$recalibrate <- FALSE
 
 #"NorESM1_M","GFDL_ESM2M","MIROC_ESM_CHEM","HadGEM2_ES"
 for (climatemodel in c("IPSL_CM5A_LR")) {
@@ -45,7 +46,7 @@ for (climatemodel in c("IPSL_CM5A_LR")) {
   cfg <- setScenario(cfg,c("SSP2","NPI"))
   cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NPi"
   cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
-  start_run(cfg,codeCheck=FALSE)
+  #start_run(cfg,codeCheck=FALSE)
   
   ##SSP2 26 CC
   cfg$title <- paste0("SSP2_RCP26_LPJmL5")
@@ -54,6 +55,6 @@ for (climatemodel in c("IPSL_CM5A_LR")) {
   cfg <- setScenario(cfg,c("SSP2","NDC"))
   cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg950"
   cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg950"
-  #start_run(cfg,codeCheck=FALSE)
+  start_run(cfg,codeCheck=FALSE)
 }
   
