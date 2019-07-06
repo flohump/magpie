@@ -36,13 +36,14 @@ cfg$gms$c42_watdem_scenario  <- "cc"
 cfg$gms$c52_carbon_scenario  <- "cc"
 cfg$gms$c59_som_scenario  <- "cc"
 
-cfg$recalibrate <- FALSE
 cfg$force_download <- TRUE
+cfg$recalibrate <- TRUE
 
 #"NorESM1_M","GFDL_ESM2M","MIROC_ESM_CHEM","HadGEM2_ES",IPSL_CM5A_LR
 for (climatemodel in c("HadGEM2_ES")) {
   #SSP2 Ref CC
-  cfg$title <- paste0("SSP2_RCP60_LPJmL5_HadGEM_v2")
+  #cfg$title <- paste0("SSP2_RCP60_LPJmL5_HadGEM_v2")
+  cfg$title <- "calib_run_01"
   cfg$input[1] <- paste0("LPJmL5_LAI-",climatemodel,"-rcp6p0_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz")
   #cfg$input[1] <- paste0("isimip_rcp-",climatemodel,"-rcp6p0-co2_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz")
   cfg <- setScenario(cfg,c("SSP2","NPI"))
@@ -57,6 +58,6 @@ for (climatemodel in c("HadGEM2_ES")) {
   cfg <- setScenario(cfg,c("SSP2","NDC"))
   cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg950"
   cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg950"
-  start_run(cfg,codeCheck=FALSE)
+  #start_run(cfg,codeCheck=FALSE)
 }
   
