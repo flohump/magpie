@@ -41,16 +41,16 @@ cfg$recalibrate <- FALSE
 #"NorESM1_M","GFDL_ESM2M","MIROC_ESM_CHEM","HadGEM2_ES",IPSL_CM5A_LR
 for (climatemodel in c("HadGEM2_ES")) {
   #SSP2 Ref CC
-  cfg$title <- paste0("SSP2_RCP60_LPJmL5_HadGEM")
+  cfg$title <- paste0("SSP2_RCP60_LPJmL5_HadGEM_v2")
   cfg$input[1] <- paste0("LPJmL5_LAI-",climatemodel,"-rcp6p0_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz")
   #cfg$input[1] <- paste0("isimip_rcp-",climatemodel,"-rcp6p0-co2_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz")
   cfg <- setScenario(cfg,c("SSP2","NPI"))
   cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NPi"
   cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
-  #start_run(cfg,codeCheck=FALSE)
+  start_run(cfg,codeCheck=FALSE)
   
   ##SSP2 26 CC
-  cfg$title <- paste0("SSP2_RCP26_LPJmL5_HadGEM")
+  cfg$title <- paste0("SSP2_RCP26_LPJmL5_HadGEM_v2")
   cfg$input[1] <- paste0("LPJmL5_LAI-",climatemodel,"-rcp2p6_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz")
   #cfg$input[1] <- paste0("isimip_rcp-",climatemodel,"-rcp2p6-co2_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz")
   cfg <- setScenario(cfg,c("SSP2","NDC"))
