@@ -37,6 +37,7 @@ cfg$gms$c52_carbon_scenario  <- "cc"
 cfg$gms$c59_som_scenario  <- "cc"
 
 cfg$recalibrate <- FALSE
+cfg$force_download <- TRUE
 
 #"NorESM1_M","GFDL_ESM2M","MIROC_ESM_CHEM","HadGEM2_ES",IPSL_CM5A_LR
 for (climatemodel in c("HadGEM2_ES")) {
