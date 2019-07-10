@@ -51,6 +51,7 @@
 
 *future peatland degradation scales proportionally with changes of managed land
 *Example: if 5% of the area in a cell is converted to cropland, 5% of the total peatland area is degraded
+*Scaled with ratio of peatland area and cell area. Proportional change. 
  q58_peatland_degrad(j2,land58) ..
 	v58_peatland_man(j2,"degrad",land58) + v58_peatland_missing(j2,land58) =g=
 	pc58_peatland_man(j2,"degrad",land58)

@@ -48,12 +48,13 @@ cfg$gms$peatland  <- "ipcc_2014_mar19"
 cfg$gms$c56_pollutant_prices <- "coupling"
 cfg$gms$c60_2ndgen_biodem <- "coupling"
 cfg$gms$s56_ghgprice_start <- 2020
-cfg$gms$c56_emis_policy <- "redd"
+cfg$gms$c56_emis_policy <- "all_nosoil"
 cfg$gms$s58_peatland_policy_horizon  <- 80
-cfg$gms$land <- "dec18"
+cfg$gms$land <- "feb15"
+cfg$gms$s56_reward_neg_emis <- -Inf
 cfg$gms$s80_optfile <- 1
 
-prefix <- "T90"
+prefix <- "T91"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
