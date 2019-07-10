@@ -17,8 +17,6 @@ library(luscale)
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
 
-cfg$force_download <- TRUE
-
 getInput <- function(gdx,ghg_price=TRUE,biodem=TRUE) {
   if(ghg_price) {
     a <- readGDX(gdx,"f56_pollutant_prices_coupling")
@@ -34,6 +32,8 @@ getInput <- function(gdx,ghg_price=TRUE,biodem=TRUE) {
 #start MAgPIE run
 source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
+
+cfg$force_download <- TRUE
 
 cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp8p5-co2_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz",
                "rev4.14_690d3718e151be1b450b394c1064b1c5_magpie.tgz",
