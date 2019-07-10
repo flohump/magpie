@@ -59,8 +59,8 @@ reportGrassi <- function(gdx) {
   #Indirect
   x <- mbind(x,setNames(dimSums(climatechange,dim=3),"Emissions|CO2|Land|Indirect (Mt CO2/yr)"))
   x <- mbind(x,setNames(dimSums(climatechange,dim=3),"Emissions|CO2|Land|Indirect|Climate Change (Mt CO2/yr)"))
-  x <- mbind(x,setNames(dimSums(climatechange[,,c("forestry","secdforest")],dim=3),"Emissions|CO2|Land|Indirect|Climate Change|Forest Managed (Mt CO2/yr)"))
-  x <- mbind(x,setNames(dimSums(climatechange[,,"primforest"],dim=3),"Emissions|CO2|Land|Indirect|Climate Change|Forest Unmanaged (Mt CO2/yr)"))
+  x <- mbind(x,setNames(dimSums(climatechange[,,c("forestry")],dim=3),"Emissions|CO2|Land|Indirect|Climate Change|Forest Managed (Mt CO2/yr)"))
+  x <- mbind(x,setNames(dimSums(climatechange[,,c("primforest","secdforest")],dim=3),"Emissions|CO2|Land|Indirect|Climate Change|Forest Unmanaged (Mt CO2/yr)"))
   x <- mbind(x,setNames(dimSums(climatechange[,,c("crop","past","urban")],dim=3),"Emissions|CO2|Land|Indirect|Climate Change|Non-Forest Managed (Mt CO2/yr)"))
   x <- mbind(x,setNames(dimSums(climatechange[,,"other"],dim=3),"Emissions|CO2|Land|Indirect|Climate Change|Non-Forest Unmanaged (Mt CO2/yr)"))
   
@@ -75,12 +75,12 @@ reportGrassi <- function(gdx) {
   }
   
   x <- mbind(x,setNames(dimSums(area_change[,,forest],dim=3),"Resources|Land Cover Change|Forest (Mha/yr)"))
-  x <- mbind(x,setNames(dimSums(area_change[,,c("forestry","secdforest")],dim=3),"Resources|Land Cover Change|Forest Managed (Mha/yr)"))
-  x <- mbind(x,setNames(dimSums(area_change[,,"primforest"],dim=3),"Resources|Land Cover Change|Forest Unmanaged (Mha/yr)"))
+  x <- mbind(x,setNames(dimSums(area_change[,,c("forestry")],dim=3),"Resources|Land Cover Change|Forest Managed (Mha/yr)"))
+  x <- mbind(x,setNames(dimSums(area_change[,,c("primforest","secdforest")],dim=3),"Resources|Land Cover Change|Forest Unmanaged (Mha/yr)"))
   
   x <- mbind(x,setNames(dimSums(area[,,forest],dim=3),"Resources|Land Cover|Forest (Mha)"))
-  x <- mbind(x,setNames(dimSums(area[,,c("forestry","secdforest")],dim=3),"Resources|Land Cover|Forest Managed (Mha)"))
-  x <- mbind(x,setNames(dimSums(area[,,"primforest"],dim=3),"Resources|Land Cover|Forest Unmanaged (Mha)"))
+  x <- mbind(x,setNames(dimSums(area[,,c("forestry")],dim=3),"Resources|Land Cover|Forest Managed (Mha)"))
+  x <- mbind(x,setNames(dimSums(area[,,c("primforest","secdforest")],dim=3),"Resources|Land Cover|Forest Unmanaged (Mha)"))
   x <- mbind(x,setNames(dimSums(area[,,non_forest],dim=3),"Resources|Land Cover|Non-Forest (Mha)"))
   x <- mbind(x,setNames(dimSums(area[,,c("crop","past","urban")],dim=3),"Resources|Land Cover|Non-Forest Managed (Mha)"))
   x <- mbind(x,setNames(dimSums(area[,,"other"],dim=3),"Resources|Land Cover|Non-Forest Unmanaged (Mha)"))
