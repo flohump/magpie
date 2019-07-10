@@ -17,6 +17,7 @@ library(luscale)
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
 
+cfg$force_download <- TRUE
 
 getInput <- function(gdx,ghg_price=TRUE,biodem=TRUE) {
   if(ghg_price) {
