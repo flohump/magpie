@@ -123,11 +123,10 @@ q56_cell_to_reg(i2,pollutants,emis_source) ..
 
  q56_peatland_emis_cost(j2) ..
                  v56_peatland_emis_cost(j2) =e=
-                 vm_peatland_emis(j2) * m_timestep_length *
+                 vm_peatland_emis(j2) *
                  s56_peatland_policy *
                  sum((ct,cell(i2,j2)),
                  im_pollutant_prices(ct,i2,"co2_c")*12/44
-                 * p56_ghg_price_growth_rate(ct,i2,"co2_c")/(1+p56_ghg_price_growth_rate(ct,i2,"co2_c"))
                  );
 
  q56_peatland_policy_reward(j2) ..
@@ -136,5 +135,4 @@ q56_cell_to_reg(i2,pollutants,emis_source) ..
                  s56_peatland_policy *
                  sum((ct,cell(i2,j2)),
                  im_pollutant_prices(ct,i2,"co2_c")*12/44
-                 * p56_ghg_price_growth_rate(ct,i2,"co2_c")/(1+p56_ghg_price_growth_rate(ct,i2,"co2_c"))
                  );

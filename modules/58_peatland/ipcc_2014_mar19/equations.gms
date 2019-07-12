@@ -70,7 +70,7 @@
  q58_peatland_cost(j2) ..
 	vm_peatland_cost(j2) =e= sum(land58, v58_peatland_missing(j2,land58))*1000000 + v58_peatland_cost_annuity(j2) + pc58_peatland_cost_past(j2)
 							+ sum(land58, v58_peatland_man(j2,"rewet",land58) * s58_rewet_cost_recur)
-							+ sum((from58,stat_rewet58), v58_lu_transitions(j2,from58,stat_rewet58) * s58_rewet_cost_recur * s58_peatland_policy_horizon)
+							+ sum((from58,stat_rewet58), v58_lu_transitions(j2,from58,stat_rewet58) * s58_rewet_cost_recur * sum(cell(i2,j2),(1-(1/(1+pm_interest(i2))^s58_peatland_policy_horizon))/pm_interest(i2)))
 							+ sum(stat58, v58_expansion(j2,stat58) + v58_reduction(j2,stat58)) * 1;
 	
  q58_peatland_cost_annuity(j2) ..
