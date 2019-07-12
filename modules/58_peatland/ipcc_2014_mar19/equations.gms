@@ -49,19 +49,28 @@
         sum(to58$(not sameas(from58,to58)), 
         v58_lu_transitions(j2,from58,to58));
 
-*future peatland degradation scales proportionally with changes of managed land
-*Example: if 5% of the area in a cell is converted to cropland, 5% of the total peatland area is degraded
-*Scaled with ratio of peatland area and cell area. Proportional change. 
+*' Future peatland dynamics (v58_peatland_man) depend on changes of managed land, 
+*' scaled with  the ratio of total peatland area and total land area (p58_scaling_factor).
+*' By multiplying changes in managed land with this scaling factor we implicitly assume 
+*' that intact peatlands are distributed equally within a grid cell. 
+*' The following example illustrates the mechanism used for projecting peatland dynamics: 
+*' In a given grid cell, the total land area is 50 Mha and the total peatland area is 10 Mha. 
+*' Therefore, the scaling factor is 0.2 (10 Mha divided by 50 Mha). 
+*' If cropland expands by 5 Mha, 1 Mha of intact peatland is converted to degraded peatland (5 Mha*0.2). 
+*' If the total cell would become cropland, degraded peatland would equal to the total peatland area (50 Mha * 0.2 = 10 Mha). 
+
  q58_peatland_degrad(j2,land58) ..
 	v58_peatland_man(j2,"degrad",land58) + v58_peatland_missing(j2,land58) =g=
 	pc58_peatland_man(j2,"degrad",land58)
   + ((vm_land(j2,land58) - pcm_land(j2,land58))*p58_scaling_factor(j2))$(s58_before_2015=0);
+
 
 *' Small costs of 1 $ per ha on gross land-use change avoid unrealistic patterns in the land transition matrix
 
  q58_peatland_cost(j2) ..
 	vm_peatland_cost(j2) =e= sum(land58, v58_peatland_missing(j2,land58))*1000000 + v58_peatland_cost_annuity(j2) + pc58_peatland_cost_past(j2)
 							+ sum(land58, v58_peatland_man(j2,"rewet",land58) * s58_rewet_cost_recur)
+							+ sum((from58,stat_rewet58), v58_lu_transitions(j2,from58,stat_rewet58) * s58_rewet_cost_recur * s58_peatland_policy_horizon)
 							+ sum(stat58, v58_expansion(j2,stat58) + v58_reduction(j2,stat58)) * 1;
 	
  q58_peatland_cost_annuity(j2) ..

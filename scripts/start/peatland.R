@@ -55,7 +55,7 @@ cfg$gms$land <- "feb15"
 cfg$gms$s56_reward_neg_emis <- -Inf
 cfg$gms$s80_optfile <- 1
 
-prefix <- "T91"
+prefix <- "T92"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")

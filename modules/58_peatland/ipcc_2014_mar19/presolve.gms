@@ -23,18 +23,35 @@ else
 	p58_scaling_factor(j) = p58_peatland_area(j)/p58_land_area(j);
 	
 	if(s58_before_2015 = 1,
-*Initialize peatland area	
+*' Initialization of peatland
+*' First, all degraded peatland is assigned to cropland. However, if the degraded peatland 
+*' is larger than the actual cropland multiplied by a scaling factor (see below), 
+*' degraded peatland used as cropland is reduced accordingly. In each grid cell, 
+*' we scale the actual cropland with the ratio of total peatland area and total land area 
+*' (factor between 0 and 1) because we use this scaling factor for modeling future 
+*' peatland dynamics based on agricultural land use (see equations). Accounting for 
+*' this scaling factor in the initial distribution of degraded peatland to cropland 
+*' makes sure that a full reduction of cropland would also reduce degraded peatland 
+*' used as cropland to zero in a given grid cell, which is of particular importance 
+*' for the peatland restoration scenarios. After this first step, the remaining degraded 
+*' peatland (if any exists) is assigned to pasture with the same rules, i.e. 
+*' assignment to pasture is constrained by the scaled actual pasture area. In a third 
+*' step, all remaining degraded peatland is assigned to forestry with these rules. 
+*' Finally, any remaining degraded peatland in a grid cell after these 3 steps is 
+*' assigned to an unused peatland category with equal distribution among 
+*' cropland, pasture and forestry (land-use categories are important for the 
+*' application of the wetland GHG emission factors). In total, we therefore have 
+*' 3 peatland categories: intact, degraded and unused. And for degraded and unused 
+*' we know the current/previous land use: cropland, pasture and forestry.
 	pc58_peatland_man(j,man58,land58) = 0;
 	p58_peatland_degrad_left(j) = f58_peatland_degrad(j);
-*First, all degraded peatland is assigned to cropland using a scaling factor which accounts for the ratio of peatland and land area.
-*degrad 2 Mha, cropland 10 Mha, peatland 3 Mha cell area 50 Mha min(2,10*3/50) min()
-*cropland 0 Mha -> degraded peatland 0 Mha
+*First step: cropland
 	pc58_peatland_man(j,"degrad","crop") = min(p58_peatland_degrad_left(j),pcm_land(j,"crop")*p58_scaling_factor(j));
 	p58_peatland_degrad_left(j) = p58_peatland_degrad_left(j)-pc58_peatland_man(j,"degrad","crop");
-*Second, the remaining undistributed degraded peatland is assigned to pasture using a scaling factor which accounts for the ratio of peatland and land area.
+*Second step: pasture
 	pc58_peatland_man(j,"degrad","past") = min(p58_peatland_degrad_left(j),pcm_land(j,"past")*p58_scaling_factor(j));
 	p58_peatland_degrad_left(j) = p58_peatland_degrad_left(j)-pc58_peatland_man(j,"degrad","past");
-*Third, the remaining undistributed degraded peatland is assigned to forestry using a scaling factor which accounts for the ratio of peatland and land area.
+*Third step: forestry
 	pc58_peatland_man(j,"degrad","forestry") = min(p58_peatland_degrad_left(j),pcm_land(j,"forestry")*p58_scaling_factor(j));
 	p58_peatland_degrad_left(j) = p58_peatland_degrad_left(j)-pc58_peatland_man(j,"degrad","forestry");
 *Finally, the remaining undistributed degraded peatland is equally distributed among crop, past and forestry.
@@ -46,7 +63,7 @@ else
 	v58_peatland_intact.fx(j) = pc58_peatland_intact(j);
 	v58_lu_transitions.fx(j2,from58,to58)$(not sameas(from58,to58)) = 0;
 	else
-*defne bound for peatland area after 2015
+*define bound for peatland area after 2015
 	v58_peatland_man.lo(j,man58,land58) = 0;
 	v58_peatland_man.up(j,"degrad",land58) = Inf;
 	v58_peatland_man.up(j,"unused",land58) = Inf;
