@@ -60,7 +60,7 @@
 *' If the total cell would become cropland, degraded peatland would equal to the total peatland area (50 Mha * 0.2 = 10 Mha). 
 
  q58_peatland_degrad(j2,land58) ..
-	v58_peatland_man(j2,"degrad",land58) + v58_peatland_missing(j2,land58) =g=
+	v58_peatland_man(j2,"degrad",land58) =g=
 	pc58_peatland_man(j2,"degrad",land58)
   + ((vm_land(j2,land58) - pcm_land(j2,land58))*p58_scaling_factor(j2))$(s58_before_2015=0);
 
@@ -68,7 +68,7 @@
 *' Small costs of 1 $ per ha on gross land-use change avoid unrealistic patterns in the land transition matrix
 
  q58_peatland_cost(j2) ..
-	vm_peatland_cost(j2) =e= sum(land58, v58_peatland_missing(j2,land58))*1000000 + v58_peatland_cost_annuity(j2) + pc58_peatland_cost_past(j2)
+	vm_peatland_cost(j2) =e= v58_peatland_cost_annuity(j2) + pc58_peatland_cost_past(j2)
 							+ sum(land58, v58_peatland_man(j2,"rewet",land58) * s58_rewet_cost_recur)
 							+ sum(stat58, v58_expansion(j2,stat58) + v58_reduction(j2,stat58)) * 1;
 	

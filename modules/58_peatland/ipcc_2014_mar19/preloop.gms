@@ -12,3 +12,5 @@ p58_ipcc_wetland_ef(climate58,land58,"ch4",man58) = p58_ipcc_wetland_ef(climate5
 p58_ipcc_wetland_ef(climate58,land58,"n2o",man58) = p58_ipcc_wetland_ef(climate58,land58,"n2o",man58)/298*265;
 
 p58_peatland_cost_past(t,j) = 0;
+
+v58_peatland_missing.fx(j,land58) = 0;
