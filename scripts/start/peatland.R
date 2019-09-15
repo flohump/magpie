@@ -55,7 +55,7 @@ cfg$gms$land <- "feb15"
 cfg$gms$s56_reward_neg_emis <- -Inf
 cfg$gms$s80_optfile <- 1
 
-prefix <- "T94"
+prefix <- "T95"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
@@ -88,6 +88,29 @@ cfg$gms$s56_peatland_policy <- 1
 cfg$gms$s58_rewetting_switch  <- Inf
 start_run(cfg,codeCheck=FALSE)
 
+cfg$title <- paste(prefix,"RCP1p9+PeatRestor_2000",sep="_")
+cfg$gms$s56_peatland_policy <- 1
+cfg$gms$s58_rewetting_switch  <- Inf
+cfg$gms$s58_rewet_cost_onetime  <- 2000
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"RCP1p9+PeatRestor_4000",sep="_")
+cfg$gms$s56_peatland_policy <- 1
+cfg$gms$s58_rewetting_switch  <- Inf
+cfg$gms$s58_rewet_cost_onetime  <- 4000
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"RCP1p9+PeatRestor_8000",sep="_")
+cfg$gms$s56_peatland_policy <- 1
+cfg$gms$s58_rewetting_switch  <- Inf
+cfg$gms$s58_rewet_cost_onetime  <- 8000
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"RCP1p9+PeatRestor_10000",sep="_")
+cfg$gms$s56_peatland_policy <- 1
+cfg$gms$s58_rewetting_switch  <- Inf
+cfg$gms$s58_rewet_cost_onetime  <- 10000
+start_run(cfg,codeCheck=FALSE)
 
 getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_NPi-mag-4/fulldata.gdx",biodem=TRUE,ghg_price = FALSE)
 cfg$gms$c56_emis_policy <- "none"
