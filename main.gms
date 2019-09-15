@@ -92,15 +92,15 @@ $title magpie
 *##################### R SECTION START (VERSION INFO) ##########################
 * 
 * Used data set: magpie4.1_default_mar19.tgz
-* md5sum: b3d2e9928cedd5ab97c5de52c1289c23
+* md5sum: 60a2a7c7e8dca11d027207ab2c0faeec
 * Repository: https://rse.pik-potsdam.de/data/magpie/public
 * 
-* Used data set: additional_data_rev3.68_FH.tgz
-* md5sum: cec9b624d7a6b998272356848a1da20e
+* Used data set: additional_data_rev3.69_FH.tgz
+* md5sum: b89b8b8a1d7176edb27a1a768056de16
 * Repository: /Users/flo/OneDrive/Dokumente/PIK/Development/input_data/
 * 
 * Used data set: peatland_input_v1.tgz
-* md5sum: b1847803c422ab9c77ddf874428e16b9
+* md5sum: 81dca902eb176af2feefa106fab5c1d8
 * Repository: /Users/flo/OneDrive/Dokumente/PIK/Development/input_data/
 * 
 * Low resolution: c200
@@ -134,7 +134,7 @@ $title magpie
 * 
 * 
 * 
-* Last modification (input data): Thu Mar 28 11:55:09 2019
+* Last modification (input data): Sun Sep 15 11:15:58 2019
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 
