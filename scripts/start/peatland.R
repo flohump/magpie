@@ -50,9 +50,10 @@ cfg$gms$peatland  <- "on"
 # cfg$gms$c60_2ndgen_biodem <- "coupling"
 #cfg$gms$s56_ghgprice_start <- 2020
 #cfg$gms$s56_reward_neg_emis <- -Inf
-#cfg$gms$s80_optfile <- 1
+cfg$gms$s80_optfile <- 1
+cfg$gms$c60_biodem_level <- 0
 
-prefix <- "T96"
+prefix <- "T97"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
