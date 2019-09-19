@@ -51,25 +51,25 @@ cfg$gms$peatland  <- "on"
 #cfg$gms$s56_ghgprice_start <- 2020
 #cfg$gms$s56_reward_neg_emis <- -Inf
 cfg$gms$s80_optfile <- 1
-#cfg$gms$c60_biodem_level <- 0
+cfg$gms$c60_biodem_level <- 0
 cfg$gms$s56_aff_policy <- 0
 cfg$gms$s56_cprice_red_factor <- 1
 
-prefix <- "T99"
+prefix <- "T100"
 
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
 cfg <- setScenario(cfg,c("SSP2","NPI"))
 getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_NPi-mag-4/fulldata.gdx")
-cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NPi"
-cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
+cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-Ref-REMIND-MAGPIE"
+cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-Ref-REMIND-MAGPIE"
 cfg$gms$s56_peatland_policy <- 0
 cfg$gms$s58_rewetting_switch  <- 0
 start_run(cfg,codeCheck=FALSE)
 
 #getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_Budg600-mag-4/fulldata.gdx")
-cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
+cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-26-REMIND-MAGPIE"
+cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-26-REMIND-MAGPIE"
 cfg <- setScenario(cfg,c("SSP2","NDC"))
 
 
