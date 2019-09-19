@@ -30,6 +30,7 @@ x$emis_all_glo_annual <- NULL
 x$emis_p_glo <- NULL
 x$area_pman_clim_detail <- NULL
 x$area_p_clim <- NULL
+x$area_p_clim_detail <- NULL
 x$area_p_cell <- NULL
 x$area_p_map <- NULL
 x$area_p_map_ratio <- NULL
@@ -110,6 +111,13 @@ for (i in 1:length(outputdirs)) {
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$land_clim <- mbind(x$land_clim,a)
 
+    #read peatland land detail
+    a <- readGDX(gdx,"ov58_peatland_man",select=list(type="level"))
+    a <- dimSums(a*map_cell_clim,dim=1)
+    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    x$area_p_clim_detail <- mbind(x$area_p_clim_detail,a)
+    
+    
     #emis_p_glo
     emis_p_glo <- readGDX(gdx,"ov58_peatland_emis",select=list(type="level"))
     emis_p_glo <- dimSums(emis_p_glo,dim=1)
