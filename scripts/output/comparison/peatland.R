@@ -39,6 +39,9 @@ x$fprice <- NULL
 x$fexpshare <- NULL
 x$kcal <- NULL
 x$tau <- NULL
+x$demand_food <- NULL
+x$demand_bioen <- NULL
+x$c_price <- NULL
 
 missing <- NULL
 
@@ -176,6 +179,24 @@ for (i in 1:length(outputdirs)) {
     a <- tau(gdx,level="glo")
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$tau <- mbind(x$tau,a)
+    
+    #demand food, feed, processed
+    kcr <- add_dimension(demand(gdx,level = "reg",product_aggr = TRUE,type = c("food","feed","processed"),products = "kcr"),3.1,"cat","Crops")
+    kli <- add_dimension(demand(gdx,level = "reg",product_aggr = TRUE,type = c("food","feed","processed"),products = "kli"),3.1,"cat","Livestock")
+    a <- mbind(kcr,kli)
+    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    x$demand_food <- mbind(x$demand_food,a)
+    
+    #demand bioen
+    a <- demandBioenergy(gdx,level="reg")
+    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    x$demand_bioen <- mbind(x$demand_bioen,a)
+    
+    #ghg price
+    a <- PriceGHG(gdx,level="glo")
+    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    x$c_price <- mbind(x$c_price,a)
+    
             
   } else missing <- c(missing,outputdirs[i])
 }
@@ -186,11 +207,6 @@ x <- lapply(x, function(x) {x[,getYears(x,as.integer = T)>=2015,]})
 #read emis factors (same for all scenarios)
 x$emis_fac <- readGDX(gdx,"f58_ipcc_wetland_ef")
 x$map_cell_clim <- readGDX(gdx,"p58_mapping_cell_climate")
-kcr <- add_dimension(demand(gdx,level = "reg",product_aggr = TRUE,type = c("food","feed","processed"),products = "kcr"),3.1,"cat","Crops")
-kli <- add_dimension(demand(gdx,level = "reg",product_aggr = TRUE,type = c("food","feed","processed"),products = "kli"),3.1,"cat","Livestock")
-x$demand_food <- mbind(kcr,kli)
-x$demand_bioen <- demandBioenergy(gdx,level="reg")
-x$c_price <- PriceGHG(gdx,level="glo")
 
 x$emis_co2_clim_cum <- calcEmisCum(x$emis_co2_clim_annual)
 
