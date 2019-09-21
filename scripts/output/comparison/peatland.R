@@ -189,7 +189,7 @@ x$map_cell_clim <- readGDX(gdx,"p58_mapping_cell_climate")
 kcr <- add_dimension(demand(gdx,level = "reg",product_aggr = TRUE,type = c("food","feed","processed"),products = "kcr"),3.1,"cat","Crops")
 kli <- add_dimension(demand(gdx,level = "reg",product_aggr = TRUE,type = c("food","feed","processed"),products = "kli"),3.1,"cat","Livestock")
 x$demand_food <- mbind(kcr,kli)
-x$demand_bioen <- demandBioenergy(gdx,level="glo")
+x$demand_bioen <- demandBioenergy(gdx,level="reg")
 x$c_price <- PriceGHG(gdx,level="glo")
 
 x$emis_co2_clim_cum <- calcEmisCum(x$emis_co2_clim_annual)
