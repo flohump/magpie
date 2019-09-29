@@ -37,6 +37,9 @@ sets
   stat_rewet58(to58) Peatland status
     / rewet_crop, rewet_past, rewet_forestry /
 
+  stat_degrad58(to58) Peatland status
+    / degrad_crop, degrad_past, degrad_forestry /
+
   climate58 Climate classes
 	/ tropical, temperate, boreal /
 
