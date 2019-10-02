@@ -64,7 +64,7 @@ prefix <- "T101"
 ##SSP2
 cfg$title <- paste(prefix,"Ref",sep="_")
 cfg <- setScenario(cfg,c("SSP2","NPI"))
-getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_NPi-mag-4/fulldata.gdx")
+#getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_NPi-mag-4/fulldata.gdx")
 cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-Ref-REMIND-MAGPIE"
 cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-Ref-REMIND-MAGPIE"
 cfg$gms$s56_peatland_policy <- 0
