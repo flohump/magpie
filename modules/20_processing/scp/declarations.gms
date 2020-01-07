@@ -6,13 +6,13 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 
-
 positive variables
   vm_dem_processing(i,kall)                      Demand for processing use (mio. tDM per yr)
   v20_dem_processing(i,processing_subst20,kall)   Demand for processing use by process (mio. tDM per yr)
   v20_secondary_substitutes(i,ksd,kpr)           Substitutes for inferior secondary products (mio. tDM per yr)
   vm_secondary_overproduction(i,kall,kpr)        Overproduction of secondary couple products (mio. tDM per yr)
   vm_cost_processing(i)                          Processing costs (mio. USD05MER per yr)
+  v20_processing_shares(i,ksd,kpr)				 Shares of secondary products coming from a primary product (1)
 ;
 
 variables
@@ -35,10 +35,11 @@ equations
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  ov_dem_processing(t,i,kall,type)                         Demand for processing use (mio. tDM per yr)
- ov20_dem_processing(t,i,processing_subst20,kpr,type)     Demand for processing use by process (mio. tDM per yr)
+ ov20_dem_processing(t,i,processing_subst20,kall,type)    Demand for processing use by process (mio. tDM per yr)
  ov20_secondary_substitutes(t,i,ksd,kpr,type)             Substitutes for inferior secondary products (mio. tDM per yr)
  ov_secondary_overproduction(t,i,kall,kpr,type)           Overproduction of secondary couple products (mio. tDM per yr)
  ov_cost_processing(t,i,type)                             Processing costs (mio. USD05MER per yr)
+ ov20_processing_shares(t,i,ksd,kpr,type)                 Shares of secondary products coming from a primary product (1)
  ov_processing_substitution_cost(t,i,type)                Costs or benefits of substituting one product by another (mio. USD05MER per yr)
  oq20_processing(t,i,kpr,ksd,type)                        Processing equation (mio. tDM per yr)
  oq20_processing_aggregation_nocereals(t,i,kpr,type)      Connecting processing activity to processing flows (mio. tDM per yr)

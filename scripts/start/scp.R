@@ -23,7 +23,7 @@ source("config/default.cfg")
 
 cfg$results_folder <- "output/:title:"
 
-prefix <- "scp02_"
+prefix <- "03_"
 
 for (ssp in c("SSP2")) {
   
@@ -35,14 +35,13 @@ for (ssp in c("SSP2")) {
   cfg$gms$s80_maxiter <- 20
   #  cfg$gms$land <- "feb15"
   #  cfg$gms$s80_optfile <- 0
-  
-  cfg$title <- paste0(prefix,ssp,"_Budg600_scpOn")
   cfg$gms$processing <- "scp"
-  start_run(cfg,codeCheck=FALSE)
-
-  cfg$title <- paste0(prefix,ssp,"_Budg600_scpOff")
-  cfg$gms$processing <- "substitution_dec18"
-  start_run(cfg,codeCheck=FALSE)
+  
+  for (scp in c("off","begr","sugar","mixed_fixed","mixed_free")) {
+    cfg$title <- paste0(prefix,ssp,"_Budg600_scp_",scp)
+    cfg$gms$c20_scp <- scp
+    start_run(cfg,codeCheck=FALSE)
+  }
   
 }
 
