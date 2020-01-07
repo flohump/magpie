@@ -188,7 +188,7 @@ $setglobal demand  sector_may15
 $setglobal production  flexreg_apr16
 
 $setglobal residues  flexreg_apr16
-$setglobal processing  substitution_dec18
+$setglobal processing  scp
 
 $setglobal trade  selfsuff_reduced
 
