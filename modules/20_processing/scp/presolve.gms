@@ -6,6 +6,9 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 
+v20_dem_processing.fx(i,processing_subst20,knpr)=0;
+v20_dem_processing.up(i,"substitutes","scp")=Inf;
+
 vm_dem_processing.fx(i,knpr)=0;
 
 vm_secondary_overproduction.fx(i2,kall,kpr)=0;

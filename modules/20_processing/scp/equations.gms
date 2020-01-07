@@ -60,7 +60,7 @@ q20_processing(i2,kpr,ksd) ..
   sum(processing20, v20_dem_processing(i2,processing20,kpr)
          * sum(ct,f20_processing_conversion_factors(ct,processing20,ksd,kpr)))  =e=
  (vm_prod_reg(i2,ksd) - sum(ct,f20_processing_balanceflow(ct,i2,ksd)))
-         * sum(ct,f20_processing_shares(ct,i2,ksd,kpr))
+         * sum(ct,f20_processing_shares(ct,i2,ksd,kpr))$(not sameas(ksd,"scp"))
          - v20_secondary_substitutes(i2,ksd,kpr)
          + vm_secondary_overproduction(i2,ksd,kpr);
 
@@ -131,7 +131,7 @@ sum((ksd,processing20,kpr), v20_dem_processing(i2,processing20,kpr)
 q20_substitution_utility_loss(i2) ..
       vm_processing_substitution_cost(i2) =e=
       sum(kpr,
-        v20_dem_processing(i2,"substitutes",kpr)$(not sameas(kpr,"scp"))
+        v20_dem_processing(i2,"substitutes",kpr)
         * 200
       ) +
       sum((ksd,processing20,kpr), v20_dem_processing(i2,processing20,kpr)

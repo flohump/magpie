@@ -23,7 +23,7 @@ source("config/default.cfg")
 
 cfg$results_folder <- "output/:title:"
 
-prefix <- "scp01_"
+prefix <- "scp02_"
 
 for (ssp in c("SSP2")) {
   

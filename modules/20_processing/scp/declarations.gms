@@ -9,7 +9,7 @@
 
 positive variables
   vm_dem_processing(i,kall)                      Demand for processing use (mio. tDM per yr)
-  v20_dem_processing(i,processing_subst20,kpr)   Demand for processing use by process (mio. tDM per yr)
+  v20_dem_processing(i,processing_subst20,kall)   Demand for processing use by process (mio. tDM per yr)
   v20_secondary_substitutes(i,ksd,kpr)           Substitutes for inferior secondary products (mio. tDM per yr)
   vm_secondary_overproduction(i,kall,kpr)        Overproduction of secondary couple products (mio. tDM per yr)
   vm_cost_processing(i)                          Processing costs (mio. USD05MER per yr)
