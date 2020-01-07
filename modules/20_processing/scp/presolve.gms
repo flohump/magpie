@@ -10,6 +10,7 @@ v20_dem_processing.fx(i,processing_subst20,knpr)=0;
 v20_dem_processing.up(i,"substitutes","scp")=Inf;
 
 v20_processing_shares.fx(i,ksd,kpr)=f20_processing_shares(t,i,ksd,kpr);
+v20_processing_shares.fx(i,"scp",kpr)=0;
 $ifThen "%c20_scp%" == "off",
 	v20_processing_shares.fx(i,"scp",kpr)=0;
 $elseIf "%c20_scp%" == "begr",
