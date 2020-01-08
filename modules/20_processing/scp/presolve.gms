@@ -17,7 +17,7 @@ $elseIf "%c20_scp%" == "begr"
 	v20_processing_shares.fx(i,"scp","begr")=1;
 $elseIf "%c20_scp%" == "sugar"
 	v20_processing_shares.fx(i,"scp","sugr_cane")=1;
-$elseIf "%c20_scp%" == "mixed_fixed",
+$elseIf "%c20_scp%" == "mixed_fixed"
 	v20_processing_shares.fx(i,"scp","begr")=0.5;
 	v20_processing_shares.fx(i,"scp","sugr_cane")=0.5;
 $elseIf "%c20_scp%" == "mixed_free"
