@@ -16,6 +16,7 @@
  ov20_processing_shares(t,i,ksd,kpr,"marginal")                 = v20_processing_shares.m(i,ksd,kpr);
  ov_processing_substitution_cost(t,i,"marginal")                = vm_processing_substitution_cost.m(i);
  oq20_processing(t,i,kpr,ksd,"marginal")                        = q20_processing.m(i,kpr,ksd);
+ oq20_processing_shares_scp(t,i,"marginal")                     = q20_processing_shares_scp.m(i);
  oq20_processing_aggregation_nocereals(t,i,kpr,"marginal")      = q20_processing_aggregation_nocereals.m(i,kpr);
  oq20_processing_aggregation_cereals(t,i,kcereals20,"marginal") = q20_processing_aggregation_cereals.m(i,kcereals20);
  oq20_processing_aggregation_cotton(t,i,"marginal")             = q20_processing_aggregation_cotton.m(i);
@@ -33,6 +34,7 @@
  ov20_processing_shares(t,i,ksd,kpr,"level")                    = v20_processing_shares.l(i,ksd,kpr);
  ov_processing_substitution_cost(t,i,"level")                   = vm_processing_substitution_cost.l(i);
  oq20_processing(t,i,kpr,ksd,"level")                           = q20_processing.l(i,kpr,ksd);
+ oq20_processing_shares_scp(t,i,"level")                        = q20_processing_shares_scp.l(i);
  oq20_processing_aggregation_nocereals(t,i,kpr,"level")         = q20_processing_aggregation_nocereals.l(i,kpr);
  oq20_processing_aggregation_cereals(t,i,kcereals20,"level")    = q20_processing_aggregation_cereals.l(i,kcereals20);
  oq20_processing_aggregation_cotton(t,i,"level")                = q20_processing_aggregation_cotton.l(i);
@@ -50,6 +52,7 @@
  ov20_processing_shares(t,i,ksd,kpr,"upper")                    = v20_processing_shares.up(i,ksd,kpr);
  ov_processing_substitution_cost(t,i,"upper")                   = vm_processing_substitution_cost.up(i);
  oq20_processing(t,i,kpr,ksd,"upper")                           = q20_processing.up(i,kpr,ksd);
+ oq20_processing_shares_scp(t,i,"upper")                        = q20_processing_shares_scp.up(i);
  oq20_processing_aggregation_nocereals(t,i,kpr,"upper")         = q20_processing_aggregation_nocereals.up(i,kpr);
  oq20_processing_aggregation_cereals(t,i,kcereals20,"upper")    = q20_processing_aggregation_cereals.up(i,kcereals20);
  oq20_processing_aggregation_cotton(t,i,"upper")                = q20_processing_aggregation_cotton.up(i);
@@ -67,6 +70,7 @@
  ov20_processing_shares(t,i,ksd,kpr,"lower")                    = v20_processing_shares.lo(i,ksd,kpr);
  ov_processing_substitution_cost(t,i,"lower")                   = vm_processing_substitution_cost.lo(i);
  oq20_processing(t,i,kpr,ksd,"lower")                           = q20_processing.lo(i,kpr,ksd);
+ oq20_processing_shares_scp(t,i,"lower")                        = q20_processing_shares_scp.lo(i);
  oq20_processing_aggregation_nocereals(t,i,kpr,"lower")         = q20_processing_aggregation_nocereals.lo(i,kpr);
  oq20_processing_aggregation_cereals(t,i,kcereals20,"lower")    = q20_processing_aggregation_cereals.lo(i,kcereals20);
  oq20_processing_aggregation_cotton(t,i,"lower")                = q20_processing_aggregation_cotton.lo(i);

@@ -21,6 +21,7 @@ variables
 
 equations
      q20_processing(i,kpr,ksd)                          Processing equation (mio. tDM per yr)
+     q20_processing_shares_scp(i)						Processing shares for SCP (1)
      q20_processing_aggregation_nocereals(i,kpr)        Connecting processing activity to processing flows (mio. tDM per yr)
      q20_processing_aggregation_cereals(i,kcereals20)   Connecting processing activity to food use for milling (mio. tDM per yr)
      q20_processing_aggregation_cotton(i)               Connecting processing activity to production for cotton ginning (mio. tDM per yr)
@@ -42,6 +43,7 @@ parameters
  ov20_processing_shares(t,i,ksd,kpr,type)                 Shares of secondary products coming from a primary product (1)
  ov_processing_substitution_cost(t,i,type)                Costs or benefits of substituting one product by another (mio. USD05MER per yr)
  oq20_processing(t,i,kpr,ksd,type)                        Processing equation (mio. tDM per yr)
+ oq20_processing_shares_scp(t,i,type)                     Processing shares for SCP (1)
  oq20_processing_aggregation_nocereals(t,i,kpr,type)      Connecting processing activity to processing flows (mio. tDM per yr)
  oq20_processing_aggregation_cereals(t,i,kcereals20,type) Connecting processing activity to food use for milling (mio. tDM per yr)
  oq20_processing_aggregation_cotton(t,i,type)             Connecting processing activity to production for cotton ginning (mio. tDM per yr)

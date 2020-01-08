@@ -64,6 +64,9 @@ q20_processing(i2,kpr,ksd) ..
          - v20_secondary_substitutes(i2,ksd,kpr)
          + vm_secondary_overproduction(i2,ksd,kpr);
 
+q20_processing_shares_scp(i2) ..
+sum(kpr, v20_processing_shares(i2,"scp",kpr)) =e= 1;
+
 *' Oils from one crop can be substituted by different types of oils.
 q20_processing_substitution_oils(i2) ..
   v20_dem_processing(i2,"substitutes","oils") =g=
