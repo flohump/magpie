@@ -14,6 +14,7 @@ scalars
   s56_ghgprice_devstate_scaling Switch for scaling GHG price with development state (1=on 0=off) / 0 /
   s56_c_price_induced_aff Switch for C price driven afforestation (1=on 0=off) / 1 /
   s56_c_price_aff_future Switch for using future (1) or present (0) C prices in afforestation decision / 0 /
+  s56_payment afforestion payment scheme (0=annually 1=begin 2=end 3=buffer) / 0 /
 ;
 
 $setglobal c56_pollutant_prices  R2M41-SSP2-Budg600

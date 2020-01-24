@@ -110,8 +110,19 @@ q56_cell_to_reg(i2,pollutants,emis_source) ..
  q56_reward_cdr_aff(j2) ..
                  v56_reward_cdr_aff(j2) =e=
             	 pc56_c_price_induced_aff*
-            	 sum(ac, 
-            	 (vm_cdr_aff(j2,ac) * sum((cell(i2,j2),ct), p56_c_price_aff(ct,i2,ac)))
-            	 / ((1+sum(cell(i2,j2),pm_interest(i2)))**(ac.off*5)))
+            	 (
+            	 sum(ac, (vm_cdr_aff(j2,ac) * sum((cell(i2,j2),ct), p56_c_price_aff(ct,i2,ac)))
+            	 / ((1+sum(cell(i2,j2),pm_interest(i2)))**(ac.off*5)))$(s56_payment=0)
+            	 +
+            	 (sum(ac, vm_cdr_aff(j2,ac)) * sum((cell(i2,j2),ct), p56_c_price_aff(ct,i2,"ac0")))$(s56_payment=1)
+            	 +
+            	 ((sum(ac, vm_cdr_aff(j2,ac)) * sum((cell(i2,j2),ct), sum(ac$(ac.off*5=s32_planing_horizon), p56_c_price_aff(ct,i2,ac))))
+            	 / ((1+sum(cell(i2,j2),pm_interest(i2)))**(s32_planing_horizon)))$(s56_payment=2)
+            	 +
+            	 (sum(ac, (0.7 * vm_cdr_aff(j2,ac) * sum((cell(i2,j2),ct), p56_c_price_aff(ct,i2,ac)))
+            	 / ((1+sum(cell(i2,j2),pm_interest(i2)))**(ac.off*5))) + 
+				 (sum(ac, 0.3*vm_cdr_aff(j2,ac)) * sum((cell(i2,j2),ct), sum(ac$(ac.off*5=s32_planing_horizon), p56_c_price_aff(ct,i2,ac))))
+            	 / ((1+sum(cell(i2,j2),pm_interest(i2)))**(s32_planing_horizon)))$(s56_payment=3)
+            	 )
                  *sum(cell(i2,j2),pm_interest(i2)/(1+pm_interest(i2)));
 
