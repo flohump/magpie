@@ -48,17 +48,20 @@ cfg$results_folder <- "output/:title:"
 cfg <- setScenario(cfg,c("SSP2","NDC"))
 cfg$gms$interest_rate <- "glo_jan16"
 cfg$gms$c12_interest_rate <- "coupling"
-cfg$gms$c56_pollutant_prices <- "coupling"
-cfg$gms$c60_2ndgen_biodem <- "coupling"
+# cfg$gms$c56_pollutant_prices <- "coupling"
+# cfg$gms$c60_2ndgen_biodem <- "coupling"
 getInput("/p/projects/piam/runs/coupled-magpie/output/C_SSP2-PkBudg900-mag-4/fulldata.gdx")
-prefix <- "rew01_"
+cfg$gms$land <- "feb15"
+prefix <- "rew02_"
 
 for (co2_price_path in c("Hotelling","PeakBudget")) {
   if (co2_price_path=="PeakBudget") {
     cfg$gms$c56_pollutant_prices <- "coupling"
+    cfg$gms$c60_2ndgen_biodem <- "coupling"
     getInput("/p/projects/piam/runs/coupled-magpie/output/C_SSP2-PkBudg900-mag-4/fulldata.gdx")
   } else if (co2_price_path == "Hotelling") {
     cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-26-REMIND-MAGPIE"
+    cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-26-REMIND-MAGPIE"
   }
 
   reset()
