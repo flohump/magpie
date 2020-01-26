@@ -28,8 +28,12 @@ getInput <- function(gdx,ghg_price=TRUE,biodem=TRUE) {
   }
 }
 
-reset <- function() {
-  interest_rate(0.07); cfg$gms$s56_payment=0; cfg$gms$s56_c_price_aff_future=1; cfg$gms$s32_planing_horizon=75;
+reset <- function(cfg) {
+  interest_rate(0.05)
+  cfg$gms$s56_payment <- 0
+  cfg$gms$s56_c_price_aff_future <- 1 
+  cfg$gms$s32_planing_horizon <- 75
+  return(cfg)
 }
 
 interest_rate <- function(target) {
@@ -45,7 +49,7 @@ source("config/default.cfg")
 #cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
-cfg <- setScenario(cfg,c("SSP2","BASE"))
+cfg <- setScenario(cfg,c("SSP2","NDC"))
 cfg$gms$interest_rate <- "glo_jan16"
 cfg$gms$c12_interest_rate <- "coupling"
 # cfg$gms$c56_pollutant_prices <- "coupling"
@@ -64,21 +68,21 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
     cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-26-REMIND-MAGPIE"
   }
 
-  reset()
+  cfg <- reset(cfg)
   for (time_horizon in c(10,20,30,50,75,100)) {
     cfg$title <- paste0(prefix,co2_price_path,"_timehorizon_",time_horizon)
     cfg$gms$s32_planing_horizon=time_horizon
     start_run(cfg,codeCheck=FALSE)
   }
   
-  reset()
+  cfg <- reset(cfg)
   for (discount in c(0.01,0.03,0.05,0.07,0.1)) {
     cfg$title <- paste0(prefix,co2_price_path,"_interestrate_",discount*100)
     interest_rate(discount)
     start_run(cfg,codeCheck=FALSE)
   }
   
-  reset()
+  cfg <- reset(cfg)
   for (payment in c(0,1,2,3)) {
     if (payment==0) name="annually" else if (payment==1) name="begin" else if (payment==2) name="end" else if (payment==3) name="buffer"
     cfg$title <- paste0(prefix,co2_price_path,"_payment_",name)
@@ -86,7 +90,7 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
     start_run(cfg,codeCheck=FALSE)
   }
   
-  reset()
+  cfg <- reset(cfg)
   for (co2_price_exp in c(0,1)) {
     if (co2_price_exp==0) name="myopic" else if (co2_price_exp==1) name="perfect-foresight"
     cfg$title <- paste0(prefix,co2_price_path,"_co2priceexp_",name)
