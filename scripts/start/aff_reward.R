@@ -45,14 +45,14 @@ source("config/default.cfg")
 #cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
-cfg <- setScenario(cfg,c("SSP2","NDC"))
+cfg <- setScenario(cfg,c("SSP2","BASE"))
 cfg$gms$interest_rate <- "glo_jan16"
 cfg$gms$c12_interest_rate <- "coupling"
 # cfg$gms$c56_pollutant_prices <- "coupling"
 # cfg$gms$c60_2ndgen_biodem <- "coupling"
 getInput("/p/projects/piam/runs/coupled-magpie/output/C_SSP2-PkBudg900-mag-4/fulldata.gdx")
 cfg$gms$land <- "feb15"
-prefix <- "rew02_"
+prefix <- "rew03_"
 
 for (co2_price_path in c("Hotelling","PeakBudget")) {
   if (co2_price_path=="PeakBudget") {
