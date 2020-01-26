@@ -38,11 +38,12 @@ cfg$results_folder <- "output/:title:"
 prefix <- "lama01_"
 
 for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
-  
-  cfg$title <- paste0(prefix,ssp,"_NPI")
-  cfg <- setScenario(cfg,c(ssp,"NPI"))
-  cfg$gms$trade <- "off"
-  cfg$gms$s15_elastic_demand <- 0
-  start_run(cfg,codeCheck=FALSE)
+  for (trade in c("on","off")) {
+    cfg$title <- paste0(prefix,ssp,"_NPI_trade_",trade)
+    cfg <- setScenario(cfg,c(ssp,"NPI"))
+    if (trade=="off") cfg$gms$trade <- "off"
+    cfg$gms$s15_elastic_demand <- 0
+    start_run(cfg,codeCheck=FALSE)
+  }
 }
 
