@@ -304,3 +304,15 @@ p15_kcal_pc_calibrated(t,i,kfo) = p15_kcal_pc_calibrated_orig(t,i,kfo) * (1-i15_
 else
 display "exogenous demand information is used" ;
 );
+
+*run model with 100 kcal/cap/day additional demand
+p15_prices_kcal_shock_before(t,i,kfo) = q15_food_demand.m(i,kfo);
+p15_kcal_pc_shock_before(t,i,kfo) = p15_kcal_pc_calibrated(t,i,kfo);
+p15_kcal_pc_shock_after(t,i,kfo) = p15_kcal_pc_calibrated(t,i,kfo)+100;
+p15_kcal_pc_calibrated(t,i,kfo) = p15_kcal_pc_shock_after(t,i,kfo);
+*run the model with increased demand and save price response
+solve magpie USING nlp MINIMIZING vm_cost_glo;
+p15_prices_kcal_shock_after(t,i,kfo) = q15_food_demand.m(i,kfo);
+*reset kcal_pc to values before shock and re-run the model to reset all variable levels and marginals
+p15_kcal_pc_calibrated(t,i,kfo) = p15_kcal_pc_shock_before(t,i,kfo);
+solve magpie USING nlp MINIMIZING vm_cost_glo;

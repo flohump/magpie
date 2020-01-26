@@ -78,6 +78,12 @@ parameters
  p15_prices_kcal(t,iso,kfo)                        Prices from MAgPIE after optimization (USD05PPP per kcal)
  i15_prices_initial_kcal(iso,kfo)                  Initial prices that capture the approximate level of prices in 1961-2010 (USD05PPP per kcal)
 
+*demand shock
+ p15_prices_kcal_shock_before(t,i,kfo) blub (USD05PPP per kcal)
+ p15_prices_kcal_shock_after(t,i,kfo) blub (USD05PPP per kcal)
+ p15_kcal_pc_shock_before(t,i,kfo) blub (kcal per capita per day)
+ p15_kcal_pc_shock_after(t,i,kfo) blub (kcal per capita per day)
+ 
 * anthropometrics
   o15_bmi_shr(t,iso,sex,age,bmi_group15)           Calibrated estimates BMI share for population groups  (1)
   p15_bodyheight(t,iso,sex,age,estimates15)        Body height (cm per cap)
