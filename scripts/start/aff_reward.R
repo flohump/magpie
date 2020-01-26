@@ -56,7 +56,8 @@ cfg$gms$c12_interest_rate <- "coupling"
 # cfg$gms$c60_2ndgen_biodem <- "coupling"
 getInput("/p/projects/piam/runs/coupled-magpie/output/C_SSP2-PkBudg900-mag-4/fulldata.gdx")
 cfg$gms$land <- "feb15"
-prefix <- "rew03_"
+cfg$gms$s15_elastic_demand <- 0
+prefix <- "rew04_"
 
 for (co2_price_path in c("Hotelling","PeakBudget")) {
   if (co2_price_path=="PeakBudget") {
