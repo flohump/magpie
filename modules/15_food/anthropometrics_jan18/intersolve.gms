@@ -306,16 +306,23 @@ display "exogenous demand information is used" ;
 );
 
 display "run model with demand shock and save price response" ;
-*run model with 100 kcal/cap/day additional demand
-p15_prices_kcal_shock_before(t,i,kfo) = q15_food_demand.m(i,kfo);
-p15_kcal_pc_shock_before(t,i,kfo) = p15_kcal_pc_calibrated(t,i,kfo);
-p15_kcal_pc_shock_after(t,i,kfo) = p15_kcal_pc_calibrated(t,i,kfo)*1.1;
-p15_kcal_pc_calibrated(t,i,kfo) = p15_kcal_pc_shock_after(t,i,kfo);
+*increase demand by 10%
+p15_demand_kcal_pc_before(t,i,kfo) = p15_kcal_pc_calibrated(t,i,kfo);
+p15_demand_kcal_pc_after(t,i,kfo) = p15_kcal_pc_calibrated(t,i,kfo)*1.1;
+p15_kcal_pc_calibrated(t,i,kfo) = p15_demand_kcal_pc_after(t,i,kfo);
+p15_prod_total_before(t,i,kall) = vm_prod_reg.l(i,kall);
+*save prices before shock
+p15_prices_kcal_pc_before(t,i,kfo) = q15_food_demand.m(i,kfo);
+p15_prices_prod_before(t,i,k_trade) = q21_trade_reg.m(i,k_trade);
+p15_prices_prod_before(t,i,k_notrade) = q21_notrade.m(i,k_notrade);
 *run the model with increased demand and save price response
 solve magpie USING nlp MINIMIZING vm_cost_glo;
-p15_prices_kcal_shock_after(t,i,kfo) = q15_food_demand.m(i,kfo);
+p15_prices_kcal_pc_after(t,i,kfo) = q15_food_demand.m(i,kfo);
+p15_prices_prod_after(t,i,k_trade) = q21_trade_reg.m(i,k_trade);
+p15_prices_prod_after(t,i,k_notrade) = q21_notrade.m(i,k_notrade);
+p15_prod_total_after(t,i,kall) = vm_prod_reg.l(i,kall);
 
 display "run model again without demand shock to reset all variable levels and marginals" ;
 *reset kcal_pc to values before shock and re-run the model to reset all variable levels and marginals
-p15_kcal_pc_calibrated(t,i,kfo) = p15_kcal_pc_shock_before(t,i,kfo);
+p15_kcal_pc_calibrated(t,i,kfo) = p15_demand_kcal_pc_before(t,i,kfo);
 solve magpie USING nlp MINIMIZING vm_cost_glo;

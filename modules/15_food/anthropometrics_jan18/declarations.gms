@@ -79,10 +79,14 @@ parameters
  i15_prices_initial_kcal(iso,kfo)                  Initial prices that capture the approximate level of prices in 1961-2010 (USD05PPP per kcal)
 
 *demand shock
- p15_prices_kcal_shock_before(t,i,kfo) blub (USD05PPP per kcal)
- p15_prices_kcal_shock_after(t,i,kfo) blub (USD05PPP per kcal)
- p15_kcal_pc_shock_before(t,i,kfo) blub (kcal per capita per day)
- p15_kcal_pc_shock_after(t,i,kfo) blub (kcal per capita per day)
+ p15_prices_kcal_pc_before(t,i,kfo) blub (USD05PPP per kcal)
+ p15_prices_kcal_pc_after(t,i,kfo) blub (USD05PPP per kcal)
+ p15_demand_kcal_pc_before(t,i,kfo) blub (kcal per capita per day)
+ p15_demand_kcal_pc_after(t,i,kfo) blub (kcal per capita per day)
+ p15_prod_total_before(t,i,kall)  blub (mio t DM per year)
+ p15_prod_total_after(t,i,kall)  blub (mio t DM per year)
+ p15_prices_prod_before(t,i,kall)  blub (USD05PPP per t DM)
+ p15_prices_prod_after(t,i,kall)  blub (USD05PPP per t DM)
  
 * anthropometrics
   o15_bmi_shr(t,iso,sex,age,bmi_group15)           Calibrated estimates BMI share for population groups  (1)
