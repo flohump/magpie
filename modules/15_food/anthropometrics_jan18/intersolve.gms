@@ -315,12 +315,16 @@ p15_prod_total_before(t,i,kall) = vm_prod_reg.l(i,kall);
 p15_prices_kcal_pc_before(t,i,kfo) = q15_food_demand.m(i,kfo);
 p15_prices_prod_before(t,i,k_trade) = q21_trade_reg.m(i,k_trade);
 p15_prices_prod_before(t,i,k_notrade) = q21_notrade.m(i,k_notrade);
+p15_prices_glo_prod_before(t,k_trade) = q21_trade_glo.m(k_trade);
+
 *run the model with increased demand and save price response
 solve magpie USING nlp MINIMIZING vm_cost_glo;
 p15_prices_kcal_pc_after(t,i,kfo) = q15_food_demand.m(i,kfo);
 p15_prices_prod_after(t,i,k_trade) = q21_trade_reg.m(i,k_trade);
 p15_prices_prod_after(t,i,k_notrade) = q21_notrade.m(i,k_notrade);
+p15_prices_glo_prod_after(t,k_trade) = q21_trade_glo.m(k_trade);
 p15_prod_total_after(t,i,kall) = vm_prod_reg.l(i,kall);
+
 
 display "run model again without demand shock to reset all variable levels and marginals" ;
 *reset kcal_pc to values before shock and re-run the model to reset all variable levels and marginals

@@ -87,7 +87,9 @@ parameters
  p15_prod_total_after(t,i,kall)  blub (mio t DM per year)
  p15_prices_prod_before(t,i,kall)  blub (USD05PPP per t DM)
  p15_prices_prod_after(t,i,kall)  blub (USD05PPP per t DM)
- 
+ p15_prices_glo_prod_before(t,kall) blub (USD05PPP per t DM)
+ p15_prices_glo_prod_after(t,kall) blub (USD05PPP per t DM)
+  
 * anthropometrics
   o15_bmi_shr(t,iso,sex,age,bmi_group15)           Calibrated estimates BMI share for population groups  (1)
   p15_bodyheight(t,iso,sex,age,estimates15)        Body height (cm per cap)
