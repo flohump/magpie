@@ -35,10 +35,11 @@ source("config/default.cfg")
 
 cfg$results_folder <- "output/:title:"
 
-prefix <- "lama03_"
+prefix <- "lama04_"
 
-for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
-  for (trade in c("on","off")) {
+#for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
+for (ssp in c("SSP2")) {
+  for (trade in c("off")) {
     cfg$title <- paste0(prefix,ssp,"_NPI_trade_",trade)
     cfg <- setScenario(cfg,c(ssp,"NPI"))
     if (trade=="off") cfg$gms$c21_trade_liberalization <- "fragmented"

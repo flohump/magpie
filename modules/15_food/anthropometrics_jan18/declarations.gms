@@ -83,12 +83,12 @@ parameters
  p15_prices_kcal_pc_after(t,i,kfo) blub (USD05PPP per kcal)
  p15_demand_kcal_pc_before(t,i,kfo) blub (kcal per capita per day)
  p15_demand_kcal_pc_after(t,i,kfo) blub (kcal per capita per day)
- p15_prod_total_before(t,i,kall)  blub (mio t DM per year)
- p15_prod_total_after(t,i,kall)  blub (mio t DM per year)
- p15_prices_prod_before(t,i,kall)  blub (USD05PPP per t DM)
- p15_prices_prod_after(t,i,kall)  blub (USD05PPP per t DM)
- p15_prices_glo_prod_before(t,kall) blub (USD05PPP per t DM)
- p15_prices_glo_prod_after(t,kall) blub (USD05PPP per t DM)
+ p15_prod_total_before(t,i,kfo)  blub (mio t DM per year)
+ p15_prod_total_after(t,i,kfo)  blub (mio t DM per year)
+ p15_prices_prod_before(t,i,kfo)  blub (USD05PPP per t DM)
+ p15_prices_prod_after(t,i,kfo)  blub (USD05PPP per t DM)
+ p15_prices_glo_prod_before(t,kfo) blub (USD05PPP per t DM)
+ p15_prices_glo_prod_after(t,kfo) blub (USD05PPP per t DM)
   
 * anthropometrics
   o15_bmi_shr(t,iso,sex,age,bmi_group15)           Calibrated estimates BMI share for population groups  (1)
