@@ -61,6 +61,11 @@ PriceElasticitiesSupply <- function(gdx,scen="SSP2", file=FALSE) {
   price_elasiticty_supply <- prod_change/price_change
   
   if(file) {
+    write.report(p15_prod_total_before,"output/prod_before.csv",append = TRUE,model = "MAgPIE",scenario = scen,unit = "mio tDM per year")
+    write.report(p15_prod_total_after,"output/prod_after.csv",append = TRUE,model = "MAgPIE",scenario = scen,unit = "mio tDM per year")
+    write.report(p15_prices_prod_before,"output/prices_before.csv",append = TRUE,model = "MAgPIE",scenario = scen,unit = "USD05MER per tDM")
+    write.report(p15_prices_prod_after,"output/prices_after.csv",append = TRUE,model = "MAgPIE",scenario = scen,unit = "USD05MER per tDM")
+    write.report(prod_change,"output/prod_change.csv",append = TRUE,model = "MAgPIE",scenario = scen,unit = "%")
     write.report(prod_change,"output/prod_change.csv",append = TRUE,model = "MAgPIE",scenario = scen,unit = "%")
     write.report(price_change,"output/price_change.csv",append = TRUE,model = "MAgPIE",scenario = scen,unit = "%")
     write.report(price_elasiticty_supply,"output/price_elasiticty_supply.csv",append = TRUE,model = "MAgPIE",scenario = scen,unit = "unitless")
