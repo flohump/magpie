@@ -11,6 +11,7 @@ s15_waste_scen;;;;;;;;1.2;1.2;;;;;;;;;;;
 s15_exo_diet;;;;;;;;1;0;;;;;;;;;;;
 c15_kcal_scen;;;;;;;;healthy_BMI;healthy_BMI;;;;;;;;;;;
 c15_EAT_scen;;;;;;;;FLX;FLX;;;;;;;;;;;
+c17_prod_scen;;;SSP1;SSP2;SSP3;SSP4;SSP5;;;;;;;;;;;;;
 c21_trade_liberalization;;;l908080r807070;l909090r808080;l909595r809090;l908080r807070;l908080r807070;l908080r807070;;;;;;;;l908080r807070;l909090r808080;l909595r809090;l908080r807070;l908080r807070
 s32_max_aff_area;;;;;;;;500;Inf;;;;;;;;;;;
 c32_aff_mask;;;;;;;;onlytropical;noboreal;;;;;;;;;;;

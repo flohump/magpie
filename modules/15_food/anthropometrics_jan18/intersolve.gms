@@ -305,6 +305,7 @@ else
 display "exogenous demand information is used" ;
 );
 
+$ontext
 display "run model with demand shock and save price response" ;
 *increase demand by 10%
 p15_demand_kcal_pc_before(t,i,kfo) = p15_kcal_pc_calibrated(t,i,kfo);
@@ -333,3 +334,4 @@ display "run model again without demand shock to reset all variable levels and m
 *reset kcal_pc to values before shock and re-run the model to reset all variable levels and marginals
 p15_kcal_pc_calibrated(t,i,kfo) = p15_demand_kcal_pc_before(t,i,kfo);
 solve magpie USING nlp MINIMIZING vm_cost_glo;
+$offtext

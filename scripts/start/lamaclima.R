@@ -35,16 +35,15 @@ source("config/default.cfg")
 
 cfg$results_folder <- "output/:title:"
 
-prefix <- "lama04_"
+prefix <- "lama05_"
 
-#for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
-for (ssp in c("SSP2")) {
-  for (trade in c("off")) {
-    cfg$title <- paste0(prefix,ssp,"_NPI_trade_",trade)
-    cfg <- setScenario(cfg,c(ssp,"NPI"))
-    if (trade=="off") cfg$gms$c21_trade_liberalization <- "fragmented"
-    cfg$gms$s15_elastic_demand <- 0
-    start_run(cfg,codeCheck=FALSE)
-  }
+for (ssp in c("SSP2","SSP1","SSP3","SSP4","SSP5")) {
+  cfg$title <- paste0(prefix,ssp,"_NPI")
+  cfg <- setScenario(cfg,c(ssp,"NPI"))
+  cfg$gms$s15_elastic_demand <- 0
+  cfg$gms$maccs  <- "off_jul16"
+  cfg$gms$trade <- "free_apr16"
+  cfg$gms$production <- "supply_shock_jan20"
+  start_run(cfg,codeCheck=FALSE)
 }
 

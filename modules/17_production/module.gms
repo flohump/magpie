@@ -14,4 +14,5 @@
 
 *###################### R SECTION START (MODULETYPES) ##########################
 $Ifi "%production%" == "flexreg_apr16" $include "./modules/17_production/flexreg_apr16/realization.gms"
+$Ifi "%production%" == "supply_shock_jan20" $include "./modules/17_production/supply_shock_jan20/realization.gms"
 *###################### R SECTION END (MODULETYPES) ############################

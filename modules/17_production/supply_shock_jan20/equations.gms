@@ -5,6 +5,11 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
- q21_trade_glo(k_trade).. sum(i2 ,vm_prod_reg(i2,k_trade)*pm_prod_shock(i2,k_trade)) =g= sum(i2, vm_supply(i2,k_trade)*pm_prod_shock(i2,k_trade));
+*' @equations
 
- q21_notrade(i2,k_notrade).. vm_prod_reg(i2,k_notrade)*pm_prod_shock(i2,k_notrade) =g= vm_supply(i2,k_notrade)*pm_prod_shock(i2,k_notrade);
+q17_prod_reg(i2,k) ..
+vm_prod_reg(i2,k) =e= sum(cell(i2,j2), vm_prod(j2,k));
+
+*' The equation above describes regional production of a MAgPIE plant commodity
+*' `vm_prod_reg` as the sum of the cluster level production `vm_prod` of the
+*' same commodity.

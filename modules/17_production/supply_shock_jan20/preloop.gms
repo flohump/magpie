@@ -5,6 +5,12 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
- q21_trade_glo(k_trade).. sum(i2 ,vm_prod_reg(i2,k_trade)*pm_prod_shock(i2,k_trade)) =g= sum(i2, vm_supply(i2,k_trade)*pm_prod_shock(i2,k_trade));
-
- q21_notrade(i2,k_notrade).. vm_prod_reg(i2,k_notrade)*pm_prod_shock(i2,k_notrade) =g= vm_supply(i2,k_notrade)*pm_prod_shock(i2,k_notrade);
+i17_prod_reg(t,i,kall) = f17_prod_reg(t,i,kall,"%c17_prod_scen%");
+pm_prod_shock(i,k) = 1;
+*define shock scenarios
+p17_shock_scen("0") = 0;
+p17_shock_scen("5") = 0.05;
+p17_shock_scen("10") = 0.1;
+p17_shock_scen("20") = 0.2;
+p17_shock_scen("40") = 0.4;
+p17_shock_scen("80") = 0.8;

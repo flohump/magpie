@@ -185,12 +185,12 @@ $setglobal yields  dynamic_aug18
 
 $setglobal food  anthropometrics_jan18
 $setglobal demand  sector_may15
-$setglobal production  flexreg_apr16
+$setglobal production  supply_shock_jan20
 
 $setglobal residues  flexreg_apr16
 $setglobal processing  substitution_dec18
 
-$setglobal trade  selfsuff_reduced
+$setglobal trade  free_apr16
 
 $setglobal crop  endo_jun13
 $setglobal past  endo_jun13
@@ -214,7 +214,7 @@ $setglobal methane  ipcc2006_flexreg_apr16
 $setglobal phosphorus  off
 $setglobal awms  ipcc2006_aug16
 $setglobal ghg_policy  price_jan20
-$setglobal maccs  on_sep16
+$setglobal maccs  off_jul16
 $setglobal som  static_jan19
 
 $setglobal bioenergy  1stgen_priced_dec18
