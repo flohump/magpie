@@ -7,10 +7,10 @@
 
 sets
    s17_shock production shock scenario
-       / 0, 5, 10, 20, 40, 80 /
+       / 0, 5, 10, 20 /
        
    s17_shock_sub(s17_shock) production shock scenario sub
-       / 5, 10, 20, 40, 80 /
+       / 5, 10, 20 /
 
    s17_scen  ssp scenario
        / SSP1, SSP2, SSP3, SSP4, SSP5 /       

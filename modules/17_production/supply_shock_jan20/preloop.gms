@@ -12,5 +12,3 @@ p17_shock_scen("0") = 0;
 p17_shock_scen("5") = 0.05;
 p17_shock_scen("10") = 0.1;
 p17_shock_scen("20") = 0.2;
-p17_shock_scen("40") = 0.4;
-p17_shock_scen("80") = 0.8;
