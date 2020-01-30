@@ -5,6 +5,6 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
- q21_trade_glo(k_trade).. sum(i2 ,vm_prod_reg(i2,k_trade)*pm_prod_shock(i2,k_trade)) =g= sum(i2, vm_supply(i2,k_trade)*pm_prod_shock(i2,k_trade));
+ q21_trade_glo(k_trade).. sum(i2 ,vm_prod_reg(i2,k_trade) =g= sum(i2, vm_supply(i2,k_trade)*pm_prod_shock(i2,k_trade));
 
- q21_notrade(i2,k_notrade).. vm_prod_reg(i2,k_notrade)*pm_prod_shock(i2,k_notrade) =g= vm_supply(i2,k_notrade)*pm_prod_shock(i2,k_notrade);
+ q21_notrade(i2,k_notrade).. vm_prod_reg(i2,k_notrade) =g= vm_supply(i2,k_notrade)*pm_prod_shock(i2,k_notrade);

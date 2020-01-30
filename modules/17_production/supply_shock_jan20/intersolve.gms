@@ -23,6 +23,9 @@ loop(s17_shock_sub,
  display "simultaneous shock";
  display s17_shock_sub;
  pm_prod_shock(i,k) = 1+p17_shock_scen(s17_shock_sub);
+*release bounds of production for all regions and products
+ vm_prod_reg.lo(i,k) = 0;
+ vm_prod_reg.up(i,k) = Inf;
  solve magpie USING nlp MINIMIZING vm_cost_glo;
 *save production, prices and costs after shock
  p17_prod(t,i,k,s17_shock_sub) = vm_prod_reg.l(i,k) * pm_prod_shock(i,k);
@@ -33,6 +36,8 @@ loop(s17_shock_sub,
 
 *reset prod shock
 pm_prod_shock(i,k) = 1;
+*reset prod pattern fixing 
+ vm_prod_reg.fx(i,k) = i17_prod_reg(t,i,k);
 
 display "run model with individual shocks and save price response" ;
 *individual shock for all regions and products for deriving own elasticity 
@@ -42,12 +47,17 @@ loop ((i,k2,s17_shock_sub),
  display k2;
  display s17_shock_sub;
  pm_prod_shock(i,k2) = 1+p17_shock_scen(s17_shock_sub);
+*release bounds of production for this region and product, production of all other regions and products is fixed
+ vm_prod_reg.lo(i,k2) = 0;
+ vm_prod_reg.up(i,k2) = Inf;
  solve magpie USING nlp MINIMIZING vm_cost_glo;
 *save prices and costs after shock, production is the same as for the simultaneous shock
  p17_price_own(t,i,k2,s17_shock_sub) = sum(k_notrade$sameas(k_notrade,k2), q21_notrade.m(i,k_notrade)) + sum(k_trade$sameas(k_trade,k2), q21_trade_glo.m(k_trade));
  p17_cost_own(t,i,k2,s17_shock_sub) = v11_cost_reg.l(i);
 *reset prod shock
- pm_prod_shock(i,k2) = 1; 
+ pm_prod_shock(i,k2) = 1;
+*reset prod pattern fixing 
+ vm_prod_reg.fx(i,k2) = i17_prod_reg(t,i,k2);
 );
 
 
