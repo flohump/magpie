@@ -18,7 +18,10 @@ p17_cost_own(t,i,k,"0") = v11_cost_reg.l(i);
 
 
 *simultaneous shock for all regions and products for deriving cross-price elasticity 
+display "run model with simultaneous shock and save price response" ;
 loop(s17_shock_sub, 
+ display "simultaneous shock";
+ display s17_shock_sub;
  pm_prod_shock(i,k) = 1+p17_shock_scen(s17_shock_sub);
  solve magpie USING nlp MINIMIZING vm_cost_glo;
 *save production, prices and costs after shock
@@ -31,8 +34,13 @@ loop(s17_shock_sub,
 *reset prod shock
 pm_prod_shock(i,k) = 1;
 
+display "run model with individual shocks and save price response" ;
 *individual shock for all regions and products for deriving own elasticity 
 loop ((i,k2,s17_shock_sub),
+ display "individual shock"; 
+ display i;
+ display k2;
+ display s17_shock_sub;
  pm_prod_shock(i,k2) = 1+p17_shock_scen(s17_shock_sub);
  solve magpie USING nlp MINIMIZING vm_cost_glo;
 *save prices and costs after shock, production is the same as for the simultaneous shock
