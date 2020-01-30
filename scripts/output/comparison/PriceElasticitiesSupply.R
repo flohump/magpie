@@ -26,6 +26,10 @@ if(!exists("source_include")) {
 ###############################################################################
 cat("\nStarting output generation\n")
 
+if (file.exists("output/prod_before.csv")) file.rename("output/prod_before.csv","output/prod_before.bak")
+if (file.exists("output/prod_after.csv")) file.rename("output/prod_after.csv","output/prod_after.bak")
+if (file.exists("output/prices_before.csv")) file.rename("output/prices_before.csv","output/prices_before.bak")
+if (file.exists("output/prices_after.csv")) file.rename("output/prices_after.csv","output/prices_after.bak")
 if (file.exists("output/prod_change.csv")) file.rename("output/prod_change.csv","output/prod_change.bak")
 if (file.exists("output/price_change.csv")) file.rename("output/price_change.csv","output/price_change.bak")
 if (file.exists("output/price_elasiticty_supply.csv")) file.rename("output/price_elasiticty_supply.csv","output/price_elasiticty_supply.bak")
