@@ -190,7 +190,7 @@ $setglobal production  supply_shock_jan20
 $setglobal residues  flexreg_apr16
 $setglobal processing  substitution_dec18
 
-$setglobal trade  free_apr16
+$setglobal trade  selfsuff_reduced
 
 $setglobal crop  endo_jun13
 $setglobal past  endo_jun13

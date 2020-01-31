@@ -11,11 +11,11 @@
 
  q21_trade_glo(k_trade)..
   sum(i2 ,vm_prod_reg(i2,k_trade)) =g=
-  sum(i2, vm_supply(i2,k_trade)) + sum(ct,f21_trade_balanceflow(ct,k_trade));
+  sum(i2, vm_supply(i2,k_trade)*pm_prod_shock(i2,k_trade)) + sum(ct,f21_trade_balanceflow(ct,k_trade));
 *'
 *' For non-tradable commodites, the regional supply should be larger or equal to the regional demand.
  q21_notrade(i2,k_notrade)..
-  vm_prod_reg(i2,k_notrade) =g= vm_supply(i2,k_notrade);
+  vm_prod_reg(i2,k_notrade) =g= vm_supply(i2,k_notrade)*pm_prod_shock(i2,k_notrade);
 
 *' The following equation indicates the regional trade constraint for the self-sufficiency pool.
 *' The share of regional demand that has to be fulfilled through the self-sufficiency pool is

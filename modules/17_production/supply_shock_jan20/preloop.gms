@@ -5,8 +5,8 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-i17_prod_reg(t,i,kall) = f17_prod_reg(t,i,kall,"%c17_prod_scen%");
-pm_prod_shock(i,k) = 1;
+*i17_prod_reg(t,i,kall) = f17_prod_reg(t,i,kall,"%c17_prod_scen%");
+pm_prod_shock(i,kall) = 1;
 *define shock scenarios
 p17_shock_scen("0") = 0;
 p17_shock_scen("5") = 0.05;

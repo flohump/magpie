@@ -17,3 +17,4 @@ sets
 ;
 
 alias(k,k2);
+alias(kall,kall2);

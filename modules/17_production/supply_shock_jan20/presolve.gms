@@ -5,4 +5,4 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-vm_prod_reg.fx(i,kall) = i17_prod_reg(t,i,kall);
+*vm_prod_reg.fx(i,kall) = i17_prod_reg(t,i,kall);

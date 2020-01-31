@@ -6,14 +6,15 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 parameters
- pm_prod_shock(i,k)				production shock (percentage)
+ pm_prod_shock(i,kall)			production shock (percentage)
  p17_shock_scen(s17_shock)		production shock (percentage)
  i17_prod_reg(t,i,kall)		production (mio. tDM per yr)
- p17_prod(t,i,k,s17_shock)		production (mio. tDM per yr)
- p17_price_cross(t,i,k,s17_shock) prices cross (USD05MER per tDM)
+ p17_prod_cross(t,i,kall,s17_shock)	production cross (mio. tDM per yr)
+ p17_prod_own(t,i,kall,s17_shock)		production own (mio. tDM per yr)
+ p17_price_cross(t,i,kall,s17_shock) prices cross (USD05MER per tDM)
  p17_cost_cross(t,i,s17_shock) 	cost cross (mio. USD05MER per yr)
- p17_price_own(t,i,k,s17_shock) prices own (USD05MER per tDM)
- p17_cost_own(t,i,k,s17_shock) 	cost own (mio. USD05MER per yr)
+ p17_price_own(t,i,kall,s17_shock) prices own (USD05MER per tDM)
+ p17_cost_own(t,i,kall,s17_shock) 	cost own (mio. USD05MER per yr)
 ;
 
 positive variables
