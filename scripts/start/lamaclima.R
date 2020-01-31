@@ -35,7 +35,10 @@ source("config/default.cfg")
 
 cfg$results_folder <- "output/:title:"
 
-prefix <- "lama06_"
+#06 kall
+#07 k primary products only
+
+prefix <- "lama07_"
 
 for (ssp in c("SSP2","SSP1","SSP3","SSP4","SSP5")) {
   cfg$title <- paste0(prefix,ssp,"_BASE")

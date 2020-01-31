@@ -26,7 +26,7 @@ display "run model with simultaneous shock and save price response" ;
 loop(s21_shock_sub, 
  display "simultaneous shock";
  display s21_shock_sub;
- p21_supply_shock(i,kall) = 1+p21_shock_scen(s21_shock_sub);
+ p21_supply_shock(i,k) = 1+p21_shock_scen(s21_shock_sub);
  solve magpie USING nlp MINIMIZING vm_cost_glo;
 *save production, prices and costs after shock
  p21_prod_cross(t,i,kall,s21_shock_sub) = vm_prod_reg.l(i,kall);
