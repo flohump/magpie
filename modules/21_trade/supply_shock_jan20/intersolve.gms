@@ -16,17 +16,18 @@ p21_cost_own(t,i,kall,"0") = v11_cost_reg.l(i);
 
 *save production patterns from initial run
 i21_prod_reg(t,i,kall) = vm_prod_reg.l(i,kall);
-*save production patterns from initial run
-i21_supply_reg(t,i,kall) = vm_supply.l(i,kall);
+*save supply patterns from initial run
+i21_prod(t,j,k) = vm_prod.l(j,k);
 
-vm_supply.fx(i,kall) = vm_supply.l(i,kall)
-
+*vm_prod_reg.fx(i,ksd) = i21_prod_reg(t,i,ksd);
+vm_prod.lo(j,k) = i21_prod(t,j,k)
+ 
 *simultaneous shock for all regions and products for deriving cross-price elasticity 
 display "run model with simultaneous shock and save price response" ;
 loop(s21_shock_sub, 
  display "simultaneous shock";
  display s21_shock_sub;
- p21_supply_shock(i,k) = 1+p21_shock_scen(s21_shock_sub);
+ p21_supply_shock(i,kall) = 1+p21_shock_scen(s21_shock_sub);
  solve magpie USING nlp MINIMIZING vm_cost_glo;
 *save production, prices and costs after shock
  p21_prod_cross(t,i,kall,s21_shock_sub) = vm_prod_reg.l(i,kall);

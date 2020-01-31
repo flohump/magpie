@@ -16,4 +16,4 @@ sets
        / SSP1, SSP2, SSP3, SSP4, SSP5 /       
 ;
 
-alias(k,kall2);
+alias(kall,kall2);
