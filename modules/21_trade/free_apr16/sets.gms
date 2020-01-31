@@ -6,12 +6,16 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 sets
-   k_trade(k) Production activities of tradable commodities
-       / tece, maiz, trce, rice_pro, soybean, rapeseed, groundnut, sunflower,
-         oilpalm, puls_pro, potato, cassav_sp, sugr_cane, sugr_beet, others,
-         cottn_pro, livst_rum, livst_pig,
-         livst_chick, livst_egg, livst_milk /
-
-   k_notrade(k) Production activities of non-tradable commodities
-       / begr, betr, foddr, pasture /
+*sets need to be adopted to new categories
+   k_notrade(kall) Production activities of non-tradable commodites
+       / oilpalm, foddr, pasture, res_cereals, res_fibrous, res_nonfibrous,wood,woodfuel /
+* oilpalm not traded, only its oil and oilcake due to FAOSTAT complications, and as trade is little
+* foddr is not traded as too bulky
+* pasture ist not traded as too bulky
+   k_trade(kall) Production activities of tradable commodities
+   / tece,maiz,trce,rice_pro,soybean,rapeseed,groundnut,sunflower,puls_pro,
+   potato,cassav_sp,sugr_cane,sugr_beet,others,cottn_pro, begr, betr,
+   oils,oilcakes,sugar,molasses,alcohol,ethanol,distillers_grain,brans,scp,fibres,
+   livst_rum, livst_pig,livst_chick, livst_egg, livst_milk, fish /
+       
 ;

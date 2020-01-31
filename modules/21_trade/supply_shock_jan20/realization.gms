@@ -15,12 +15,10 @@
 *' products.
 
 *####################### R SECTION START (PHASES) ##############################
-$Ifi "%phase%" == "sets" $include "./modules/17_production/supply_shock_jan20/sets.gms"
-$Ifi "%phase%" == "declarations" $include "./modules/17_production/supply_shock_jan20/declarations.gms"
-$Ifi "%phase%" == "input" $include "./modules/17_production/supply_shock_jan20/input.gms"
-$Ifi "%phase%" == "equations" $include "./modules/17_production/supply_shock_jan20/equations.gms"
-$Ifi "%phase%" == "preloop" $include "./modules/17_production/supply_shock_jan20/preloop.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/17_production/supply_shock_jan20/presolve.gms"
-$Ifi "%phase%" == "intersolve" $include "./modules/17_production/supply_shock_jan20/intersolve.gms"
-$Ifi "%phase%" == "postsolve" $include "./modules/17_production/supply_shock_jan20/postsolve.gms"
+$Ifi "%phase%" == "sets" $include "./modules/21_trade/supply_shock_jan20/sets.gms"
+$Ifi "%phase%" == "declarations" $include "./modules/21_trade/supply_shock_jan20/declarations.gms"
+$Ifi "%phase%" == "equations" $include "./modules/21_trade/supply_shock_jan20/equations.gms"
+$Ifi "%phase%" == "preloop" $include "./modules/21_trade/supply_shock_jan20/preloop.gms"
+$Ifi "%phase%" == "intersolve" $include "./modules/21_trade/supply_shock_jan20/intersolve.gms"
+$Ifi "%phase%" == "postsolve" $include "./modules/21_trade/supply_shock_jan20/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################

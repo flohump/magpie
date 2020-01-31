@@ -5,11 +5,12 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-*' @equations
+*set vm_cost_trade zero in order to avoid a free variable
+vm_cost_trade.fx(i)               = 0;
 
-q17_prod_reg(i2,k) ..
-vm_prod_reg(i2,k) =e= sum(cell(i2,j2), vm_prod(j2,k));
-
-*' The equation above describes regional production of a MAgPIE plant commodity
-*' `vm_prod_reg` as the sum of the cluster level production `vm_prod` of the
-*' same commodity.
+p21_supply_shock(i,kall) = 1;
+*define shock scenarios
+p21_shock_scen("0") = 0;
+p21_shock_scen("5") = 0.05;
+p21_shock_scen("10") = 0.1;
+p21_shock_scen("20") = 0.2;

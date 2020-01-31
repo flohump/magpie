@@ -6,6 +6,7 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 
+
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
  ov_cost_trade(t,i,"marginal")     = vm_cost_trade.m(i);
  oq21_notrade(t,i,kall,"marginal") = q21_notrade.m(i,kall);
@@ -16,3 +17,4 @@
  ov_cost_trade(t,i,"lower")        = vm_cost_trade.lo(i);
  oq21_notrade(t,i,kall,"lower")    = q21_notrade.lo(i,kall);
 *##################### R SECTION END (OUTPUT DEFINITIONS) ######################
+

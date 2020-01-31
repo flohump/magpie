@@ -185,12 +185,12 @@ $setglobal yields  dynamic_aug18
 
 $setglobal food  anthropometrics_jan18
 $setglobal demand  sector_may15
-$setglobal production  supply_shock_jan20
+$setglobal production  flexreg_apr16
 
 $setglobal residues  flexreg_apr16
 $setglobal processing  substitution_dec18
 
-$setglobal trade  selfsuff_reduced
+$setglobal trade  supply_shock_jan20
 
 $setglobal crop  endo_jun13
 $setglobal past  endo_jun13

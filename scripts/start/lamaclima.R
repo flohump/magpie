@@ -41,9 +41,10 @@ for (ssp in c("SSP2","SSP1","SSP3","SSP4","SSP5")) {
   cfg$title <- paste0(prefix,ssp,"_NPI")
   cfg <- setScenario(cfg,c(ssp,"NPI"))
   cfg$gms$s15_elastic_demand <- 0
+  cfg$gms$land <- "feb15"
+#  cfg$gms$s80_optfile <- 0
   cfg$gms$maccs  <- "off_jul16"
-#  cfg$gms$trade <- "free_apr16"
-  cfg$gms$production <- "supply_shock_jan20"
+  cfg$gms$trade <- "supply_shock_jan20"
   start_run(cfg,codeCheck=FALSE)
 }
 

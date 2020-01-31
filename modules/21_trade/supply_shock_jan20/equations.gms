@@ -5,16 +5,4 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-sets
-   s17_shock production shock scenario
-       / 0, 5, 10, 20 /
-       
-   s17_shock_sub(s17_shock) production shock scenario sub
-       / 5, 10, 20 /
-
-   s17_scen  ssp scenario
-       / SSP1, SSP2, SSP3, SSP4, SSP5 /       
-;
-
-alias(k,k2);
-alias(kall,kall2);
+ q21_notrade(i2,kall).. vm_prod_reg(i2,kall) =g= vm_supply(i2,kall) * p21_supply_shock(i2,kall);

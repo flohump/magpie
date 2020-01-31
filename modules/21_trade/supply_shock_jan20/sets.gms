@@ -5,10 +5,16 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-$setglobal c17_prod_scen	SSP2
-*   options are SSP1-5
+sets
+   s21_shock production shock scenario
+       / 0, 5, 10, 20 /
+       
+   s21_shock_sub(s21_shock) production shock scenario sub
+       / 5, 10, 20 /
 
-table f17_prod_reg(t_all,i,kall,s17_scen) production pattern (mio. tDM per yr)
-$ondelim
-$include "./modules/17_production/input/f17_prod_reg.cs3"
-$offdelim;
+   s21_scen  ssp scenario
+       / SSP1, SSP2, SSP3, SSP4, SSP5 /       
+;
+
+alias(k,k2);
+alias(kall,kall2);
