@@ -35,9 +35,9 @@ source("config/default.cfg")
 
 cfg$results_folder <- "output/:title:"
 
-prefix <- "lama06_"
-
-for (ssp in c("SSP2","SSP1","SSP3","SSP4","SSP5")) {
+prefix <- "lama06X_"
+#"SSP1","SSP3","SSP4","SSP5"
+for (ssp in c("SSP2")) {
   cfg$title <- paste0(prefix,ssp,"_NPI")
   cfg <- setScenario(cfg,c(ssp,"NPI"))
   cfg$gms$s15_elastic_demand <- 0
