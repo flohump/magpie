@@ -16,6 +16,10 @@ p21_cost_own(t,i,kall,"0") = v11_cost_reg.l(i);
 
 *save production patterns from initial run
 i21_prod_reg(t,i,kall) = vm_prod_reg.l(i,kall);
+*save production patterns from initial run
+i21_supply_reg(t,i,kall) = vm_supply.l(i,kall);
+
+vm_supply.fx(i,kall) = vm_supply.l(i,kall)
 
 *simultaneous shock for all regions and products for deriving cross-price elasticity 
 display "run model with simultaneous shock and save price response" ;

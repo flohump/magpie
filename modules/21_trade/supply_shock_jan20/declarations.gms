@@ -9,6 +9,7 @@ parameters
  p21_supply_shock(i,kall)		supply shock (percentage)
  p21_shock_scen(s21_shock)		supply shock scenario (percentage)
  i21_prod_reg(t,i,kall)		production (mio. tDM per yr)
+ i21_supply_reg(t,i,kall)		supply (mio. tDM per yr)
  p21_prod_cross(t,i,kall,s21_shock)	production cross (mio. tDM per yr)
  p21_prod_own(t,i,kall,s21_shock)		production own (mio. tDM per yr)
  p21_price_cross(t,i,kall,s21_shock) prices cross (USD05MER per tDM)
