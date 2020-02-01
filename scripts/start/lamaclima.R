@@ -39,9 +39,9 @@ cfg$results_folder <- "output/:title:"
 #06 prod_reg free with lower bound on prod_cell
 
 
-prefix <- "lama06X_"
-#"SSP1","SSP3","SSP4","SSP5"
-for (ssp in c("SSP2")) {
+prefix <- "lama06_"
+
+for (ssp in c("SSP1","SSP3","SSP4","SSP5","SSP2")) {
   cfg$title <- paste0(prefix,ssp,"_BASE")
   cfg <- setScenario(cfg,c(ssp,"BASE"))
   cfg$recalc_npi_ndc <- FALSE

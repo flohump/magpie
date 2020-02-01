@@ -19,8 +19,8 @@ i21_prod_reg(t,i,kall) = vm_prod_reg.l(i,kall);
 *save supply patterns from initial run
 i21_prod(t,j,k) = vm_prod.l(j,k);
 
-*vm_prod_reg.fx(i,ksd) = i21_prod_reg(t,i,ksd);
-vm_prod.lo(j,k) = i21_prod(t,j,k)
+*set lower bound of cellular production to level of production from initial run 
+vm_prod.lo(j,k) = vm_prod.l(j,k);
  
 *simultaneous shock for all regions and products for deriving cross-price elasticity 
 display "run model with simultaneous shock and save price response" ;
@@ -54,4 +54,5 @@ loop ((kall2,s21_shock_sub),
  p21_supply_shock(i,kall2) = 1;
 );
 
-
+*set lower bound to zero for next timestep
+vm_prod.lo(j,k) = 0;
