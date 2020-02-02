@@ -37,12 +37,12 @@ cfg$results_folder <- "output/:title:"
 
 #05 prod_reg free
 #06 prod_reg free with lower bound on prod_cell
+#07 prod_reg free with lower bound on prod_cell and reset of all variables and constraints (load_gdx)
 
 
-prefix <- "lama06X_"
+prefix <- "lama07_"
 
-#for (ssp in c("SSP1","SSP3","SSP4","SSP5","SSP2")) {
-for (ssp in c("SSP4","SSP2")) {
+for (ssp in c("SSP1","SSP3","SSP4","SSP5","SSP2")) {
   cfg$title <- paste0(prefix,ssp,"_BASE")
   cfg <- setScenario(cfg,c(ssp,"BASE"))
   cfg$recalc_npi_ndc <- FALSE

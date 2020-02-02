@@ -19,15 +19,16 @@ i21_prod_reg(t,i,kall) = vm_prod_reg.l(i,kall);
 *save supply patterns from initial run
 i21_prod(t,j,k) = vm_prod.l(j,k);
 
-*set lower bound of cellular production to level of production from initial run 
-vm_prod.lo(j,k) = vm_prod.l(j,k);
- 
 *simultaneous shock for all regions and products for deriving cross-price elasticity 
 display "run model with simultaneous shock and save price response" ;
 loop(s21_shock_sub, 
  display "simultaneous shock";
  display s21_shock_sub;
  p21_supply_shock(i,kall) = 1+p21_shock_scen(s21_shock_sub);
+*reset all variables and constraint 
+$include "./core/load_gdx.gms"
+*set lower bound of cellular production to level of production from initial run 
+ vm_prod.lo(j,k) = vm_prod.l(j,k);
  solve magpie USING nlp MINIMIZING vm_cost_glo;
 *save production, prices and costs after shock
  p21_prod_cross(t,i,kall,s21_shock_sub) = vm_prod_reg.l(i,kall);
@@ -45,6 +46,10 @@ loop ((kall2,s21_shock_sub),
  display kall2;
  display s21_shock_sub;
  p21_supply_shock(i,kall2) = 1+p21_shock_scen(s21_shock_sub);
+*reset all variables and constraint 
+$include "./core/load_gdx.gms"
+*set lower bound of cellular production to level of production from initial run 
+ vm_prod.lo(j,k2) = vm_prod.l(j,k2);
  solve magpie USING nlp MINIMIZING vm_cost_glo;
 *save production, prices and costs after shock
  p21_prod_own(t,i,kall2,s21_shock_sub) = vm_prod_reg.l(i,kall2);
@@ -56,3 +61,5 @@ loop ((kall2,s21_shock_sub),
 
 *set lower bound to zero for next timestep
 vm_prod.lo(j,k) = 0;
+*reset all variables and constraint 
+$include "./core/load_gdx.gms"
