@@ -30,6 +30,7 @@ display "reset variables and constraints";
 display vm_cost_glo.l;
 $include "./core/load_gdx.gms"
 display vm_cost_glo.l;
+vm_tau.fx(i) = vm_tau.l(i);
 *set lower bound of cellular production to level of production from initial run 
 * vm_prod_reg.lo(i,kall) = vm_prod_reg.l(i,kall)* p21_supply_shock(i,kall);
  solve magpie USING nlp MINIMIZING vm_cost_glo;
@@ -54,6 +55,7 @@ display "reset variables and constraints";
 display vm_cost_glo.l;
 $include "./core/load_gdx.gms"
 display vm_cost_glo.l;
+vm_tau.fx(i) = vm_tau.l(i);
  solve magpie USING nlp MINIMIZING vm_cost_glo;
 *save production, prices and costs after shock
  p21_prod_own(t,i,kall2,s21_shock_own) = vm_prod_reg.l(i,kall2);
@@ -66,5 +68,11 @@ display vm_cost_glo.l;
 *reset all variables and constraint 
 display "reset variables and constraints";
 display vm_cost_glo.l;
+display vm_tau.l
+display vm_tau.lo;
+display vm_tau.up;
 $include "./core/load_gdx.gms"
 display vm_cost_glo.l;
+display vm_tau.l;
+display vm_tau.lo;
+display vm_tau.up;

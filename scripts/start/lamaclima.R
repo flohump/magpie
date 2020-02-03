@@ -39,9 +39,10 @@ cfg$results_folder <- "output/:title:"
 #06 prod_reg free with lower bound on prod_cell
 #07 prod_reg free with lower bound on prod_cell and reset of all variables and constraints (load_gdx)
 #08 prod_reg free and reset of all variables and constraints (load_gdx)
+#09 prod_reg free with fixed vm_tau and reset of all variables and constraints (load_gdx)
 
 
-prefix <- "lama08_"
+prefix <- "lama09_"
 
 for (ssp in c("SSP1","SSP3","SSP4","SSP5","SSP2")) {
   cfg$title <- paste0(prefix,ssp,"_BASE")
