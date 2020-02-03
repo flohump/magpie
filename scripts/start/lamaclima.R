@@ -42,7 +42,7 @@ cfg$results_folder <- "output/:title:"
 #09 prod_reg free with fixed vm_tau and reset of all variables and constraints (load_gdx)
 
 
-prefix <- "lama09_"
+prefix <- "lama10_"
 
 for (ssp in c("SSP1","SSP3","SSP4","SSP5","SSP2")) {
   cfg$title <- paste0(prefix,ssp,"_BASE")

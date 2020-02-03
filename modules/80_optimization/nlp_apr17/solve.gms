@@ -65,7 +65,7 @@ repeat(
 *' @stop
 
 if ((p80_modelstat(t) < 3),
-  put_utility 'shell' / 'mv -f magpie_p.gdx magpie_' t.tl:0'.gdx';
+  put_utility 'shell' / 'cp -f magpie_p.gdx magpie_' t.tl:0'.gdx';
 );
 
 if ((p80_modelstat(t) > 2 and p80_modelstat(t) ne 7),
