@@ -7,11 +7,14 @@
 
 sets
    s21_shock production shock scenario
-       / 0, 5, 10, 20 /
+       / 0, 5, 10, 20, 40, 80 /
        
-   s21_shock_sub(s21_shock) production shock scenario sub
+   s21_shock_cross(s21_shock) production shock scenario sub
        / 5, 10, 20 /
 
+   s21_shock_own(s21_shock) production shock scenario
+       / 5, 10, 20, 40, 80 /
+       
    s21_scen  ssp scenario
        / SSP1, SSP2, SSP3, SSP4, SSP5 /       
 ;
