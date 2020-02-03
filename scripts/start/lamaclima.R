@@ -39,7 +39,8 @@ cfg$results_folder <- "output/:title:"
 #06 prod_reg free with lower bound on prod_cell
 #07 prod_reg free with lower bound on prod_cell and reset of all variables and constraints (load_gdx)
 #08 prod_reg free and reset of all variables and constraints (load_gdx)
-#09 prod_reg free with fixed vm_tau and reset of all variables and constraints (load_gdx)
+#09 prod_reg free with fixed vm_tau
+#10 prod_reg free with fixed vm_tau and reset of all variables and constraints (load_gdx)
 
 
 prefix <- "lama10_"
