@@ -37,9 +37,9 @@ cfg$results_folder <- "output/:title:"
 
 #05 prod_reg free
 #06 prod_reg free with lower bound on prod_cell
-#07 prod_reg free with lower bound on prod_cell and reset of all variables and constraints (load_gdx)
-#08 prod_reg free and reset of all variables and constraints (load_gdx)
-#09 prod_reg free with fixed vm_tau
+#07 prod_reg free with lower bound on prod_cell and NOT WORKING reset of all variables and constraints (load_gdx)
+#08 prod_reg free and NOT WORKING reset of all variables and constraints (load_gdx)
+#09 prod_reg free with fixed vm_tau NOT WORKING reset of all variables and constraints (load_gdx)
 #10 prod_reg free with fixed vm_tau and reset of all variables and constraints (load_gdx)
 
 
