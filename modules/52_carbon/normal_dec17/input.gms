@@ -5,6 +5,10 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
+scalar
+s52_forestry_plantation switch for using natveg (0) or plantations (1) in forestry module / 0 /
+;
+
 $setglobal c52_carbon_scenario  nocc
 *   options:   cc  (climate change)
 *             nocc (no climate change)

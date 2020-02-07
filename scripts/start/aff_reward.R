@@ -33,6 +33,7 @@ reset <- function(cfg) {
   cfg$gms$s56_payment <- 0
   cfg$gms$s56_c_price_aff_future <- 1 
   cfg$gms$s32_planing_horizon <- 75
+  cfg$gms$s52_forestry_plantation <- 0
   return(cfg)
 }
 
@@ -57,45 +58,53 @@ cfg$gms$c12_interest_rate <- "coupling"
 getInput("/p/projects/piam/runs/coupled-magpie/output/C_SSP2-PkBudg900-mag-4/fulldata.gdx")
 cfg$gms$land <- "feb15"
 cfg$gms$s15_elastic_demand <- 0
-prefix <- "rew04_"
+prefix <- "rew05_"
 
 for (co2_price_path in c("Hotelling","PeakBudget")) {
   if (co2_price_path=="PeakBudget") {
     cfg$gms$c56_pollutant_prices <- "coupling"
     cfg$gms$c60_2ndgen_biodem <- "coupling"
-    getInput("/p/projects/piam/runs/coupled-magpie/output/C_SSP2-PkBudg900-mag-4/fulldata.gdx")
+    getInput("/p/projects/piam/runs/coupled-magpie/output-20200129/C_SSP2-PkBudg900-mag-4/fulldata.gdx")
   } else if (co2_price_path == "Hotelling") {
     cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-26-REMIND-MAGPIE"
     cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-26-REMIND-MAGPIE"
   }
 
   cfg <- reset(cfg)
-  for (time_horizon in c(10,20,30,50,75,100)) {
+  for (time_horizon in c(30,75,100)) {
     cfg$title <- paste0(prefix,co2_price_path,"_timehorizon_",time_horizon)
-    cfg$gms$s32_planing_horizon=time_horizon
+    cfg$gms$s32_planing_horizon <- time_horizon
     start_run(cfg,codeCheck=FALSE)
   }
   
   cfg <- reset(cfg)
-  for (discount in c(0.01,0.03,0.05,0.07,0.1)) {
+  for (discount in c(0.03,0.05,0.07)) {
     cfg$title <- paste0(prefix,co2_price_path,"_interestrate_",discount*100)
     interest_rate(discount)
     start_run(cfg,codeCheck=FALSE)
   }
   
   cfg <- reset(cfg)
-  for (payment in c(0,1,2,3)) {
-    if (payment==0) name="annually" else if (payment==1) name="begin" else if (payment==2) name="end" else if (payment==3) name="buffer"
+  for (payment in c(0,3)) {
+    if (payment==0) name="annual" else if (payment==1) name="begin" else if (payment==2) name="end" else if (payment==3) name="buffer"
     cfg$title <- paste0(prefix,co2_price_path,"_payment_",name)
-    cfg$gms$s56_payment=payment
+    cfg$gms$s56_payment <- payment
     start_run(cfg,codeCheck=FALSE)
   }
   
   cfg <- reset(cfg)
   for (co2_price_exp in c(0,1)) {
-    if (co2_price_exp==0) name="myopic" else if (co2_price_exp==1) name="perfect-foresight"
+    if (co2_price_exp==0) name="myopic" else if (co2_price_exp==1) name="foresight"
     cfg$title <- paste0(prefix,co2_price_path,"_co2priceexp_",name)
-    cfg$gms$s56_c_price_aff_future=co2_price_exp
+    cfg$gms$s56_c_price_aff_future <- co2_price_exp
+    start_run(cfg,codeCheck=FALSE)
+  }
+  
+  cfg <- reset(cfg)
+  for (forest_type in c(0,1)) {
+    if (forest_type==0) name="natveg" else if (forest_type==1) name="plantation"
+    cfg$title <- paste0(prefix,co2_price_path,"_foresttype_",name)
+    cfg$gms$s52_forestry_plantation <- forest_type
     start_run(cfg,codeCheck=FALSE)
   }
 }
