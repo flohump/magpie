@@ -55,7 +55,6 @@ cfg$gms$interest_rate <- "glo_jan16"
 cfg$gms$c12_interest_rate <- "coupling"
 # cfg$gms$c56_pollutant_prices <- "coupling"
 # cfg$gms$c60_2ndgen_biodem <- "coupling"
-getInput("/p/projects/piam/runs/coupled-magpie/output/C_SSP2-PkBudg900-mag-4/fulldata.gdx")
 cfg$gms$land <- "feb15"
 cfg$gms$s15_elastic_demand <- 0
 prefix <- "rew05_"
