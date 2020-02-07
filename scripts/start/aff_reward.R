@@ -69,7 +69,10 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
     cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-26-REMIND-MAGPIE"
     cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-26-REMIND-MAGPIE"
   }
-
+  cfg <- reset(cfg)
+  cfg$title <- paste0(prefix,co2_price_path,"_default")
+  start_run(cfg,codeCheck=FALSE)
+  
   cfg <- reset(cfg)
   for (time_horizon in c(30,75,100)) {
     cfg$title <- paste0(prefix,co2_price_path,"_timehorizon_",time_horizon)
@@ -79,7 +82,7 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
   
   cfg <- reset(cfg)
   for (discount in c(0.03,0.05,0.07)) {
-    cfg$title <- paste0(prefix,co2_price_path,"_interestrate_",discount*100)
+    cfg$title <- paste0(prefix,co2_price_path,"_discountrate_",discount*100)
     interest_rate(discount)
     start_run(cfg,codeCheck=FALSE)
   }
