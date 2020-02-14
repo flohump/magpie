@@ -33,6 +33,7 @@ for (i in 1:length(outputdirs)) {
   gdx<-path(outputdirs[i],"fulldata.gdx")
   if(file.exists(gdx)) tmp <- modelstat(gdx) else tmp <- 0
   if (any(tmp>2)) {
+    file.copy(from = "scripts/run_submit/submit.sh",to = path(outputdirs[i],"submit.sh"),overwrite = TRUE)
     current <- getwd()
     setwd(outputdirs[i])
     if (file.exists("magpie_y1995.gdx")) file.remove("magpie_y1995.gdx")
