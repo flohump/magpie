@@ -59,7 +59,9 @@ cfg$gms$c56_pollutant_prices <- "coupling"
 cfg$gms$c60_2ndgen_biodem <- "coupling"
 cfg$gms$land <- "feb15"
 cfg$gms$s15_elastic_demand <- 0
-prefix <- "rew06_"
+cfg$gms$c60_biodem_level <- 0
+
+prefix <- "rew07_"
 
 for (co2_price_path in c("Hotelling","PeakBudget")) {
   file.copy(from = paste0("input/input_bioen_dem_",co2_price_path,".csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
