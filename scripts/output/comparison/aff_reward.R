@@ -15,6 +15,7 @@ library(magclass)
 library(luplot)
 library(magpie4)
 library(ggplot2)
+library(data.table)
 
 options(error=function()traceback(2))
 
