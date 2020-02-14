@@ -61,12 +61,13 @@ cfg$gms$land <- "feb15"
 cfg$gms$s15_elastic_demand <- 0
 cfg$gms$c60_biodem_level <- 0
 
-prefix <- "rew07_"
+prefix <- "rew08_"
 
 for (co2_price_path in c("Hotelling","PeakBudget")) {
-  file.copy(from = paste0("input/input_bioen_dem_",co2_price_path,".csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
-  file.copy(from = paste0("input/input_ghg_price_",co2_price_path,".csv"), to = "modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3",overwrite = TRUE)
-
+  #file.copy(from = paste0("input/input_bioen_dem_",co2_price_path,".csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
+  file.copy(from = paste0("input/input_ghg_price_",co2_price_path,".cs3"), to = "modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3",overwrite = TRUE)
+  file.copy(from = paste0("input/input_bioen_dem_PeakBudget.csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
+  
   cfg <- reset(cfg)
   cfg$title <- paste0(prefix,co2_price_path,"_default")
   start_run(cfg,codeCheck=FALSE)
