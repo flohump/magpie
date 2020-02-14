@@ -96,20 +96,20 @@ $title magpie
 * md5sum: e0cb64c918128436bf9a323e57cae81b
 * Repository: /p/projects/rd3mod/mirror/rse.pik-potsdam.de/data/magpie/public
 * 
-* Used data set: rev4.26_690d3718e151be1b450b394c1064b1c5_magpie.tgz
-* md5sum: 448ab3a63e3071b3391c6bb56cb04411
+* Used data set: rev4.35_690d3718e151be1b450b394c1064b1c5_magpie.tgz
+* md5sum: b66892b80453e25923d432355e2c78bb
 * Repository: /p/projects/rd3mod/inputdata/output
 * 
-* Used data set: rev4.26_690d3718e151be1b450b394c1064b1c5_validation.tgz
-* md5sum: 2a5fbb76e8f8f3e3f74c833b21517d4b
+* Used data set: rev4.35_690d3718e151be1b450b394c1064b1c5_validation.tgz
+* md5sum: 03d2e7294ec5a2d91438785feaf452e5
 * Repository: /p/projects/rd3mod/inputdata/output
 * 
 * Used data set: calibration_H12_c200_12Sep18.tgz
 * md5sum: 0a7d88e902918eb6a5263faaf066cc5d
 * Repository: /p/projects/landuse/data/input/calibration
 * 
-* Used data set: additional_data_rev3.73.tgz
-* md5sum: 3ce07e85c937a937bee759a40fd50b8a
+* Used data set: additional_data_rev3.77.tgz
+* md5sum: 28184d92028972c171145399ab21fdca
 * Repository: /p/projects/landuse/data/input/archive
 * 
 * Low resolution: c200
@@ -123,7 +123,7 @@ $title magpie
 * 
 * Regionscode: 690d3718e151be1b450b394c1064b1c5
 * 
-* Regions data revision: 4.26
+* Regions data revision: 4.35
 * 
 * lpj2magpie settings:
 * * LPJmL data folder: /p/projects/landuse/data/input/lpj_input/isimip_rcp/IPSL_CM5A_LR/rcp2p6/co2
@@ -143,7 +143,7 @@ $title magpie
 * 
 * 
 * 
-* Last modification (input data): Sun Dec 29 00:47:22 2019
+* Last modification (input data): Thu Feb 13 19:52:45 2020
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 
@@ -167,7 +167,8 @@ $offlisting
 **************************MODEL SPECIFIC SCALARS********************************
 *                    Key parameters during model runs
 
-$setglobal c_timesteps  coup2100
+$setglobal c_timesteps  2
+$setglobal c_title  seins
 
 scalars
   s_use_gdx   use of gdx files                                       / 2 /
