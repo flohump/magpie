@@ -64,7 +64,7 @@ cfg$gms$c60_biodem_level <- 0
 #09 with high bioen_dem
 #10 no bioen dem
 
-prefix <- "rew10_"
+prefix <- "rew11_"
 
 for (co2_price_path in c("Hotelling","PeakBudget")) {
 #  file.copy(from = paste0("input/input_bioen_dem_",co2_price_path,".csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
@@ -77,14 +77,14 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
   
   cfg <- reset(cfg)
   for (time_horizon in c(20,50,100)) {
-    cfg$title <- paste0(prefix,co2_price_path,"_timehorizon_",time_horizon)
+    cfg$title <- paste0(prefix,co2_price_path,"_timehorizon_",time_horizon,"yrs")
     cfg$gms$s32_planing_horizon <- time_horizon
     start_run(cfg,codeCheck=FALSE)
   }
   
   cfg <- reset(cfg)
   for (discount in c(0.03,0.05,0.07)) {
-    cfg$title <- paste0(prefix,co2_price_path,"_discountrate_",discount*100)
+    cfg$title <- paste0(prefix,co2_price_path,"_discountrate_",discount*100,"%")
     interest_rate(discount)
     start_run(cfg,codeCheck=FALSE)
   }
@@ -115,8 +115,8 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
   
   cfg <- reset(cfg)
   for (buffer in c(0,0.2,0.4)) {
-    cfg$title <- paste0(prefix,co2_price_path,"_buffer_",buffer*100)
-    interest_rate(discount)
+    cfg$title <- paste0(prefix,co2_price_path,"_buffer_",buffer*100,"%")
+    cfg$gms$s56_buffer_aff <- buffer
     start_run(cfg,codeCheck=FALSE)
   }
   

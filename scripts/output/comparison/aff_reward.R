@@ -32,6 +32,7 @@ cat("\nStarting output generation\n")
 forestry <- NULL
 missing <- NULL
 all <- NULL
+def <- NULL
 
 for (i in 1:length(outputdirs)) {
   print(paste("Processing",outputdirs[i]))
@@ -47,13 +48,15 @@ for (i in 1:length(outputdirs)) {
     forestry <- mbind(forestry,setNames(x,scen))
     
     tmp <- strsplit(scen,"_")[[1]]
-    co2_price <- tmp[2]
+    co2_price_path <- tmp[2]
     variable <- tmp[3]
     label <- tmp[4]
     x <- as.data.table(as.quitte(x))
     x <- x[,.(region,period,value)]
     if (variable!="default") {
-      all <- rbind(all,cbind(co2_price,variable,label,x))
+      all <- rbind(all,cbind(co2_price_path,variable,label,x))
+    } else {
+      def <- rbind(def,cbind(co2_price_path,variable,x))
     }
   } else missing <- c(missing,outputdirs[i])
 }
@@ -62,9 +65,12 @@ if (!is.null(missing)) {
   print(missing)
 }
 
-write.csv(all,"output/data_aff.csv",row.names = F)
+write.csv(all,"output/data_aff_area.csv",row.names = F)
+write.csv(def,"output/data_aff_area_def.csv",row.names = F)
+
+
 #a <- data.table(read.csv("data.csv"))
-#ggplot(all,aes(x=period,y=value,color=variable,label=label,group=label)) + geom_line()+geom_label_repel(data = subset(all, period == max(period)),direction = "x",show.legend = F) + facet_wrap(vars(co2_price),nrow = 1)
+#ggplot(all,aes(x=period,y=value,color=variable,label=label,group=label)) + geom_line()+geom_label_repel(data = subset(all, period == max(period)),direction = "x",show.legend = F) + facet_wrap(vars(co2_price_path),nrow = 1)
 
 # p <- magpie2ggplot2(forestry,scenario = 1,ylab = "Mha",title = "Afforestation",legend_position = "bottom",group = NULL,legend_ncol = 1)
 # ggsave(plot = p,filename = "output/aff_area.pdf",width = 8,height = 7)
