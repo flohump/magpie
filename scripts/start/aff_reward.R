@@ -33,7 +33,7 @@ reset <- function(cfg) {
   cfg$gms$s56_payment <- 0
   cfg$gms$s56_c_price_exp_aff <- 50 
   cfg$gms$s32_planing_horizon <- 50
-  cfg$gms$s52_forestry_plantation <- 0
+  cfg$gms$s52_forestry_plantation <- 1
   cfg$gms$s56_buffer_aff <- 0.2
   return(cfg)
 }
@@ -61,12 +61,12 @@ cfg$gms$land <- "feb15"
 cfg$gms$s15_elastic_demand <- 0
 cfg$gms$c60_biodem_level <- 0
 
-prefix <- "rew08_"
+prefix <- "rew09_"
 
 for (co2_price_path in c("Hotelling","PeakBudget")) {
-  #file.copy(from = paste0("input/input_bioen_dem_",co2_price_path,".csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
+  file.copy(from = paste0("input/input_bioen_dem_",co2_price_path,".csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
   file.copy(from = paste0("input/input_ghg_price_",co2_price_path,".cs3"), to = "modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3",overwrite = TRUE)
-  file.copy(from = paste0("input/input_bioen_dem_PeakBudget.csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
+  #file.copy(from = paste0("input/input_bioen_dem_PeakBudget.csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
   
   cfg <- reset(cfg)
   cfg$title <- paste0(prefix,co2_price_path,"_default")
@@ -87,7 +87,7 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
   }
   
   cfg <- reset(cfg)
-  for (payment in c(0,1,2)) {
+  for (payment in c(0,2)) {
     if (payment==0) name="annual" else if (payment==1) name="begin" else if (payment==2) name="end" else if (payment==3) name="buffer"
     cfg$title <- paste0(prefix,co2_price_path,"_payment_",name)
     cfg$gms$s56_payment <- payment
