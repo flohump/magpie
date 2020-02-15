@@ -84,7 +84,7 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
   
   cfg <- reset(cfg)
   for (discount in c(0.03,0.05,0.07)) {
-    cfg$title <- paste0(prefix,co2_price_path,"_discountrate_",discount*100,"%")
+    cfg$title <- paste0(prefix,co2_price_path,"_discountrate_",discount*100)
     interest_rate(discount)
     start_run(cfg,codeCheck=FALSE)
   }
@@ -115,7 +115,7 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
   
   cfg <- reset(cfg)
   for (buffer in c(0,0.2,0.4)) {
-    cfg$title <- paste0(prefix,co2_price_path,"_buffer_",buffer*100,"%")
+    cfg$title <- paste0(prefix,co2_price_path,"_buffer_",buffer*100)
     cfg$gms$s56_buffer_aff <- buffer
     start_run(cfg,codeCheck=FALSE)
   }
