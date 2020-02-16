@@ -54,7 +54,11 @@ for (i in 1:length(outputdirs)) {
     x <- as.data.table(as.quitte(x))
     x <- x[,.(region,period,value)]
     if (variable!="default") {
-      all <- rbind(all,cbind(co2_price_path,variable,label,x))
+      if (label %in% c("discountrate","buffer")) {
+        all <- rbind(all,cbind(co2_price_path,variable,paste0(label,"%"),x))
+      } else {
+        all <- rbind(all,cbind(co2_price_path,variable,label,x))
+      }
     } else {
       def <- rbind(def,cbind(co2_price_path,variable,x))
     }
