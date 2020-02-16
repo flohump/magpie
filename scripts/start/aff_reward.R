@@ -64,27 +64,30 @@ cfg$gms$c60_biodem_level <- 0
 #09 with high bioen_dem
 #10 no bioen dem
 
-prefix <- "rew11_"
+prefix <- "rew12_"
 
 for (co2_price_path in c("Hotelling","PeakBudget")) {
+  for (co2_price_factor in c(1,2)) {
 #  file.copy(from = paste0("input/input_bioen_dem_",co2_price_path,".csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
   file.copy(from = paste0("input/input_ghg_price_",co2_price_path,".cs3"), to = "modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3",overwrite = TRUE)
   file.copy(from = paste0("input/input_bioen_dem_zero.csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
   
+  cfg$gms$s56_cprice_red_factor <- co2_price_factor
+  
   cfg <- reset(cfg)
-  cfg$title <- paste0(prefix,co2_price_path,"_default")
+  cfg$title <- paste0(prefix,co2_price_path,"_",co2_price_factor,"_default")
   start_run(cfg,codeCheck=FALSE)
   
   cfg <- reset(cfg)
   for (time_horizon in c(20,50,100)) {
-    cfg$title <- paste0(prefix,co2_price_path,"_timehorizon_",time_horizon,"yrs")
+    cfg$title <- paste0(prefix,co2_price_path,"_",co2_price_factor,"_timehorizon_",time_horizon,"yrs")
     cfg$gms$s32_planing_horizon <- time_horizon
     start_run(cfg,codeCheck=FALSE)
   }
   
   cfg <- reset(cfg)
   for (discount in c(0.03,0.05,0.07)) {
-    cfg$title <- paste0(prefix,co2_price_path,"_discountrate_",discount*100)
+    cfg$title <- paste0(prefix,co2_price_path,"_",co2_price_factor,"_discountrate_",discount*100)
     interest_rate(discount)
     start_run(cfg,codeCheck=FALSE)
   }
@@ -92,7 +95,7 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
   cfg <- reset(cfg)
   for (payment in c(0,2)) {
     if (payment==0) name="annual" else if (payment==1) name="begin" else if (payment==2) name="end" else if (payment==3) name="buffer"
-    cfg$title <- paste0(prefix,co2_price_path,"_payment_",name)
+    cfg$title <- paste0(prefix,co2_price_path,"_",co2_price_factor,"_payment_",name)
     cfg$gms$s56_payment <- payment
     start_run(cfg,codeCheck=FALSE)
   }
@@ -100,7 +103,7 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
   cfg <- reset(cfg)
   for (co2_price_exp in c(0,1)) {
     if (co2_price_exp==0) name="myopic" else if (co2_price_exp==1) name="foresight"
-    cfg$title <- paste0(prefix,co2_price_path,"_co2priceexp_",name)
+    cfg$title <- paste0(prefix,co2_price_path,"_",co2_price_factor,"_co2priceexp_",name)
     cfg$gms$s56_c_price_exp_aff <- co2_price_exp*cfg$gms$s32_planing_horizon
     start_run(cfg,codeCheck=FALSE)
   }
@@ -108,16 +111,16 @@ for (co2_price_path in c("Hotelling","PeakBudget")) {
   cfg <- reset(cfg)
   for (forest_type in c(0,1)) {
     if (forest_type==0) name="natveg" else if (forest_type==1) name="plantation"
-    cfg$title <- paste0(prefix,co2_price_path,"_foresttype_",name)
+    cfg$title <- paste0(prefix,co2_price_path,"_",co2_price_factor,"_foresttype_",name)
     cfg$gms$s52_forestry_plantation <- forest_type
     start_run(cfg,codeCheck=FALSE)
   }
   
   cfg <- reset(cfg)
   for (buffer in c(0,0.2,0.4)) {
-    cfg$title <- paste0(prefix,co2_price_path,"_buffer_",buffer*100)
+    cfg$title <- paste0(prefix,co2_price_path,"_",co2_price_factor,"_buffer_",buffer*100)
     cfg$gms$s56_buffer_aff <- buffer
     start_run(cfg,codeCheck=FALSE)
   }
-  
+ }
 }
