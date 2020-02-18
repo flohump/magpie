@@ -26,5 +26,4 @@ pm_carbon_density_ac_forestry(t,j,ac,ag_pools) = pm_carbon_density_ac(t,j,ac,ag_
 *overwrite with faster growing plantations depending on s52_forestry_plantation
 pm_carbon_density_ac_forestry(t,j,ac,"vegc")$(s52_forestry_plantation = 1) = m_growth_vegc(pc52_carbon_density_start(t,j,"vegc"),fm_carbon_density(t,j,"other","vegc"),sum(clcl,pm_climate_class(j,clcl)*f52_growth_par(clcl,"k","plantations")),sum(clcl,pm_climate_class(j,clcl)*f52_growth_par(clcl,"m","plantations")),(ord(ac)-1));
 
-
 *** EOF pre.gms ***
