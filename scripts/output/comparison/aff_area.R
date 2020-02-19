@@ -28,6 +28,8 @@ if(!exists("source_include")) {
 cat("\nStarting output generation\n")
 
 forestry <- NULL
+emis <- NULL
+cdr <- NULL
 missing <- NULL
 
 for (i in 1:length(outputdirs)) {
@@ -43,6 +45,15 @@ for (i in 1:length(outputdirs)) {
     x <- x-setYears(x[,1,],NULL)
     getNames(x) <- scen
     forestry <- mbind(forestry,x)
+    
+    x <- collapseNames(emisCO2(gdx,level="glo",cumulative = TRUE)/1000)
+    getNames(x) <- scen
+    emis <- mbind(emis,x)
+
+    x <- collapseNames(emisCO2(gdx,level="glo",cumulative = TRUE,type = "neg")/1000)
+    getNames(x) <- scen
+    cdr <- mbind(cdr,x)
+    
   } else missing <- c(missing,outputdirs[i])
 }
 if (!is.null(missing)) {
@@ -52,3 +63,9 @@ if (!is.null(missing)) {
 
 p <- magpie2ggplot2(forestry,scenario = 1,ylab = "Mha",title = "Afforestation",legend_position = "bottom",group = NULL,legend_ncol = 1)
 ggsave(plot = p,filename = "output/aff_area.pdf",width = 8,height = 7)
+
+p <- magpie2ggplot2(emis,scenario = 1,ylab = "GtCO2",title = "Cumulative CO2 Emissions",legend_position = "bottom",group = NULL,legend_ncol = 1)
+ggsave(plot = p,filename = "output/emis_cum.pdf",width = 8,height = 7)
+
+p <- magpie2ggplot2(cdr,scenario = 1,ylab = "GtCO2",title = "Cumulative CDR",legend_position = "bottom",group = NULL,legend_ncol = 1)
+ggsave(plot = p,filename = "output/cdr_cum.pdf",width = 8,height = 7)

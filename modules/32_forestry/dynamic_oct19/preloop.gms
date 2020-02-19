@@ -20,3 +20,5 @@ p32_cdr_ac(t,j,ac) = 0;
 *initialize parameter 
 p32_land(t,j,type32,ac) = 0;
 p32_land(t,j,"plant","acx") = pcm_land(j,"forestry");
+
+f32_fac_req_ha(i,"recur")$(s32_recur_cost = 0) = 0;
