@@ -64,7 +64,7 @@ cfg$gms$c60_biodem_level <- 0
 #09 with high bioen_dem
 #10 no bioen dem
 
-prefix <- "cal08_"
+prefix <- "cal09_"
 
 for (co2_price_path in c("Hotelling","PeakBudget1","PeakBudget2","PeakBudget3","PeakBudget4","PeakBudget5","PeakBudget6")) {
 #  for (co2_price_scen in c("1p4C","1p5C","1p6C")) {
