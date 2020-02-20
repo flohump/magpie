@@ -64,9 +64,9 @@ cfg$gms$c60_biodem_level <- 0
 #09 with high bioen_dem
 #10 no bioen dem
 
-prefix <- "cal06_"
+prefix <- "cal07_"
 
-for (co2_price_path in c("Hotelling","PeakBudget1","PeakBudget2","PeakBudget3")) {
+for (co2_price_path in c("Hotelling","PeakBudget1","PeakBudget2","PeakBudget3","PeakBudget4","PeakBudget5","PeakBudget6")) {
 #  for (co2_price_scen in c("1p4C","1p5C","1p6C")) {
 #  file.copy(from = paste0("input/input_bioen_dem_",co2_price_path,".csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
   file.copy(from = paste0("input/input_ghg_price_",co2_price_path,".cs3"), to = "modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3",overwrite = TRUE)
