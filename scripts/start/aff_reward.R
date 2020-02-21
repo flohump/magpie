@@ -33,7 +33,7 @@ reset <- function(cfg) {
   cfg$gms$s56_payment <- 0
   cfg$gms$s56_c_price_exp_aff <- 50 
   cfg$gms$s32_planing_horizon <- 50
-  cfg$gms$s52_forestry_plantation <- 1
+  cfg$gms$s52_forestry_plantation <- 0
   cfg$gms$s56_buffer_aff <- 0.2
   return(cfg)
 }
@@ -64,9 +64,10 @@ cfg$gms$c60_biodem_level <- 0
 #09 with high bioen_dem
 #10 no bioen dem
 
-prefix <- "cal09_"
+prefix <- "cal10"
 
 for (co2_price_path in c("Hotelling","PeakBudget1","PeakBudget2","PeakBudget3","PeakBudget4","PeakBudget5","PeakBudget6")) {
+#  for (co2_price_path in c("Hotelling","PeakBudget")) {
 #  for (co2_price_scen in c("1p4C","1p5C","1p6C")) {
 #  file.copy(from = paste0("input/input_bioen_dem_",co2_price_path,".csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
   file.copy(from = paste0("input/input_ghg_price_",co2_price_path,".cs3"), to = "modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3",overwrite = TRUE)
@@ -79,7 +80,7 @@ for (co2_price_path in c("Hotelling","PeakBudget1","PeakBudget2","PeakBudget3","
   # cfg <- reset(cfg)
   # cfg$title <- paste0(prefix,co2_price_path,"_default")
   # start_run(cfg,codeCheck=FALSE)
-  
+  # 
   # cfg <- reset(cfg)
   # for (time_horizon in c(20,50,100)) {
   #   cfg$title <- paste0(prefix,co2_price_path,"_",co2_price_scen,"_timehorizon_",time_horizon,"yrs")
