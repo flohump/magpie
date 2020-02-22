@@ -78,13 +78,13 @@ for (ssp in c("SSP2")) {
     file.copy(from = paste0("input/input_bioen_dem_100EJ.csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
     
     cfg <- reset(cfg)
-    cfg$title <- paste0(prefix,co2_price_path,"_",ssp,"_LibTrade")
-    cfg$gms$c21_trade_liberalization <- "l908080r807070"
+    cfg$title <- paste0(prefix,co2_price_path,"_",ssp,"_FeedSSP5")
+    cfg$gms$c70_feed_scen <- "ssp5"
     start_run(cfg,codeCheck=FALSE)
 
     cfg <- reset(cfg)
-    cfg$title <- paste0(prefix,co2_price_path,"_",ssp,"_DefTrade")
-    cfg$gms$c21_trade_liberalization <- "l909090r808080"
+    cfg$title <- paste0(prefix,co2_price_path,"_",ssp,"_DefFeed")
+    cfg$gms$c70_feed_scen <- "ssp2"
     start_run(cfg,codeCheck=FALSE)
     
     # cfg <- reset(cfg)
