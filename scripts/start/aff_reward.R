@@ -57,7 +57,8 @@ cfg$results_folder <- "output/:title:"
 
 prefix <- "rew14"
 
-for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
+#for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
+for (ssp in c("SSP2")) {
   for (co2_price_path in c("Hotelling","PeakBudget")) {
     
     cfg <- setScenario(cfg,c(ssp,"NDC"))
@@ -69,7 +70,7 @@ for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
     cfg$gms$land <- "feb15"
     cfg$gms$s15_elastic_demand <- 0
     cfg$gms$c60_biodem_level <- 0
-    cfg$gms$s32_recur_cost <- 0
+    cfg$gms$s32_recur_cost <- 1
     
     #  for (co2_price_scen in c("1p4C","1p5C","1p6C")) {
     #  file.copy(from = paste0("input/input_bioen_dem_",co2_price_path,".csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
@@ -77,7 +78,13 @@ for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
     file.copy(from = paste0("input/input_bioen_dem_100EJ.csv"), to = "modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv",overwrite = TRUE)
     
     cfg <- reset(cfg)
-    cfg$title <- paste0(prefix,co2_price_path,"_",ssp,"_RecurCostOff")
+    cfg$title <- paste0(prefix,co2_price_path,"_",ssp,"_LibTrade")
+    cfg$gms$c21_trade_liberalization <- "l908080r807070"
+    start_run(cfg,codeCheck=FALSE)
+
+    cfg <- reset(cfg)
+    cfg$title <- paste0(prefix,co2_price_path,"_",ssp,"_DefTrade")
+    cfg$gms$c21_trade_liberalization <- "l909090r808080"
     start_run(cfg,codeCheck=FALSE)
     
     # cfg <- reset(cfg)
