@@ -42,6 +42,10 @@ PriceElasticitiesSupply <- function(gdx,scen="SSP2", file=FALSE) {
   p21_price_own <- readGDX(gdx,"p21_price_own")
   p21_cost_own <- readGDX(gdx,"p21_cost_own")
   
+#Filter negative and zero prices
+  p21_price_cross[p21_price_cross<=0] <- NA
+  p21_price_own[p21_price_own<=0] <- NA
+  
   prod_change_own <- p21_prod_own/collapseNames(p21_prod_own[,,"0"])-1
   price_change_own <- p21_price_own/collapseNames(p21_price_own[,,"0"])-1
   
