@@ -19,7 +19,7 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 
-#cfg$force_download <- TRUE
+
 
 cfg$results_folder <- "output/:title:"
 
@@ -35,6 +35,8 @@ for (res in c("c200","c600","c1000","c10000")) {
     cfg <- setScenario(cfg,c("SSP2","NPI"))
     cfg$gms$optimization <- opt
     cfg$gms$trade <- "off"
+    cfg$force_download <- TRUE
+    cfg$recalc_npi_ndc <- TRUE
     start_run(cfg,codeCheck=FALSE)
   }
 }
