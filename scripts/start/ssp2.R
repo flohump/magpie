@@ -34,6 +34,7 @@ for (res in c("c200","c600","c1000","c10000")) {
     cfg$title <- paste0("res_SSP2_",res,"_",opt)
     cfg <- setScenario(cfg,c("SSP2","NPI"))
     cfg$gms$optimization <- opt
+    cfg$gms$trade <- "off"
     start_run(cfg,codeCheck=FALSE)
   }
 }
