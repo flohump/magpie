@@ -23,26 +23,18 @@ cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
 
-cfg$title <- "R2M41_SSP2_NPi_v5"
-cfg <- setScenario(cfg,c("SSP2","NPI"))
-cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NPi"
-cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
-start_run(cfg,codeCheck=FALSE)
-
-cfg$title <- "R2M41_SSP2_NDC_v5"
-cfg <- setScenario(cfg,c("SSP2","NDC"))
-cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NDC"
-cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NDC"
-start_run(cfg,codeCheck=FALSE)
-
-cfg$title <- "R2M41_SSP2_Budg600_v5"
-cfg <- setScenario(cfg,c("SSP2","NDC"))
-cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
-start_run(cfg,codeCheck=FALSE)
-
-cfg$title <- "SSPDB_SSP2_26_v5"
-cfg <- setScenario(cfg,c("SSP2","NDC"))
-cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-26-REMIND-MAGPIE"
-cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-26-REMIND-MAGPIE"
-start_run(cfg,codeCheck=FALSE)
+for (res in c("c200","c600","c1000","c10000")) {
+  for (opt in c("nlp_apr17","nlp_par")) {
+    cfg$input <- c(paste0("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev42_",res,"_690d3718e151be1b450b394c1064b1c5.tgz"),
+                   "rev4.42_690d3718e151be1b450b394c1064b1c5_magpie.tgz",
+                   "rev4.42_690d3718e151be1b450b394c1064b1c5_validation.tgz",
+                   "calibration_H12_c200_26Feb20.tgz",
+                   "additional_data_rev3.77.tgz")
+    
+    cfg$title <- paste0("res_SSP2_",res,"_",opt)
+    cfg <- setScenario(cfg,c("SSP2","NPI"))
+    cfg$gms$optimization <- opt
+    start_run(cfg,codeCheck=FALSE)
+  }
+}
+  
