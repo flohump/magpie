@@ -7,6 +7,7 @@ pc21_trade_surplus_shr(k_trade)$(sum(i, vm_prod_reg.l(i,k_trade) > 0)) =
 while(smax(k_trade,abs(pc21_trade_surplus_shr(k_trade))) > 0.05,
 pc21_prices(k_trade) = pc21_prices(k_trade)*min(1.2, max(0.8, 1 - 0.5*pc21_trade_surplus_shr(k_trade)));
 
+display "walras auction";
 display pc21_trade_surplus_shr;
 display pc21_prices;
 
@@ -38,6 +39,8 @@ Repeat
 	) ;
 display$sleep(5) 'sleep some time';
 until card(p21_handle) = 0;
+i2(i) = yes;
+j2(j) = yes;
 
 pc21_trade_surplus_shr(k_trade)$(sum(i, vm_prod_reg.l(i,k_trade) > 0)) = 
 					sum(i, v21_trade_flows.l(i,k_trade))/

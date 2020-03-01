@@ -59,5 +59,7 @@ Repeat
 	) ;
 display$sleep(5) 'sleep some time';
 until card(p80_handle) = 0;
+i2(i) = yes;
+j2(j) = yes;
 
 ***************end solve loop***************
