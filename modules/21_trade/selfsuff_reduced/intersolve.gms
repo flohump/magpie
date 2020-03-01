@@ -7,6 +7,9 @@ pc21_trade_surplus_shr(k_trade)$(sum(i, vm_prod_reg.l(i,k_trade) > 0)) =
 while(smax(k_trade,abs(pc21_trade_surplus_shr(k_trade))) > 0.05,
 pc21_prices(k_trade) = pc21_prices(k_trade)*min(1.2, max(0.8, 1 - 0.5*pc21_trade_surplus_shr(k_trade)));
 
+display pc21_trade_surplus_shr;
+display pc21_prices;
+
 i2(i) = no;
 j2(j) = no;
 magpie.solvelink = 3;
