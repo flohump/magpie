@@ -50,4 +50,5 @@ sets
    trade_groups21 Trade groups
    / easytrade,hardtrade /
 
+	solveinfo21	"Nash solution stats" /solvestat, modelstat, resusd, objval/
 ;

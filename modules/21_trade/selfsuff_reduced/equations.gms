@@ -11,7 +11,22 @@
 
  q21_trade_glo(k_trade)..
   sum(i2 ,vm_prod_reg(i2,k_trade)) =g=
-  sum(i2, vm_supply(i2,k_trade)) + sum(ct,f21_trade_balanceflow(ct,k_trade));
+  sum(i2, vm_supply(i2,k_trade)) + 
+  sum(ct,f21_trade_balanceflow(ct,k_trade))$(s21_walras_auction=0) + 
+  sum(i2, v21_trade_flows(i2,k_trade))$(s21_walras_auction=1);
+
+ q21_cash_flows(i2)..    v21_cash_flows(i2)
+                            =e=
+                            -sum(k_trade, pc21_prices(k_trade) * v21_trade_flows(i2,k_trade));
+
+*quadratic adjustment costs, penalizing deviations from the trade pattern of the last iteration.
+q21_costAdjNash(i2)..
+v21_costAdjNash(i2) =e= sum(k_trade,
+*                      pc21_prices(k_trade) * 50 
+					100
+                      * (pc21_trade_flows(i2,k_trade) - v21_trade_flows(i2,k_trade))
+                      * (pc21_trade_flows(i2,k_trade) - v21_trade_flows(i2,k_trade)));
+
 *'
 *' For non-tradable commodites, the regional supply should be larger or equal to the regional demand.
  q21_notrade(i2,k_notrade)..
@@ -67,4 +82,4 @@
 
 * Regional trade costs are the costs for each region aggregated over all the tradable commodities.
  q21_cost_trade(i2)..
- vm_cost_trade(i2) =e= sum(k_trade,v21_cost_trade_reg(i2,k_trade));
+ vm_cost_trade(i2) =e= sum(k_trade, v21_cost_trade_reg(i2,k_trade)) + v21_cash_flows(i2) + v21_costAdjNash(i2);

@@ -17,3 +17,5 @@ elseif (s21_trade_tariff=0),
     i21_trade_tariff(i2,k_trade) = 0;
 );
 
+pc21_prices(k_trade) = f21_prices(k_trade);
+pc21_trade_flows(i,k_trade) = 0;

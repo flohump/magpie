@@ -19,11 +19,11 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 
-prefix <- "res03"
+prefix <- "res04"
 
 cfg$results_folder <- "output/:title:"
 
-for (res in c("c200","c600","c1000","c10000")) {
+for (res in c("c200","c600")) {#"c1000","c10000"
 #for (res in c("c200")) {
   for (opt in c("nlp_par")) {#"nlp_par"
     cfg$input <- c(paste0("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev42_",res,"_690d3718e151be1b450b394c1064b1c5.tgz"),
@@ -35,7 +35,8 @@ for (res in c("c200","c600","c1000","c10000")) {
     cfg$title <- paste0(prefix,"_SSP2_",res,"_",opt)
     cfg <- setScenario(cfg,c("SSP2","NPI"))
     cfg$gms$optimization <- opt
-    cfg$gms$trade <- "fixed"
+    #cfg$gms$trade <- "fixed"
+    cfg$gms$s21_walras_auction <- 1
     cfg$force_download <- TRUE
     cfg$recalc_npi_ndc <- TRUE
     start_run(cfg,codeCheck=FALSE)
