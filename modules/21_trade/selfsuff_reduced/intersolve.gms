@@ -5,12 +5,18 @@ pc21_trade_surplus_shr(k_trade)$(sum(i, vm_prod_reg.l(i,k_trade) > 0)) =
 					sum(i, vm_prod_reg.l(i,k_trade));
 pc21_trade_surplus_shr("scp") = 0;
 
-while(smax(k_trade,abs(pc21_trade_surplus_shr(k_trade))) > 0.05,
+s21_counter = 0;
+
+*while(smax(k_trade,abs(pc21_trade_surplus_shr(k_trade))) > 0.05,
+repeat
+s21_counter = s21_counter + 1;
 pc21_prices(k_trade) = pc21_prices(k_trade)*min(1.2, max(0.8, 1 - 0.5*pc21_trade_surplus_shr(k_trade)));
+pc21_trade_surplus_glo(k_trade) = sum(i, v21_trade_flows.l(i,k_trade));
 
 display "walras auction";
 display pc21_trade_surplus_shr;
 display pc21_prices;
+display pc21_trade_surplus_glo;
 
 i2(i) = no;
 j2(j) = no;
@@ -47,5 +53,7 @@ pc21_trade_surplus_shr(k_trade)$(sum(i, vm_prod_reg.l(i,k_trade) > 0)) =
 					sum(i, v21_trade_flows.l(i,k_trade))/
 					sum(i, vm_prod_reg.l(i,k_trade));
 pc21_trade_surplus_shr("scp") = 0;
-);
+until smax(k_trade,abs(pc21_trade_surplus_glo(k_trade))) = 0 OR s21_counter = 100;
+
+*);
 );

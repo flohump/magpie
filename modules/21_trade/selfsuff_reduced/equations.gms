@@ -12,7 +12,7 @@
  q21_trade_glo(k_trade)..
   sum(i2 ,vm_prod_reg(i2,k_trade)) =g=
   sum(i2, vm_supply(i2,k_trade)) + 
-  sum(ct,f21_trade_balanceflow(ct,k_trade))$(s21_walras_auction=0) + 
+  sum(ct,f21_trade_balanceflow(ct,k_trade)) + 
   sum(i2, v21_trade_flows(i2,k_trade))$(s21_walras_auction=1);
 
  q21_cash_flows(i2)..    v21_cash_flows(i2)
