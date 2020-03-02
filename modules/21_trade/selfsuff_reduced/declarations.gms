@@ -23,12 +23,12 @@ parameters
 positive variables
  v21_excess_dem(k_trade)                 Global excess demand (mio. tDM per yr)
  v21_excess_prod(i,k_trade)              Regional excess production (mio. tDM per yr)
- vm_cost_trade(i)                        Regional  trade costs (mio. USD05MER per yr)
  v21_cost_trade_reg(i,k_trade)           Regional trade costs for each tradable commodity (mio. USD05MER per yr)
  v21_costAdjNash(i)						 monetary trade surplus (Mio US$)
 ;
 
 variables
+ vm_cost_trade(i)                        Regional  trade costs (mio. USD05MER per yr)
  v21_cash_flows(i)            			 monetary trade surplus (mio. USD05MER per yr)
  v21_trade_flows(i,k_trade)  			 quantitative trade surplus exports minus imports (mio. tDM per yr)
 ;
