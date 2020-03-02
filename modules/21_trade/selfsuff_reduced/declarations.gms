@@ -51,9 +51,9 @@ equations
 parameters
  ov21_excess_dem(t,k_trade,type)       Global excess demand (mio. tDM per yr)
  ov21_excess_prod(t,i,k_trade,type)    Regional excess production (mio. tDM per yr)
- ov_cost_trade(t,i,type)               Regional  trade costs (mio. USD05MER per yr)
  ov21_cost_trade_reg(t,i,k_trade,type) Regional trade costs for each tradable commodity (mio. USD05MER per yr)
  ov21_costAdjNash(t,i,type)            monetary trade surplus (Mio US$)
+ ov_cost_trade(t,i,type)               Regional  trade costs (mio. USD05MER per yr)
  ov21_cash_flows(t,i,type)             monetary trade surplus (mio. USD05MER per yr)
  ov21_trade_flows(t,i,k_trade,type)    quantitative trade surplus exports minus imports (mio. tDM per yr)
  oq21_trade_glo(t,k_trade,type)        Global production constraint (mio. tDM per yr)
