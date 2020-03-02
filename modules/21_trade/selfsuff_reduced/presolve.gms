@@ -12,8 +12,10 @@ if (s21_walras_auction=0,
 else
  v21_trade_flows.lo(i,k_trade) = -Inf;
  v21_trade_flows.up(i,k_trade) = Inf;
+ v21_trade_flows.fx(i,"scp") = 0;
  v21_cash_flows.lo(i) = -Inf;
  v21_cash_flows.up(i) = Inf;
  v21_costAdjNash.lo(i) = 0;
  v21_costAdjNash.up(i) = Inf;
 );
+

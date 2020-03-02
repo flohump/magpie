@@ -19,7 +19,7 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 
-prefix <- "res10"
+prefix <- "res11"
 
 cfg$results_folder <- "output/:title:"
 

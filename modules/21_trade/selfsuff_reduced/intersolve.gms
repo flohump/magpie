@@ -3,7 +3,6 @@ pc21_trade_surplus_shr(k_trade) = 0;
 pc21_trade_surplus_shr(k_trade)$(sum(i, vm_prod_reg.l(i,k_trade) > 0)) = 
 					sum(i, v21_trade_flows.l(i,k_trade))/
 					sum(i, vm_prod_reg.l(i,k_trade));
-pc21_trade_surplus_shr("scp") = 0;
 
 s21_counter = 0;
 
@@ -52,8 +51,7 @@ j2(j) = yes;
 pc21_trade_surplus_shr(k_trade)$(sum(i, vm_prod_reg.l(i,k_trade) > 0)) = 
 					sum(i, v21_trade_flows.l(i,k_trade))/
 					sum(i, vm_prod_reg.l(i,k_trade));
-pc21_trade_surplus_shr("scp") = 0;
-until smax(k_trade,abs(pc21_trade_surplus_glo(k_trade))) = 0 OR s21_counter = 100;
+until smax(k_trade,abs(pc21_trade_surplus_glo(k_trade))) < 1 OR s21_counter = 100;
 
 *);
 );
