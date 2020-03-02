@@ -4,7 +4,7 @@
 *** |  AGPL-3.0, you are granted additional permissions described in the
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
-pc21_prices(k_trade) = q21_trade_glo.m(k_trade);
+p21_prices(t,k_trade) = pc21_prices(k_trade);
 pc21_trade_flows(i,k_trade) = v21_trade_flows.l(i,k_trade);
 
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################

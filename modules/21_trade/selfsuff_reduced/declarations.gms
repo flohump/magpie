@@ -10,6 +10,7 @@ parameters
  i21_trade_margin(i,k_trade)                    Trade margins (USD05MER per tDM)
  i21_trade_tariff(i,k_trade)                    Trade tariffs (USD05MER per tDM)
  pc21_prices(k_trade)
+ p21_prices(t,k_trade)
  pc21_trade_flows(i,k_trade)
  pc21_trade_surplus_glo(k_trade)
  pc21_trade_surplus_shr(k_trade)
