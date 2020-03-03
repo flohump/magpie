@@ -89,7 +89,7 @@ $endif
 * For instance, other natural land increases if agricultural land is abandoned.
 vm_land.lo(j,"primforest") = p35_save_primforest(t,j);
 vm_land.up(j,"primforest") = vm_land.l(j,"primforest");
-m_boundfix(vm_land,(j,land),up,10e-5);
+m_boundfix(vm_land,(j,"primforest"),up,10e-5);
 
 v35_secdforest.fx(j,"ac0") = 0;
 v35_secdforest.lo(j,"acx") = p35_save_secdforest(t,j);
