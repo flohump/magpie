@@ -46,6 +46,7 @@ loop(i,
 
 Repeat
   	loop(i$handlecollect(p80_handle(i)),
+		display$magpie.solvestat;
 		p80_modelstat(t,i) = magpie.modelstat;
 		p80_repy(i,'solvestat') = magpie.solvestat;
 		p80_repy(i,'modelstat') = magpie.modelstat;
@@ -57,7 +58,8 @@ Repeat
 		display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
 		p80_handle(i) = 0
 	) ;
-display$sleep(5) 'sleep some time';
+display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
+*display$sleep(5) 'sleep some time';
 until card(p80_handle) = 0;
 i2(i) = yes;
 j2(j) = yes;
