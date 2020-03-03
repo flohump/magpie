@@ -57,7 +57,7 @@ Repeat
                 if(p80_repy(i,'modelstat') <= 2,
                     p80_repyLastOptim(i,'objval') = p80_repy(i,'objval');
                 );
-		if (magpie.modelstat <= 2 OR 7,
+		if (magpie.modelstat <= 2 OR magpie.modelstat = 7,
 		display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
 		p80_handle(i) = 0;
 		else display$handleSubmit(p80_handle(i)) 'Resubmitted handle' ;
