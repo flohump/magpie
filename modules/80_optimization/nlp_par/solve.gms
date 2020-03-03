@@ -44,7 +44,9 @@ loop(i,
 	p80_handle(i) = magpie.handle;
 );
 
+s80_counter = 0;
 Repeat
+  	s80_counter = s80_counter + 1 ;
   	loop(i$handlecollect(p80_handle(i)),
 		display magpie.modelstat;
 		p80_modelstat(t,i) = magpie.modelstat;
@@ -52,10 +54,10 @@ Repeat
 		p80_repy(i,'modelstat') = magpie.modelstat;
 		p80_repy(i,'resusd'   ) = magpie.resusd;
 		p80_repy(i,'objval')    = magpie.objval;
-                if(p80_repy(i,'modelstat') eq 2,
+                if(p80_repy(i,'modelstat') <= 2,
                     p80_repyLastOptim(i,'objval') = p80_repy(i,'objval');
                 );
-		if (magpie.modelstat <= 2,
+		if (magpie.modelstat <= 2 OR 7,
 		display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
 		p80_handle(i) = 0;
 		else display$handleSubmit(p80_handle(i)) 'Resubmitted handle' ;
@@ -63,7 +65,7 @@ Repeat
 	) ;
 display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
 *display$sleep(5) 'sleep some time';
-until card(p80_handle) = 0;
+until card(p80_handle) = 0 OR s80_counter >= s80_maxiter;
 i2(i) = yes;
 j2(j) = yes;
 
