@@ -46,7 +46,7 @@ loop(i,
 
 Repeat
   	loop(i$handlecollect(p80_handle(i)),
-		display$magpie.solvestat;
+		display magpie.modelstat;
 		p80_modelstat(t,i) = magpie.modelstat;
 		p80_repy(i,'solvestat') = magpie.solvestat;
 		p80_repy(i,'modelstat') = magpie.modelstat;
