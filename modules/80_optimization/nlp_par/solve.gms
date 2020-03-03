@@ -38,8 +38,6 @@ magpie.solvelink = 3;
 loop(i,
 	i2(i) = yes;
 	j2(j) = yes$cell(i,j);
-	display i2;
-	display j2;
 	solve magpie USING nlp MINIMIZING vm_cost_glo ;
 	i2(i) = no;
 	j2(j) = no;
@@ -48,7 +46,6 @@ loop(i,
 
 Repeat
   	loop(i$handlecollect(p80_handle(i)),
-		display magpie.solvestat;
 		display magpie.modelstat;
 		p80_modelstat(t,i) = magpie.modelstat;
 		p80_repy(i,'solvestat') = magpie.solvestat;
