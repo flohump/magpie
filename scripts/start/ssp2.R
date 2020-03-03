@@ -19,7 +19,7 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 
-prefix <- "res14"
+prefix <- "res15"
 
 cfg$results_folder <- "output/:title:"
 
@@ -34,7 +34,7 @@ for (res in c("c200")) {
     
     cfg$title <- paste0(prefix,"_SSP2_",res,"_",opt)
     cfg <- setScenario(cfg,c("SSP2","NPI"))
-    cfg$gms$optimization <- opt
+    #cfg$gms$optimization <- opt
     cfg$gms$s15_elastic_demand <- 0
     cfg$gms$trade <- "exo"
 #    cfg$gms$s21_walras_auction <- 1
