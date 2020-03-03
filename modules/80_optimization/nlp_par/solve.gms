@@ -55,8 +55,11 @@ Repeat
                 if(p80_repy(i,'modelstat') eq 2,
                     p80_repyLastOptim(i,'objval') = p80_repy(i,'objval');
                 );
+		if (magpie.modelstat <= 2,
 		display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
-		p80_handle(i) = 0
+		p80_handle(i) = 0;
+		else display$handleSubmit(p80_handle(i)) 'Resubmitted handle' ;
+		);
 	) ;
 display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
 *display$sleep(5) 'sleep some time';
