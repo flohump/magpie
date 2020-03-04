@@ -39,6 +39,8 @@ loop(i,
 	i2(i) = yes;
 	j2(j) = yes$cell(i,j);
 	solve magpie USING nlp MINIMIZING vm_cost_glo ;
+	display j2;
+	display i2;
 	i2(i) = no;
 	j2(j) = no;
 	p80_handle(i) = magpie.handle;
@@ -60,13 +62,14 @@ Repeat
 		if (magpie.modelstat <= 2 OR magpie.modelstat = 7,
 		display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
 		p80_handle(i) = 0;
-		else display$handleSubmit(p80_handle(i)) 'Resubmitted handle' ;
+		else display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
 		);
 	) ;
 display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
 *display$sleep(5) 'sleep some time';
 until card(p80_handle) = 0 OR s80_counter >= s80_maxiter;
+*reset to default for food demand model
 i2(i) = yes;
 j2(j) = yes;
-
+magpie.solvelink = 0;
 ***************end solve loop***************
