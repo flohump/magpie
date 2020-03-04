@@ -115,7 +115,7 @@ else
 
 *' @stop
 
-
+display vm_dem_food.l;
 
 
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
