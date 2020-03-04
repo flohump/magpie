@@ -35,12 +35,12 @@ for (res in c("c600","c1000")) {#"c1000","c10000"
     cfg$title <- paste0(prefix,"_SSP2_",res,"_",opt)
     cfg <- setScenario(cfg,c("SSP2","NPI"))
     cfg$gms$optimization <- opt
-    cfg$gms$s15_elastic_demand <- 0
+    cfg$gms$s15_elastic_demand <- 1
     cfg$gms$c60_bioenergy_subsidy <- 0
     cfg$gms$trade <- "exo"
 #    cfg$gms$s21_walras_auction <- 1
 #    cfg$force_download <- TRUE
-    cfg$recalc_npi_ndc <- TRUE
+    #cfg$recalc_npi_ndc <- TRUE
     start_run(cfg,codeCheck=FALSE)
   }
 }
