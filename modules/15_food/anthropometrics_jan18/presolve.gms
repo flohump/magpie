@@ -528,7 +528,8 @@ p15_kcal_pc_calibrated(t,i,kfo) = p15_kcal_pc_calibrated_orig(t,i,kfo) * (1-i15_
 
 );
 
-
+display p15_kcal_pc_calibrated;
+display p15_kcal_pc_calibrated_orig;
 *' @stop
 
 *###############################################################################
