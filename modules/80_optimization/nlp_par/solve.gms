@@ -71,5 +71,7 @@ until card(p80_handle) = 0 OR s80_counter >= s80_maxiter;
 *reset to default for food demand model
 i2(i) = yes;
 j2(j) = yes;
+	display j2;
+	display i2;
 magpie.solvelink = 0;
 ***************end solve loop***************

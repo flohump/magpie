@@ -245,7 +245,7 @@ $setglobal production  flexreg_apr16
 $setglobal residues  flexreg_apr16
 $setglobal processing  substitution_dec18
 
-$setglobal trade  selfsuff_reduced
+$setglobal trade  exo
 
 $setglobal crop  endo_jun13
 $setglobal past  endo_jun13
@@ -277,7 +277,7 @@ $setglobal material  exo_flexreg_apr16
 $setglobal livestock  fbask_jan16
 $setglobal disagg_lvst  foragebased_aug18
 
-$setglobal optimization  nlp_apr17
+$setglobal optimization  nlp_par
 
 ****************************END MODULE SETUP************************************
 

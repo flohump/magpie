@@ -305,6 +305,7 @@ else
              ) / sum(i_to_iso(i,iso),
                  im_pop_iso(t,iso)
              );
+display p15_kcal_pc;
 
  p15_balanceflow_kcal(t,i,kfo)$(
     sum(i_to_iso(i,iso),
