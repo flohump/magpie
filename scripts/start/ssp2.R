@@ -40,7 +40,7 @@ for (res in c("c600","c1000")) {#"c1000","c10000"
     cfg$gms$trade <- "exo"
 #    cfg$gms$s21_walras_auction <- 1
 #    cfg$force_download <- TRUE
-#    cfg$recalc_npi_ndc <- TRUE
+    cfg$recalc_npi_ndc <- TRUE
     start_run(cfg,codeCheck=FALSE)
   }
 }
