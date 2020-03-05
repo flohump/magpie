@@ -31,7 +31,7 @@ Tol_Feas_Max = 4.0e-6
 Tol_Feas_Tria = 4.0e-6
 $offecho
 
-magpie.solvelink = 3;
+*magpie.solvelink = 3;
 
 i2(i) = no;
 j2(j) = no;
@@ -42,6 +42,7 @@ p80_handle("SSA") = magpie.handle;
 i2(i) = no;
 j2(j) = no;
 
+$ontext
 Repeat
   	loop(i$handlecollect(p80_handle(i)),
 		i2(i) = yes;
@@ -65,7 +66,7 @@ Repeat
 display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
 *display$sleep(5) 'sleep some time';
 until card(p80_handle) = 0;
-
+$offtext
 $ontext
 magpie.solvelink = 3;
 *start loop over Regions
