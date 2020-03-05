@@ -24,7 +24,7 @@ prefix <- "res19"
 cfg$results_folder <- "output/:title:"
 
 #for (res in c("c600","c1000")) {#"c1000","c10000"
-for (res in c("c600")) {
+for (res in c("c1000")) {
   for (opt in c("nlp_par")) {#"nlp_par""nlp_apr17"
     cfg$input <- c(paste0("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev42_",res,"_690d3718e151be1b450b394c1064b1c5.tgz"),
                    "rev4.42_690d3718e151be1b450b394c1064b1c5_magpie.tgz",
