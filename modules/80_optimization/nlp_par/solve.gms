@@ -46,9 +46,7 @@ loop(i,
 	p80_handle(i) = magpie.handle;
 );
 
-s80_counter = 0;
 Repeat
-  	s80_counter = s80_counter + 1 ;
   	loop(i$handlecollect(p80_handle(i)),
 		i2(i) = yes;
 		display i2;
@@ -70,7 +68,7 @@ Repeat
 	) ;
 display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
 *display$sleep(5) 'sleep some time';
-until card(p80_handle) = 0 OR s80_counter >= s80_maxiter;
+until card(p80_handle) = 0;
 *reset to default for food demand model
 i2(i) = yes;
 j2(j) = yes;
