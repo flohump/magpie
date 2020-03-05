@@ -31,42 +31,60 @@ Tol_Feas_Max = 4.0e-6
 Tol_Feas_Tria = 4.0e-6
 $offecho
 
-*magpie.solvelink = 3;
-
+magpie.solvelink = 3;
 i2(i) = no;
 j2(j) = no;
-i2("SSA") = yes;
-j2(j) = yes$cell("SSA",j);
-solve magpie USING nlp MINIMIZING vm_cost_glo ;
-p80_handle("SSA") = magpie.handle;
-i2(i) = no;
-j2(j) = no;
+*start loop over Regions
+loop(i,
+	i2(i) = yes;
+	j2(j) = yes$cell(i,j);
+	solve magpie USING nlp MINIMIZING vm_cost_glo ;
+*	display j2;
+*	display i2;
+	i2(i) = no;
+	j2(j) = no;
+	p80_handle(i) = magpie.handle;
+);
 
 $ontext
-Repeat
-  	loop(i$handlecollect(p80_handle(i)),
-		i2(i) = yes;
-		display i2;
-		i2(i) = no;
-		display magpie.modelstat;
-		p80_modelstat(t,i) = magpie.modelstat;
-		p80_repy(i,'solvestat') = magpie.solvestat;
-		p80_repy(i,'modelstat') = magpie.modelstat;
-		p80_repy(i,'resusd'   ) = magpie.resusd;
-		p80_repy(i,'objval')    = magpie.objval;
-                if(p80_repy(i,'modelstat') <= 2,
-                    p80_repyLastOptim(i,'objval') = p80_repy(i,'objval');
-                );
-		if (magpie.modelstat <= 2 OR magpie.modelstat = 7,
-		display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
-		p80_handle(i) = 0;
-		else display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
-		);
-	) ;
-display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
-*display$sleep(5) 'sleep some time';
-until card(p80_handle) = 0;
+i2(i) = no;
+j2(j) = no;
+i2("EUR") = yes;
+j2(j) = yes$cell("EUR",j);
+solve magpie USING nlp MINIMIZING vm_cost_glo ;
+p80_handle("EUR") = magpie.handle;
+*solve magpie USING nlp MINIMIZING vm_cost_glo ;
+i2(i) = no;
+j2(j) = no;
 $offtext
+
+repeat
+   loop(i$p80_handle(i),
+      if(handleStatus(p80_handle(i)) = 2,
+         magpie.handle = p80_handle(i);
+         execute_loadhandle magpie;
+		 p80_modelstat(t,i) = magpie.modelstat;
+         display magpie.modelstat;
+		display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
+		if (magpie.modelstat <= 2 OR magpie.modelstat = 7,
+		p80_handle(i) = 0;
+		else 
+	i2(i) = yes;
+	j2(j) = yes$cell(i,j);
+	solve magpie USING nlp MINIMIZING vm_cost_glo ;
+	i2(i) = no;
+	j2(j) = no;
+	p80_handle(i) = magpie.handle;
+		
+*		solve magpie USING nlp MINIMIZING vm_cost_glo ;
+*		p80_handle("EUR") = magpie.handle;
+*		display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
+		);
+      ); 
+   ) ;
+   display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
+until card(p80_handle) = 0;
+
 $ontext
 magpie.solvelink = 3;
 *start loop over Regions
