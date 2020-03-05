@@ -31,13 +31,40 @@ Tol_Feas_Max = 4.0e-6
 Tol_Feas_Tria = 4.0e-6
 $offecho
 
+magpie.solvelink = 3;
+
 i2(i) = no;
 j2(j) = no;
 i2("LAM") = yes;
 j2(j) = yes$cell("LAM",j);
 solve magpie USING nlp MINIMIZING vm_cost_glo ;
+p80_handle("LAM") = magpie.handle;
 i2(i) = yes;
 j2(j) = yes;
+
+Repeat
+  	loop(i$handlecollect(p80_handle(i)),
+		i2(i) = yes;
+		display i2;
+		i2(i) = no;
+		display magpie.modelstat;
+		p80_modelstat(t,i) = magpie.modelstat;
+		p80_repy(i,'solvestat') = magpie.solvestat;
+		p80_repy(i,'modelstat') = magpie.modelstat;
+		p80_repy(i,'resusd'   ) = magpie.resusd;
+		p80_repy(i,'objval')    = magpie.objval;
+                if(p80_repy(i,'modelstat') <= 2,
+                    p80_repyLastOptim(i,'objval') = p80_repy(i,'objval');
+                );
+		if (magpie.modelstat <= 2 OR magpie.modelstat = 7,
+		display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
+		p80_handle(i) = 0;
+		else display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
+		);
+	) ;
+display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
+*display$sleep(5) 'sleep some time';
+until card(p80_handle) = 0;
 
 $ontext
 magpie.solvelink = 3;
