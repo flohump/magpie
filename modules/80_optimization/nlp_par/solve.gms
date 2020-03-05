@@ -50,6 +50,7 @@ s80_counter = 0;
 Repeat
   	s80_counter = s80_counter + 1 ;
   	loop(i$handlecollect(p80_handle(i)),
+		display i;
 		display magpie.modelstat;
 		p80_modelstat(t,i) = magpie.modelstat;
 		p80_repy(i,'solvestat') = magpie.solvestat;
