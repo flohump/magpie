@@ -31,7 +31,7 @@ Tol_Feas_Max = 4.0e-6
 Tol_Feas_Tria = 4.0e-6
 $offecho
 
-magpie.solvelink = 3;
+magpie.solvelink = 6;
 i2(i) = no;
 j2(j) = no;
 *start loop over Regions
