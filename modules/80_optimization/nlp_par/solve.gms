@@ -35,16 +35,12 @@ magpie.solvelink = 3;
 
 i2(i) = no;
 j2(j) = no;
-i2("LAM") = yes;
-j2(j) = yes$cell("LAM",j);
-solve magpie USING nlp MINIMIZING vm_cost_glo ;
-p80_handle("LAM") = magpie.handle;
-i2(i) = no;
-j2(j) = no;
 i2("SSA") = yes;
 j2(j) = yes$cell("SSA",j);
 solve magpie USING nlp MINIMIZING vm_cost_glo ;
 p80_handle("SSA") = magpie.handle;
+i2(i) = no;
+j2(j) = no;
 
 Repeat
   	loop(i$handlecollect(p80_handle(i)),
