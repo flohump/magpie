@@ -33,6 +33,13 @@ $offecho
 
 i2(i) = no;
 j2(j) = no;
+i2("LAM") = yes;
+j2(j) = yes$cell("LAM",j);
+solve magpie USING nlp MINIMIZING vm_cost_glo ;
+i2(i) = yes;
+j2(j) = yes;
+
+$ontext
 magpie.solvelink = 3;
 *start loop over Regions
 loop(i,
@@ -75,4 +82,5 @@ j2(j) = yes;
 	display j2;
 	display i2;
 magpie.solvelink = 0;
+$offtext
 ***************end solve loop***************
