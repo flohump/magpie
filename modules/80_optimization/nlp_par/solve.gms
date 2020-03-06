@@ -78,20 +78,23 @@ repeat
 		 j2(j) = yes$cell(i,j);
          display i2;
          display magpie.modelstat;
+		 display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
 		if (magpie.modelstat <= 2,
-		 display$handledelete(p80_handle(i)) 'trouble deleting handles' ;		 
 		 p80_handle(i) = 0;
 		elseif magpie.modelstat = 7,
-		 display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
+		 solve magpie USING nlp MINIMIZING vm_cost_glo ;
+		 p80_handle(i) = magpie.handle;
 		 p80_counter(i) = p80_counter(i) + 1;
 		elseif magpie.modelstat = 13,
 	     display "WARNING: Modelstat 13 | retry with CONOPT3!";
       	 option nlp = conopt;
-		 display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
+      	 solve magpie USING nlp MINIMIZING vm_cost_glo;
       	 option nlp = conopt4;
+		 p80_handle(i) = magpie.handle;
 		 p80_counter(i) = p80_counter(i) + 1;
 		else 
-		 display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
+		 solve magpie USING nlp MINIMIZING vm_cost_glo ;
+		 p80_handle(i) = magpie.handle;
 		 p80_counter(i) = p80_counter(i) + 1;		 
 *		 handleSubmit does work as expected. Does not restart from saved state.
 *		 display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
