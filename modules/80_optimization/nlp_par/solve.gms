@@ -99,6 +99,7 @@ repeat
 *		 handleSubmit does work as expected. Does not restart from saved state.
 *		 display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
 		);
+		execerror = 0;
 		i2(i) = no;
 		j2(j) = no;
 * write extended run information in list file in the case that the final solution is infeasible
@@ -109,6 +110,7 @@ repeat
    );
    display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
 until card(p80_handle) = 0 OR smax(i, p80_counter(i)) >= s80_maxiter;
+execerror = 0;
 
 if (smax(i,p80_modelstat(t,i)) > 2 and smax(i,p80_modelstat(t,i)) ne 7,
   Execute_Unload "fulldata.gdx";

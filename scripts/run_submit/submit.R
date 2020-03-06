@@ -20,7 +20,7 @@ write(capture.output(cfg), file="config.log")
 
 cat("\nStarting MAgPIE...\n")
 begin<-Sys.time()
-system(paste("gams full.gms -errmsg=1 -lf=full.log -lo=",cfg$logoption,sep=""))
+system(paste("gams full.gms -errmsg=1 -execErr=1000 -lf=full.log -lo=",cfg$logoption,sep=""))
 gams_runtime<-Sys.time()-begin  #calculate runtime info
 if(!file.exists("fulldata.gdx")) stop("MAgPIE model run did not finish properly (fulldata.gdx is missing). Please check full.lst for further information!")
 cat("\nMAgPIE run finished!\n")
