@@ -42,7 +42,7 @@ for (res in c("c1000")) {
 #    cfg$gms$s21_walras_auction <- 1
 #    cfg$force_download <- TRUE
     #cfg$recalc_npi_ndc <- TRUE
-    cfg$gms$c_timesteps <- 1
+#    cfg$gms$c_timesteps <- 1
     start_run(cfg,codeCheck=FALSE)
   }
 }
