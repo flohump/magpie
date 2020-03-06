@@ -305,7 +305,6 @@ else
              ) / sum(i_to_iso(i,iso),
                  im_pop_iso(t,iso)
              );
-display p15_kcal_pc;
 
  p15_balanceflow_kcal(t,i,kfo)$(
     sum(i_to_iso(i,iso),
@@ -528,8 +527,6 @@ p15_kcal_pc_calibrated(t,i,kfo) = p15_kcal_pc_calibrated_orig(t,i,kfo) * (1-i15_
 
 );
 
-display p15_kcal_pc_calibrated;
-display p15_kcal_pc_calibrated_orig;
 *' @stop
 
 *###############################################################################

@@ -21,7 +21,7 @@ p80_modelstat(t,i) = 1;
 
 magpie.optfile   = s80_optfile ;
 magpie.scaleopt  = 1 ;
-magpie.solprint  = on ;
+magpie.solprint  = 1 ;
 magpie.holdfixed = 1 ;
 
 $onecho > conopt4.opt
@@ -31,6 +31,18 @@ Tol_Feas_Max = 4.0e-6
 Tol_Feas_Tria = 4.0e-6
 $offecho
 
+i2(i) = no;
+j2(j) = no;
+i2("BRA") = yes;
+j2(j) = yes$cell("BRA",j);
+solve magpie USING nlp MINIMIZING vm_cost_glo ;
+*p80_handle("EUR") = magpie.handle;
+*solve magpie USING nlp MINIMIZING vm_cost_glo ;
+i2(i) = no;
+j2(j) = no;
+*$offtext
+
+$ontext
 magpie.solvelink = 6;
 i2(i) = no;
 j2(j) = no;
@@ -45,18 +57,6 @@ loop(i,
 	j2(j) = no;
 	p80_handle(i) = magpie.handle;
 );
-
-$ontext
-i2(i) = no;
-j2(j) = no;
-i2("EUR") = yes;
-j2(j) = yes$cell("EUR",j);
-solve magpie USING nlp MINIMIZING vm_cost_glo ;
-p80_handle("EUR") = magpie.handle;
-*solve magpie USING nlp MINIMIZING vm_cost_glo ;
-i2(i) = no;
-j2(j) = no;
-$offtext
 
 *collection loop
 repeat
@@ -88,7 +88,7 @@ repeat
 		j2(j) = no;
 * write extended run information in list file in the case that the final solution is infeasible
   		if((p80_counter(i) >= (s80_maxiter-1) and p80_modelstat(t,i) > 2 and p80_modelstat(t,i) ne 7),
-    		magpie.solprint = on
+    		magpie.solprint = 1
   		);
       ); 
    );
@@ -99,7 +99,7 @@ if (smax(i,p80_modelstat(t,i)) > 2 and smax(i,p80_modelstat(t,i)) ne 7,
   Execute_Unload "fulldata.gdx";
   abort "no feasible solution found!";
 );
-
+$offtext
 $ontext
 magpie.solvelink = 3;
 *start loop over Regions
