@@ -38,6 +38,7 @@ for (res in c("c1000")) {
     cfg$gms$s15_elastic_demand <- 1
     cfg$gms$c60_bioenergy_subsidy <- 0
     cfg$gms$trade <- "exo"
+    cfg$recalibrate <- FALSE
 #    cfg$gms$s21_walras_auction <- 1
 #    cfg$force_download <- TRUE
     #cfg$recalc_npi_ndc <- TRUE
