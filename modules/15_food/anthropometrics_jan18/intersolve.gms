@@ -33,7 +33,6 @@ p15_modelstat(t) = m15_food_demand.modelstat;
 
 display "Food Demand Model finished with modelstat ";
 display p15_modelstat;
-display v15_kcal_regr.l;
 
 if(( p15_modelstat(t)) > 2 and (p15_modelstat(t) ne 7 ),
   m15_food_demand.solprint = 1
@@ -115,7 +114,7 @@ if (s15_elastic_demand * (1-sum(sameas(t_past,t),1)) =1,
                                    ) / sum(i_to_iso(i,iso),
                                        im_pop_iso(t,iso)
                                    );
-display p15_kcal_pc;
+
 * We calibrate countries with zero food demand according to FAOSTAT
 * down to zero to match FAO world totals.
 * Values are rounded to avoid path dependencies of MAgPIE solver.

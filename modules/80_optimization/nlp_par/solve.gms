@@ -63,25 +63,24 @@ repeat
       if(handleStatus(p80_handle(i)) = 2,
          magpie.handle = p80_handle(i);
          execute_loadhandle magpie;
+		 magpie.modelstat$(magpie.modelstat=NA) = 4;
 		 p80_modelstat(t,i) = magpie.modelstat;
+		 i2(i) = yes;
+		 j2(j) = yes$cell(i,j);
+         display i2;
          display magpie.modelstat;
-		display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
+		 display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
 		if (magpie.modelstat <= 2 OR magpie.modelstat = 7,
-		p80_handle(i) = 0;
+		 p80_handle(i) = 0;
 		else 
-	i2(i) = yes;
-	j2(j) = yes$cell(i,j);
-	solve magpie USING nlp MINIMIZING vm_cost_glo ;
-	i2(i) = no;
-	j2(j) = no;
-	p80_handle(i) = magpie.handle;
-		
-*		solve magpie USING nlp MINIMIZING vm_cost_glo ;
-*		p80_handle("EUR") = magpie.handle;
-*		display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
+		 solve magpie USING nlp MINIMIZING vm_cost_glo ;
+		 p80_handle(i) = magpie.handle;
+*		 display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
 		);
+		i2(i) = no;
+		j2(j) = no;		
       ); 
-   ) ;
+   );
    display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
 until card(p80_handle) = 0;
 
