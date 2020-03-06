@@ -72,7 +72,7 @@ repeat
       if(handleStatus(p80_handle(i)) = 2,
          magpie.handle = p80_handle(i);
          execute_loadhandle magpie;
-		 magpie.modelstat$(magpie.modelstat=NA) = 4;
+		 magpie.modelstat$(magpie.modelstat=NA) = 13;
 		 p80_modelstat(t,i) = magpie.modelstat;
 		 i2(i) = yes;
 		 j2(j) = yes$cell(i,j);
