@@ -34,7 +34,7 @@ $offecho
 magpie.solvelink = 6;
 i2(i) = no;
 j2(j) = no;
-*start loop over Regions
+*submission loop
 loop(i,
 	i2(i) = yes;
 	j2(j) = yes$cell(i,j);
@@ -58,6 +58,7 @@ i2(i) = no;
 j2(j) = no;
 $offtext
 
+*collection loop
 repeat
    loop(i$p80_handle(i),
       if(handleStatus(p80_handle(i)) = 2,
@@ -79,14 +80,25 @@ repeat
 		else 
 		 solve magpie USING nlp MINIMIZING vm_cost_glo ;
 		 p80_handle(i) = magpie.handle;
+		 p80_counter(i) = p80_counter(i) + 1;		 
+*		 handleSubmit does work as expected. Does not restart from saved state.
 *		 display$handleSubmit(p80_handle(i)) 'trouble resubmitting handles' ;
 		);
 		i2(i) = no;
 		j2(j) = no;		
       ); 
+* write extended run information in list file in the case that the final solution is infeasible
+  if((p80_counter(i) >= (s80_maxiter-1) and p80_modelstat(t,i) > 2 and p80_modelstat(t,i) ne 7),
+    magpie.solprint = 1
+  );
    );
    display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
 until card(p80_handle) = 0 OR smax(i, p80_counter(i)) >= s80_maxiter;
+
+if (smax(i,p80_modelstat(t,i)) > 2 and smax(i,p80_modelstat(t,i)) ne 7,
+  Execute_Unload "fulldata.gdx";
+  abort "no feasible solution found!";
+);
 
 $ontext
 magpie.solvelink = 3;
