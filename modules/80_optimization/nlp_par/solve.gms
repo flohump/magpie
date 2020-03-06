@@ -14,7 +14,7 @@ $else
   abort "c80_nlp_solver setting not supported in nlp_apr17 realization!";
 $endif
 
-s80_counter = 0;
+p80_counter(i) = 0;
 p80_modelstat(t,i) = 1;
 
 *** solver settings
@@ -71,8 +71,11 @@ repeat
          display magpie.modelstat;
 		 display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
 		if (magpie.modelstat <= 2,
-* OR magpie.modelstat = 7
 		 p80_handle(i) = 0;
+		elseif magpie.modelstat = 7,
+		 solve magpie USING nlp MINIMIZING vm_cost_glo ;
+		 p80_handle(i) = magpie.handle;
+		 p80_counter(i) = p80_counter(i) + 1;
 		else 
 		 solve magpie USING nlp MINIMIZING vm_cost_glo ;
 		 p80_handle(i) = magpie.handle;
@@ -83,7 +86,7 @@ repeat
       ); 
    );
    display$readyCollect(p80_handle) 'Problem waiting for next instance to complete';
-until card(p80_handle) = 0;
+until card(p80_handle) = 0 OR smax(i, p80_counter(i)) >= s80_maxiter;
 
 $ontext
 magpie.solvelink = 3;

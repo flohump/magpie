@@ -8,12 +8,9 @@
 parameters
 	p80_num_nonopt(t)		numNOpt indicator (1)
 	p80_modelstat(t,i)             		"modelstat"
+	p80_counter(i)             		"modelstat"
 	p80_handle(i)						"parallel mode handle parameter"
 	p80_repy(i,solveinfo80)  			"summary report from solver"
 	p80_repyLastOptim(i,solveinfo80)	"objective value from last optimal solution"
 
-;
-
-scalars
-  s80_counter       counter (1)
 ;
