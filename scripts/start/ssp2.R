@@ -26,13 +26,13 @@ cfg$results_folder <- "output/:title:"
 #for (res in c("c600","c1000")) {#"c1000","c10000"
 for (res in c("c1000")) {
   for (opt in c("nlp_par")) {#"nlp_par""nlp_apr17"
-    cfg$input <- c(paste0("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev42_",res,"_690d3718e151be1b450b394c1064b1c5.tgz"),
-                   "rev4.42_690d3718e151be1b450b394c1064b1c5_magpie.tgz",
-                   "rev4.42_690d3718e151be1b450b394c1064b1c5_validation.tgz",
-                   "calibration_H12_c200_26Feb20.tgz",
+    cfg$input <- c(paste0("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev42_",res,"_ec4c05e41bb6ce4e8c3beb8e3f3296a0.tgz"),
+                   "rev4.42_ec4c05e41bb6ce4e8c3beb8e3f3296a0_magpie.tgz",
+                   "rev4.42_ec4c05e41bb6ce4e8c3beb8e3f3296a0_validation.tgz",
+#                   "calibration_H12_c200_26Feb20.tgz",
                    "additional_data_rev3.77.tgz")
     
-    cfg$title <- paste0(prefix,"_SSP2_",res,"_",opt,"_solvelink6")
+    cfg$title <- paste0(prefix,"_SSP2_",res,"_",opt,"_G20")
     cfg <- setScenario(cfg,c("SSP2","NPI"))
     cfg$gms$optimization <- opt
     cfg$gms$s15_elastic_demand <- 1
