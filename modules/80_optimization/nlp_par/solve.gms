@@ -21,7 +21,7 @@ p80_modelstat(t,i) = 1;
 
 magpie.optfile   = s80_optfile ;
 magpie.scaleopt  = 1 ;
-magpie.solprint  = 1 ;
+magpie.solprint  = 0 ;
 magpie.holdfixed = 1 ;
 
 $onecho > conopt4.opt
@@ -31,6 +31,7 @@ Tol_Feas_Max = 4.0e-6
 Tol_Feas_Tria = 4.0e-6
 $offecho
 
+$ontext
 i2(i) = no;
 j2(j) = no;
 i2("BRA") = yes;
@@ -48,9 +49,8 @@ solve magpie USING nlp MINIMIZING vm_cost_glo ;
 *solve magpie USING nlp MINIMIZING vm_cost_glo ;
 i2(i) = no;
 j2(j) = no;
-*$offtext
+$offtext
 
-$ontext
 magpie.solvelink = 6;
 i2(i) = no;
 j2(j) = no;
@@ -85,6 +85,13 @@ repeat
 		 solve magpie USING nlp MINIMIZING vm_cost_glo ;
 		 p80_handle(i) = magpie.handle;
 		 p80_counter(i) = p80_counter(i) + 1;
+		elseif magpie.modelstat = 13,
+	     display "WARNING: Modelstat 13 | retry with CONOPT3!";
+      	 option nlp = conopt;
+      	 solve magpie USING nlp MINIMIZING vm_cost_glo;
+      	 option nlp = conopt4;
+		 p80_handle(i) = magpie.handle;
+		 p80_counter(i) = p80_counter(i) + 1;
 		else 
 		 solve magpie USING nlp MINIMIZING vm_cost_glo ;
 		 p80_handle(i) = magpie.handle;
@@ -107,7 +114,7 @@ if (smax(i,p80_modelstat(t,i)) > 2 and smax(i,p80_modelstat(t,i)) ne 7,
   Execute_Unload "fulldata.gdx";
   abort "no feasible solution found!";
 );
-$offtext
+
 $ontext
 magpie.solvelink = 3;
 *start loop over Regions
