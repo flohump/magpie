@@ -21,7 +21,7 @@ p80_modelstat(t,i) = 1;
 
 magpie.optfile   = s80_optfile ;
 magpie.scaleopt  = 1 ;
-magpie.solprint  = 0 ;
+magpie.solprint  = on ;
 magpie.holdfixed = 1 ;
 
 $onecho > conopt4.opt
@@ -88,7 +88,7 @@ repeat
 		j2(j) = no;
 * write extended run information in list file in the case that the final solution is infeasible
   		if((p80_counter(i) >= (s80_maxiter-1) and p80_modelstat(t,i) > 2 and p80_modelstat(t,i) ne 7),
-    		magpie.solprint = 1
+    		magpie.solprint = on
   		);
       ); 
    );
