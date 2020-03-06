@@ -70,7 +70,8 @@ repeat
          display i2;
          display magpie.modelstat;
 		 display$handledelete(p80_handle(i)) 'trouble deleting handles' ;
-		if (magpie.modelstat <= 2 OR magpie.modelstat = 7,
+		if (magpie.modelstat <= 2,
+* OR magpie.modelstat = 7
 		 p80_handle(i) = 0;
 		else 
 		 solve magpie USING nlp MINIMIZING vm_cost_glo ;
