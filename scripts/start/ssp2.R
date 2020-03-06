@@ -32,7 +32,7 @@ for (res in c("c1000")) {
 #                   "calibration_H12_c200_26Feb20.tgz",
                    "additional_data_rev3.77.tgz")
     
-    cfg$title <- paste0(prefix,"_SSP2_",res,"_",opt,"_G20_BRA")
+    cfg$title <- paste0(prefix,"_SSP2_",res,"_",opt,"_G20_BRA2")
     cfg <- setScenario(cfg,c("SSP2","NPI"))
     cfg$gms$optimization <- opt
     cfg$gms$s15_elastic_demand <- 1
