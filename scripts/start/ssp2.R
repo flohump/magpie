@@ -32,13 +32,13 @@ for (res in c("c1000")) {
 #                   "calibration_H12_c200_26Feb20.tgz",
                    "additional_data_rev3.77.tgz")
     
-    cfg$title <- paste0(prefix,"_SSP2_",res,"_",opt,"_G20")
+    cfg$title <- paste0(prefix,"_SSP2_",res,"_",opt,"_G20_calib")
     cfg <- setScenario(cfg,c("SSP2","NPI"))
     cfg$gms$optimization <- opt
     cfg$gms$s15_elastic_demand <- 1
     cfg$gms$c60_bioenergy_subsidy <- 0
     cfg$gms$trade <- "exo"
-    cfg$recalibrate <- FALSE
+    cfg$recalibrate <- TRUE
 #    cfg$gms$s21_walras_auction <- 1
 #    cfg$force_download <- TRUE
     #cfg$recalc_npi_ndc <- TRUE
