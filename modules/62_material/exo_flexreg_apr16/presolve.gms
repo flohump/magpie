@@ -12,10 +12,10 @@
 *' How this switch affects the material demand calculations is explained in the
 *' equation(s) accompanying this module.
 
-if (sum(sameas(t_past,t),1) = 1,
+if (m_year(t) <= 2020,
   s62_historical=1;
 else
- s62_historical=0;
+  s62_historical=0;
 );
 
 *' @stop

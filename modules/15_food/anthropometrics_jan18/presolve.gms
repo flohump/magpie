@@ -17,7 +17,7 @@ option nlp = conopt4
 *' which declines in the course of the century at the cost of chicken meat.
 *' @stop
 
-if (sum(sameas(t_past,t),1) = 1,
+if (m_year(t) <= 2020,
 
 *** Calculate the share of individual food products within major food groups, and replace zero shares with regional averages
 * First set it to equal shares, just in case there is no population
@@ -114,7 +114,7 @@ if (sum(sameas(t_past,t),1) = 1,
 
 * Calculations are only made after historical period. Before, we use historical values.
 
-if (sum(sameas(t_past,t),1) = 1,
+if (m_year(t) <= 2020,
 
    p15_bodyheight(t,iso,sex,age,estimates15) = f15_bodyheight(t,iso,sex,age);
 
@@ -252,7 +252,7 @@ p15_bmi_shr_regr(t,iso,sex,age,bmi_group15)=v15_bmi_shr_regr.l(iso,sex,age,bmi_g
 *' demand estimates can still be used for all countries, but MAgPIE only considers
 *' demand from FAOSTAT countries.
 
-if (sum(sameas(t_past,t),1) = 1,
+if (m_year(t) <= 2020,
     p15_kcal_calib(t,iso,kfo)$(sum(kfo2,f15_kcal_pc_iso(t,iso,kfo2))=0) = 0;
     p15_balanceflow_kcal_iso(t,iso,kfo)$(sum(kfo2,f15_kcal_pc_iso(t,iso,kfo2))>0) = 0;
     p15_kcal_calib(t,iso,kfo)$(sum(kfo2,f15_kcal_pc_iso(t,iso,kfo2))>0) = f15_kcal_pc_iso(t,iso,kfo) - v15_kcal_regr.l(iso, kfo);
@@ -427,7 +427,7 @@ p15_demand2intake_ratio_scen(t,i) =p15_demand2intake_ratio(t,i);
 
 * ###### Exogenous food waste scenario
 
-if(s15_exo_waste = 1,
+if(s15_exo_waste = 1 AND m_year(t) > 2020,
 
 * "Downwards convergence" of regional calorie oversupply due to food waste to the
 * waste reduction target, i.e. only for values that are higher than the target:
@@ -454,7 +454,7 @@ p15_kcal_pc_calibrated(t,i,kfo)$(p15_demand2intake_ratio(t,i) >0 ) = p15_kcal_pc
 *' to 1.
 
 
-if(s15_exo_diet = 1,
+if(s15_exo_diet = 1 AND m_year(t) > 2020,
 
 
 *' 1.) In a first step, the exogenous scenario diets are defined by selecting a

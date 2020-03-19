@@ -104,7 +104,7 @@ p15_bodyheight(t,iso,"F","10--14","final")=p15_bodyheight(t,iso,"M","15--19","fi
 *' term, which is the residual of the regression fit and observation of the last
 *' historical time step.
 
-if (sum(sameas(t_past,t),1) = 1,
+if (m_year(t) <= 2020,
 * For historical period, the regression results are only used to estimate the calibration parameter.
   p15_bodyheight_calib(t,iso,sex,age_new_estimated15) = f15_bodyheight(t,iso,sex,age_new_estimated15) - p15_bodyheight(t,iso,sex,age_new_estimated15,"final");
   p15_bodyheight(t,iso,sex,age_new_estimated15,"final") = f15_bodyheight(t,iso,sex,age_new_estimated15);
