@@ -17,6 +17,7 @@ library(magpie4)
 library(ggplot2)
 library(data.table)
 library(quitte)
+library(reshape2)
 
 options(error=function()traceback(2))
 
@@ -29,7 +30,8 @@ if(!exists("source_include")) {
 ###############################################################################
 cat("\nStarting output generation\n")
 
-forestry <- NULL
+aff_area_shr <- NULL
+aff_area <- NULL
 missing <- NULL
 
 for (i in 1:length(outputdirs)) {
@@ -44,7 +46,11 @@ for (i in 1:length(outputdirs)) {
     x <- collapseNames(read.magpie(path(outputdirs[i],"cell.land_0.5_share.mz"))[,,"forestry"])
     x <- x-setYears(x[,2020,],NULL)
     x <- x[,c(2050,2100),]
-    forestry <- mbind(forestry,setNames(x,scen))
+    aff_area_shr <- mbind(aff_area_shr,setNames(x,scen))
+    x <- collapseNames(read.magpie(path(outputdirs[i],"cell.land_0.5.mz"))[,,"forestry"])
+    x <- x-setYears(x[,2020,],NULL)
+    x <- x[,c(2050,2100),]
+    aff_area <- mbind(aff_area,setNames(x,scen))
   } else missing <- c(missing,outputdirs[i])
 }
 if (!is.null(missing)) {
@@ -52,4 +58,31 @@ if (!is.null(missing)) {
   print(missing)
 }
 
-write.magpie(forestry,"output/aff_area_shr.mz")
+write.magpie(aff_area_shr,"output/aff_area_shr.mz")
+write.magpie(aff_area,"output/aff_area.mz")
+
+mag_to_data_table <- function(x) {
+  mag <- as.array(x)
+  load("sysdata.rda")
+  coord <- magclassdata$half_deg[, c("lon", "lat")]
+  NODATA <- NA
+  lon <- seq(-179.75, 179.75, by = 0.5)
+  lat <- seq(-89.75, 89.75, by = 0.5)
+  time <- as.numeric(unlist(lapply(strsplit(dimnames(mag)[[2]],"y"), function(mag) mag[2])))
+  data <- dimnames(mag)[[3]]
+  netcdf <- array(NODATA, dim = c(720, 360, dim(mag)[2],dim(mag)[3]), dimnames = list(lon, lat, time, data))
+  for (i in 1:ncells(mag)) {
+    netcdf[which(coord[i, 1] == lon), which(coord[i,2] == lat), , ] <- mag[i, , , drop = FALSE]
+  }
+  
+  dt <- melt(netcdf)
+  names(dt) <- c("lon","lat","time","data","value")
+  dt <- as.data.table(dt)
+  return(dt)
+}
+
+aff_area_shr <- mag_to_data_table(aff_area_shr)
+aff_area <- mag_to_data_table(aff_area)
+
+saveRDS(aff_area_shr,"aff_area_shr.rds")
+saveRDS(aff_area,"aff_area.rds")
