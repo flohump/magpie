@@ -41,7 +41,7 @@ for (i in 1:length(outputdirs)) {
     load(path(outputdirs[i],"config.Rdata"))
     scen <- cfg$title
     #read-in reporting file
-    x <- read.magpie(path(outputdirs[i],"cell.land_0.5_share.mz"))
+    x <- collapseNames(read.magpie(path(outputdirs[i],"cell.land_0.5_share.mz"))[,,"forestry"])
     x <- x-setYears(x[,2020,],NULL)
     x <- x[,c(2050,2100),]
     forestry <- mbind(forestry,setNames(x,scen))
