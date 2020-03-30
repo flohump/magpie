@@ -15,6 +15,8 @@ library(magclass)
 library(luplot)
 library(magpie4)
 library(ggplot2)
+library(data.table)
+library(quitte)
 
 options(error=function()traceback(2))
 
@@ -28,9 +30,9 @@ if(!exists("source_include")) {
 cat("\nStarting output generation\n")
 
 forestry <- NULL
-emis <- NULL
-cdr <- NULL
 missing <- NULL
+all <- NULL
+def <- NULL
 
 for (i in 1:length(outputdirs)) {
   print(paste("Processing",outputdirs[i]))
@@ -43,17 +45,23 @@ for (i in 1:length(outputdirs)) {
     #read-in reporting file
     x <- collapseNames(land(gdx,level="glo")[,,"forestry"])
     x <- x-setYears(x[,1,],NULL)
-    getNames(x) <- scen
-    forestry <- mbind(forestry,x)
+    forestry <- mbind(forestry,setNames(x,scen))
     
-    x <- collapseNames(emisCO2(gdx,level="glo",cumulative = TRUE)/1000)
-    getNames(x) <- scen
-    emis <- mbind(emis,x)
-
-    x <- collapseNames(emisCO2(gdx,level="glo",cumulative = TRUE,type = "neg")/1000)
-    getNames(x) <- scen
-    cdr <- mbind(cdr,x)
-    
+    tmp <- strsplit(scen,"_")[[1]]
+    co2_price_path <- tmp[2]
+    variable <- tmp[3]
+    label <- tmp[4]
+    x <- as.data.table(as.quitte(x))
+    x <- x[,.(region,period,value)]
+    if (variable!="default") {
+      if (label %in% c("discountrate","buffer")) {
+        all <- rbind(all,cbind(co2_price_path,variable,paste0(label,"%"),x))
+      } else {
+        all <- rbind(all,cbind(co2_price_path,variable,label,x))
+      }
+    } else {
+      def <- rbind(def,cbind(co2_price_path,variable,x))
+    }
   } else missing <- c(missing,outputdirs[i])
 }
 if (!is.null(missing)) {
@@ -61,11 +69,12 @@ if (!is.null(missing)) {
   print(missing)
 }
 
-p <- magpie2ggplot2(forestry,scenario = 1,ylab = "Mha",title = "Afforestation",legend_position = "bottom",group = NULL,legend_ncol = 1)
-ggsave(plot = p,filename = "output/aff_area.pdf",width = 8,height = 7)
+write.csv(all,"output/data_aff_area.csv",row.names = F)
+write.csv(def,"output/data_aff_area_def.csv",row.names = F)
 
-p <- magpie2ggplot2(emis,scenario = 1,ylab = "GtCO2",title = "Cumulative CO2 Emissions",legend_position = "bottom",group = NULL,legend_ncol = 1)
-ggsave(plot = p,filename = "output/emis_cum.pdf",width = 8,height = 7)
 
-p <- magpie2ggplot2(cdr,scenario = 1,ylab = "GtCO2",title = "Cumulative CDR",legend_position = "bottom",group = NULL,legend_ncol = 1)
-ggsave(plot = p,filename = "output/cdr_cum.pdf",width = 8,height = 7)
+#a <- data.table(read.csv("data.csv"))
+#ggplot(all,aes(x=period,y=value,color=variable,label=label,group=label)) + geom_line()+geom_label_repel(data = subset(all, period == max(period)),direction = "x",show.legend = F) + facet_wrap(vars(co2_price_path),nrow = 1)
+
+# p <- magpie2ggplot2(forestry,scenario = 1,ylab = "Mha",title = "Afforestation",legend_position = "bottom",group = NULL,legend_ncol = 1)
+# ggsave(plot = p,filename = "output/aff_area.pdf",width = 8,height = 7)

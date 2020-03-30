@@ -18,6 +18,7 @@ scalars
   s56_counter counter for C price interpolation (1) / 0 /
   s56_timesteps number of time steps for C price interpolation (1) / 0 /
   s56_offset helper for C price interpolation (1) / 0 /
+  s56_payment afforestation payment scheme (0=annually 1=begin 2=end 3=reserve) / 0 /
 ;
 
 $setglobal c56_pollutant_prices  R2M41-SSP2-NPi
