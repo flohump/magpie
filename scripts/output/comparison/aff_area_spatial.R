@@ -84,5 +84,5 @@ mag_to_data_table <- function(x) {
 aff_area_shr <- mag_to_data_table(aff_area_shr)
 aff_area <- mag_to_data_table(aff_area)
 
-saveRDS(aff_area_shr,"aff_area_shr.rds")
-saveRDS(aff_area,"aff_area.rds")
+saveRDS(aff_area_shr,"output/aff_area_shr.rds")
+saveRDS(aff_area,"output/aff_area.rds")
