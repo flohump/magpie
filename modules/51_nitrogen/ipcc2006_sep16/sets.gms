@@ -23,6 +23,5 @@ sets
      forestry_vegc, forestry_litc, forestry_soilc,
      primforest_vegc, primforest_litc, primforest_soilc,
 secdforest_vegc, secdforest_litc, secdforest_soilc,     urban_vegc, urban_litc, urban_soilc,
-     other_vegc, other_litc, other_soilc,
-     beccs/
+     other_vegc, other_litc, other_soilc /
 ;
