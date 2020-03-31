@@ -26,6 +26,7 @@ if(!exists("source_include")) {
 ###############################################################################
 cat("\nStarting output generation\n")
 
+all <- NULL
 missing <- NULL
 
 if(file.exists("output/report_comp.csv")) file.rename("output/report_comp.csv","output/report_comp.bak")
@@ -34,6 +35,7 @@ for (i in 1:length(outputdirs)) {
   print(paste("Processing",outputdirs[i]))
   #gdx file
   rep<-path(outputdirs[i],"report.mif")
+  rep_rds <- sub(".mif","rds",rep)
   if(file.exists(rep)) {
     #get scenario name
     load(path(outputdirs[i],"config.Rdata"))
@@ -43,6 +45,9 @@ for (i in 1:length(outputdirs)) {
     getNames(a,dim=1) <- scen
     #add to reporting csv file
     write.report2(a,file="output/report_comp.csv",append=TRUE,ndigit = 4,skipempty = FALSE)
+  } else if (file.exists(rep_rds)) {
+    a <- readRDS(rep_rds)
+    all <- rbind(all,a)
   } else missing <- c(missing,outputdirs[i])
 }
 if (!is.null(missing)) {
@@ -51,3 +56,4 @@ if (!is.null(missing)) {
 }
 
 if(file.exists("output/report_comp.csv")) saveRDS(read.quitte("output/report_comp.csv"),file = "output/report_comp.rds")
+if(!is.null(all)) saveRDS(all,file = "output/report_comp.rds")
