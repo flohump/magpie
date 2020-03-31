@@ -86,7 +86,7 @@ for (ssp in c("SSP1")) {
     # }
     
     cfg <- reset(cfg)
-    cfg$title <- paste0(prefix,"_",ssp,"_",co2_price_path,"_",ftype,"_default_fixedforever")
+    cfg$title <- paste0(prefix,"_",ssp,"_",co2_price_path,"_",ftype,"_default_FIXvm_btm_cell")
     start_run(cfg,codeCheck=FALSE)
 
     # if (ssp=="SSP1") {

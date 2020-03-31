@@ -5,6 +5,9 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
+***vm_btm_cell is only used for CO2 sources from land. Fix other sources and pollutants to zero.
+vm_btm_cell.fx(j,emis_source,pollutants) = 0;
+vm_btm_cell.up(j,emis_co2,"co2_c") = Inf;
 
 ****select ghg prices
 $ifthen "%c56_pollutant_prices%" == "coupling" im_pollutant_prices(t_all,i,pollutants) = f56_pollutant_prices_coupling(t_all,i,pollutants);
