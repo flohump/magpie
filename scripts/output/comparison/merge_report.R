@@ -35,7 +35,7 @@ for (i in 1:length(outputdirs)) {
   print(paste("Processing",outputdirs[i]))
   #gdx file
   rep<-path(outputdirs[i],"report.mif")
-  rep_rds <- sub(".mif","rds",rep)
+  rep_rds <- sub(".mif",".rds",rep)
   if(file.exists(rep)) {
     #get scenario name
     load(path(outputdirs[i],"config.Rdata"))
