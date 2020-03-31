@@ -5,8 +5,10 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-***fix vm_btm_cell to zero for non-CO2 sources from land-use change
-vm_btm_cell.fx(j,emis_co2,pollutants)$(not sameas(pollutants,"co2_c")) = 0;
+***fix vm_btm_cell to zero for non-CO2 emissions from land-use change
+vm_btm_cell.fx(j,emis_source_cell,pollutants)$(not sameas(pollutants,"co2_c")) = 0;
+***fix vm_btm_cell to zero for CO2 emissions from ag. production (non land-use change)
+vm_btm_cell.fx(j,emis_source_reg,"co2_c") = 0;
 
 ****select ghg prices
 $ifthen "%c56_pollutant_prices%" == "coupling" im_pollutant_prices(t_all,i,pollutants) = f56_pollutant_prices_coupling(t_all,i,pollutants);
