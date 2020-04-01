@@ -56,7 +56,7 @@ cfg$output <- c("rds_report","disaggregation")
 #09 with high bioen_dem
 #10 no bioen dem
 
-prefix <- "rew19"
+prefix <- "rew20"
 
 for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
   for (co2_price_path in c("Hotelling","Linear")) {
@@ -71,7 +71,6 @@ for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
     cfg$gms$land <- "feb15"
     cfg$gms$s15_elastic_demand <- 0
     cfg$gms$c60_biodem_level <- 0
-    cfg$gms$s32_recur_cost <- 1
     cfg$gms$s32_aff_plantation <- forest_type
     
     if (forest_type==0) ftype="Natveg" else if (forest_type==1) ftype="Plantation"
