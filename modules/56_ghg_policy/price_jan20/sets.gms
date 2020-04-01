@@ -83,7 +83,7 @@ sets
 
    emis_reg_yr56(emis_source_reg) regional yearly emission sources
    /inorg_fert, man_crop, awms, resid, man_past, som,
-   rice, ent_ferm /
+   rice, ent_ferm,  beccs/
 
    ac_exp(ac) age-class corresponding to planning horizon
 ;
