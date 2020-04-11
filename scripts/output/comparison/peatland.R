@@ -245,7 +245,7 @@ nums <- as.numeric(gsub(paste("peatland_", ".RData", sep="|"), "", files))
 if(length(nums)==0) last=0 else last <- max(nums)
 newFile <- paste0("output/peatland_", sprintf("%02d", last + 1), ".RData")
 save(x,file = newFile,compress = "xz")
-saveRDS(x,file = sub(".RData",".rds",newFile))
+saveRDS(x,file = sub(".RData",".rds",newFile),compress = "xz")
 
 if (!is.null(missing)) {
   cat("\nList of folders with missing fulldata.gdx\n")
