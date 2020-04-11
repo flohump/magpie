@@ -158,7 +158,7 @@ runOutputs <- function(comp=NULL, output=NULL, outputdirs=NULL, submit=NULL) {
         system(paste0("srun --qos=standby --job-name=scripts-output --output=log_out-%j.out --error=log_out-%j.err --mail-type=END --time=200 --mem-per-cpu=8000 Rscript output.R outputdirs=",paste(outputdirs,collapse=",")," comp=",comp,"  output=",rout," submit=direct &"))
         Sys.sleep(1)
       } else if(submit=="slurm priority") {
-        system(paste0("srun --qos=priority --job-name=scripts-output --output=log_out-%j.out --error=log_out-%j.err --mail-type=END --mem-per-cpu=8000 Rscript output.R outputdirs=",paste(outputdirs,collapse=",")," comp=",comp,"  output=",rout," submit=direct &"))
+        system(paste0("srun --qos=priority --job-name=scripts-output --output=log_out-%j.out --error=log_out-%j.err --mail-type=END --mem-per-cpu=0 --cpus-per-task=15 Rscript output.R outputdirs=",paste(outputdirs,collapse=",")," comp=",comp,"  output=",rout," submit=direct &"))
         Sys.sleep(1)
       } else if(submit=="debug") {
         tmp.env <- new.env()
