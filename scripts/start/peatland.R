@@ -33,7 +33,7 @@ getInput <- function(gdx,ghg_price=TRUE,biodem=TRUE) {
 source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 
-cfg$force_download <- TRUE
+#cfg$force_download <- TRUE
 
 # cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp8p5-co2_rev34_c200_690d3718e151be1b450b394c1064b1c5.tgz",
 #                "rev4.14_690d3718e151be1b450b394c1064b1c5_magpie.tgz",
@@ -55,78 +55,52 @@ cfg$gms$c60_biodem_level <- 0
 cfg$gms$s56_aff_policy <- 0
 cfg$gms$s56_cprice_red_factor <- 1
 
-cfg$gms$s58_rewet_cost_onetime  <- 7000
-cfg$gms$s58_rewet_cost_recur  <- 200
 
+prefix <- "T102"
 
-prefix <- "T101"
-
-##SSP2
-cfg$title <- paste(prefix,"Ref",sep="_")
-cfg <- setScenario(cfg,c("SSP2","NPI"))
-#getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_NPi-mag-4/fulldata.gdx")
-cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-Ref-REMIND-MAGPIE"
-cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-Ref-REMIND-MAGPIE"
-cfg$gms$s56_peatland_policy <- 0
-cfg$gms$s58_rewetting_switch  <- 0
-start_run(cfg,codeCheck=FALSE)
-
-#getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_Budg600-mag-4/fulldata.gdx")
-cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-26-REMIND-MAGPIE"
-cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-26-REMIND-MAGPIE"
-cfg <- setScenario(cfg,c("SSP2","NDC"))
-
-
-cfg$title <- paste(prefix,"RCP1p9",sep="_")
-cfg$gms$s56_peatland_policy <- 0
-cfg$gms$s58_rewetting_switch  <- 0
-start_run(cfg,codeCheck=FALSE)
-
-cfg$title <- paste(prefix,"RCP1p9+PeatProt",sep="_")
-cfg$gms$s56_peatland_policy <- 1
-cfg$gms$s58_rewetting_switch  <- 0
-start_run(cfg,codeCheck=FALSE)
-
-cfg$title <- paste(prefix,"RCP1p9+PeatRestor",sep="_")
-cfg$gms$s56_peatland_policy <- 1
-cfg$gms$s58_rewetting_switch  <- Inf
-start_run(cfg,codeCheck=FALSE)
-
-# cfg$title <- paste(prefix,"RCP1p9+PeatRestor_2000",sep="_")
-# cfg$gms$s56_peatland_policy <- 1
-# cfg$gms$s58_rewetting_switch  <- Inf
-# cfg$gms$s58_rewet_cost_onetime  <- 2000
-# start_run(cfg,codeCheck=FALSE)
-# 
-# cfg$title <- paste(prefix,"RCP1p9+PeatRestor_4000",sep="_")
-# cfg$gms$s56_peatland_policy <- 1
-# cfg$gms$s58_rewetting_switch  <- Inf
-# cfg$gms$s58_rewet_cost_onetime  <- 4000
-# start_run(cfg,codeCheck=FALSE)
-# 
-# cfg$title <- paste(prefix,"RCP1p9+PeatRestor_8000",sep="_")
-# cfg$gms$s56_peatland_policy <- 1
-# cfg$gms$s58_rewetting_switch  <- Inf
-# cfg$gms$s58_rewet_cost_onetime  <- 8000
-# start_run(cfg,codeCheck=FALSE)
-# 
-# cfg$title <- paste(prefix,"RCP1p9+PeatRestor_10000",sep="_")
-# cfg$gms$s56_peatland_policy <- 1
-# cfg$gms$s58_rewetting_switch  <- Inf
-# cfg$gms$s58_rewet_cost_onetime  <- 10000
-# start_run(cfg,codeCheck=FALSE)
-
-# getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_NPi-mag-4/fulldata.gdx",biodem=TRUE,ghg_price = FALSE)
-# cfg$gms$c56_emis_policy <- "none"
-# 
-# cfg$title <- paste(prefix,"Ref+PeatProt",sep="_")
-# cfg$gms$s56_peatland_policy <- 1
-# cfg$gms$s58_rewetting_switch  <- 0
-# cfg$gms$s56_aff_policy <- 0
-# start_run(cfg,codeCheck=FALSE)
-# 
-# cfg$title <- paste(prefix,"Ref+PeatRestor",sep="_")
-# cfg$gms$s56_peatland_policy <- 1
-# cfg$gms$s58_rewetting_switch  <- Inf
-# cfg$gms$s56_aff_policy <- 0
-# start_run(cfg,codeCheck=FALSE)
+for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
+  for (pcost in c("low","medium","high")) {
+    if (pcost == "low") {
+      cfg$gms$s58_rewet_cost_onetime  <- 875
+      cfg$gms$s58_rewet_cost_recur  <- 25
+    } else if (pcost == "medium") {
+      cfg$gms$s58_rewet_cost_onetime  <- 7000
+      cfg$gms$s58_rewet_cost_recur  <- 200
+    } else if (pcost == "high") {
+      cfg$gms$s58_rewet_cost_onetime  <- 14000
+      cfg$gms$s58_rewet_cost_recur  <- 400
+    }
+    
+    #Ref
+    cfg$title <- paste(prefix,ssp,"Ref",pcost,sep="_")
+    cfg <- setScenario(cfg,c(ssp,"NPI"))
+    #getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_NPi-mag-4/fulldata.gdx")
+    cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-Ref-REMIND-MAGPIE"
+    cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-Ref-REMIND-MAGPIE"
+    cfg$gms$s56_peatland_policy <- 0
+    cfg$gms$s58_rewetting_switch  <- 0
+    start_run(cfg,codeCheck=FALSE)
+    
+    #Pol
+    #getInput("/p/projects/remind/runs/magpie4-2019-04-02-develop/output/r8473-trunk-C_Budg600-mag-4/fulldata.gdx")
+    cfg$gms$c56_pollutant_prices <- "SSPDB-SSP2-26-REMIND-MAGPIE"
+    cfg$gms$c60_2ndgen_biodem <- "SSPDB-SSP2-26-REMIND-MAGPIE"
+    cfg <- setScenario(cfg,c(ssp,"NDC"))
+    
+    cfg$title <- paste(prefix,ssp,"RCP2p6",pcost,sep="_")
+    cfg$gms$s56_peatland_policy <- 0
+    cfg$gms$s58_rewetting_switch  <- 0
+    start_run(cfg,codeCheck=FALSE)
+    
+    cfg$title <- paste(prefix,ssp,"RCP2p6+PeatProt",pcost,sep="_")
+    cfg$gms$s56_peatland_policy <- 1
+    cfg$gms$s58_rewetting_switch  <- 0
+    start_run(cfg,codeCheck=FALSE)
+    
+    cfg$title <- paste(prefix,ssp,"RCP2p6+PeatRestor",pcost,sep="_")
+    cfg$gms$s56_peatland_policy <- 1
+    cfg$gms$s58_rewetting_switch  <- Inf
+    start_run(cfg,codeCheck=FALSE)
+    
+  }  
+}
