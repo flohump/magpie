@@ -55,8 +55,9 @@ cfg$gms$c60_biodem_level <- 0
 cfg$gms$s56_aff_policy <- 0
 cfg$gms$s56_cprice_red_factor <- 1
 
+cfg$output <- c("rds_report","interpolation")
 
-prefix <- "T102"
+prefix <- "T103"
 
 for (ssp in c("SSP1","SSP2","SSP3","SSP4","SSP5")) {
   for (pcost in c("low","medium","high")) {
