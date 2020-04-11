@@ -77,7 +77,7 @@
  q58_peatland_cost_annuity(j2) ..
 	v58_peatland_cost_annuity(j2) =g=
     (sum((from58,stat_rewet58), v58_lu_transitions(j2,from58,stat_rewet58) * s58_rewet_cost_onetime) +
-    sum((from58,stat_degrad58), v58_lu_transitions(j2,from58,stat_degrad58) * s58_degrad_cost_onetime))
+    sum(stat_degrad58, v58_lu_transitions(j2,"intact",stat_degrad58) * s58_degrad_cost_onetime))
 	* sum(cell(i2,j2),pm_interest(i2)/(1+pm_interest(i2)));
 
  q58_peatland_emis_detail(j2,climate58,emis58) ..
