@@ -42,6 +42,9 @@ x$tau <- NULL
 x$demand_food <- NULL
 x$demand_bioen <- NULL
 x$c_price <- NULL
+x$cost <- NULL
+x$cost_wo_peatlandemis <- NULL
+x$cost_wo_peatlandreward <- NULL
 
 missing <- NULL
 
@@ -197,7 +200,25 @@ for (i in 1:length(outputdirs)) {
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$c_price <- mbind(x$c_price,a)
     
-            
+    #cost reg
+    a <- readGDX(gdx,"ov11_cost_reg",select = list(type="level"))
+    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    x$cost <- mbind(x$cost,a)
+    
+    #cost reg without peatland GHG emis costs
+    a <- readGDX(gdx,"ov11_cost_reg",select = list(type="level"))
+    b <- superAggregate(readGDX(gdx,"ov_peatland_emis_cost",select = list(type="level")),level="reg",aggr_type = "sum")
+    a <- a-b
+    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    x$cost_wo_peatlandemis <- mbind(x$cost_wo_peatlandemis,a)
+    
+    #cost reg without peatland GHG emis costs
+    a <- readGDX(gdx,"ov11_cost_reg",select = list(type="level"))
+    b <- superAggregate(readGDX(gdx,"ov56_peatland_policy_reward",select = list(type="level")),level="reg",aggr_type = "sum")
+    a <- a-b
+    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    x$cost_wo_peatlandreward <- mbind(x$cost_wo_peatlandreward,a)
+    
   } else missing <- c(missing,outputdirs[i])
 }
 
@@ -224,6 +245,7 @@ nums <- as.numeric(gsub(paste("peatland_", ".RData", sep="|"), "", files))
 if(length(nums)==0) last=0 else last <- max(nums)
 newFile <- paste0("output/peatland_", sprintf("%02d", last + 1), ".RData")
 save(x,file = newFile,compress = "xz")
+saveRDS(x,file = sub(".RData",".rds",newFile))
 
 if (!is.null(missing)) {
   cat("\nList of folders with missing fulldata.gdx\n")
