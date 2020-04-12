@@ -240,7 +240,7 @@ write.magpie(x$area_p_map_ratio_change,"output/map_degrad_ratio_change.nc",comme
 
 x$land_clim_change <- x$land_clim-setYears(x$land_clim[,1,],NULL)
 
-files <- list.files(path="output", pattern="peatland_*")
+files <- list.files(path="output", pattern="*.RData")
 nums <- as.numeric(gsub(paste("peatland_", ".RData", sep="|"), "", files))
 if(length(nums)==0) last=0 else last <- max(nums)
 newFile <- paste0("output/peatland_", sprintf("%02d", last + 1), ".RData")

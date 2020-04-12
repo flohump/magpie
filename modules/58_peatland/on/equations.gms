@@ -92,7 +92,6 @@
  q58_peatland_ghgsaving(j2) ..
 	vm_peatland_ghgsaving(j2) =e=
    sum((climate58,emis58), 
-	(sum(land58, 
+	sum(land58, 
 	(p58_ipcc_wetland_ef(climate58,land58,emis58,"degrad")-p58_ipcc_wetland_ef(climate58,land58,emis58,"rewet")) * v58_peatland_man(j2,"rewet",land58))
-	+ p58_ipcc_wetland_ef(climate58,"crop",emis58,"degrad") * v58_peatland_intact(j2))
 	* p58_mapping_cell_climate(j2,climate58));
