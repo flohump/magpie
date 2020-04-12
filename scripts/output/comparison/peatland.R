@@ -164,12 +164,12 @@ for (i in 1:length(outputdirs)) {
     x$emis_co2_clim_annual <- mbind(x$emis_co2_clim_annual,a)
     
     #read fprice
-    a <- priceIndex(gdx,level="glo", products="kfo", baseyear = "y2015")
+    a <- priceIndex(gdx,level="regglo", products="kfo", baseyear = "y2015")
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$fprice <- mbind(x$fprice,a)
 
     #read food exp share
-    a <- FoodExpenditureShare(gdx, level = "glo")
+    a <- FoodExpenditureShare(gdx, level = "regglo")
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$fexpshare <- mbind(x$fexpshare,a)
     
