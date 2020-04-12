@@ -36,6 +36,7 @@ x$area_p_map <- NULL
 x$area_p_map_ratio <- NULL
 x$land_clim <- NULL
 x$fprice <- NULL
+x$income <- NULL
 x$fexpshare <- NULL
 x$kcal <- NULL
 x$tau <- NULL
@@ -167,7 +168,12 @@ for (i in 1:length(outputdirs)) {
     a <- priceIndex(gdx,level="regglo", products="kfo", baseyear = "y2015")
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$fprice <- mbind(x$fprice,a)
-
+    
+    #read income
+    a <- income(gdx,level="reg",per_capita = FALSE,type = "mer")
+    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    x$income <- mbind(x$income,a)
+    
     #read food exp share
     a <- FoodExpenditureShare(gdx, level = "regglo")
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
