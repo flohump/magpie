@@ -35,6 +35,7 @@ x$area_p_cell <- NULL
 x$area_p_map <- NULL
 x$area_p_map_ratio <- NULL
 x$land_clim <- NULL
+x$fprice_index <- NULL
 x$fprice <- NULL
 x$income <- NULL
 x$fexpshare <- NULL
@@ -164,8 +165,13 @@ for (i in 1:length(outputdirs)) {
     a <- mbind(lu,peat)
     x$emis_co2_clim_annual <- mbind(x$emis_co2_clim_annual,a)
     
-    #read fprice
+    #read fprice_index
     a <- priceIndex(gdx,level="regglo", products="kfo", baseyear = "y2015")
+    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    x$fprice_index <- mbind(x$fprice_index,a)
+
+    #read fprice
+    a <- prices(gdx,level="regglo", products="kfo")
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$fprice <- mbind(x$fprice,a)
     
