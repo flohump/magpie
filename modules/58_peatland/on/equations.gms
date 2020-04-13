@@ -65,17 +65,11 @@
 	pc58_peatland_man(j2,"degrad",land58)
   + ((vm_land(j2,land58) - pcm_land(j2,land58))*p58_scaling_factor(j2))$(s58_before_2015=0);
 
-*' Conversion of intact peatland into managed peatland (v58_peatland_man) is limited to the
-*' net expansion of degraded peatland. This constraint is needed to avoid the 
-*' conversion of intact peatland into rewetted peatland.
+*' Peatland rewetting is limited to degraded and unused peatland.
+*' This constraint avoids the conversion of intact peatland into rewetted peatland.
 
- q58_net_expansion_degrad(j2) ..
- 	v58_net_expansion_degrad(j2) =g=
-	sum(land58, v58_peatland_man(j2,"degrad",land58) - pc58_peatland_man(j2,"degrad",land58));
-
- q58_peatland_intact(j2) ..
-	v58_reduction(j2,"intact") =l=
-	v58_net_expansion_degrad(j2);
+ q58_peatland_rewet(j2) ..
+	sum(stat_rewet58, v58_expansion(j2,stat_rewet58)) =l= sum(land58, v58_peatland_man(j2,"degrad",land58) + v58_peatland_man(j2,"unused",land58)) - v58_reduction(j2,"intact");
 
 *' Small costs of 1 $ per ha on gross land-use change avoid unrealistic patterns in the land transition matrix
 
