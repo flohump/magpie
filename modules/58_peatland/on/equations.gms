@@ -50,7 +50,7 @@
         sum(to58$(not sameas(from58,to58)), 
         v58_lu_transitions(j2,from58,to58));
 
-*' Future peatland dynamics (v58_peatland_man) depend on changes of managed land, 
+*' Future peatland degradation (v58_peatland_man) depends on changes of managed land, 
 *' scaled with  the ratio of total peatland area and total land area (p58_scaling_factor).
 *' By multiplying changes in managed land with this scaling factor we implicitly assume 
 *' that intact peatlands are distributed equally within a grid cell. 
@@ -65,6 +65,13 @@
 	pc58_peatland_man(j2,"degrad",land58)
   + ((vm_land(j2,land58) - pcm_land(j2,land58))*p58_scaling_factor(j2))$(s58_before_2015=0);
 
+*' Future peatland rewetting (v58_peatland_man) is restricted to existing managed peatland 
+*' (pc58_peatland_man). This constraint is needed to avoid the conversion of intact peatland 
+*' into rewetted peatland.
+
+ q58_peatland_rewet(j2,land58) ..
+	v58_peatland_man(j2,"rewet",land58) =l=
+	sum(man58, pc58_peatland_man(j2,man58,land58));
 
 *' Small costs of 1 $ per ha on gross land-use change avoid unrealistic patterns in the land transition matrix
 
