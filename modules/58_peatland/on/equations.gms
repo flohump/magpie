@@ -66,10 +66,16 @@
   + ((vm_land(j2,land58) - pcm_land(j2,land58))*p58_scaling_factor(j2))$(s58_before_2015=0);
 
 *' Peatland rewetting is limited to degraded and unused peatland.
-*' This constraint avoids the conversion of intact peatland into rewetted peatland.
+*' These constraints avoids the conversion of intact peatland into rewetted peatland.
 
- q58_peatland_rewet(j2) ..
-	sum(stat_rewet58, v58_expansion(j2,stat_rewet58)) =l= sum(land58, v58_peatland_man(j2,"degrad",land58) + v58_peatland_man(j2,"unused",land58)) - v58_reduction(j2,"intact");
+ q58_peatland_rewet_crop(j2) ..
+	v58_expansion(j2,"rewet_crop") =l= v58_peatland_man(j2,"degrad","crop") + v58_peatland_man(j2,"unused","crop") - v58_lu_transitions(j2,"intact","degrad_crop");
+
+ q58_peatland_rewet_past(j2) ..
+	v58_expansion(j2,"rewet_past") =l= v58_peatland_man(j2,"degrad","past") + v58_peatland_man(j2,"unused","past") - v58_lu_transitions(j2,"intact","degrad_past");
+
+ q58_peatland_rewet_forestry(j2) ..
+	v58_expansion(j2,"rewet_forestry") =l= v58_peatland_man(j2,"degrad","forestry") + v58_peatland_man(j2,"unused","forestry") - v58_lu_transitions(j2,"intact","degrad_forestry");
 
 *' Small costs of 1 $ per ha on gross land-use change avoid unrealistic patterns in the land transition matrix
 
