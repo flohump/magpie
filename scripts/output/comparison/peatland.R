@@ -171,7 +171,7 @@ for (i in 1:length(outputdirs)) {
     x$fprice_index <- mbind(x$fprice_index,a)
 
     #read fprice
-    a <- prices(gdx,level="regglo", products="kfo")
+    a <- prices(gdx,level="regglo", products="kfo",product_aggr = TRUE)
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$fprice <- mbind(x$fprice,a)
     
