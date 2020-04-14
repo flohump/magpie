@@ -224,13 +224,6 @@ for (i in 1:length(outputdirs)) {
     a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
     x$cost_wo_peatlandemis <- mbind(x$cost_wo_peatlandemis,a)
     
-    #cost reg without peatland GHG emis costs
-    a <- readGDX(gdx,"ov11_cost_reg",select = list(type="level"))
-    b <- superAggregate(readGDX(gdx,"ov56_peatland_policy_reward",select = list(type="level")),level="reg",aggr_type = "sum")
-    a <- a+b
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
-    x$cost_wo_peatlandreward <- mbind(x$cost_wo_peatlandreward,a)
-    
   } else missing <- c(missing,outputdirs[i])
 }
 
