@@ -66,16 +66,13 @@
   + ((vm_land(j2,land58) - pcm_land(j2,land58))*p58_scaling_factor(j2))$(s58_before_2015=0);
 
 *' Either conversion of intact to degraded peatland OR conversion of degraded to rewetted peatland.
-*' These constraints avoid the conversion of intact peatland into rewetted peatland.
+*' This constraint avoid the conversion of intact peatland into rewetted peatland.
 
- q58_peatland_intact_degrad_crop(j2) ..
-	v58_lu_transitions(j2,"intact","degrad_crop") * v58_lu_transitions(j2,"degrad_crop","rewet_crop") =e= 0;
-
- q58_peatland_intact_degrad_past(j2) ..
-	v58_lu_transitions(j2,"intact","degrad_past") * v58_lu_transitions(j2,"degrad_past","rewet_past") =e= 0;
-
- q58_peatland_intact_degrad_forestry(j2) ..
-	v58_lu_transitions(j2,"intact","degrad_forestry") * v58_lu_transitions(j2,"degrad_forestry","rewet_forestry") =e= 0;
+ q58_peatland_intact(j2) ..
+	sum(stat_degrad58, v58_lu_transitions(j2,"intact",stat_degrad58)) * 
+	sum((stat_degrad_from58,stat_rewet58), v58_lu_transitions(j2,stat_degrad_from58,stat_rewet58))
+	=e= 
+	0;
 
 *' Small costs of 1 $ per ha on gross land-use change avoid unrealistic patterns in the land transition matrix
 
