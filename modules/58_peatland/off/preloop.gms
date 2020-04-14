@@ -7,4 +7,3 @@
 
 vm_peatland_emis.fx(j) = 0;
 vm_peatland_cost.fx(j) = 0;
-vm_peatland_ghgsaving.fx(j) = 0;

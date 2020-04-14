@@ -65,17 +65,17 @@
 	pc58_peatland_man(j2,"degrad",land58)
   + ((vm_land(j2,land58) - pcm_land(j2,land58))*p58_scaling_factor(j2))$(s58_before_2015=0);
 
-*' Peatland rewetting is limited to degraded and unused peatland.
-*' These constraints avoids the conversion of intact peatland into rewetted peatland.
+*' Conversion of intact to degraded peatland is limited to the change of managed peatland.
+*' These constraints avoid the conversion of intact peatland into rewetted peatland.
 
- q58_peatland_rewet_crop(j2) ..
-	v58_expansion(j2,"rewet_crop") =n= v58_peatland_man(j2,"degrad","crop") + v58_peatland_man(j2,"unused","crop") - v58_lu_transitions(j2,"intact","degrad_crop");
+ q58_peatland_intact_degrad_crop(j2) ..
+	v58_lu_transitions(j2,"intact","degrad_crop") =l= sum(man58, v58_peatland_man(j2,man58,"crop") - pc58_peatland_man(j2,man58,"crop"));
 
- q58_peatland_rewet_past(j2) ..
-	v58_expansion(j2,"rewet_past") =n= v58_peatland_man(j2,"degrad","past") + v58_peatland_man(j2,"unused","past") - v58_lu_transitions(j2,"intact","degrad_past");
+ q58_peatland_intact_degrad_past(j2) ..
+	v58_lu_transitions(j2,"intact","degrad_past") =l= sum(man58, v58_peatland_man(j2,man58,"past") - pc58_peatland_man(j2,man58,"past"));
 
- q58_peatland_rewet_forestry(j2) ..
-	v58_expansion(j2,"rewet_forestry") =n= v58_peatland_man(j2,"degrad","forestry") + v58_peatland_man(j2,"unused","forestry") - v58_lu_transitions(j2,"intact","degrad_forestry");
+ q58_peatland_intact_degrad_forestry(j2) ..
+	v58_lu_transitions(j2,"intact","degrad_forestry") =l= sum(man58, v58_peatland_man(j2,man58,"forestry") - pc58_peatland_man(j2,man58,"forestry"));
 
 *' Small costs of 1 $ per ha on gross land-use change avoid unrealistic patterns in the land transition matrix
 
@@ -99,10 +99,3 @@
  q58_peatland_emis(j2) ..
 	vm_peatland_emis(j2) =e=
 	sum((climate58,emis58), v58_peatland_emis(j2,climate58,emis58));
-
- q58_peatland_ghgsaving(j2) ..
-	vm_peatland_ghgsaving(j2) =e=
-   sum((climate58,emis58), 
-	sum(land58, 
-	(p58_ipcc_wetland_ef(climate58,land58,emis58,"degrad")-p58_ipcc_wetland_ef(climate58,land58,emis58,"rewet")) * v58_peatland_man(j2,"rewet",land58))
-	* p58_mapping_cell_climate(j2,climate58)) * 0;
