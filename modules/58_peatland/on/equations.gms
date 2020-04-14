@@ -69,13 +69,13 @@
 *' These constraints avoid the conversion of intact peatland into rewetted peatland.
 
  q58_peatland_intact_degrad_crop(j2) ..
-	v58_lu_transitions(j2,"intact","degrad_crop") =l= sum(man58, v58_peatland_man(j2,man58,"crop") - pc58_peatland_man(j2,man58,"crop"));
+	v58_lu_transitions(j2,"intact","degrad_crop") =l= v58_peatland_man(j2,"degrad","crop") - pc58_peatland_man(j2,"degrad","crop") + v58_lu_transitions(j2,"degrad_crop","rewet_crop") + v58_lu_transitions(j2,"degrad_crop","unused_crop");
 
  q58_peatland_intact_degrad_past(j2) ..
-	v58_lu_transitions(j2,"intact","degrad_past") =l= sum(man58, v58_peatland_man(j2,man58,"past") - pc58_peatland_man(j2,man58,"past"));
+	v58_lu_transitions(j2,"intact","degrad_past") =l= v58_peatland_man(j2,"degrad","past") - pc58_peatland_man(j2,"degrad","past") + v58_lu_transitions(j2,"degrad_past","rewet_past") + v58_lu_transitions(j2,"degrad_past","unused_past");
 
  q58_peatland_intact_degrad_forestry(j2) ..
-	v58_lu_transitions(j2,"intact","degrad_forestry") =l= sum(man58, v58_peatland_man(j2,man58,"forestry") - pc58_peatland_man(j2,man58,"forestry"));
+	v58_lu_transitions(j2,"intact","degrad_forestry") =l= v58_peatland_man(j2,"degrad","forestry") - pc58_peatland_man(j2,"degrad","forestry") + v58_lu_transitions(j2,"degrad_forestry","rewet_forestry") + v58_lu_transitions(j2,"degrad_forestry","unused_forestry");
 
 *' Small costs of 1 $ per ha on gross land-use change avoid unrealistic patterns in the land transition matrix
 
