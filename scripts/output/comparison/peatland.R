@@ -167,32 +167,32 @@ for (i in 1:length(outputdirs)) {
     
     #read fprice_index
     a <- priceIndex(gdx,level="regglo", products="kfo", baseyear = "y2015")
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    a <- collapseNames(add_dimension(a,dim = 3.1,add = "scenario",nm = scen),collapsedim = "data")
     x$fprice_index <- mbind(x$fprice_index,a)
 
     #read fprice
-    a <- prices(gdx,level="regglo", products="kfo",product_aggr = TRUE)
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    a <- collapseNames(prices(gdx,level="regglo", products="kfo",product_aggr = TRUE))
+    a <- collapseNames(add_dimension(a,dim = 3.1,add = "scenario",nm = scen),collapsedim = "data")
     x$fprice <- mbind(x$fprice,a)
     
     #read income
-    a <- income(gdx,level="reg",per_capita = FALSE,type = "mer")
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    a <- collapseNames(income(gdx,level="reg",per_capita = FALSE,type = "mer"))
+    a <- collapseNames(add_dimension(a,dim = 3.1,add = "scenario",nm = scen),collapsedim = "data")
     x$income <- mbind(x$income,a)
     
     #read food exp share
-    a <- FoodExpenditureShare(gdx, level = "regglo")
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    a <- collapseNames(FoodExpenditureShare(gdx, level = "regglo"))
+    a <- collapseNames(add_dimension(a,dim = 3.1,add = "scenario",nm = scen),collapsedim = "data")
     x$fexpshare <- mbind(x$fexpshare,a)
     
     #read kcal
-    a <- Kcal(gdx, level = "glo")
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    a <- collapseNames(Kcal(gdx, level = "glo"))
+    a <- collapseNames(add_dimension(a,dim = 3.1,add = "scenario",nm = scen),collapsedim = "data")
     x$kcal <- mbind(x$kcal,a)
     
     #read tau
-    a <- tau(gdx,level="glo")
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    a <- collapseNames(tau(gdx,level="glo"))
+    a <- collapseNames(add_dimension(a,dim = 3.1,add = "scenario",nm = scen),collapsedim = "type")
     x$tau <- mbind(x$tau,a)
     
     #demand food, feed, processed
@@ -213,15 +213,15 @@ for (i in 1:length(outputdirs)) {
     x$c_price <- mbind(x$c_price,a)
     
     #cost reg
-    a <- readGDX(gdx,"ov11_cost_reg",select = list(type="level"))
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    a <- collapseNames(readGDX(gdx,"ov11_cost_reg",select = list(type="level")))
+    a <- collapseNames(add_dimension(a,dim = 3.1,add = "scenario",nm = scen),collapsedim = "data")
     x$cost <- mbind(x$cost,a)
     
     #cost reg without peatland GHG emis costs
-    a <- readGDX(gdx,"ov11_cost_reg",select = list(type="level"))
-    b <- superAggregate(readGDX(gdx,"ov_peatland_emis_cost",select = list(type="level")),level="reg",aggr_type = "sum")
+    a <- collapseNames(readGDX(gdx,"ov11_cost_reg",select = list(type="level")))
+    b <- collapseNames(superAggregate(readGDX(gdx,"ov_peatland_emis_cost",select = list(type="level")),level="reg",aggr_type = "sum"))
     a <- a-b
-    a <- add_dimension(a,dim = 3.1,add = "scenario",nm = scen)
+    a <- collapseNames(add_dimension(a,dim = 3.1,add = "scenario",nm = scen),collapsedim = "data")
     x$cost_wo_peatlandemis <- mbind(x$cost_wo_peatlandemis,a)
     
   } else missing <- c(missing,outputdirs[i])
