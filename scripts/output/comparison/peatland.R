@@ -36,7 +36,7 @@ x$area_p_map <- NULL
 x$area_p_map_ratio <- NULL
 x$land_clim <- NULL
 x$fprice_index <- NULL
-x$fprice <- NULL
+x$fprices <- NULL
 x$income <- NULL
 x$fexpshare <- NULL
 x$kcal <- NULL
@@ -173,7 +173,7 @@ for (i in 1:length(outputdirs)) {
     #read fprice
     a <- collapseNames(prices(gdx,level="regglo", products="kfo",product_aggr = TRUE))
     a <- collapseNames(add_dimension(a,dim = 3.1,add = "scenario",nm = scen),collapsedim = "data")
-    x$fprice <- mbind(x$fprice,a)
+    x$fprices <- mbind(x$fprices,a)
     
     #read income
     a <- collapseNames(income(gdx,level="reg",per_capita = FALSE,type = "mer"))
