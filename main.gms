@@ -197,7 +197,7 @@ $title magpie
 * 
 * 
 * 
-* Last modification (input data): Tue Sep 15 13:45:32 2020
+* Last modification (input data): Tue Oct 27 09:42:49 2020
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 
@@ -253,7 +253,7 @@ $setglobal past  endo_jun13
 
 $setglobal forestry  dynamic_may20
 
-$setglobal urban  static
+$setglobal urban  dynamic
 $setglobal natveg  dynamic_may20
 
 $setglobal factor_costs  mixed_feb17
