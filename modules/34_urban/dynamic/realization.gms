@@ -5,17 +5,16 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-*' @description In the static realization, urban land remains static over time
-*' with the spatial distribution of 1995 from the LUH2 data
-*' set [@hurtt2018luh2]. Carbon stocks are fixed to zero because
+*' @description In the dynamic realization, urban land expands based on population growth.
+*' Carbon stocks are fixed to zero because
 *' information on urban land carbon density is missing.
 
-*' @limitations Urban land is static over time and
-*' corresponding carbon stocks are assumed zero
+*' @limitations Carbon stocks are assumed zero.
 
 *####################### R SECTION START (PHASES) ##############################
 $Ifi "%phase%" == "declarations" $include "./modules/34_urban/dynamic/declarations.gms"
 $Ifi "%phase%" == "equations" $include "./modules/34_urban/dynamic/equations.gms"
 $Ifi "%phase%" == "preloop" $include "./modules/34_urban/dynamic/preloop.gms"
+$Ifi "%phase%" == "presolve" $include "./modules/34_urban/dynamic/presolve.gms"
 $Ifi "%phase%" == "postsolve" $include "./modules/34_urban/dynamic/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################
