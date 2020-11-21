@@ -5,8 +5,8 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-loop(t_all$(ord(t_all) > 1),
- p34_pop_growth(t_all,i) = im_pop(t_all,i)/im_pop(t_all-1,i);
+loop(t$(ord(t) > 1),
+ p34_pop_growth(t,i) = im_pop(t,i)/im_pop(t-1,i);
 );
 
 vm_carbon_stock.fx(j,"urban",c_pools) = 0;

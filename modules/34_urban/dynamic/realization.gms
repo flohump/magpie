@@ -15,9 +15,7 @@
 
 *####################### R SECTION START (PHASES) ##############################
 $Ifi "%phase%" == "declarations" $include "./modules/34_urban/dynamic/declarations.gms"
-$Ifi "%phase%" == "input" $include "./modules/34_urban/dynamic/input.gms"
 $Ifi "%phase%" == "equations" $include "./modules/34_urban/dynamic/equations.gms"
 $Ifi "%phase%" == "preloop" $include "./modules/34_urban/dynamic/preloop.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/34_urban/dynamic/presolve.gms"
 $Ifi "%phase%" == "postsolve" $include "./modules/34_urban/dynamic/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################

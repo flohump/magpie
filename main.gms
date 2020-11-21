@@ -197,7 +197,7 @@ $title magpie
 * 
 * 
 * 
-* Last modification (input data): Tue Oct 27 09:42:49 2020
+* Last modification (input data): Sat Nov 21 20:28:44 2020
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 

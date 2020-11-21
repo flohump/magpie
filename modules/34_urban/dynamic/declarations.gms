@@ -6,23 +6,15 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 equations
- q34_urban(i)       		              urban land (mio. ha)
- q34_cost(i)
+ q34_urban(j)       		              urban land (mio. ha)
 ;
 
 parameters
- p34_pop_growth(t_all,i) growth rate (1)
- pc34_adjustment_cost(j)
-;
-
-variables
-vm_cost_urban(i)
+ p34_pop_growth(t,i) population growth factor between time steps (1)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov_cost_urban(t,i,type) 
- oq34_urban(t,i,type)    urban land (mio. ha)
- oq34_cost(t,i,type)     
+ oq34_urban(t,j,type) urban land (mio. ha)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
