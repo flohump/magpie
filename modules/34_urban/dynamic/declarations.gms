@@ -6,11 +6,11 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 equations
- q34_urban(j)       		              urban land (mio. ha)
+ q34_urban(j)       		urban land (mio. ha)
 ;
 
 parameters
- p34_pop_growth(t,i) population growth factor between time steps (1)
+ p34_pop_growth(t_all,i) 		annual population growth rate (1)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
