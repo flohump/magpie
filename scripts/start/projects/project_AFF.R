@@ -6,7 +6,7 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ----------------------------------------------------------
-# description: Test USA NDC
+# description: TEST
 # ----------------------------------------------------------
 
 
@@ -31,12 +31,13 @@ cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report")
 
 cfg <- gms::setScenario(cfg,c("SSP2","NPI"))
-cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
+# cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
+# cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
 
 
 for (x in seq(0, 8000, by=1000)) {
-  cfg$title <- paste0("T1_AFF_",x)
+  cfg$title <- paste0("T2_LCON_",x)
+  cfg$gms$s39_cost_establish <- x
   cfg$gms$s39_cost_establish_forestry <- x
   start_run(cfg,codeCheck=FALSE)
 }
