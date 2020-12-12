@@ -36,7 +36,7 @@ cfg <- gms::setScenario(cfg,c("SSP2","NPI"))
 
 
 for (x in seq(0, 8000, by=1000)) {
-  cfg$title <- paste0("T2_LCON_",x)
+  cfg$title <- paste0("T3_LCON_",x)
   cfg$gms$s39_cost_establish <- x
   cfg$gms$s39_cost_establish_forestry <- x
   start_run(cfg,codeCheck=FALSE)
