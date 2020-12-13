@@ -15,11 +15,12 @@
 *' @limitations Data availability for land conversion costs is very limited.
 
 *####################### R SECTION START (PHASES) ##############################
-$Ifi "%phase%" == "sets" $include "./modules/39_landconversion/global_static_aug18/sets.gms"
-$Ifi "%phase%" == "declarations" $include "./modules/39_landconversion/global_static_aug18/declarations.gms"
-$Ifi "%phase%" == "equations" $include "./modules/39_landconversion/global_static_aug18/equations.gms"
-$Ifi "%phase%" == "scaling" $include "./modules/39_landconversion/global_static_aug18/scaling.gms"
-$Ifi "%phase%" == "preloop" $include "./modules/39_landconversion/global_static_aug18/preloop.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/39_landconversion/global_static_aug18/presolve.gms"
-$Ifi "%phase%" == "postsolve" $include "./modules/39_landconversion/global_static_aug18/postsolve.gms"
+$Ifi "%phase%" == "sets" $include "./modules/39_landconversion/global_static_dec20/sets.gms"
+$Ifi "%phase%" == "declarations" $include "./modules/39_landconversion/global_static_dec20/declarations.gms"
+$Ifi "%phase%" == "input" $include "./modules/39_landconversion/global_static_dec20/input.gms"
+$Ifi "%phase%" == "equations" $include "./modules/39_landconversion/global_static_dec20/equations.gms"
+$Ifi "%phase%" == "scaling" $include "./modules/39_landconversion/global_static_dec20/scaling.gms"
+$Ifi "%phase%" == "preloop" $include "./modules/39_landconversion/global_static_dec20/preloop.gms"
+$Ifi "%phase%" == "presolve" $include "./modules/39_landconversion/global_static_dec20/presolve.gms"
+$Ifi "%phase%" == "postsolve" $include "./modules/39_landconversion/global_static_dec20/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################

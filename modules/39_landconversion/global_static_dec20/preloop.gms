@@ -5,11 +5,11 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-s39_cost_establish = 8000;
 s39_cost_clearing = 5;
 
 i39_cost_establish(land) = 0;
-i39_cost_establish(land_establish39) = s39_cost_establish;
+i39_cost_establish(land_clearing39) = s39_cost_establish;
+i39_cost_establish("forestry") = s39_cost_establish_forestry;
 
 i39_cost_clearing(land) = 0;
 i39_cost_clearing(land_clearing39) = s39_cost_clearing;

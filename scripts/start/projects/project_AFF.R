@@ -30,14 +30,51 @@ cfg$results_folder <- "output/:title:"
 
 cfg$output <- c("rds_report")
 
-cfg <- gms::setScenario(cfg,c("SSP2","NPI"))
+cfg <- gms::setScenario(cfg,c("SSP2","BASE"))
 # cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
 # cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
 
+cfg$title <- paste0("T4_LCON8000_aug18_NPI")
+cfg <- gms::setScenario(cfg,c("SSP2","NPI"))
+cfg$gms$landconversion <- "global_static_aug18"
+start_run(cfg,codeCheck=FALSE)
 
-for (x in seq(0, 8000, by=1000)) {
-  cfg$title <- paste0("T3_LCON_",x)
-  cfg$gms$s39_cost_establish <- x
-  cfg$gms$s39_cost_establish_forestry <- x
-  start_run(cfg,codeCheck=FALSE)
-}
+cfg$title <- paste0("T4_LCON8000_aug18_BASE")
+cfg <- gms::setScenario(cfg,c("SSP2","BASE"))
+cfg$gms$landconversion <- "global_static_aug18"
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste0("T4_LCON8000_dec20_NPI")
+cfg <- gms::setScenario(cfg,c("SSP2","NPI"))
+cfg$gms$landconversion <- "global_static_dec20"
+cfg$gms$s39_cost_establish <- 8000
+cfg$gms$s39_cost_establish_forestry <- 8000
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste0("T4_LCON8000_dec20_BASE")
+cfg <- gms::setScenario(cfg,c("SSP2","BASE"))
+cfg$gms$landconversion <- "global_static_dec20"
+cfg$gms$s39_cost_establish <- 8000
+cfg$gms$s39_cost_establish_forestry <- 8000
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste0("T4_LCON4000_dec20_NPI")
+cfg <- gms::setScenario(cfg,c("SSP2","NPI"))
+cfg$gms$landconversion <- "global_static_dec20"
+cfg$gms$s39_cost_establish <- 4000
+cfg$gms$s39_cost_establish_forestry <- 4000
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste0("T4_LCON4000_dec20_BASE")
+cfg <- gms::setScenario(cfg,c("SSP2","BASE"))
+cfg$gms$landconversion <- "global_static_dec20"
+cfg$gms$s39_cost_establish <- 4000
+cfg$gms$s39_cost_establish_forestry <- 4000
+start_run(cfg,codeCheck=FALSE)
+
+# for (x in seq(0, 8000, by=1000)) {
+#   cfg$title <- paste0("T3_LCON_",x)
+#   cfg$gms$s39_cost_establish <- x
+#   cfg$gms$s39_cost_establish_forestry <- x
+#   start_run(cfg,codeCheck=FALSE)
+# }

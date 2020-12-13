@@ -14,7 +14,6 @@ variables
 ;
 
 scalar
- s39_cost_establish               Global land establishment costs (USD05MER per hectare)
  s39_cost_clearing                Global land clearing costs (USD05MER per ton C)
 ;
 
