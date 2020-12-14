@@ -34,7 +34,7 @@ cfg <- gms::setScenario(cfg,c("SSP2","BASE"))
 # cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
 # cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
 
-cfg$title <- paste0("T5_LCON8000_aug18_NPI")
+cfg$title <- paste0("T6_LCON8000_aug18_NPI")
 cfg <- gms::setScenario(cfg,c("SSP2","NPI"))
 cfg$gms$landconversion <- "global_static_aug18"
 start_run(cfg,codeCheck=FALSE)
@@ -44,11 +44,11 @@ start_run(cfg,codeCheck=FALSE)
 # cfg$gms$landconversion <- "global_static_aug18"
 # start_run(cfg,codeCheck=FALSE)
 
-cfg$title <- paste0("T5_LCON8000_dec20_NPI")
+cfg$title <- paste0("T6_LCON8000_dec20_NPI")
 cfg <- gms::setScenario(cfg,c("SSP2","NPI"))
 cfg$gms$landconversion <- "global_static_dec20"
-cfg$gms$s39_cost_establish <- 8000
-cfg$gms$s39_cost_establish_forestry <- 8000
+# cfg$gms$s39_cost_establish <- 8000
+# cfg$gms$s39_cost_establish_forestry <- 8000
 start_run(cfg,codeCheck=FALSE)
 
 # cfg$title <- paste0("T4_LCON8000_dec20_BASE")
