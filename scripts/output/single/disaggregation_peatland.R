@@ -98,9 +98,19 @@ land_hr <- interpolate( x          = land_lr,
 CountryToCell   <- toolGetMapping("CountryToCellMapping.csv", type = "cell")
 getCells(land_hr) <- CountryToCell$celliso
 x <- toolAggregate(land_hr,CountryToCell,from="celliso",to="iso")
+getNames(x) <- paste0("Land|Peatland|",getNames(x))
 write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4.2",scenario = title,unit = "Mha")
 file.copy(path(outputdir,land_iso_out_file),path("output",paste0(title,".csv")),overwrite = TRUE)
 #dimSums(x,dim=c(1,3))
+
+
+a <- PeatlandEmissions(gdx,level="cell",unit="gas")
+b <- speed_aggregate(a,path(outputdir,sum_spam_file),weight = setYears(dimSums(land_hr[,1,],dim=3),NULL))
+getCells(b) <- CountryToCell$celliso
+x <- toolAggregate(b,CountryToCell,from="celliso",to="iso")
+getNames(x) <- c("Emissions|Peatland|CH4 (Mt CH4/yr)","Emissions|Peatland|CO2 (Mt CO2/yr)","Emissions|Peatland|DOC (Mt CO2/yr)","Emissions|Peatland|N2O (Mt N2O/yr)")
+write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4.2",scenario = title,append = TRUE)
+
 
 print("Write outputs cell.land")
 #check
@@ -109,9 +119,6 @@ land_hr[dimSums(land_hr,dim=c(2,3)) == 0,,] <- NA
 #dimSums(land_hr,dim=c(1),na.rm=TRUE)
 write.magpie(land_hr,path(outputdir,land_hr_out_file),comment="unit: Mha per grid-cell")
 file.copy(path(outputdir,land_hr_out_file),path("output",paste0(title,".nc")),overwrite = TRUE)
-
-
-
 
 
 
