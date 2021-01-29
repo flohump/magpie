@@ -100,7 +100,6 @@ getCells(land_hr) <- CountryToCell$celliso
 x <- toolAggregate(land_hr,CountryToCell,from="celliso",to="iso")
 getNames(x) <- paste0("Land|Peatland|",getNames(x))
 write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4.2",scenario = title,unit = "Mha")
-file.copy(path(outputdir,land_iso_out_file),path("output",paste0(title,".csv")),overwrite = TRUE)
 #dimSums(x,dim=c(1,3))
 
 
@@ -110,6 +109,8 @@ getCells(b) <- CountryToCell$celliso
 x <- toolAggregate(b,CountryToCell,from="celliso",to="iso")
 getNames(x) <- c("Emissions|Peatland|CH4 (Mt CH4/yr)","Emissions|Peatland|CO2 (Mt CO2/yr)","Emissions|Peatland|DOC (Mt CO2/yr)","Emissions|Peatland|N2O (Mt N2O/yr)")
 write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4.2",scenario = title,append = TRUE)
+
+file.copy(path(outputdir,land_iso_out_file),path("output",paste0(title,".csv")),overwrite = TRUE)
 
 
 print("Write outputs cell.land")
