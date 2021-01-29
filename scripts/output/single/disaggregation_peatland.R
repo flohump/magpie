@@ -104,6 +104,7 @@ write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4.2",sce
 
 
 a <- PeatlandEmissions(gdx,level="cell",unit="gas")
+a <- a[,getYears(a,as.integer = T) >= 2015,]
 b <- speed_aggregate(a,path(outputdir,sum_spam_file),weight = setYears(dimSums(land_hr[,1,],dim=3),NULL))
 getCells(b) <- CountryToCell$celliso
 x <- toolAggregate(b,CountryToCell,from="celliso",to="iso")
