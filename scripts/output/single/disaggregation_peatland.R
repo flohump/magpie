@@ -153,6 +153,7 @@ tech <- toolAggregate(tech,CountryToCell,from="celliso",to="iso")
 getNames(tech) <- c("Technical Mitigation Potential|Peatland|CH4 (Mt CO2eq/yr)","Technical Mitigation Potential|Peatland|N2O (Mt CO2eq/yr)","Technical Mitigation Potential|Peatland|DOC (Mt CO2eq/yr)","Technical Mitigation Potential|Peatland|CO2 (Mt CO2eq/yr)")
 write.report(tech,file = path(outputdir,tech_iso_out_file),model = "MAgPIE 4.2",scenario = "X",append = FALSE)
 
+file.copy(path(outputdir,tech_iso_out_file),path("output",tech_iso_out_file),overwrite = TRUE)
 
 print("Write outputs cell.land")
 #check
