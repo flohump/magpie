@@ -22,6 +22,7 @@ land_hr_file_degrad <- "f58_peatland_degrad_0.5.mz"
 land_hr_file_intact <- "f58_peatland_intact_0.5.mz"
 land_hr_out_file           <- "peatland_cell.nc"
 land_iso_out_file           <- "peatland_iso.csv"
+tech_iso_out_file           <- "peatland_TechPot_iso.csv"
 
 prev_year        <- "y2015"            #timestep before calculations in MAgPIE
 in_folder        <- "modules/58_peatland/input"
@@ -29,7 +30,7 @@ in_folder        <- "modules/58_peatland/input"
 if(!exists("source_include")) {
   sum_spam_file    <- "0.5-to-n200_sum.spam"
   title       <- "base_run"
-  outputdir       <- "output/SSP2_Ref_c200"
+  outputdir       <- "output/T143_SSP2_RCP2p6+PeatRestor_medium/"
 
   ###Define arguments that can be read from command line
   readArgs("sum_spam_file","outputdir","title")
@@ -111,7 +112,46 @@ x <- toolAggregate(b,CountryToCell,from="celliso",to="iso")
 getNames(x) <- c("Emissions|Peatland|CH4 (Mt CH4/yr)","Emissions|Peatland|CO2 (Mt CO2/yr)","Emissions|Peatland|DOC (Mt CO2/yr)","Emissions|Peatland|N2O (Mt N2O/yr)")
 write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4.2",scenario = title,append = TRUE)
 
+a <- PeatlandEmissions(gdx,level="cell",unit="GWP")
+a <- a[,getYears(a,as.integer = T) >= 2015,]
+b <- speed_aggregate(a,path(outputdir,sum_spam_file),weight = setYears(dimSums(land_hr[,1,],dim=3),NULL))
+getCells(b) <- CountryToCell$celliso
+x <- toolAggregate(b,CountryToCell,from="celliso",to="iso")
+getNames(x) <- c("Emissions|Peatland|CH4 (Mt CO2eq/yr)","Emissions|Peatland|CO2 (Mt CO2eq/yr)","Emissions|Peatland|DOC (Mt CO2eq/yr)","Emissions|Peatland|N2O (Mt CO2eq/yr)")
+write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4.2",scenario = title,append = TRUE)
+
 file.copy(path(outputdir,land_iso_out_file),path("output",paste0(title,".csv")),overwrite = TRUE)
+
+
+#### technical potential
+area <- dimSums(readGDX(gdx,"ov58_peatland_man",select = list(type="level"))[,,c("degrad","unused")],dim=3.1)[,getYears(land_hr),]
+
+area_shr <- area/dimSums(area,dim=c(3))
+
+# set inf to 0
+area_shr[is.na(area_shr)]       <- 0
+area_shr[is.nan(area_shr)]      <- 0
+area_shr[is.infinite(area_shr)] <- 0
+
+# disaggregate share of crop types in terms of croparea to 0.5 resolution
+area_shr_hr <- speed_aggregate(area_shr,t(read.spam(path(outputdir,sum_spam_file))))
+getCells(area_shr_hr) <- CountryToCell$celliso
+
+# calculate crop tpye specific croparea in 0.5 resolution
+area_hr     <- area_shr_hr*setNames(land_hr[,,"degrad"],NULL)
+
+ef <- readGDX(gdx,"p58_ipcc_wetland_ef")
+er <- collapseNames(ef[,,"rewet"])-collapseNames(ef[,,"degrad"])
+clcl <- read.magpie("input/koeppen_geiger_0.5.mz")
+getCells(clcl) <- CountryToCell$celliso
+mapping <- readGDX(gdx,"clcl_mapping")
+clcl <- groupAggregate(clcl,query = mapping,from="clcl", to="clcl58")
+names(dimnames(clcl))[3] <- "clcl58"
+tech <- area_hr[,1,] * er * clcl
+tech <- dimSums(tech,dim=c(3.1,3.2))
+tech <- toolAggregate(tech,CountryToCell,from="celliso",to="iso")
+getNames(tech) <- c("Technical Mitigation Potential|Peatland|CH4 (Mt CO2eq/yr)","Technical Mitigation Potential|Peatland|N2O (Mt CO2eq/yr)","Technical Mitigation Potential|Peatland|DOC (Mt CO2eq/yr)","Technical Mitigation Potential|Peatland|CO2 (Mt CO2eq/yr)")
+write.report(tech,file = path(outputdir,tech_iso_out_file),model = "MAgPIE 4.2",scenario = "X",append = FALSE)
 
 
 print("Write outputs cell.land")
