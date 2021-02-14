@@ -161,7 +161,7 @@ tech <- mbind(tech,y)
 x <- toolAggregate(land_hr,CountryToCell,from="celliso",to="iso")
 x <- x[,1,]
 x[,,"rewet"] <- x[,,"degrad"]
-x[,,"degrad"] <- 0
+x[,,"degrad"] <- -x[,,"degrad"]
 getNames(x) <- paste0("Land|Peatland|",getNames(x)," (Mha)")
 tech <- mbind(x,tech)
 getYears(tech) <- 2100
