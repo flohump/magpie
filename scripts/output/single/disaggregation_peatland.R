@@ -154,6 +154,17 @@ tech <- area_hr[,1,] * er * clcl
 tech <- dimSums(tech,dim=c(3.1,3.2))
 tech <- toolAggregate(tech,CountryToCell,from="celliso",to="iso")
 getNames(tech) <- c("Emissions|Peatland|CH4 (Mt CO2eq/yr)","Emissions|Peatland|N2O (Mt CO2eq/yr)","Emissions|Peatland|DOC (Mt CO2eq/yr)","Emissions|Peatland|CO2 (Mt CO2eq/yr)")
+y <- dimSums(tech,dim=3)
+getNames(y) <- "Emissions|Peatland|Total (Mt CO2eq/yr)"
+tech <- mbind(tech,y)
+#area
+x <- toolAggregate(land_hr,CountryToCell,from="celliso",to="iso")
+x <- x[,1,]
+x[,,"rewet"] <- x[,,"degrad"]
+x[,,"degrad"] <- 0
+getNames(x) <- paste0("Land|Peatland|",getNames(x)," (Mha)")
+tech <- mbind(x,tech)
+getYears(tech) <- 2100
 write.report(tech,file = path(outputdir,tech_iso_out_file),model = "Technical Mitigation Potential",scenario = "Peatland Restoration",append = FALSE)
 
 file.copy(path(outputdir,tech_iso_out_file),path("output",tech_iso_out_file),overwrite = TRUE)
