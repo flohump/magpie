@@ -100,7 +100,7 @@ CountryToCell   <- toolGetMapping("CountryToCellMapping.csv", type = "cell")
 getCells(land_hr) <- CountryToCell$celliso
 x <- toolAggregate(land_hr,CountryToCell,from="celliso",to="iso")
 getNames(x) <- paste0("Land|Peatland|",getNames(x))
-write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4.2",scenario = title,unit = "Mha")
+write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4",scenario = title,unit = "Mha")
 #dimSums(x,dim=c(1,3))
 
 
@@ -110,7 +110,7 @@ b <- speed_aggregate(a,path(outputdir,sum_spam_file),weight = setYears(dimSums(l
 getCells(b) <- CountryToCell$celliso
 x <- toolAggregate(b,CountryToCell,from="celliso",to="iso")
 getNames(x) <- c("Emissions|Peatland|CH4 (Mt CH4/yr)","Emissions|Peatland|CO2 (Mt CO2/yr)","Emissions|Peatland|DOC (Mt CO2/yr)","Emissions|Peatland|N2O (Mt N2O/yr)")
-write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4.2",scenario = title,append = TRUE)
+write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4",scenario = title,append = TRUE)
 
 a <- PeatlandEmissions(gdx,level="cell",unit="GWP")
 a <- a[,getYears(a,as.integer = T) >= 2015,]
@@ -118,7 +118,10 @@ b <- speed_aggregate(a,path(outputdir,sum_spam_file),weight = setYears(dimSums(l
 getCells(b) <- CountryToCell$celliso
 x <- toolAggregate(b,CountryToCell,from="celliso",to="iso")
 getNames(x) <- c("Emissions|Peatland|CH4 (Mt CO2eq/yr)","Emissions|Peatland|CO2 (Mt CO2eq/yr)","Emissions|Peatland|DOC (Mt CO2eq/yr)","Emissions|Peatland|N2O (Mt CO2eq/yr)")
-write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4.2",scenario = title,append = TRUE)
+y <- dimSums(x,dim=3)
+getNames(y) <- "Emissions|Peatland|Total (Mt CO2eq/yr)"
+x <- mbind(x,y)
+write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4",scenario = title,append = TRUE)
 
 file.copy(path(outputdir,land_iso_out_file),path("output",paste0(title,".csv")),overwrite = TRUE)
 
@@ -150,8 +153,8 @@ names(dimnames(clcl))[3] <- "clcl58"
 tech <- area_hr[,1,] * er * clcl
 tech <- dimSums(tech,dim=c(3.1,3.2))
 tech <- toolAggregate(tech,CountryToCell,from="celliso",to="iso")
-getNames(tech) <- c("Technical Mitigation Potential|Peatland|CH4 (Mt CO2eq/yr)","Technical Mitigation Potential|Peatland|N2O (Mt CO2eq/yr)","Technical Mitigation Potential|Peatland|DOC (Mt CO2eq/yr)","Technical Mitigation Potential|Peatland|CO2 (Mt CO2eq/yr)")
-write.report(tech,file = path(outputdir,tech_iso_out_file),model = "MAgPIE 4.2",scenario = "X",append = FALSE)
+getNames(tech) <- c("Emissions|Peatland|CH4 (Mt CO2eq/yr)","Emissions|Peatland|N2O (Mt CO2eq/yr)","Emissions|Peatland|DOC (Mt CO2eq/yr)","Emissions|Peatland|CO2 (Mt CO2eq/yr)")
+write.report(tech,file = path(outputdir,tech_iso_out_file),model = "Technical Mitigation Potential",scenario = "Peatland Restoration",append = FALSE)
 
 file.copy(path(outputdir,tech_iso_out_file),path("output",tech_iso_out_file),overwrite = TRUE)
 
