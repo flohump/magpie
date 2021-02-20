@@ -37,7 +37,7 @@ cfg$results_folder <- "output/:title:"
 ## Create a set of runs based on default.cfg
 
 for(ssp in c("SSP2")) { ## Add SSP* here for testing other SSPs. Basic test should be for SSP2
-  for (co2_price_path in c("BAU","POL")) {
+  for (co2_price_path in c("POL")) {
     
     if (co2_price_path == "BAU") {
       cfg <- setScenario(cfg,c(ssp,"NPI"))
