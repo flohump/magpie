@@ -26,8 +26,8 @@ source("config/default.cfg")
 
 # choose a meaningful Pull Request (PR) flag
 #pr_flag <- "DE_CpriceNatveg"
-pr_flag <- "DE_CpriceForest"
-#pr_flag <- "DE_CpriceForest_noAffOtherLand"
+#pr_flag <- "DE_CpriceForest"
+pr_flag <- "DE_CpriceForest_noAffOtherLand"
 
 # Grab user name
 user <- Sys.info()[["user"]]

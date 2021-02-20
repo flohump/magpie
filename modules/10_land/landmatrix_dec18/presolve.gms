@@ -12,7 +12,7 @@
 *' No afforestation on natveg areas
 *v10_lu_transitions.fx(j,"primforest","forestry") = 0;
 *v10_lu_transitions.fx(j,"secdforest","forestry") = 0;
-*v10_lu_transitions.fx(j,"other","forestry") = 0;
+v10_lu_transitions.fx(j,"other","forestry") = 0;
 
 *' Conversions within natveg are not allowed
 v10_lu_transitions.fx(j,"primforest","other") = 0;
