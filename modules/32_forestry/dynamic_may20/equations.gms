@@ -45,7 +45,9 @@ v32_land(j2,"aff","ac0") * p32_aff_bgp(j2,ac);
 
 *' ac_est can only increase if total afforested land increases
 q32_aff_est(j2) ..
-sum(ac_est, v32_land(j2,"aff",ac_est)) =l= sum(ac, v32_land(j2,"aff",ac)) - sum((ct,ac), p32_land(ct,j2,"aff",ac));
+*sum(ac_est, v32_land(j2,"aff",ac_est)) =l= sum(ac, v32_land(j2,"aff",ac)) - sum((ct,ac), p32_land(ct,j2,"aff",ac));
+sum(ac_est, v32_land(j2,"aff",ac_est)) =l= (vm_land(j2,"forestry") + sum(land_natveg, vm_land(j2,land_natveg))) - 
+(pcm_land(j2,"forestry")-sum(land_natveg, pcm_land(j2,land_natveg)));
 
 *-----------------------------------------------
 ****************** Land ************************

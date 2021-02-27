@@ -17,6 +17,18 @@
 ## Load lucode2 and gms to use setScenario later
 library(lucode2)
 library(gms)
+library(magclass)
+
+getInput <- function(gdx,ghg_price=TRUE,biodem=TRUE) {
+  if(ghg_price) {
+    a <- readGDX(gdx,"f56_pollutant_prices_coupling")
+    write.magpie(a,"modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3")
+  }
+  if(biodem) {
+    a <- readGDX(gdx,"f60_bioenergy_dem_coupling")
+    write.magpie(a,"modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv")
+  }
+}
 
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
@@ -24,37 +36,25 @@ source("scripts/start_functions.R")
 # Source default cfg. This loads the object "cfg" in R environment
 source("config/default.cfg")
 
-# choose a meaningful Pull Request (PR) flag
-#pr_flag <- "DE_CpriceNatveg"
-#pr_flag <- "DE_CpriceForest"
-pr_flag <- "DE_CpriceForest_noAffOtherLand"
-
-# Grab user name
-user <- Sys.info()[["user"]]
 
 cfg$results_folder <- "output/:title:"
+cfg$output <- c("rds_report") # Only run rds_report after model run
+
+ssp <- "SSP2"
 
 ## Create a set of runs based on default.cfg
 
-for(ssp in c("SSP2")) { ## Add SSP* here for testing other SSPs. Basic test should be for SSP2
-  for (co2_price_path in c("POL")) {
-    
-    if (co2_price_path == "BAU") {
-      cfg <- setScenario(cfg,c(ssp,"NPI"))
-      cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NPi" #update to most recent coupled runs asap
-      cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi" ##update to most recent coupled runs asap
-      
-    } else if (co2_price_path == "POL"){
-      cfg <- setScenario(cfg,c(ssp,"NPI"))
-      cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600" #update to most recent coupled runs asap
-      cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600" ##update to most recent coupled runs asap
-    }
-    
-    cfg$title <- paste0(pr_flag,"_",ssp,"_",co2_price_path) #Create easily distinguishable run title
-    
-    cfg$output <- c("rds_report") # Only run rds_report after model run
-    
-    start_run(cfg,codeCheck=TRUE) # Start MAgPIE run
-    #cat(cfg$title)
-  }
-}
+cfg$title <- "DE_PkBudg900_ref_VRE1_CPnatveg"
+cfg <- setScenario(cfg,c(ssp,"NPI"))
+cfg$gms$c56_pollutant_prices <- "coupling"
+cfg$gms$c60_2ndgen_biodem <- "coupling"
+getInput("/p/tmp/merfort/DeepEl_coupl_resub/magpie/output/C_TraInd-PkBudg900_ref_VRE1-mag-4/fulldata.gdx")
+start_run(cfg,codeCheck=FALSE) # Start MAgPIE run
+
+cfg$title <- "DE_PkBudg900_ref_VRE1_CPforest"
+cfg <- setScenario(cfg,c(ssp,"NPI"))
+cfg$gms$c56_pollutant_prices <- "coupling"
+cfg$gms$c60_2ndgen_biodem <- "coupling"
+cfg$input <- c(cfg$input,"patch_EmisPolicy.tgz")
+getInput("/p/tmp/merfort/DeepEl_coupl_resub/magpie/output/C_TraInd-PkBudg900_ref_VRE1-mag-4/fulldata.gdx")
+start_run(cfg,codeCheck=FALSE) # Start MAgPIE run
