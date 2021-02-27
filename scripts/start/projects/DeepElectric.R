@@ -18,6 +18,7 @@
 library(lucode2)
 library(gms)
 library(magclass)
+library(gdx)
 
 getInput <- function(gdx,ghg_price=TRUE,biodem=TRUE) {
   if(ghg_price) {
