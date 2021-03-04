@@ -123,6 +123,17 @@ getNames(y) <- "Emissions|Peatland|Total (Mt CO2eq/yr)"
 x <- mbind(x,y)
 write.report(x,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4",scenario = title,append = TRUE)
 
+a <- PeatlandEmissions(gdx,level="cell",unit="GWP",cumulative = TRUE,baseyear = 2015)
+a <- a[,getYears(a,as.integer = T) >= 2015,]
+b <- speed_aggregate(a,path(outputdir,sum_spam_file),weight = setYears(dimSums(land_hr[,1,],dim=3),NULL))
+getCells(b) <- CountryToCell$celliso
+x <- toolAggregate(b,CountryToCell,from="celliso",to="iso")
+#getNames(x) <- c("Emissions|Peatland|CH4 (Mt CO2eq/yr)","Emissions|Peatland|CO2 (Mt CO2eq/yr)","Emissions|Peatland|DOC (Mt CO2eq/yr)","Emissions|Peatland|N2O (Mt CO2eq/yr)")
+y <- dimSums(x,dim=3)
+getNames(y) <- "Emissions|Peatland|Total|Cumulative (Mt CO2eq since 2015)"
+write.report(y,file = path(outputdir,land_iso_out_file),model = "MAgPIE 4",scenario = title,append = TRUE)
+
+
 file.copy(path(outputdir,land_iso_out_file),path("output",paste0(title,".csv")),overwrite = TRUE)
 
 
