@@ -168,6 +168,17 @@ getNames(tech) <- c("Emissions|Peatland|CH4 (Mt CO2eq/yr)","Emissions|Peatland|N
 y <- dimSums(tech,dim=3)
 getNames(y) <- "Emissions|Peatland|Total (Mt CO2eq/yr)"
 tech <- mbind(tech,y)
+#add cumulative emissions
+a <- y
+im_years <- new.magpie("GLO",getYears(a),NULL)
+im_years[,,] <- c(1,diff(getYears(a,as.integer = TRUE)))
+a[,"y1995",] <- 0
+a <- a*im_years[,getYears(a),]
+a <- as.magpie(apply(a,c(1,3),cumsum))
+a <- a - setYears(a[,"y2015",],NULL)
+getNames(a) <- "Emissions|Peatland|Total|Cumulative (Mt CO2eq since 2015)"
+tech <- mbind(tech,a)
+
 #area
 x <- toolAggregate(land_hr,CountryToCell,from="celliso",to="iso")
 x <- x[,1,]
