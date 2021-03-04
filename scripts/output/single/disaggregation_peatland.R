@@ -171,7 +171,7 @@ tech <- mbind(tech,y)
 #cumulative emissions not possible in this case
 a <- y
 getNames(a) <- "Emissions|Peatland|Total|Cumulative (Mt CO2eq since 2015)"
-a[,,] <- NA
+a[,,] <- 0
 tech <- mbind(tech,a)
 
 #area
