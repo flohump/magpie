@@ -8,17 +8,23 @@
 positive variables
  vm_prod(j,k)                    Production in each cell (mio. tDM per yr)
  vm_prod_reg(i,kall)             Regional aggregated production (mio. tDM per yr)
+ vm_prod_missing(i,k)		 Missing regional production causing infeasibility (mio. tDM per yr)
+ vm_prod_cost_missing(i)		 Costs for missing regional production (mio. USD per yr)
 ;
 
 equations
- q17_prod_reg(i,k)               Regional production (mio. tDM per yr)
+ q17_prod_cost_missing(i)		Missing regional production causing infeasibility (mio. tDM per yr)
+ q17_prod_reg(i,k)              Regional production (mio. tDM per yr)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov_prod(t,j,k,type)        Production in each cell (mio. tDM per yr)
- ov_prod_reg(t,i,kall,type) Regional aggregated production (mio. tDM per yr)
- oq17_prod_reg(t,i,k,type)  Regional production (mio. tDM per yr)
+ ov_prod(t,j,k,type)              Production in each cell (mio. tDM per yr)
+ ov_prod_reg(t,i,kall,type)       Regional aggregated production (mio. tDM per yr)
+ ov_prod_missing(t,i,k,type)      Missing regional production causing infeasibility (mio. tDM per yr)
+ ov_prod_cost_missing(t,i,type)   Costs for missing regional production (mio. USD per yr)
+ oq17_prod_cost_missing(t,i,type) Missing regional production causing infeasibility (mio. tDM per yr)
+ oq17_prod_reg(t,i,k,type)        Regional production (mio. tDM per yr)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
 

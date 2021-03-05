@@ -16,6 +16,7 @@
 
 *####################### R SECTION START (PHASES) ##############################
 $Ifi "%phase%" == "declarations" $include "./modules/17_production/flexreg_apr16/declarations.gms"
+$Ifi "%phase%" == "input" $include "./modules/17_production/flexreg_apr16/input.gms"
 $Ifi "%phase%" == "equations" $include "./modules/17_production/flexreg_apr16/equations.gms"
 $Ifi "%phase%" == "postsolve" $include "./modules/17_production/flexreg_apr16/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################
