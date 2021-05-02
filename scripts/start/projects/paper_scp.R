@@ -31,7 +31,7 @@ cfg$output <- c("rds_report","extra/disaggregation")
 
 cfg <- setScenario(cfg,c("SSP2","NPI"))
 
-prefix <- "SCP36"
+prefix <- "SCP37"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
@@ -41,6 +41,15 @@ cfg$gms$s15_elastic_demand <- 0
 
 cfg$gms$c20_scp_type <- "sugar"
 
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev52_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+               "rev4.58_h12_magpie.tgz",
+               "rev4.58_h12_validation.tgz",
+               "calibration_H12_c200_23Feb21.tgz",
+               "additional_data_rev4.00.tgz",
+               "patch_processing_conversion_factors.tgz")
+
+cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=NULL,"./patch"=NULL),
+                           getOption("magpie_repos"))
 
 #ref
 for (pol in c("Ref")) {
