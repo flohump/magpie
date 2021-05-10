@@ -72,8 +72,8 @@ cfg$gms$c56_pollutant_prices_noselect <- "R2M41-SSP2-NPi"
 cfg$gms$policy_countries56  <- all_iso_countries
 cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
 #default food scenario
-cfg$gms$c15_food_scenario <- "SDP"
-cfg$gms$c15_food_scenario_noselect <- "SDP"
+cfg$gms$c15_food_scenario <- "SSP1"
+cfg$gms$c15_food_scenario_noselect <- "SSP1"
 #exo diet and waste
 cfg$gms$c15_exo_scen_targetyear <- "y2050"
 cfg$gms$s15_exo_diet <- 1
@@ -116,5 +116,5 @@ cfg$gms$s32_aff_plantation <- 1
 #EFP
 cfg$gms$c42_env_flow_policy <- "on"
 cfg$gms$EFP_countries  <- oecd_countries #todo
-start_run(cfg,codeCheck=FALSE)
+#start_run(cfg,codeCheck=FALSE)
 
