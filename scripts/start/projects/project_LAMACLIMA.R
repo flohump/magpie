@@ -13,32 +13,8 @@
 #### Script to start a MAgPIE run ####
 ######################################
 
-oecd_countries <- "ABW,AFG,AGO,AIA,ALA,ALB,AND,ARE,ARG,ARM,
-                          ASM,ATA,ATF,ATG,AUS,AUT,AZE,BDI,BEL,BEN,
-                          BES,BFA,BGD,BGR,BHR,BHS,BIH,BLM,BLR,BLZ,
-                          BMU,BOL,BRA,BRB,BRN,BTN,BVT,BWA,CAF,CAN,
-                          CCK,CHN,CHE,CHL,CIV,CMR,COD,COG,COK,COL,
-                          COM,CPV,CRI,CUB,CUW,CXR,CYM,CYP,CZE,DEU,
-                          DJI,DMA,DNK,DOM,DZA,ECU,EGY,ERI,ESH,ESP,
-                          EST,ETH,FIN,FJI,FLK,FRA,FRO,FSM,GAB,GBR,
-                          GEO,GGY,GHA,GIB,GIN,GLP,GMB,GNB,GNQ,GRC,
-                          GRD,GRL,GTM,GUF,GUM,GUY,HKG,HMD,HND,HRV,
-                          HTI,HUN,IDN,IMN,IND,IOT,IRL,IRN,IRQ,ISL,
-                          ISR,ITA,JAM,JEY,JOR,JPN,KAZ,KEN,KGZ,KHM,
-                          KIR,KNA,KOR,KWT,LAO,LBN,LBR,LBY,LCA,LIE,
-                          LKA,LSO,LTU,LUX,LVA,MAC,MAF,MAR,MCO,MDA,
-                          MDG,MDV,MEX,MHL,MKD,MLI,MLT,MMR,MNE,MNG,
-                          MNP,MOZ,MRT,MSR,MTQ,MUS,MWI,MYS,MYT,NAM,
-                          NCL,NER,NFK,NGA,NIC,NIU,NLD,NOR,NPL,NRU,
-                          NZL,OMN,PAK,PAN,PCN,PER,PHL,PLW,PNG,POL,
-                          PRI,PRK,PRT,PRY,PSE,PYF,QAT,REU,ROU,RUS,
-                          RWA,SAU,SDN,SEN,SGP,SGS,SHN,SJM,SLB,SLE,
-                          SLV,SMR,SOM,SPM,SRB,SSD,STP,SUR,SVK,SVN,
-                          SWE,SWZ,SXM,SYC,SYR,TCA,TCD,TGO,THA,TJK,
-                          TKL,TKM,TLS,TON,TTO,TUN,TUR,TUV,TWN,TZA,
-                          UGA,UKR,UMI,URY,USA,UZB,VAT,VCT,VEN,VGB,
-                          VIR,VNM,VUT,WLF,WSM,YEM,ZAF,ZMB,ZWE"
-
+#https://www.oecd-ilibrary.org/docserver/9789264243439-8-en.pdf?expires=1620650049&id=id&accname=guest&checksum=7D894DDBF0C64FCC776D3AE6014FA9F0
+oecd_countries <- "AUS,AUT,BEL,CAN,CHL,CZE,DNK,EST,FIN,FRA,DEU,GRC,HUN,ISL,IRL,ISR,ITA,JPN,KOR,LUX,MEX,NLD,NOR,POL,PRT,SVK,ESP,SWE,CHE,TUR,GBR,USA"
 
 library(gms)
 library(magclass)
@@ -54,7 +30,7 @@ source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","disaggregation","disaggregation_transitions")
 
-prefix <- "LAMA01"
+prefix <- "LAMA02"
 cfg$gms$s80_optfile <- 1
 cfg$gms$s80_maxiter <- 5
 
@@ -116,5 +92,5 @@ cfg$gms$s32_aff_plantation <- 1
 #EFP
 cfg$gms$c42_env_flow_policy <- "on"
 cfg$gms$EFP_countries  <- oecd_countries #todo
-#start_run(cfg,codeCheck=FALSE)
+start_run(cfg,codeCheck=FALSE)
 
