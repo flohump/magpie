@@ -262,6 +262,7 @@ $setglobal forestry  dynamic_feb21
 $setglobal urban  static
 $setglobal natveg  dynamic_feb21
 
+$setglobal labor_prod  off
 $setglobal factor_costs  mixed_feb17
 $setglobal landconversion  global_static_aug18
 
