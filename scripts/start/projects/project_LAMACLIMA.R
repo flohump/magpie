@@ -30,7 +30,7 @@ source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","disaggregation","disaggregation_transitions")
 
-prefix <- "LAMA03"
+prefix <- "LAMA05"
 cfg$gms$s80_optfile <- 1
 cfg$gms$s80_maxiter <- 5
 
@@ -62,6 +62,8 @@ cfg$gms$scen_countries15  <- all_iso_countries
 #AFF
 cfg$gms$s32_planing_horizon <- 80
 cfg$gms$s32_aff_plantation <- 0
+cfg$gms$s32_max_aff_area <- Inf
+cfg$gms$c32_aff_mask <- "noboreal"
 #EFP
 cfg$gms$c42_env_flow_policy <- "on"
 cfg$gms$EFP_countries  <- all_iso_countries
@@ -90,7 +92,9 @@ cfg$gms$s15_waste_scen <- 1.2
 cfg$gms$scen_countries15  <- oecd_countries #todo
 #AFF
 cfg$gms$s32_planing_horizon <- 80
-cfg$gms$s32_aff_plantation <- 1
+cfg$gms$s32_aff_plantation <- 0
+cfg$gms$s32_max_aff_area <- Inf
+cfg$gms$c32_aff_mask <- "noboreal"
 #EFP
 cfg$gms$c42_env_flow_policy <- "on"
 cfg$gms$EFP_countries  <- oecd_countries #todo
