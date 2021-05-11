@@ -30,7 +30,7 @@ source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","disaggregation","disaggregation_transitions")
 
-prefix <- "LAMA02"
+prefix <- "LAMA03"
 cfg$gms$s80_optfile <- 1
 cfg$gms$s80_maxiter <- 5
 
@@ -41,7 +41,8 @@ cfg$gms$s15_elastic_demand <- 0
 #Scenario 1, based on SDP
 cfg$title <- paste(prefix,"SSP1-1p5deg",sep="_")
 cfg <- setScenario(cfg,c("SDP","NDC","ForestryEndo"))
-cfg$gms$s35_secdf_distribution <- 0
+cfg$gms$c35_protect_scenario <- "WDPA"
+#cfg$gms$s35_secdf_distribution <- 0
 #1.5 degree policy
 cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
 cfg$gms$c56_pollutant_prices_noselect <- "R2M41-SSP2-NPi"
@@ -69,7 +70,8 @@ start_run(cfg,codeCheck=FALSE)
 #Scenario 2, based on SSP4
 cfg$title <- paste(prefix,"SSP4-1p5deg",sep="_")
 cfg <- setScenario(cfg,c("SSP4","NDC","ForestryEndo"))
-cfg$gms$s35_secdf_distribution <- 0
+cfg$gms$c35_protect_scenario <- "WDPA"
+#cfg$gms$s35_secdf_distribution <- 0
 #1.5 degree policy
 cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
 cfg$gms$c56_pollutant_prices_noselect <- "R2M41-SSP2-NPi"
