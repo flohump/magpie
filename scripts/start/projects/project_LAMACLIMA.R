@@ -28,9 +28,9 @@ source("config/default.cfg")
 #cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
-cfg$output <- c("rds_report","disaggregation","disaggregation_transitions")
+cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "LAMA06"
+prefix <- "LAMA07"
 cfg$gms$s80_optfile <- 1
 cfg$gms$s80_maxiter <- 5
 
@@ -47,6 +47,7 @@ cfg$gms$c35_protect_scenario <- "WDPA"
 cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
 cfg$gms$c56_pollutant_prices_noselect <- "R2M41-SSP2-NPi"
 cfg$gms$policy_countries56  <- all_iso_countries
+cfg$gms$s56_ghgprice_phase_in <- 1
 cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
 #default food scenario
 cfg$gms$c15_food_scenario <- "SSP1"
@@ -77,7 +78,8 @@ cfg$gms$c35_protect_scenario <- "WDPA"
 #1.5 degree policy
 cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
 cfg$gms$c56_pollutant_prices_noselect <- "R2M41-SSP2-NPi"
-cfg$gms$policy_countries56  <- oecd_countries #todo
+cfg$gms$policy_countries56  <- all_iso_countries#oecd_countries #todo
+cfg$gms$s56_ghgprice_phase_in <- 1
 cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
 #default food scenario
 cfg$gms$c15_food_scenario <- "SSP4"
