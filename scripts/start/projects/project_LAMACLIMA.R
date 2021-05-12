@@ -30,7 +30,7 @@ source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "LAMA08"
+prefix <- "LAMA09"
 cfg$gms$s80_optfile <- 1
 cfg$gms$s80_maxiter <- 5
 
@@ -40,7 +40,7 @@ cfg$gms$s15_elastic_demand <- 0
 
 #Scenario 1, based on SDP
 cfg$title <- paste(prefix,"SSP1-1p5deg",sep="_")
-cfg <- setScenario(cfg,c("SDP","NDC","ForestryEndo"))
+cfg <- setScenario(cfg,c("SDP","NDC","ForestryOff"))
 cfg$gms$c35_protect_scenario <- "WDPA"
 #cfg$gms$s35_secdf_distribution <- 0
 #1.5 degree policy
@@ -62,8 +62,8 @@ cfg$gms$s15_waste_scen <- 1.2
 cfg$gms$scen_countries15  <- all_iso_countries
 #AFF
 cfg$gms$s32_planing_horizon <- 50
-cfg$gms$s32_aff_plantation <- 1
-cfg$gms$s32_max_aff_area <- 600
+cfg$gms$s32_aff_plantation <- 0
+cfg$gms$s32_max_aff_area <- 500
 cfg$gms$c32_aff_mask <- "noboreal"
 #EFP
 cfg$gms$c42_env_flow_policy <- "on"
@@ -72,7 +72,7 @@ start_run(cfg,codeCheck=FALSE)
 
 #Scenario 2, based on SSP4
 cfg$title <- paste(prefix,"SSP4-1p5deg",sep="_")
-cfg <- setScenario(cfg,c("SSP4","NDC","ForestryEndo"))
+cfg <- setScenario(cfg,c("SSP4","NDC","ForestryOff"))
 cfg$gms$c35_protect_scenario <- "WDPA"
 #cfg$gms$s35_secdf_distribution <- 0
 #1.5 degree policy
