@@ -29,7 +29,7 @@ source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation")
 
-prefix <- "VE12"
+prefix <- "VE13"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
@@ -37,14 +37,14 @@ cfg$gms$s80_maxiter <- 30
 
 cfg$gms$s32_planing_horizon <- 50
 cfg$gms$c35_protect_scenario <- "WDPA"
-cfg$gms$c56_emis_policy <- "redd+_nosoil"
+#cfg$gms$c56_emis_policy <- "redd+_nosoil"
+#cfg$gms$s56_ghgprice_phase_in <- 1
 
 #ref
 for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_AffPlantCarbon","Climate+Nature_AffPlantCarbon+Biodiv")) {
   if (pol == "Ref") {
     cfg <- setScenario(cfg,c("SSP2","NPI"))
     cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NPi"
-    cfg$gms$s56_ghgprice_phase_in <- 1
     cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
     cfg$gms$s32_aff_plantation <- 0
     cfg$gms$s32_aff_bii_coeff <- 0
@@ -52,7 +52,6 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_AffPlant
   } else if (pol == "Climate") {
     cfg <- setScenario(cfg,c("SSP2","NDC"))
     cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-    cfg$gms$s56_ghgprice_phase_in <- 1
     cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
     cfg$gms$s32_aff_plantation <- 1
     cfg$gms$s32_aff_bii_coeff <- 1
@@ -60,7 +59,6 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_AffPlant
   } else if (pol == "Nature") {
     cfg <- setScenario(cfg,c("SSP2","NDC"))
     cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NPi"
-    cfg$gms$s56_ghgprice_phase_in <- 1
     cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
     cfg$gms$s32_aff_plantation <- 0
     cfg$gms$s32_aff_bii_coeff <- 0
@@ -68,7 +66,6 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_AffPlant
   } else if (pol == "Climate+Nature") {
     cfg <- setScenario(cfg,c("SSP2","NDC"))
     cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-    cfg$gms$s56_ghgprice_phase_in <- 1
     cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
     cfg$gms$s32_aff_plantation <- 0
     cfg$gms$s32_aff_bii_coeff <- 0
@@ -76,7 +73,6 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_AffPlant
   } else if (pol == "Climate+Nature_AffPlantCarbon") {
     cfg <- setScenario(cfg,c("SSP2","NDC"))
     cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-    cfg$gms$s56_ghgprice_phase_in <- 1
     cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
     cfg$gms$s32_aff_plantation <- 1
     cfg$gms$s32_aff_bii_coeff <- 1
@@ -84,7 +80,6 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_AffPlant
   } else if (pol == "Climate+Nature_AffPlantCarbon+Biodiv") {
     cfg <- setScenario(cfg,c("SSP2","NDC"))
     cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-    cfg$gms$s56_ghgprice_phase_in <- 1
     cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
     cfg$gms$s32_aff_plantation <- 1
     cfg$gms$s32_aff_bii_coeff <- 0
