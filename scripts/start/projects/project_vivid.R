@@ -29,7 +29,7 @@ source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation")
 
-prefix <- "VE16"
+prefix <- "VE17"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
@@ -37,8 +37,8 @@ cfg$gms$s80_maxiter <- 30
 
 cfg$gms$s32_planing_horizon <- 50
 cfg$gms$c35_protect_scenario <- "WDPA"
-#cfg$gms$c56_emis_policy <- "redd+_nosoil"
-cfg$gms$c56_emis_policy <- "redd+natveg_nosoil"
+cfg$gms$c56_emis_policy <- "redd+_nosoil"
+#cfg$gms$c56_emis_policy <- "redd+natveg_nosoil"
 
 #ref
 for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_AffPlantCarbon","Climate+Nature_AffPlantCarbon+Biodiv")) {
