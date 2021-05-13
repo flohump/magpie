@@ -30,7 +30,7 @@ source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "LAMA16"
+prefix <- "LAMA17"
 cfg$gms$s80_optfile <- 1
 cfg$gms$s80_maxiter <- 5
 
