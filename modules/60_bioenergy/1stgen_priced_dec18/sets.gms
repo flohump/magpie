@@ -15,6 +15,13 @@
 sets
 
    scen2nd60 second generation bioenergy scenarios /
+       PIK_GDP,
+       PIK_H2C,
+       PIK_HBL,
+       PIK_HOS,
+       PIK_LIN,
+       PIK_NPI,
+       PIK_OPT,
        R2M41-SSP2-Budg1300,
        R2M41-SSP2-Budg600,
        R2M41-SSP2-Budg950,
