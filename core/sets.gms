@@ -47,32 +47,32 @@ sets
        VIR,VNM,VUT,WLF,WSM,YEM,ZAF,ZMB,ZWE /
 
    j number of LPJ cells /
-       CAZ_1*CAZ_28,
-       CHA_29*CHA_52,
-       EUR_53*EUR_62,
-       IND_63*IND_69,
-       JPN_70*JPN_72,
-       LAM_73*LAM_125,
-       MEA_126*MEA_142,
-       NEU_143*NEU_150,
-       OAS_151*OAS_172,
-       REF_173*REF_179,
-       SSA_180*SSA_190,
-       USA_191*USA_200 /
+       CAZ_1*CAZ_7,
+       CHA_8*CHA_30,
+       EUR_31*EUR_39,
+       IND_40*IND_45,
+       JPN_46*JPN_46,
+       LAM_47*LAM_87,
+       MEA_88*MEA_112,
+       NEU_113*NEU_118,
+       OAS_119*OAS_131,
+       REF_132*REF_143,
+       SSA_144*SSA_180,
+       USA_181*USA_200 /
 
    cell(i,j) number of LPJ cells per region i /
-       CAZ . CAZ_1*CAZ_28
-       CHA . CHA_29*CHA_52
-       EUR . EUR_53*EUR_62
-       IND . IND_63*IND_69
-       JPN . JPN_70*JPN_72
-       LAM . LAM_73*LAM_125
-       MEA . MEA_126*MEA_142
-       NEU . NEU_143*NEU_150
-       OAS . OAS_151*OAS_172
-       REF . REF_173*REF_179
-       SSA . SSA_180*SSA_190
-       USA . USA_191*USA_200 /
+       CAZ . CAZ_1*CAZ_7
+       CHA . CHA_8*CHA_30
+       EUR . EUR_31*EUR_39
+       IND . IND_40*IND_45
+       JPN . JPN_46*JPN_46
+       LAM . LAM_47*LAM_87
+       MEA . MEA_88*MEA_112
+       NEU . NEU_113*NEU_118
+       OAS . OAS_119*OAS_131
+       REF . REF_132*REF_143
+       SSA . SSA_144*SSA_180
+       USA . USA_181*USA_200 /
 
    i_to_iso(i,iso) mapping regions to iso countries /
        CAZ . (AUS,CAN,HMD,NZL,SPM)
@@ -163,7 +163,9 @@ sets time_annual Annual extended time steps
      y1980, y1985, y1990,
      y1995, y2000, y2005, y2010, y2015
     /
+
 ;
+
 
 set t_past(t_all) Timesteps with observed data
 $If "%c_past%"== "till_2010" /y1965, y1970, y1975, y1980, y1985, y1990,y1995, y2000, y2005, y2010/;
