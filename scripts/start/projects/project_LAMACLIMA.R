@@ -24,28 +24,32 @@ source("scripts/start_functions.R")
 
 #start MAgPIE run
 source("config/default.cfg")
+source("scripts/start/extra/lpjml_addon.R")
 
 #cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "LAMA17"
-cfg$gms$s80_optfile <- 1
-cfg$gms$s80_maxiter <- 5
+prefix <- "LAMA18"
+# cfg$gms$s80_optfile <- 1
+# cfg$gms$s80_maxiter <- 30
 
 #https://miro.com/app/board/o9J_lVys8js=/
 
 #Scenario 1, based on SDP
 cfg$title <- paste(prefix,"SSP1-1p5deg",sep="_")
 cfg <- setScenario(cfg,c("SDP","NDC","ForestryEndo"))
-cfg$gms$c35_protect_scenario <- "BH"
+cfg$gms$c35_protect_scenario <- "FF+BH"
+cfg$gms$s30_set_aside_shr <- 0.2
+cfg$gms$c30_set_aside_target <- "by2030"
+cfg$gms$c35_forest_damage_end <- "by2030"
 #cfg$gms$s35_secdf_distribution <- 0
 #1.5 degree policy
-cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
 cfg$gms$c56_pollutant_prices_noselect <- "R2M41-SSP2-NPi"
 cfg$gms$policy_countries56  <- all_iso_countries
-cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
 #default food scenario
 cfg$gms$c15_food_scenario <- "SSP1"
 cfg$gms$c15_food_scenario_noselect <- "SSP1"
@@ -71,12 +75,15 @@ start_run(cfg,codeCheck=FALSE)
 cfg$title <- paste(prefix,"SSP4-1p5deg",sep="_")
 cfg <- setScenario(cfg,c("SSP4","NDC","ForestryEndo"))
 cfg$gms$c35_protect_scenario <- "WDPA"
+cfg$gms$s30_set_aside_shr <- 0
+cfg$gms$c30_set_aside_target <- "by2030"
+cfg$gms$c35_forest_damage_end <- "by2030"
 #cfg$gms$s35_secdf_distribution <- 0
 #1.5 degree policy
-cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
 cfg$gms$c56_pollutant_prices_noselect <- "R2M41-SSP2-NPi"
 cfg$gms$policy_countries56  <- oecd_countries#oecd_countries #todo
-cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
 #default food scenario
 cfg$gms$c15_food_scenario <- "SSP4"
 cfg$gms$c15_food_scenario_noselect <- "SSP4"
