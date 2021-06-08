@@ -32,7 +32,7 @@ cfg$gms$yields                       <- "managementcalib_aug19"
 cfg$gms$s14_yld_past_switch          <- 0.25
 cfg$gms$processing                   <- "substitution_may21"
 cfg$gms$crop                         <- "endo_apr21"
-cfg$gms$factor_costs                 <- "sticky_labour_jun21"
+cfg$gms$factor_costs                 <- "sticky_feb18"
 cfg$gms$c41_initial_irrigation_area  <- "LUH2v2"
 cfg                                  <- setScenario(cfg,"cc")
 
