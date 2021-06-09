@@ -18,13 +18,13 @@ positive variables
  vm_cost_inv(i)                        Investment capital costs (mio USD05MER  per yr)
  v38_investment_immobile(j,kcr)        Investment costs in immobile farm capital (mio USD05MER per yr)
  v38_investment_mobile(j)              Investment costs in mobile farm capital (mio USD05MER per yr)
- v38_capital(i,kcr)
- v38_labour(i,kcr)
+ v38_capital_need(i,kcr)
+ v38_labour_need(i,kcr)
 ;
 
 parameters
  i38_variable_costs(i,kcr)           Variable input costs (mio USD05MER per input unit)
- i38_capital_need(i,kcr,mobil38)     Capital requirements for farming with tau equal 1 (mio USD05MER)
+* i38_capital_need(i,kcr,mobil38)     Capital requirements for farming with tau equal 1 (mio USD05MER)
  p38_capital_immobile(t,j,kcr)       Preexisting immobile capital stocks before investment (mio USD05MER)
  p38_capital_mobile(t,j)             Preexisting mobile capital stocks before investment (mio USD05MER)
 
@@ -54,8 +54,8 @@ parameters
  ov_cost_inv(t,i,type)                  Investment capital costs (mio USD05MER  per yr)
  ov38_investment_immobile(t,j,kcr,type) Investment costs in immobile farm capital (mio USD05MER per yr)
  ov38_investment_mobile(t,j,type)       Investment costs in mobile farm capital (mio USD05MER per yr)
- ov38_capital(t,i,kcr,type)             
- ov38_labour(t,i,kcr,type)              
+ ov38_capital_need(t,i,kcr,type)        
+ ov38_labour_need(t,i,kcr,type)         
  oq38_cost_prod_crop(t,i,kcr,type)      Regional factor input costs for plant production (mio USD05MER)
  oq38_cost_prod_inv(t,i,type)           Regional investment costs in capital (mio USD05MER)
  oq38_investment_immobile(t,j,kcr,type) Cellular immobile investments into farm capital   (mio USD05MER)

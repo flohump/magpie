@@ -8,4 +8,4 @@
 vm_cost_prod.scale(i,kall) = 10e4;
 vm_cost_inv.scale(i) = 10e4;
 v38_investment_immobile.scale(j,kcr) = 10e3;
-v38_capital.scale(i,kcr) = 10e3;
+v38_capital_need.scale(i,kcr) = 10e3;
