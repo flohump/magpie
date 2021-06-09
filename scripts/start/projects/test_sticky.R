@@ -35,7 +35,7 @@ source("scripts/start/extra/lpjml_addon.R")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "ST01"
+prefix <- "ST02"
 
 cfg <- setScenario(cfg,c("SSP2","NPI","cc"))
 cfg$gms$labor_prod <- "off"
