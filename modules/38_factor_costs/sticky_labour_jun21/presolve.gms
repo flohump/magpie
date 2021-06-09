@@ -18,22 +18,22 @@ $endif
 
 *i38_capital_need(i,kcr,"mobile") = f38_fac_req(kcr) * p38_capital_cost_share(i) / (pm_interest(t,i)+s38_depreciation_rate) * (1-s38_immobile);
 *i38_capital_need(i,kcr,"immobile") = f38_fac_req(kcr)  * p38_capital_cost_share(i) / (pm_interest(t,i)+s38_depreciation_rate) * s38_immobile;
-i38_capital(i,kcr) = f38_fac_req(kcr) * p38_capital_cost_share(i) / (pm_interest(t,i)+s38_depreciation_rate);
-i38_labour(i,kcr) = (f38_fac_req(kcr) * (1-p38_capital_cost_share(i))) / s38_wage * (1-s38_mi_start);
+i38_capital_need(i,kcr) = f38_fac_req(kcr) * p38_capital_cost_share(i) / (pm_interest(t,i)+s38_depreciation_rate);
+i38_labour_need(i,kcr) = (f38_fac_req(kcr) * (1-p38_capital_cost_share(i))) / s38_wage * (1-s38_mi_start);
 
-v38_capital.lo(i,kcr) = 0.0001;
-v38_capital.l(i,kcr) = i38_capital(i,kcr);
-v38_capital.up(i,kcr) = 10 * i38_capital(i,kcr);
+v38_capital_need.lo(i,kcr) = i38_capital_need(i,kcr);
+v38_capital_need.l(i,kcr) = i38_capital_need(i,kcr);
+v38_capital_need.up(i,kcr) = 10 * i38_capital_need(i,kcr);
 
-v38_labour.lo(i,kcr) = 0.0001;
-v38_labour.l(i,kcr) = i38_labour(i,kcr);
-v38_labour.up(i,kcr) = 10 * i38_labour(i,kcr);
+v38_labour_need.lo(i,kcr) = i38_labour_need(i,kcr);
+v38_labour_need.l(i,kcr) = i38_labour_need(i,kcr);
+v38_labour_need.up(i,kcr) = 10 * i38_labour_need(i,kcr);
 
 * update CES parameters
-i38_sh(i,kcr) = (pm_interest(t,i) * i38_capital(i,kcr)**(1 + s38_ep)) / (pm_interest(t,i) * i38_capital(i,kcr)**(1 + s38_ep)  + s38_wage * i38_labour(i,kcr)**(1 + s38_ep)) ; 
+i38_sh(i,kcr) = (pm_interest(t,i) * i38_capital_need(i,kcr)**(1 + s38_ep)) / (pm_interest(t,i) * i38_capital_need(i,kcr)**(1 + s38_ep)  + s38_wage * i38_labour_need(i,kcr)**(1 + s38_ep)) ; 
 * i38_scale = A
 * A = 1 / ([sh*K**(-ep) + (1 - sh)*(cc * L)**(-ep)]**(-1/ep))
-i38_scale(i,kcr) = 1/([i38_sh(i,kcr) * i38_capital(i,kcr)**(-s38_ep) + (1 - i38_sh(i,kcr)) * i38_labour(i,kcr)**(-s38_ep)]**(-1/s38_ep));
+i38_scale(i,kcr) = 1/([i38_sh(i,kcr) * i38_capital_need(i,kcr)**(-s38_ep) + (1 - i38_sh(i,kcr)) * i38_labour_need(i,kcr)**(-s38_ep)]**(-1/s38_ep));
 
 p38_croparea_start(j,kcr) = sum(w, fm_croparea("y1995",j,w,kcr));
 
@@ -42,8 +42,8 @@ if (ord(t) = 1,
 * i38_variable_costs(i2,kcr) = f38_fac_req(kcr)  * (1-p38_capital_cost_share(i2)) * (1-s38_mi_start);
 
 *' Estimate capital stock based on capital remuneration
-  p38_capital_immobile_t(j,kcr)   = sum(cell(i,j), i38_capital(i,kcr)*s38_immobile*p38_croparea_start(j,kcr)*f38_region_yield(i,kcr)* fm_tau1995(i));
-  p38_capital_mobile_t(j)         = sum((cell(i,j),kcr), i38_capital(i,kcr)*(1-s38_immobile)*p38_croparea_start(j,kcr)*f38_region_yield(i,kcr)* fm_tau1995(i));
+  p38_capital_immobile_t(j,kcr)   = sum(cell(i,j), i38_capital_need(i,kcr)*s38_immobile*p38_croparea_start(j,kcr)*f38_region_yield(i,kcr)* fm_tau1995(i));
+  p38_capital_mobile_t(j)         = sum((cell(i,j),kcr), i38_capital_need(i,kcr)*(1-s38_immobile)*p38_croparea_start(j,kcr)*f38_region_yield(i,kcr)* fm_tau1995(i));
 
   p38_capital_immobile(t,j,kcr)   = p38_capital_immobile_t(j,kcr) ;
   p38_capital_mobile(t,j)         = p38_capital_mobile_t(j);

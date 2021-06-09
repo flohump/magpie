@@ -38,8 +38,8 @@ parameters
 
  i38_sh(i,kcr)
  i38_scale(i,kcr)
- i38_capital(i,kcr)
- i38_labour(i,kcr)
+ i38_capital_need(i,kcr)
+ i38_labour_need(i,kcr)
 ;
 
 scalars

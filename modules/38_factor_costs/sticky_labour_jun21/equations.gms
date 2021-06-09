@@ -12,15 +12,15 @@
 *' A * [sh*K**(-ep) + (1 - sh)*(LP * L)**(-ep)]**(-1/ep) =e= 1 ;
  q38_ces_prodfun(j2,kcr) ..
   sum(cell(i2,j2), i38_scale(i2,kcr) * 
-  [i38_sh(i2,kcr)*v38_capital(i2,kcr)**(-s38_ep) + 
-  (1 - i38_sh(i2,kcr))*(vm_labor_prod(j2) * v38_labour(i2,kcr))**(-s38_ep)]**(-1/s38_ep))
+  [i38_sh(i2,kcr)*v38_capital_need(i2,kcr)**(-s38_ep) + 
+  (1 - i38_sh(i2,kcr))*(vm_labor_prod(j2) * v38_labour_need(i2,kcr))**(-s38_ep)]**(-1/s38_ep))
   =e= 1 ;
 
 *' Variable costs (without capital): The factor costs are calculated based on the requirements  of the regional aggregated production without
 * considering capital costs.
 
 q38_cost_prod_crop(i2,kcr).. vm_cost_prod(i2,kcr)
-                              =e= vm_prod_reg(i2,kcr) * v38_labour(i2,kcr) * s38_wage / (1-s38_mi_start)
+                              =e= vm_prod_reg(i2,kcr) * v38_labour_need(i2,kcr) * s38_wage / (1-s38_mi_start)
                                 ;
 
 *' Investment costs: Investment are the summation of investment in mobile and immobile capital. The costs are annuitized,
@@ -41,7 +41,7 @@ q38_cost_prod_inv(i2).. vm_cost_inv(i2)=e=(sum((cell(i2,j2),kcr),v38_investment_
 
 q38_investment_immobile(j2,kcr).. v38_investment_immobile(j2,kcr)
                                   =g=
-                                 vm_prod(j2,kcr)*sum(cell(i2,j2), v38_capital(i2,kcr) * s38_immobile)-
+                                 vm_prod(j2,kcr)*sum(cell(i2,j2), v38_capital_need(i2,kcr) * s38_immobile)-
                                  p38_capital_immobile_t(j2,kcr);
 *
 
@@ -49,6 +49,6 @@ q38_investment_immobile(j2,kcr).. v38_investment_immobile(j2,kcr)
 
 q38_investment_mobile(j2).. v38_investment_mobile(j2)
                              =g=
-                             sum((cell(i2,j2),kcr), vm_prod(j2,kcr) * v38_capital(i2,kcr) * (1-s38_immobile))-
+                             sum((cell(i2,j2),kcr), vm_prod(j2,kcr) * v38_capital_need(i2,kcr) * (1-s38_immobile))-
                              p38_capital_mobile_t(j2);
 *                           
