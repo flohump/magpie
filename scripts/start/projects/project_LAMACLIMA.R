@@ -31,7 +31,7 @@ source("scripts/start/extra/lpjml_addon.R")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "LAMA21"
+prefix <- "LAMA22"
 # cfg$gms$s80_optfile <- 1
 # cfg$gms$s80_maxiter <- 30
 
@@ -75,6 +75,16 @@ cfg$gms$c32_aff_mask <- "noboreal"
 #EFP
 cfg$gms$c42_env_flow_policy <- "on"
 cfg$gms$EFP_countries  <- all_iso_countries
+#AWM
+cfg$gms$c50_scen_neff <- "neff75_80_starty2010"
+cfg$gms$c50_scen_neff_noselect <- "neff75_80_starty2010"
+cfg$gms$cropneff_countries  <- all_iso_countries
+#Fert
+cfg$gms$c55_scen_conf <- "ssp1"
+cfg$gms$c55_scen_conf_noselect <- "ssp1"
+cfg$gms$scen_countries55  <- all_iso_countries
+#irrig
+cfg$gms$s42_irrig_eff_scenario <- 3
 start_run(cfg,codeCheck=FALSE)
 
 #Scenario 2, based on SSP4
@@ -113,5 +123,15 @@ cfg$gms$c32_aff_mask <- "noboreal"
 #EFP
 cfg$gms$c42_env_flow_policy <- "on"
 cfg$gms$EFP_countries  <- oecd_countries
+#AWM
+cfg$gms$c50_scen_neff <- "neff75_80_starty2010"
+cfg$gms$c50_scen_neff_noselect <- "neff65_70_starty2010"
+cfg$gms$cropneff_countries  <- oecd_countries
+#Fert
+cfg$gms$c55_scen_conf <- "ssp1"
+cfg$gms$c55_scen_conf_noselect <- "ssp4"
+cfg$gms$scen_countries55  <- oecd_countries
+#irrig
+cfg$gms$s42_irrig_eff_scenario <- 3
 start_run(cfg,codeCheck=FALSE)
 
