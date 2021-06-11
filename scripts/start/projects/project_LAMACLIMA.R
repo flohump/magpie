@@ -31,14 +31,14 @@ source("scripts/start/extra/lpjml_addon.R")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "LAMA20"
+prefix <- "LAMA21"
 # cfg$gms$s80_optfile <- 1
 # cfg$gms$s80_maxiter <- 30
 
 #https://miro.com/app/board/o9J_lVys8js=/
 
 #Scenario 1, based on SDP
-cfg$title <- paste(prefix,"SSP1-1p5deg",sep="_")
+cfg$title <- paste(prefix,"Sustainability",sep="_")
 cfg <- setScenario(cfg,c("SDP","NDC","ForestryEndo"))
 cfg$gms$c35_protect_scenario <- "FF_BH"
 cfg$gms$c35_protect_scenario_noselect <- "FF_BH"
@@ -76,7 +76,7 @@ cfg$gms$EFP_countries  <- all_iso_countries
 start_run(cfg,codeCheck=FALSE)
 
 #Scenario 2, based on SSP4
-cfg$title <- paste(prefix,"SSP4-1p5deg",sep="_")
+cfg$title <- paste(prefix,"Inequality",sep="_")
 cfg <- setScenario(cfg,c("SSP4","NDC","ForestryEndo"))
 cfg$gms$c35_protect_scenario <- "FF_BH"
 cfg$gms$c35_protect_scenario_noselect <- "WDPA"
