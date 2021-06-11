@@ -35,6 +35,8 @@ prefix <- "LAMA21"
 # cfg$gms$s80_optfile <- 1
 # cfg$gms$s80_maxiter <- 30
 
+cfg$qos <- "priority"
+
 #https://miro.com/app/board/o9J_lVys8js=/
 
 #Scenario 1, based on SDP
