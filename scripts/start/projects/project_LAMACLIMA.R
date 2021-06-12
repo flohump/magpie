@@ -31,7 +31,7 @@ source("scripts/start/extra/lpjml_addon.R")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "LAMA23"
+prefix <- "LAMA24"
 # cfg$gms$s80_optfile <- 1
 # cfg$gms$s80_maxiter <- 30
 
@@ -134,4 +134,9 @@ cfg$gms$scen_countries55  <- oecd_countries
 #irrig
 cfg$gms$s42_irrig_eff_scenario <- 3
 start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"Inequality_NatAff",sep="_")
+cfg$gms$s32_aff_plantation <- 0
+start_run(cfg,codeCheck=FALSE)
+
 
