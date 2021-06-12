@@ -70,6 +70,7 @@ cfg$gms$scen_countries15  <- all_iso_countries
 #AFF
 cfg$gms$s32_planing_horizon <- 50
 cfg$gms$s32_aff_plantation <- 0
+cfg$gms$s32_aff_bii_coeff <- 0
 cfg$gms$s32_max_aff_area <- 500
 cfg$gms$c32_aff_mask <- "noboreal"
 #EFP
@@ -118,6 +119,7 @@ cfg$gms$scen_countries15  <- oecd_countries
 #AFF
 cfg$gms$s32_planing_horizon <- 50
 cfg$gms$s32_aff_plantation <- 1
+cfg$gms$s32_aff_bii_coeff <- 1
 cfg$gms$s32_max_aff_area <- Inf
 cfg$gms$c32_aff_mask <- "noboreal"
 #EFP
@@ -137,6 +139,7 @@ start_run(cfg,codeCheck=FALSE)
 
 cfg$title <- paste(prefix,"Inequality_NatAff",sep="_")
 cfg$gms$s32_aff_plantation <- 0
+cfg$gms$s32_aff_bii_coeff <- 0
 start_run(cfg,codeCheck=FALSE)
 
 

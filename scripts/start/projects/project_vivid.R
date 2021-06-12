@@ -23,13 +23,14 @@ source("scripts/start_functions.R")
 
 #start MAgPIE run
 source("config/default.cfg")
+source("scripts/start/extra/lpjml_addon.R")
 
 #cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation")
 
-prefix <- "VE13"
+prefix <- "VE20"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
@@ -41,18 +42,18 @@ cfg$gms$c35_protect_scenario <- "WDPA"
 #cfg$gms$s56_ghgprice_phase_in <- 1
 
 #ref
-for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_AffPlantCarbon","Climate+Nature_AffPlantCarbon+Biodiv")) {
+for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_PlantAff")) {
   if (pol == "Ref") {
     cfg <- setScenario(cfg,c("SSP2","NPI"))
-    cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NPi"
-    cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
+    cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-NPi"
+    cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-NPi"
     cfg$gms$s32_aff_plantation <- 0
     cfg$gms$s32_aff_bii_coeff <- 0
     cfg$gms$c44_price_bv_loss <- "p0"
   } else if (pol == "Climate") {
     cfg <- setScenario(cfg,c("SSP2","NDC"))
-    cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-    cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
+    cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
+    cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
     cfg$gms$s32_aff_plantation <- 1
     cfg$gms$s32_aff_bii_coeff <- 1
     cfg$gms$c44_price_bv_loss <- "p0"
@@ -65,22 +66,22 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_AffPlant
     cfg$gms$c44_price_bv_loss <- "p10_p10000"
   } else if (pol == "Climate+Nature") {
     cfg <- setScenario(cfg,c("SSP2","NDC"))
-    cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-    cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
+    cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
+    cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
     cfg$gms$s32_aff_plantation <- 0
     cfg$gms$s32_aff_bii_coeff <- 0
     cfg$gms$c44_price_bv_loss <- "p10_p10000"
-  } else if (pol == "Climate+Nature_AffPlantCarbon") {
+  } else if (pol == "Climate+Nature_PlantAff") {
     cfg <- setScenario(cfg,c("SSP2","NDC"))
-    cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-    cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
+    cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
+    cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
     cfg$gms$s32_aff_plantation <- 1
     cfg$gms$s32_aff_bii_coeff <- 1
     cfg$gms$c44_price_bv_loss <- "p10_p10000"
   } else if (pol == "Climate+Nature_AffPlantCarbon+Biodiv") {
     cfg <- setScenario(cfg,c("SSP2","NDC"))
-    cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600"
-    cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600"
+    cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
+    cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
     cfg$gms$s32_aff_plantation <- 1
     cfg$gms$s32_aff_bii_coeff <- 0
     cfg$gms$c44_price_bv_loss <- "p10_p10000"
