@@ -23,6 +23,8 @@ if(!exists("source_include")) {
 map_file                   <- Sys.glob(path(outputdir, "clustermap_*.rds"))
 gdx                        <- path(outputdir,"fulldata.gdx")
 land_hr_file               <- path(outputdir,"avl_land_t_0.5.mz")
+land_hr_out_file           <- path(outputdir,"cell.land_0.5.mz")
+land_hr_share_out_file     <- path(outputdir,"cell.land_0.5_share.mz")
 land_trans_hr_out_file        <- path(outputdir,"cell.land_transitions_0.5.mz")
 land_trans_hr_share_out_file  <- path(outputdir,"cell.land_transitions_0.5_share.mz")
 
@@ -85,6 +87,12 @@ if(max(test)>0.2||min(test)< -0.2) warning("Sum over land transitions and land s
   write.magpie(x, file, comment=comment)
   write.magpie(x, sub(".mz",".nc",file), comment=comment, verbose=FALSE)
 }
+
+.tmpwrite(land_hr, land_hr_out_file, comment="unit: Mha per grid-cell",
+          message="Write outputs cell.land")
+.tmpwrite(land_hr/dimSums(land_hr,dim=3), land_trans_hr_share_out_file,
+          comment="unit: grid-cell land area fraction",
+          message="Write outputs cell.land_share")
 
 .tmpwrite(land_trans_hr, land_trans_hr_out_file, comment="unit: Mha per grid-cell",
           message="Write outputs cell.land")
