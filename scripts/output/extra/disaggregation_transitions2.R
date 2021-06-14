@@ -90,7 +90,7 @@ if(max(test)>0.2||min(test)< -0.2) warning("Sum over land transitions and land s
 
 .tmpwrite(land_hr, land_hr_out_file, comment="unit: Mha per grid-cell",
           message="Write outputs cell.land")
-.tmpwrite(land_hr/dimSums(land_hr,dim=3), land_trans_hr_share_out_file,
+.tmpwrite(land_hr/dimSums(land_hr,dim=3), land_hr_share_out_file,
           comment="unit: grid-cell land area fraction",
           message="Write outputs cell.land_share")
 
