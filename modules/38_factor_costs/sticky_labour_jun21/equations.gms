@@ -8,8 +8,13 @@
 
 *' @equations
 
-*' CES function
-*' A * [sh*K**(-ep) + (1 - sh)*(LP * L)**(-ep)]**(-1/ep) =e= 1 ;
+*' Constant elasticity of substitution (CES) production function for one unit of output.
+*' The CES function accounts for capital `v38_capital_need` and labour `v38_labour_need` requirements.
+*' The efficiency of labour is affected by the labour productivity factor `vm_labor_prod`, which is  
+*' provided by the labour productivity module [37_labor_prod].
+*' The calculation of total capital and labour costs is covered by the equations `q38_cost_prod_crop` and `q38_cost_prod_inv`.
+*' The conceptual and analytical details of the CES function including the labour productivity factor are documented in @CES.
+
  q38_ces_prodfun(j2,kcr) ..
   sum(cell(i2,j2), i38_scale(i2,kcr) * 
   [i38_sh(i2,kcr)*v38_capital_need(i2,kcr)**(-s38_ep) + 
@@ -17,7 +22,7 @@
   =e= 1 ;
 
 *' Variable costs (without capital): The factor costs are calculated based on the requirements  of the regional aggregated production without
-* considering capital costs.
+*' considering capital costs.
 
 q38_cost_prod_crop(i2,kcr).. vm_cost_prod(i2,kcr)
                               =e= vm_prod_reg(i2,kcr) * v38_labour_need(i2,kcr) * s38_wage / (1-s38_mi_start)
@@ -25,6 +30,7 @@ q38_cost_prod_crop(i2,kcr).. vm_cost_prod(i2,kcr)
 
 *' Investment costs: Investment are the summation of investment in mobile and immobile capital. The costs are annuitized,
 *' and corrected to make sure that the annual depreciation of the current time-step is accounted for.
+
 q38_cost_prod_inv(i2).. vm_cost_inv(i2)=e=(sum((cell(i2,j2),kcr),v38_investment_immobile(j2,kcr))
                                     +sum((cell(i2,j2)),v38_investment_mobile(j2)))
                                     *((1-s38_depreciation_rate)*
@@ -43,12 +49,12 @@ q38_investment_immobile(j2,kcr).. v38_investment_immobile(j2,kcr)
                                   =g=
                                  vm_prod(j2,kcr)*sum(cell(i2,j2), v38_capital_need(i2,kcr) * s38_immobile)-
                                  p38_capital_immobile_t(j2,kcr);
-*
 
-*'On the other hand, the mobile capital is needed by all crop activities in each location, so it is defined over each j2 cell.
+
+*' On the other hand, the mobile capital is needed by all crop activities in each location, so it is defined over each j2 cell.
 
 q38_investment_mobile(j2).. v38_investment_mobile(j2)
                              =g=
                              sum((cell(i2,j2),kcr), vm_prod(j2,kcr) * v38_capital_need(i2,kcr) * (1-s38_immobile))-
                              p38_capital_mobile_t(j2);
-*                           
+                           

@@ -18,8 +18,8 @@ positive variables
  vm_cost_inv(i)                        Investment capital costs (mio USD05MER  per yr)
  v38_investment_immobile(j,kcr)        Investment costs in immobile farm capital (mio USD05MER per yr)
  v38_investment_mobile(j)              Investment costs in mobile farm capital (mio USD05MER per yr)
- v38_capital_need(i,kcr)
- v38_labour_need(i,kcr)
+ v38_capital_need(i,kcr)			   Capital required for one unit of output (USD05MER per ton DM)
+ v38_labour_need(i,kcr)				   Labour required for one unit of output (hours per ton DM)
 ;
 
 parameters
@@ -36,15 +36,14 @@ parameters
 
  p38_croparea_start(j,kcr)           Agricultural land initialization area (mio. ha)
 
- i38_sh(i,kcr)
- i38_scale(i,kcr)
- i38_capital_need(i,kcr)
- i38_labour_need(i,kcr)
+ i38_sh(i,kcr)						Share parameter for CES function (1)
+ i38_scale(i,kcr)					Scaling factor for total factor productivity (1)
+ i38_capital_need(i,kcr)			Initial capital required for one unit of output (USD05MER per ton DM)
+ i38_labour_need(i,kcr)				Initial labour required for one unit of output (hours per ton DM)
 ;
 
 scalars
- s38_beta
- s38_ep
+ s38_ep								Elasticity parameter for CES function (1)
 ;
 
 

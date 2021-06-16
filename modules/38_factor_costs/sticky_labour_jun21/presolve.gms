@@ -31,8 +31,6 @@ v38_labour_need.up(i,kcr) = 10 * i38_labour_need(i,kcr);
 
 * update CES parameters
 i38_sh(i,kcr) = (pm_interest(t,i) * i38_capital_need(i,kcr)**(1 + s38_ep)) / (pm_interest(t,i) * i38_capital_need(i,kcr)**(1 + s38_ep)  + s38_wage * i38_labour_need(i,kcr)**(1 + s38_ep)) ; 
-* i38_scale = A
-* A = 1 / ([sh*K**(-ep) + (1 - sh)*(cc * L)**(-ep)]**(-1/ep))
 i38_scale(i,kcr) = 1/([i38_sh(i,kcr) * i38_capital_need(i,kcr)**(-s38_ep) + (1 - i38_sh(i,kcr)) * i38_labour_need(i,kcr)**(-s38_ep)]**(-1/s38_ep));
 
 p38_croparea_start(j,kcr) = sum(w, fm_croparea("y1995",j,w,kcr));

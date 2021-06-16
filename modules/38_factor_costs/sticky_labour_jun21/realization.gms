@@ -7,10 +7,11 @@
 
 *' @description The main goal of this realization is to improve crop patterns at different spatial
 *' scales. Specifically, the goal is reached by reducing capital relocation flexibility between
-*' crop types. In the "sticky" realization, the factor costs are separated into variable and
+*' crop types. In the "sticky" realization, the factor costs are separated into labour and
 *' capital investment costs. Then, capital is furtherly divided into immobile and mobile, where
 *' mobility is defined between crops. In this way, changes in cropland are favored in locations
-*' with existing capital stocks.
+*' with existing capital stocks. This realization includes a CES production function, which   
+*' accounts for labour productivity from the labour productivity module [37_labor_prod].
 
 *' @limitations This realization assumes that factor costs, within a region,
 *' purely depend on the production and are independent of the area under cultivation.

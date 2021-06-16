@@ -14,8 +14,10 @@ s38_depreciation_rate depreciation rate (share of costs)  / 0.05 /
 s38_immobile  immobile capital (share) / 1 /
 *' Initial management intensity
 s38_mi_start global management intensity in 1995 /0.47/
-s38_wage blub / 1 /
-s38_es blub / 0.3 /
+* Note: Wage for labour is needed for the CES function. 
+* The actual value does not matter because it cancels out.
+s38_wage Wage for labour in CES function (USD05MER per hour) / 1 /
+s38_es Elasticity of substitution in CES function (1) / 0.3 /
 ;
 
 parameter f38_fac_req(kcr) Factor requirement costs in 2005 (USD05MER per tDM)
