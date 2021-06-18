@@ -67,7 +67,19 @@ im_pollutant_prices(t_all,i,pollutants)$(m_year(t_all) >= s56_ghgprice_start+20)
 im_pollutant_prices(t_all,i,pollutants)$(s56_ghgprice_devstate_scaling = 1) = im_pollutant_prices(t_all,i,pollutants)*im_development_state(t_all,i);
 
 ***GHG emission policy
-p56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("%c56_emis_policy%",pollutants,emis_source);
+if ("%c56_lu_spa%" == "SPA2",
+ loop (t,
+  if (t < 2050,
+	p56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("redd+_nosoil",pollutants,emis_source);
+	s56_c_price_induced_aff = 0;
+  else 
+	p56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("%c56_emis_policy%",pollutants,emis_source);
+	s56_c_price_induced_aff = 1;
+  	);
+  );
+else 
+ p56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("%c56_emis_policy%",pollutants,emis_source);
+); 
 
 *reward neg emissions depending on s56_reward_neg_emis
 v56_emission_costs_cell_oneoff.lo(j2,emis_cell_one56) = s56_reward_neg_emis;
