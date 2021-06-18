@@ -1,24 +1,17 @@
-*** |  (C) 2008-2020 Potsdam Institute for Climate Impact Research (PIK)
+*** |  (C) 2008-2021 Potsdam Institute for Climate Impact Research (PIK)
 *** |  authors, and contributors see CITATION.cff file. This file is part
 *** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 *** |  AGPL-3.0, you are granted additional permissions described in the
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-*' @description This 'mixed' realization specifies factors costs to depend on
-*' area harvested and agricultural land use intensity and corresponding average
-*' production volumes. with total factor costs being reduced by climate change
-*' effects from Orlov 2020.
-*' Consequently, factor costs in this realization react on both: area under
-*' production and average productivity of a region as captured by the $\tau$
-*' factor. A detailed description of the approach can be found
-*' in @dietrich_forecasting_2014 with background information about the used
-*' intensity measure in @dietrich_measuring_2012.
+*' @description This realization accounts for climate change impacts on 
+*' labour productivity, based on ESM experiments from the LAMACLIMA project <https://climateanalytics.org/projects/lamaclima/>.
+*' In addition, land management (irrigation, afforestation, wood harvesting)
+*' can be employed as adaptation measure to minimize negative impacts
+*' on labour productivity.
 *'
-*' @limitations This realization assumes that factor costs only depend on area
-*' and average productivity of a region. Productivity differences within a
-*' region are ignored. Therefore, cases in which the cellular productivity
-*' levels affect factors costs are only partially accounted for.
+*' @limitations no known limitations
 
 
 *####################### R SECTION START (PHASES) ##############################

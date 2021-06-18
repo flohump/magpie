@@ -13,7 +13,7 @@
 *' The efficiency of labour is affected by the labour productivity factor `vm_labor_prod`, which is  
 *' provided by the labour productivity module [37_labor_prod].
 *' The calculation of total capital and labour costs is covered by the equations `q38_cost_prod_crop` and `q38_cost_prod_inv`.
-*' The conceptual and analytical details of the CES function including the labour productivity factor are documented in @CES.
+*' The conceptual and analytical details of the CES function including the labour productivity factor are documented in @orlov_ces_2021.
 
  q38_ces_prodfun(j2,kcr) ..
   sum(cell(i2,j2), i38_scale(i2,kcr) * 

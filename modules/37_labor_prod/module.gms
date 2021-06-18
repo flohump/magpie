@@ -1,4 +1,4 @@
-*** |  (C) 2008-2020 Potsdam Institute for Climate Impact Research (PIK)
+*** |  (C) 2008-2021 Potsdam Institute for Climate Impact Research (PIK)
 *** |  authors, and contributors see CITATION.cff file. This file is part
 *** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 *** |  AGPL-3.0, you are granted additional permissions described in the
@@ -6,16 +6,13 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 
-*' @title Factor Costs
+*' @title Labour productivity
 
-*' @description This module is used to calculate factor costs of production in
-*' crop activities. The costs of factors of production included in this module
-*' are specifically of labor, capital, and energy and related costs. The costs
-*' are crop-specific, and pass to the the cost function in [11_costs].
-*' Thus, factor costs will contribute to and influence the choice of production
-*' pattern in the model.
+*' @description This module calculates a labour productivity factor (0-1), 
+*' which reflects the efficiency of labour under changing environmental conditions (1 = no change).
+*' The labour productivity factor is considered in selected realizations of the [38_factor_costs] module.
 
-*' @authors Jan Philipp Dietrich, Benjamin Bodirsky, Kristine Karstens, Edna J. Molina Bacca
+*' @authors Florian Humpenöder, Michael Windisch
 
 
 *###################### R SECTION START (MODULETYPES) ##########################
