@@ -69,7 +69,7 @@ im_pollutant_prices(t_all,i,pollutants)$(s56_ghgprice_devstate_scaling = 1) = im
 ***GHG emission policy
 $ifthen "%c56_lu_spa%" == "SPA2"
  loop (t,
-  if (t < 2050,
+  if (m_year(t) < 2050,
 	p56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("redd+_nosoil",pollutants,emis_source);
 	s56_c_price_induced_aff = 0;
   else 
