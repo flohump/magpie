@@ -41,7 +41,7 @@ cfg$gms$s58_rewetting_switch  <- Inf
 cfg$output <- c("rds_report")
 #download_and_update(cfg)
 
-prefix <- "LU01"
+prefix <- "LU02"
 
 
 source("scripts/start/extra/lpjml_addon.R")
