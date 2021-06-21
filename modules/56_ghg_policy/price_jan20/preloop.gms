@@ -70,15 +70,16 @@ im_pollutant_prices(t_all,i,pollutants)$(s56_ghgprice_devstate_scaling = 1) = im
 $ifthen "%c56_lu_spa%" == "SPA2"
  loop (t,
   if (m_year(t) < 2050,
-	p56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("redd+_nosoil",pollutants,emis_source);
-	s56_c_price_induced_aff = 0;
+	i56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("redd+_nosoil",pollutants,emis_source);
+	i56_c_price_induced_aff(t) = 0;
   else 
-	p56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("%c56_emis_policy%",pollutants,emis_source);
-	s56_c_price_induced_aff = 1;
+	i56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("%c56_emis_policy%",pollutants,emis_source);
+	i56_c_price_induced_aff(t) = s56_c_price_induced_aff;
   	);
   );
 $else
- p56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("%c56_emis_policy%",pollutants,emis_source);
+ i56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("%c56_emis_policy%",pollutants,emis_source);
+ i56_c_price_induced_aff(t) = s56_c_price_induced_aff;
 $endif 
 
 *reward neg emissions depending on s56_reward_neg_emis

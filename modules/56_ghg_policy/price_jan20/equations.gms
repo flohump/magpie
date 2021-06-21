@@ -43,7 +43,7 @@ q56_cell_to_reg(i2,pollutants,emis_source) ..
                  v56_emission_costs_reg_yearly(i2,emis_reg_yr56) =e=
                  sum(pollutants,
                      vm_emissions_reg(i2,emis_reg_yr56,pollutants) *
-                     sum(ct, p56_emis_policy(ct,i2,pollutants,emis_reg_yr56) *
+                     sum(ct, i56_emis_policy(ct,i2,pollutants,emis_reg_yr56) *
                      im_pollutant_prices(ct,i2,pollutants)));
 
 
@@ -51,7 +51,7 @@ q56_cell_to_reg(i2,pollutants,emis_source) ..
                  v56_emission_costs_cell_yearly(j2,emis_cell_yr56) =e=
                  sum(pollutants,
                      v56_emis_cell(j2,emis_cell_yr56,pollutants) *
-                     sum((ct,cell(i2,j2)), p56_emis_policy(ct,i2,pollutants,emis_cell_yr56) *
+                     sum((ct,cell(i2,j2)), i56_emis_policy(ct,i2,pollutants,emis_cell_yr56) *
                      im_pollutant_prices(ct,i2,pollutants)));
 
 *' As MAgPIE is a recursive dynamic model, within the optimization of the current time step it does not account for benefits or costs in future time steps.
@@ -70,7 +70,7 @@ q56_cell_to_reg(i2,pollutants,emis_source) ..
                      vm_emissions_reg(i2,emis_reg_one56,pollutants)
                      * m_timestep_length
                      * sum(ct,
-                      p56_emis_policy(ct,i2,pollutants,emis_reg_one56)
+                      i56_emis_policy(ct,i2,pollutants,emis_reg_one56)
                       * im_pollutant_prices(ct,i2,pollutants)
                       * pm_interest(ct,i2)/(1+pm_interest(ct,i2)))
                  );
@@ -81,7 +81,7 @@ q56_cell_to_reg(i2,pollutants,emis_source) ..
                      v56_emis_cell(j2,emis_cell_one56,pollutants)
                      * m_timestep_length
                      * sum((ct,cell(i2,j2)),
-                    	p56_emis_policy(ct,i2,pollutants,emis_cell_one56)
+                    	i56_emis_policy(ct,i2,pollutants,emis_cell_one56)
                          * im_pollutant_prices(ct,i2,pollutants)
                          * pm_interest(ct,i2)/(1+pm_interest(ct,i2)))
                  );
@@ -110,7 +110,7 @@ q56_cell_to_reg(i2,pollutants,emis_source) ..
 
  q56_reward_cdr_aff(j2) ..
                  v56_reward_cdr_aff(j2) =e=
-            	 s56_c_price_induced_aff*
+            	 sum(ct, i56_c_price_induced_aff(ct))*
             	 sum(ac,
             	 (sum(aff_effect,(1-s56_buffer_aff)*vm_cdr_aff(j2,ac,aff_effect)) * sum((cell(i2,j2),ct), p56_c_price_aff(ct,i2,ac)))
             	 / ((1+sum((cell(i2,j2),ct),pm_interest(ct,i2)))**(ac.off*5)))
