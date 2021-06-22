@@ -41,10 +41,12 @@ cfg$gms$s58_rewetting_switch  <- Inf
 cfg$output <- c("rds_report")
 #download_and_update(cfg)
 
-prefix <- "INF04"
+prefix <- "INF05"
 
 
 source("scripts/start/extra/lpjml_addon.R")
+cfg$gms$c52_carbon_scenario  <- "nocc"
+cfg$gms$c59_som_scenario  <- "nocc"
 #cfg$gms$land <- "feb15"
 #cfg$gms$crop    <- "endo_jun13"
 cfg$results_folder <- "output/:title:"
