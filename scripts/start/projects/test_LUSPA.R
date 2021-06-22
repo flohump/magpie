@@ -41,7 +41,7 @@ cfg$gms$s58_rewetting_switch  <- Inf
 cfg$output <- c("rds_report")
 #download_and_update(cfg)
 
-prefix <- "INF06"
+prefix <- "LU03"
 
 
 source("scripts/start/extra/lpjml_addon.R")
@@ -91,6 +91,7 @@ cfg$output <- c("rds_report")
 
 cfg$title <- paste(prefix,"SSP5","1p5deg","SPA5",sep="_")
 cfg <- setScenario(cfg,c("SSP5","NDC"))
-cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
-cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
+cfg$gms$c60_biodem_level <- 1 #otherwise infeasible
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP5-PkBudg900"
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP5-PkBudg900"
 start_run(cfg,codeCheck=FALSE)
