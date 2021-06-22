@@ -35,4 +35,6 @@ cfg$gms$crop                         <- "endo_apr21"
 cfg$gms$factor_costs                 <- "sticky_feb18"
 cfg$gms$c41_initial_irrigation_area  <- "LUH2v2"
 cfg                                  <- setScenario(cfg,"cc")
+cfg$gms$c52_carbon_scenario  <- "nocc"
+cfg$gms$c59_som_scenario  <- "nocc"
 
