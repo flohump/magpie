@@ -5,16 +5,18 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
+i37_labor_prod_cc(t,j) = f37_labor_prod_cc(t,j,"CTL_ISO_400_ensmean");
+
 $ifthen "%c37_labour_switch%" == "nocc"
-loop(t_all,
- if(m_year(t_all) >= sm_fix_SSP2,
-f37_labor_prod_cc(t_all,j) = f37_labor_prod_cc("y2020",j);
+loop(t,
+ if(m_year(t) >= sm_fix_SSP2,
+i37_labor_prod_cc(t,j) = i37_labor_prod_cc("y2020",j);
  );
 );
 $endif
 
 vm_labor_prod.lo(j) = 0.0001;
-vm_labor_prod.l(j) = f37_labor_prod_cc("y1995",j);
+vm_labor_prod.l(j) = i37_labor_prod_cc("y1995",j);
 vm_labor_prod.up(j) = 1;
 v37_adapt_irr.lo(j) = -1;
 v37_adapt_irr.up(j) = 1;
@@ -23,4 +25,4 @@ v37_adapt_fore.up(j) = 1;
 v37_adapt_harv.lo(j) = -1;
 v37_adapt_harv.up(j) = 1;
 
-display f37_labor_prod_cc;
+*display f37_labor_prod_cc;

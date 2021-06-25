@@ -8,14 +8,13 @@
 $setglobal c37_labour_switch  cc
 
 scalars
-s37_adapt_irr blub / 1 /
-s37_adapt_fore blub / 1 /
-s37_adapt_harv blub / 1 /
+s37_adapt_irr blub / 0 /
+s37_adapt_fore blub / 0 /
+s37_adapt_harv blub / 0 /
 ;
 
-parameter f37_labor_prod_cc(t_all,j) LAMACLIMA yield reduction
-/
+table f37_labor_prod_cc(t_all,j,labour_scen37) Labour productivity (1)
 $ondelim
-$include "./modules/37_labor_prod/on/input/f38_labour_impact.cs2"
+$include "./modules/37_labor_prod/on/input/f37_labourprodimpact.cs3"
 $offdelim
-/;
+;

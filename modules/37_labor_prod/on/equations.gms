@@ -16,7 +16,7 @@
 * And irrigation might be stopped if vm_labor_prod=1, in places that would be irrigated in the absence of q37_labor_prod.
 
  q37_labor_prod(j2) ..
-  vm_labor_prod(j2) =l= sum(ct, f37_labor_prod_cc(ct,j2)) + v37_adapt_irr(j2) + v37_adapt_fore(j2) + v37_adapt_harv(j2);
+  vm_labor_prod(j2) =l= sum(ct, i37_labor_prod_cc(ct,j2)) + v37_adapt_irr(j2) + v37_adapt_fore(j2) + v37_adapt_harv(j2);
 
 *labour prod impacts of irrigation; depends on irrigated cropland; irrigation == cooling
 *Dummy numbers (1-0.7) assume that irrigation has a beneficial effect on labor prod.
@@ -46,4 +46,5 @@
 *The expected adaptation effect is that the model will optimize the harvesting patterns such that v37_adapt_harv is maximized. 
 *In contrast to irr and fore, this effect depends on the harvested area, which is a flow variable. I.e. if there is no harvest, there is no detrimental effect.
  q37_adapt_harv(j2) ..
- v37_adapt_harv(j2) =e= (0.7-1)/sum(land, pcm_land(j2,land)) * (sum(ac_sub, vm_hvarea_forestry(j2,ac_sub) + vm_hvarea_secdforest(j2,ac_sub) + vm_hvarea_other(j2, ac_sub)) + vm_hvarea_primforest(j2)) * s37_adapt_harv2;
+ v37_adapt_harv(j2) =e= 0;
+* (0.7-1)/sum(land, pcm_land(j2,land)) * (sum(ac_sub, vm_hvarea_forestry(j2,ac_sub) + vm_hvarea_secdforest(j2,ac_sub) + vm_hvarea_other(j2, ac_sub)) + vm_hvarea_primforest(j2)) * s37_adapt_harv2;

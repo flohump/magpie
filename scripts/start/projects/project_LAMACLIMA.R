@@ -25,15 +25,24 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 source("scripts/start/extra/lpjml_addon.R")
+cfg$input <- c(cfg$input[grep("additional_data", cfg$input)],
+               "rev4.61labourprodtest_h12_magpie_debug.tgz",
+               "rev4.61labourprodtest_h12_42b44dcd_cellularmagpie_debug_c200_GFDL-ESM4-ssp370_lpjml-ab83aee4.tgz",
+               "rev4.61labourprodtest_h12_validation_debug.tgz",
+               "calibration_H12_newlpjml_bestcalib_fc-sticky-dynamic_crop-endoApr21-allM_20May21.tgz")
+cfg$gms$c52_carbon_scenario  <- "nocc"
+cfg$gms$c59_som_scenario  <- "nocc"
+
+cfg$gms$labor_prod <- "on"
 
 #cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "LAMA24"
-# cfg$gms$s80_optfile <- 1
-# cfg$gms$s80_maxiter <- 30
+prefix <- "LAMA25"
+cfg$gms$s80_optfile <- 1
+cfg$gms$s80_maxiter <- 30
 
 cfg$qos <- "priority"
 

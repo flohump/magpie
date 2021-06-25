@@ -5,6 +5,10 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
+parameters
+ i37_labor_prod_cc(t,j) blub
+;
+
 equations
  q37_labor_prod(j)			blub
  q37_adapt_irr(j)			blub

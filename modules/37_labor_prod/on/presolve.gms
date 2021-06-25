@@ -15,4 +15,4 @@ else
  s37_adapt_harv2 = s37_adapt_harv;
 );
 
-vm_labor_prod.l(j) = f37_labor_prod_cc(t,j);
+vm_labor_prod.l(j) = i37_labor_prod_cc(t,j);
