@@ -34,7 +34,8 @@ cfg$gms$c52_carbon_scenario  <- "nocc"
 cfg$gms$c59_som_scenario  <- "nocc"
 
 cfg$gms$labor_prod <- "on"
-
+cfg$gms$factor_costs <- "sticky_labour_jun21"
+cfg$force_replace <- TRUE
 #cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
