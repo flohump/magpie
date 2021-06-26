@@ -24,15 +24,15 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 source("scripts/start/extra/lpjml_addon.R")
-cfg$gms$c52_carbon_scenario  <- "nocc"
-cfg$gms$c59_som_scenario  <- "nocc"
+#cfg$gms$c52_carbon_scenario  <- "nocc"
+#cfg$gms$c59_som_scenario  <- "nocc"
 
 #cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation")
 
-prefix <- "VE25"
+prefix <- "VE26"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
