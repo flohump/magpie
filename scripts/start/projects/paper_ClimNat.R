@@ -6,7 +6,7 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ----------------------------------------------------------
-# description: VIVID
+# description: Paper Climate vs. Nature
 # ----------------------------------------------------------
 
 
@@ -32,7 +32,7 @@ cfg$gms$c59_som_scenario  <- "nocc"
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation")
 
-prefix <- "VE23"
+prefix <- "VE24"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
@@ -54,15 +54,17 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
       cfg$gms$s32_aff_bii_coeff <- 0
       cfg$gms$c44_price_bv_loss <- "p0"
       cfg$gms$c35_protect_scenario <- "WDPA"
+      cfg$gms$c30_set_aside_target <- "none"
       cfg$gms$s30_set_aside_shr <- 0
     } else if (pol == "Climate") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
       cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
       cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
-      cfg$gms$s32_aff_plantation <- 0
-      cfg$gms$s32_aff_bii_coeff <- 0
+      cfg$gms$s32_aff_plantation <- 1
+      cfg$gms$s32_aff_bii_coeff <- 1
       cfg$gms$c44_price_bv_loss <- "p0"
       cfg$gms$c35_protect_scenario <- "WDPA"
+      cfg$gms$c30_set_aside_target <- "none"
       cfg$gms$s30_set_aside_shr <- 0
     } else if (pol == "Nature") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
@@ -70,8 +72,9 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
       cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
-      cfg$gms$c44_price_bv_loss <- "p10_p10000"
+      cfg$gms$c44_price_bv_loss <- "p0" #"p10_p10000"
       cfg$gms$c35_protect_scenario <- "FF_BH"
+      cfg$gms$c30_set_aside_target <- "by2030"
       cfg$gms$s30_set_aside_shr <- 0.2
     } else if (pol == "Climate+Nature") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
@@ -79,8 +82,9 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
       cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
-      cfg$gms$c44_price_bv_loss <- "p10_p10000"
+      cfg$gms$c44_price_bv_loss <- "p0" #"p10_p10000"
       cfg$gms$c35_protect_scenario <- "FF_BH"
+      cfg$gms$c30_set_aside_target <- "by2030"
       cfg$gms$s30_set_aside_shr <- 0.2
     } else if (pol == "Climate+Nature_PlantAff") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
