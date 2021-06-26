@@ -24,6 +24,8 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 source("scripts/start/extra/lpjml_addon.R")
+cfg$gms$c52_carbon_scenario  <- "nocc"
+cfg$gms$c59_som_scenario  <- "nocc"
 
 #cfg$force_download <- TRUE
 
@@ -42,7 +44,7 @@ cfg$gms$s32_planing_horizon <- 50
 #cfg$gms$s56_ghgprice_phase_in <- 1
 
 #ref
-for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_PlantAff")) {
+for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
   for (ssp in c("SSP2","SDP")) {
     if (pol == "Ref") {
       cfg <- setScenario(cfg,c(ssp,"NPI"))
@@ -57,8 +59,8 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature","Climate+Nature_PlantAff
       cfg <- setScenario(cfg,c(ssp,"NDC"))
       cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
       cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
-      cfg$gms$s32_aff_plantation <- 1
-      cfg$gms$s32_aff_bii_coeff <- 1
+      cfg$gms$s32_aff_plantation <- 0
+      cfg$gms$s32_aff_bii_coeff <- 0
       cfg$gms$c44_price_bv_loss <- "p0"
       #    cfg$gms$c35_protect_scenario <- "WDPA"
       cfg$gms$s30_set_aside_shr <- 0
