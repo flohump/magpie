@@ -45,7 +45,7 @@ cfg$gms$s32_planing_horizon <- 50
 
 #ref
 for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
-  for (ssp in c("SSP2","SDP")) {
+  for (ssp in c("SSP2")) {
     if (pol == "Ref") {
       cfg <- setScenario(cfg,c(ssp,"NPI"))
       cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-NPi"
@@ -53,7 +53,7 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
       cfg$gms$c44_price_bv_loss <- "p0"
-      #    cfg$gms$c35_protect_scenario <- "WDPA"
+      cfg$gms$c35_protect_scenario <- "WDPA"
       cfg$gms$s30_set_aside_shr <- 0
     } else if (pol == "Climate") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
@@ -62,7 +62,7 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
       cfg$gms$c44_price_bv_loss <- "p0"
-      #    cfg$gms$c35_protect_scenario <- "WDPA"
+      cfg$gms$c35_protect_scenario <- "WDPA"
       cfg$gms$s30_set_aside_shr <- 0
     } else if (pol == "Nature") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
@@ -70,7 +70,7 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
       cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
-      #    cfg$gms$c44_price_bv_loss <- "p10_p10000"
+      cfg$gms$c44_price_bv_loss <- "p10_p10000"
       cfg$gms$c35_protect_scenario <- "FF_BH"
       cfg$gms$s30_set_aside_shr <- 0.2
     } else if (pol == "Climate+Nature") {
@@ -79,7 +79,7 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
       cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
-      #    cfg$gms$c44_price_bv_loss <- "p10_p10000"
+      cfg$gms$c44_price_bv_loss <- "p10_p10000"
       cfg$gms$c35_protect_scenario <- "FF_BH"
       cfg$gms$s30_set_aside_shr <- 0.2
     } else if (pol == "Climate+Nature_PlantAff") {
