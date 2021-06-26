@@ -72,7 +72,7 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
       cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
-      cfg$gms$c44_price_bv_loss <- "p0" #"p10_p10000"
+      cfg$gms$c44_price_bv_loss <- "p10" #"p10_p10000"
       cfg$gms$c35_protect_scenario <- "FF_BH"
       cfg$gms$c30_set_aside_target <- "by2030"
       cfg$gms$s30_set_aside_shr <- 0.2
@@ -82,7 +82,7 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
       cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
-      cfg$gms$c44_price_bv_loss <- "p0" #"p10_p10000"
+      cfg$gms$c44_price_bv_loss <- "p10" #"p10_p10000"
       cfg$gms$c35_protect_scenario <- "FF_BH"
       cfg$gms$c30_set_aside_target <- "by2030"
       cfg$gms$s30_set_aside_shr <- 0.2
