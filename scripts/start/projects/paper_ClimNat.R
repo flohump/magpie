@@ -47,10 +47,10 @@ cfg$gms$s32_planing_horizon <- 50
 for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
   for (ssp in c("SSP2")) {
     if (pol == "Ref") {
-      cfg <- setScenario(cfg,c(ssp,"NDC"))
-      cfg$input[grep("cellularmagpie", cfg$input)] <- "rev4.62_h12_8c3f3f51_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-ab83aee4.tgz"
-      cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NDC" #"R21M42-SSP2-NPi"
-      cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NDC" #"R21M42-SSP2-NPi"
+      cfg <- setScenario(cfg,c(ssp,"NPI"))
+      cfg$input[grep("cellularmagpie", cfg$input)] <- "rev4.62_h12_6f938f85_cellularmagpie_c200_MRI-ESM2-0-ssp460_lpjml-ab83aee4.tgz"
+      cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-NPi"
+      cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-NPi"
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
       cfg$gms$c44_price_bv_loss <- "p0"
@@ -60,8 +60,8 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
     } else if (pol == "Climate") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
       cfg$input[grep("cellularmagpie", cfg$input)] <- "rev4.62_h12_57347947_cellularmagpie_c200_MRI-ESM2-0-ssp119_lpjml-ab83aee4.tgz"
-      cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600" #"R21M42-SSP2-PkBudg900"
-      cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-Budg600" #"R21M42-SSP2-PkBudg900"
+      cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
+      cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
       cfg$gms$s32_aff_plantation <- 1
       cfg$gms$s32_aff_bii_coeff <- 1
       cfg$gms$c44_price_bv_loss <- "p0"
@@ -71,8 +71,8 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
     } else if (pol == "Nature") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
       cfg$input[grep("cellularmagpie", cfg$input)] <- "rev4.62_h12_38595bea_cellularmagpie_c200_MRI-ESM2-0-ssp126_lpjml-ab83aee4.tgz"
-      cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NDC" #"R2M41-SSP2-NPi"
-      cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NDC" #"R2M41-SSP2-NPi"
+      cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NPi"
+      cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
       cfg$gms$c44_price_bv_loss <- "p3000" #"p10_p10000"
@@ -82,8 +82,8 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
     } else if (pol == "Climate+Nature") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
       cfg$input[grep("cellularmagpie", cfg$input)] <- "rev4.62_h12_38595bea_cellularmagpie_c200_MRI-ESM2-0-ssp126_lpjml-ab83aee4.tgz"
-      cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-Budg600" #"R21M42-SSP2-PkBudg900"
-      cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NDC" #"R21M42-SSP2-NPi"
+      cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
+      cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-NPi"
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
       cfg$gms$c44_price_bv_loss <- "p3000" #"p10_p10000"
