@@ -32,7 +32,7 @@ source("scripts/start/extra/lpjml_addon.R")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation")
 
-prefix <- "CN04"
+prefix <- "CN05"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
@@ -70,7 +70,7 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
       cfg$gms$s30_set_aside_shr <- 0
     } else if (pol == "Nature") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
-      cfg$input[grep("cellularmagpie", cfg$input)] <- "rev4.62_h12_57347947_cellularmagpie_c200_MRI-ESM2-0-ssp119_lpjml-ab83aee4.tgz"
+      cfg$input[grep("cellularmagpie", cfg$input)] <- "rev4.62_h12_6f938f85_cellularmagpie_c200_MRI-ESM2-0-ssp460_lpjml-ab83aee4.tgz"
       cfg$gms$c56_pollutant_prices <- "R2M41-SSP2-NPi"
       cfg$gms$c60_2ndgen_biodem <- "R2M41-SSP2-NPi"
       cfg$gms$s32_aff_plantation <- 0
