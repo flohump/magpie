@@ -9,7 +9,7 @@ i37_labor_prod_cc(t,j) = f37_labor_prod_cc(t,j,"CTL_ISO_400_ensmean");
 
 i37_labor_prod_cc(t,j)$(i37_labor_prod_cc(t,j) = 0) = 1;
 
-i37_labor_prod_cc(t,j) = i37_labor_prod_cc(t,j)*0.1;
+i37_labor_prod_cc(t,j) = i37_labor_prod_cc(t,j)*0.5;
 
 $ifthen "%c37_labour_switch%" == "nocc"
 loop(t,
