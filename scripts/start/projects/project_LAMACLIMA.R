@@ -34,7 +34,7 @@ cfg$gms$c52_carbon_scenario  <- "nocc"
 cfg$gms$c59_som_scenario  <- "nocc"
 
 cfg$gms$labor_prod <- "on"
-cfg$gms$factor_costs <- "sticky_labour_jun21"
+cfg$gms$factor_costs <- "sticky_labour_jul21"
 cfg$force_replace <- TRUE
 #cfg$force_download <- TRUE
 
@@ -44,9 +44,9 @@ cfg$output <- c("rds_report","extra/disaggregation_transitions")
 #28: labour prod*0.5
 #29: labour prod*0.5
 #30: labour prod*1
+#31 labour prod*1 + sticky_labour_jul21
 
-
-prefix <- "LAMA30"
+prefix <- "LAMA31"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
