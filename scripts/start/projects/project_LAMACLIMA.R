@@ -39,7 +39,7 @@ cfg$force_replace <- TRUE
 #cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
-cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
+cfg$output <- c("rds_report","extra/disaggregation_transitions")
 
 #28: labour prod*0.5
 

@@ -6,120 +6,96 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # --------------------------------------------------------------
-# description: Interpolates land transitions to 0.5 degree resolution
+# description: Interpolates land pools to 0.5 degree resolution
 # comparison script: FALSE
 # ---------------------------------------------------------------
-
-#Version 1.00 - Florian Humpenoeder
 
 library(lucode2)
 library(magpie4)
 library(luscale)
 library(madrat)
 
-############################# BASIC CONFIGURATION #######################################
-land_lr_file     <- "avl_land_t.cs3"
-land_hr_file     <- "avl_land_t_0.5.mz"
-land_hr_out_file           <- "cell.land_transitions_0.5.mz"
-land_hr_share_out_file     <- "cell.land_transitions_0.5_share.mz"
-
-prev_year        <- "y1985"            #timestep before calculations in MAgPIE
-in_folder        <- "modules/10_land/input"
-
+############################# BASIC CONFIGURATION ##############################
 if(!exists("source_include")) {
-  sum_spam_file    <- "0.5-to-n200_sum.spam"
-  title       <- "base_run"
-  outputdir       <- "output/SSP2_Ref_c200"
-
-  ###Define arguments that can be read from command line
-  readArgs("sum_spam_file","outputdir","title")
+  outputdir <- "output/LAMA24_Sustainability/"
+  readArgs("outputdir")
 }
-#########################################################################################
+map_file                   <- Sys.glob(path(outputdir, "clustermap_*.rds"))
+gdx                        <- path(outputdir,"fulldata.gdx")
+land_hr_file               <- path(outputdir,"avl_land_t_0.5.mz")
+land_hr_out_file           <- path(outputdir,"cell.land_0.5.mz")
+land_hr_share_out_file     <- path(outputdir,"cell.land_0.5_share.mz")
+land_trans_hr_out_file        <- path(outputdir,"cell.land_transitions_0.5.mz")
+land_trans_hr_share_out_file  <- path(outputdir,"cell.land_transitions_0.5_share.mz")
 
 load(paste0(outputdir, "/config.Rdata"))
-title <- cfg$title
-print(title)
+################################################################################
 
-# Function to extract information from info.txt
-get_info <- function(file, grep_expression, sep, pattern="", replacement="") {
-  if(!file.exists(file)) return("#MISSING#")
-  file <- readLines(file, warn=FALSE)
-  tmp <- grep(grep_expression, file, value=TRUE)
-  tmp <- strsplit(tmp, sep)
-  tmp <- sapply(tmp, "[[", 2)
-  tmp <- gsub(pattern, replacement ,tmp)
-  if(all(!is.na(as.logical(tmp)))) return(as.vector(sapply(tmp, as.logical)))
-  if (all(!(regexpr("[a-zA-Z]",tmp) > 0))) {
-    tmp <- as.numeric(tmp)
-  }
-  return(tmp)
+if(length(map_file)==0) stop("Could not find map file!")
+if(length(map_file)>1) {
+  warning("More than one map file found. First occurrence will be used!")
+  map_file <- map_file[1]
 }
-low_res       <- get_info(paste0(outputdir,"/info.txt"),"^\\* Output ?resolution:",": ")
-sum_spam_file <- paste0("0.5-to-",low_res,"_sum.spam")
-print(sum_spam_file)
-
-### Land Stock
-
+### Land STATES
 # Load input data
-gdx          <- path(outputdir,"fulldata.gdx")
-land_ini_lr  <- readGDX(gdx,"f10_land","f_land", format="first_found")[,"y1995",]
-land_lr      <- land(gdx,sum=FALSE,level="cell")
-land_ini_hr  <- read.magpie(path(in_folder,land_hr_file))[,"y1995",]
-land_ini_hr  <- land_ini_hr[,,getNames(land_lr)]
-if(any(land_ini_hr < 0)) {
-  warning(paste0("Negative values in inital high resolution dataset detected and set to 0. Check the file ",land_hr_file))
-  land_ini_hr[which(land_ini_hr < 0,arr.ind = T)] <- 0
+land_lr   <- land(gdx,sum=FALSE,level="cell")
+land_ini  <- setYears(read.magpie(land_hr_file)[,"y1995",],NULL)
+land_ini  <- land_ini[,,getNames(land_lr)]
+if(any(land_ini < 0)) {
+  warning(paste0("Negative values in inital high resolution dataset ",
+                 "detected and set to 0. Check the file ",land_hr_file))
+  land_ini[which(land_ini < 0,arr.ind = T)] <- 0
 }
 
 # Start interpolation (use interpolate from luscale)
-print("Disaggregation Land Stock")
-land_hr <- interpolate( x          = land_lr,
-                        x_ini_lr   = land_ini_lr,
-                        x_ini_hr   = land_ini_hr,
-                        spam       = path(outputdir,sum_spam_file),
-                        prev_year  = prev_year)
+message("Disaggregation")
+land_hr <- luscale::interpolate2(x     = land_lr,
+                                 x_ini = land_ini,
+                                 map   = map_file)
 land_hr  <- land_hr[,-1,]
 
-### Land Tranitions
+### Land Transitions
 
-# prepare input data
-CountryToCell   <- toolGetMapping("CountryToCellMapping.csv", type = "cell")
-land_lr <- readGDX(gdx,"ov10_lu_transitions",select = list(type="level"),react = "silent")
-if(is.null(land_lr)) stop("No land transitions available in GDX file")
-land_ini_hr <- new.magpie(CountryToCell$cell,NULL,getNames(land_lr),fill = 0)
-x  <- read.magpie(path(in_folder,land_hr_file))[,"y1995",]
-x  <- x[,,getNames(land_lr,dim=1)]
-for (i in getNames(land_lr,dim=1)) {
-  land_ini_hr[,,paste(i,i,sep=".")] <- x[,,i]  
+# read lr land transitions
+land_trans_lr <- readGDX(gdx,"ov10_lu_transitions",select = list(type="level"),react = "silent")
+if(is.null(land_trans_lr)) stop("No land transitions available in GDX file")
+# create hr land transitions object
+land_trans_ini <- new.magpie(getCells(land_ini),NULL,getNames(land_trans_lr),fill = 0)
+# fill states of hr land transitions object based on land_ini
+for (i in getNames(land_trans_lr,dim=1)) {
+  land_trans_ini[,,paste(i,i,sep=".")] <- land_ini[,,i]  
 }
-land_ini_lr <- speed_aggregate(land_ini_hr,path(outputdir,sum_spam_file))
-getCells(land_ini_lr) <- getCells(land_lr)
 
 # Interpolate Transitions
 print("Disaggregation Land Transitions")
-land_trans_hr <- interpolate( x          = land_lr,
-                        x_ini_lr   = land_ini_lr,
-                        x_ini_hr   = land_ini_hr,
-                        spam       = path(outputdir,sum_spam_file),
-                        prev_year  = prev_year)
+land_trans_hr <- interpolate2(x          = land_trans_lr,
+                              x_ini      = land_trans_ini,
+                              map   = map_file)
 land_trans_hr  <- land_trans_hr[,-1,]
 
 # Test
 test <- dimSums(land_trans_hr,dim=3.1) - land_hr
-if(max(test)>0.1||min(test)< -0.1) warning("Sum over land transitions and land stock differ, but should be equal!")
+if(max(test)>0.2||min(test)< -0.2) warning("Sum over land transitions and land stock differ, but should be equal!")
 #dimSums(land_hr[1,,],dim=c(1))[,,"crop"]
 #dimSums(land_trans_hr[1,,],dim=c(1,3.1))[,,"crop"]
 
+
 # Write outputs
 
-print("Write outputs cell.land")
-# write landpool
-write.magpie(land_trans_hr,path(outputdir,paste(land_hr_out_file,sep="_")),comment="unit: Mha per grid-cell")
-write.magpie(land_trans_hr,path(outputdir,paste(sub(".mz",".nc",land_hr_out_file),sep="_")),comment="unit: Mha per grid-cell", verbose=FALSE)
 
-print("Write outputs cell.land_share")
-# calculate share of land pools in terms of tatal cell size
-land_trans_hr_shr <- land_trans_hr/dimSums(land_trans_hr,dim=3)
-# write landpool shares
-write.magpie(land_trans_hr_shr,path(outputdir,paste(land_hr_share_out_file,sep="_")),comment="unit: grid-cell land area fraction")
-write.magpie(land_trans_hr_shr,path(outputdir,paste(sub(".mz",".nc",land_hr_share_out_file),sep="_")),comment="unit: grid-cell land area fraction", verbose=FALSE)
+.tmpwrite <- function(x,file,comment,message) {
+  write.magpie(x, file, comment=comment)
+  write.magpie(x, sub(".mz",".nc",file), comment=comment, verbose=FALSE)
+}
+
+.tmpwrite(land_hr, land_hr_out_file, comment="unit: Mha per grid-cell",
+          message="Write outputs cell.land")
+.tmpwrite(land_hr/dimSums(land_hr,dim=3), land_hr_share_out_file,
+          comment="unit: grid-cell land area fraction",
+          message="Write outputs cell.land_share")
+
+.tmpwrite(land_trans_hr, land_trans_hr_out_file, comment="unit: Mha per grid-cell",
+          message="Write outputs cell.land")
+.tmpwrite(land_trans_hr/dimSums(land_trans_hr,dim=3), land_trans_hr_share_out_file,
+          comment="unit: grid-cell land area fraction",
+          message="Write outputs cell.land_share")
