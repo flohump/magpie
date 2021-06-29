@@ -41,9 +41,9 @@ cfg$force_replace <- TRUE
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "LAMA27"
+prefix <- "LAMA27NoCC"
 cfg$force_replace <- TRUE
-#cfg$gms$c37_labour_switch <- "nocc"
+cfg$gms$c37_labour_switch <- "nocc"
 
 cfg$gms$s80_optfile <- 1
 cfg$gms$s80_maxiter <- 30
