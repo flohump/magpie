@@ -41,9 +41,10 @@ cfg$force_replace <- TRUE
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation","extra/disaggregation_transitions")
 
-prefix <- "LAMA27NoCC"
+#28: labour prod*0.5
+
+prefix <- "LAMA28"
 cfg$force_replace <- TRUE
-cfg$gms$c37_labour_switch <- "nocc"
 
 cfg$gms$s80_optfile <- 1
 cfg$gms$s80_maxiter <- 30
@@ -54,8 +55,9 @@ cfg$qos <- "priority"
 #https://miro.com/app/board/o9J_lVys8js=/
 
 #Scenario 1, based on SDP
-cfg$title <- paste(prefix,"Sustainability",sep="_")
+cfg$title <- paste(prefix,"Sustainability","CC",sep="_")
 cfg <- setScenario(cfg,c("SDP","NDC","ForestryEndo"))
+cfg$gms$c37_labour_switch <- "cc"
 cfg$gms$c35_protect_scenario <- "FF_BH"
 cfg$gms$c35_protect_scenario_noselect <- "FF_BH"
 cfg$gms$policy_countries35  <- all_iso_countries
@@ -102,9 +104,15 @@ cfg$gms$scen_countries55  <- all_iso_countries
 cfg$gms$s42_irrig_eff_scenario <- 3
 start_run(cfg,codeCheck=FALSE)
 
+cfg$title <- paste(prefix,"Sustainability","noCC",sep="_")
+cfg$gms$c37_labour_switch <- "nocc"
+start_run(cfg,codeCheck=FALSE)
+
+
 #Scenario 2, based on SSP4
-cfg$title <- paste(prefix,"Inequality",sep="_")
+cfg$title <- paste(prefix,"Inequality","CC",sep="_")
 cfg <- setScenario(cfg,c("SSP4","NDC","ForestryEndo"))
+cfg$gms$c37_labour_switch <- "cc"
 cfg$gms$c35_protect_scenario <- "FF_BH"
 cfg$gms$c35_protect_scenario_noselect <- "WDPA"
 cfg$gms$policy_countries35  <- oecd_countries
@@ -151,9 +159,19 @@ cfg$gms$scen_countries55  <- oecd_countries
 cfg$gms$s42_irrig_eff_scenario <- 3
 start_run(cfg,codeCheck=FALSE)
 
-cfg$title <- paste(prefix,"Inequality_NatAff",sep="_")
+cfg$title <- paste(prefix,"Inequality","noCC",sep="_")
+cfg$gms$c37_labour_switch <- "nocc"
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"Inequality_NatAff","CC",sep="_")
+cfg$gms$c37_labour_switch <- "cc"
 cfg$gms$s32_aff_plantation <- 0
 cfg$gms$s32_aff_bii_coeff <- 0
 start_run(cfg,codeCheck=FALSE)
 
+cfg$title <- paste(prefix,"Inequality_NatAff","noCC",sep="_")
+cfg$gms$c37_labour_switch <- "nocc"
+cfg$gms$s32_aff_plantation <- 0
+cfg$gms$s32_aff_bii_coeff <- 0
+start_run(cfg,codeCheck=FALSE)
 
