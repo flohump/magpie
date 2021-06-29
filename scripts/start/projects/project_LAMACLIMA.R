@@ -43,8 +43,10 @@ cfg$output <- c("rds_report","extra/disaggregation_transitions")
 
 #28: labour prod*0.5
 #29: labour prod*0.5
+#30: labour prod*1
 
-prefix <- "LAMA29"
+
+prefix <- "LAMA30"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
