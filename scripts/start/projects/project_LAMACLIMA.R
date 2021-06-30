@@ -58,59 +58,59 @@ cfg$qos <- "priority"
 
 #https://miro.com/app/board/o9J_lVys8js=/
 
-# #Scenario 1, based on SDP
-# cfg$title <- paste(prefix,"Sustainability","CC",sep="_")
-# cfg <- setScenario(cfg,c("SDP","NDC","ForestryEndo"))
-# cfg$gms$c37_labour_switch <- "cc"
-# cfg$gms$c35_protect_scenario <- "FF_BH"
-# cfg$gms$c35_protect_scenario_noselect <- "FF_BH"
-# cfg$gms$policy_countries35  <- all_iso_countries
-# cfg$gms$s30_set_aside_shr <- 0.2
-# cfg$gms$s30_set_aside_shr_noselect <- 0.2
-# cfg$gms$c30_set_aside_target <- "by2030"
-# cfg$gms$policy_countries30 <- all_iso_countries
-# cfg$gms$c35_forest_damage_end <- "by2030"
-# #cfg$gms$s35_secdf_distribution <- 0
-# #1.5 degree policy
-# cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
-# cfg$gms$c56_pollutant_prices_noselect <- "R2M41-SSP2-NPi"
-# cfg$gms$policy_countries56  <- all_iso_countries
-# cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
-# #default food scenario
-# cfg$gms$c15_food_scenario <- "SSP1"
-# cfg$gms$c15_food_scenario_noselect <- "SSP1"
-# #exo diet and waste
-# cfg$gms$c15_exo_scen_targetyear <- "y2050"
-# cfg$gms$s15_exo_diet <- 1
-# cfg$gms$c15_EAT_scen <- "FLX"
-# cfg$gms$c15_kcal_scen <- "healthy_BMI"
-# cfg$gms$s15_exo_waste <- 1
-# cfg$gms$s15_waste_scen <- 1.2
-# cfg$gms$scen_countries15  <- all_iso_countries
-# #AFF
-# cfg$gms$s32_planing_horizon <- 50
-# cfg$gms$s32_aff_plantation <- 0
-# cfg$gms$s32_aff_bii_coeff <- 0
-# cfg$gms$s32_max_aff_area <- 500
-# cfg$gms$c32_aff_mask <- "noboreal"
-# #EFP
-# cfg$gms$c42_env_flow_policy <- "on"
-# cfg$gms$EFP_countries  <- all_iso_countries
-# #AWM
-# cfg$gms$c50_scen_neff <- "neff75_80_starty2010"
-# cfg$gms$c50_scen_neff_noselect <- "neff75_80_starty2010"
-# cfg$gms$cropneff_countries  <- all_iso_countries
-# #Fert
-# cfg$gms$c55_scen_conf <- "ssp1"
-# cfg$gms$c55_scen_conf_noselect <- "ssp1"
-# cfg$gms$scen_countries55  <- all_iso_countries
-# #irrig
-# cfg$gms$s42_irrig_eff_scenario <- 3
-# start_run(cfg,codeCheck=FALSE)
-# 
-# cfg$title <- paste(prefix,"Sustainability","noCC",sep="_")
-# cfg$gms$c37_labour_switch <- "nocc"
-# start_run(cfg,codeCheck=FALSE)
+#Scenario 1, based on SDP
+cfg$title <- paste(prefix,"Sustainability","CC",sep="_")
+cfg <- setScenario(cfg,c("SDP","NDC","ForestryEndo"))
+cfg$gms$c37_labour_switch <- "cc"
+cfg$gms$c35_protect_scenario <- "FF_BH"
+cfg$gms$c35_protect_scenario_noselect <- "FF_BH"
+cfg$gms$policy_countries35  <- all_iso_countries
+cfg$gms$s30_set_aside_shr <- 0.2
+cfg$gms$s30_set_aside_shr_noselect <- 0.2
+cfg$gms$c30_set_aside_target <- "by2030"
+cfg$gms$policy_countries30 <- all_iso_countries
+cfg$gms$c35_forest_damage_end <- "by2030"
+#cfg$gms$s35_secdf_distribution <- 0
+#1.5 degree policy
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
+cfg$gms$c56_pollutant_prices_noselect <- "R2M41-SSP2-NPi"
+cfg$gms$policy_countries56  <- all_iso_countries
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
+#default food scenario
+cfg$gms$c15_food_scenario <- "SSP1"
+cfg$gms$c15_food_scenario_noselect <- "SSP1"
+#exo diet and waste
+cfg$gms$c15_exo_scen_targetyear <- "y2050"
+cfg$gms$s15_exo_diet <- 1
+cfg$gms$c15_EAT_scen <- "FLX"
+cfg$gms$c15_kcal_scen <- "healthy_BMI"
+cfg$gms$s15_exo_waste <- 1
+cfg$gms$s15_waste_scen <- 1.2
+cfg$gms$scen_countries15  <- all_iso_countries
+#AFF
+cfg$gms$s32_planing_horizon <- 50
+cfg$gms$s32_aff_plantation <- 0
+cfg$gms$s32_aff_bii_coeff <- 0
+cfg$gms$s32_max_aff_area <- 500
+cfg$gms$c32_aff_mask <- "noboreal"
+#EFP
+cfg$gms$c42_env_flow_policy <- "on"
+cfg$gms$EFP_countries  <- all_iso_countries
+#AWM
+cfg$gms$c50_scen_neff <- "neff75_80_starty2010"
+cfg$gms$c50_scen_neff_noselect <- "neff75_80_starty2010"
+cfg$gms$cropneff_countries  <- all_iso_countries
+#Fert
+cfg$gms$c55_scen_conf <- "ssp1"
+cfg$gms$c55_scen_conf_noselect <- "ssp1"
+cfg$gms$scen_countries55  <- all_iso_countries
+#irrig
+cfg$gms$s42_irrig_eff_scenario <- 3
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"Sustainability","noCC",sep="_")
+cfg$gms$c37_labour_switch <- "nocc"
+start_run(cfg,codeCheck=FALSE)
 
 
 #Scenario 2, based on SSP4
