@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **39_landconversion** lower costs for expansion of forestry land
 - **58_peatland** Peatland area is initialized in 1995 based on levels for the year 2015, and hold fixed depending on `s58_fix_peatland`. This provides a better proxy for peatland area and associated GHG emissions for the historic period, which where assumed zero in previous versions.
 - **script** New standard for cluster to region mapping (rds-files) is used in all scripts. If old spam files are provided by input data, rds-mapping file is created.
+- **script** updated test run script
 - **inputs** Changed file format from cs2 to cs2b for cellular input files with a single data column
 
 ### added
@@ -40,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **32_foresty** BII coefficients for CO2 price driven afforestation
 - **32_foresty** growth curve CO2 price driven afforestation
 - **32_foresty** NPI/NDC afforestation infeasibility
+- **32_foresty** Correct distribution from LUH data to plantations and ndcs
 - **35_natveg** option to fade out damage from shifting agriculture by 2030
 - **44_biodiversity** ac0 included in pricing of biodiversity loss
 
