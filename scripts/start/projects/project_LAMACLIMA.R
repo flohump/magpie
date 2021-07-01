@@ -34,7 +34,7 @@ cfg$gms$c52_carbon_scenario  <- "nocc"
 cfg$gms$c59_som_scenario  <- "nocc"
 
 cfg$gms$labor_prod <- "on"
-cfg$gms$factor_costs <- "sticky_labour_jul21"
+cfg$gms$factor_costs <- "sticky_labour_jan21"
 cfg$force_replace <- TRUE
 #cfg$force_download <- TRUE
 
@@ -47,8 +47,9 @@ cfg$output <- c("rds_report","extra/disaggregation_transitions")
 #31 labour prod*1 + sticky_labour_jul21
 #32 labour prod*0.5 + sticky_labour_jul21
 #33 labour prod*0.5 + sticky_labour_jul21
+#34 labour prod*0.5 + sticky_labour_jan21
 
-prefix <- "LAMA33"
+prefix <- "LAMA34"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
@@ -107,11 +108,11 @@ cfg$gms$c55_scen_conf_noselect <- "ssp1"
 cfg$gms$scen_countries55  <- all_iso_countries
 #irrig
 cfg$gms$s42_irrig_eff_scenario <- 3
-start_run(cfg,codeCheck=FALSE)
+#start_run(cfg,codeCheck=FALSE)
 
 cfg$title <- paste(prefix,"Sustainability","noCC",sep="_")
 cfg$gms$c37_labour_switch <- "nocc"
-start_run(cfg,codeCheck=FALSE)
+#start_run(cfg,codeCheck=FALSE)
 
 
 #Scenario 2, based on SSP4
