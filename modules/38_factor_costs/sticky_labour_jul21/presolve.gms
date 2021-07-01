@@ -16,14 +16,18 @@ $ifthen "%c38_sticky_mode%" == "dynamic" p38_capital_cost_share(i) = f38_reg_par
 $endif
 );
 
+p38_capital_cost_share_save(t,i) = p38_capital_cost_share(i);
+
 *i38_capital_need(i,kcr,"mobile") = f38_fac_req(kcr) * p38_capital_cost_share(i) / (pm_interest(t,i)+s38_depreciation_rate) * (1-s38_immobile);
 *i38_capital_need(i,kcr,"immobile") = f38_fac_req(kcr)  * p38_capital_cost_share(i) / (pm_interest(t,i)+s38_depreciation_rate) * s38_immobile;
 i38_capital_need(j,kcr) = sum(cell(i,j), f38_fac_req(kcr) * p38_capital_cost_share(i) / (pm_interest(t,i)+s38_depreciation_rate));
 i38_labour_need(j,kcr) = sum(cell(i,j), (f38_fac_req(kcr) * (1-p38_capital_cost_share(i))) / s38_wage * (1-s38_mi_start));
+i38_labour_need_save(t,j,kcr) = i38_labour_need(j,kcr);
+i38_capital_need_save(t,j,kcr) = i38_capital_need(j,kcr);
 
-v38_capital_need.lo(j,kcr) = i38_capital_need(j,kcr);
-v38_capital_need.l(j,kcr) = i38_capital_need(j,kcr);
-v38_capital_need.up(j,kcr) = 10 * i38_capital_need(j,kcr);
+*v38_capital_need.lo(j,kcr) = i38_capital_need(j,kcr);
+v38_capital_need.fx(j,kcr) = i38_capital_need(j,kcr);
+*v38_capital_need.up(j,kcr) = 10 * i38_capital_need(j,kcr);
 
 v38_labour_need.lo(j,kcr) = i38_labour_need(j,kcr);
 v38_labour_need.l(j,kcr) = i38_labour_need(j,kcr);
@@ -32,6 +36,8 @@ v38_labour_need.up(j,kcr) = 10 * i38_labour_need(j,kcr);
 * update CES parameters
 i38_sh(j,kcr) = sum(cell(i,j), (pm_interest(t,i) * i38_capital_need(j,kcr)**(1 + s38_ep)) / (pm_interest(t,i) * i38_capital_need(j,kcr)**(1 + s38_ep)  + s38_wage * i38_labour_need(j,kcr)**(1 + s38_ep))) ; 
 i38_scale(j,kcr) = 1/([i38_sh(j,kcr) * i38_capital_need(j,kcr)**(-s38_ep) + (1 - i38_sh(j,kcr)) * i38_labour_need(j,kcr)**(-s38_ep)]**(-1/s38_ep));
+i38_sh_save(t,j,kcr) = i38_sh(j,kcr);
+i38_scale_save(t,j,kcr) = i38_scale(j,kcr);
 
 p38_croparea_start(j,kcr) = sum(w, fm_croparea("y1995",j,w,kcr));
 

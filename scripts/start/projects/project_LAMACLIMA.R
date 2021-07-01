@@ -25,13 +25,13 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 source("scripts/start/extra/lpjml_addon.R")
-cfg$input <- c(cfg$input[grep("additional_data", cfg$input)],
-               "rev4.61labourprodtest_h12_magpie_debug.tgz",
-               "rev4.61labourprodtest_h12_42b44dcd_cellularmagpie_debug_c200_GFDL-ESM4-ssp370_lpjml-ab83aee4.tgz",
-               "rev4.61labourprodtest_h12_validation_debug.tgz",
-               "calibration_H12_newlpjml_bestcalib_fc-sticky-dynamic_crop-endoApr21-allM_20May21.tgz")
-cfg$gms$c52_carbon_scenario  <- "nocc"
-cfg$gms$c59_som_scenario  <- "nocc"
+cfg$input <- c(cellular = "rev4.61labourprodtest_h12_42b44dcd_cellularmagpie_debug_c200_GFDL-ESM4-ssp370_lpjml-ab83aee4.tgz",
+               regional = "rev4.61labourprodtest_h12_magpie_debug.tgz",
+               validation = "rev4.61labourprodtest_h12_validation_debug.tgz",
+               calibration = "calibration_H12_newlpjml_bestcalib_fc-sticky-dynamic_crop-endoApr21-allM_20May21.tgz",
+               additional = cfg$input[grep("additional_data", cfg$input)])
+#cfg$gms$c52_carbon_scenario  <- "nocc"
+#cfg$gms$c59_som_scenario  <- "nocc"
 
 cfg$gms$labor_prod <- "on"
 cfg$gms$factor_costs <- "sticky_labour_jul21"
@@ -50,8 +50,9 @@ cfg$output <- c("rds_report","extra/disaggregation_transitions")
 #34 labour prod*0.5 + sticky_labour_jan21
 #35 labour prod*0.5 + mixed_labour_dec20
 #36 labour prod*0.5 + sticky_labour_jul21 =e=
+#37 labour prod*0.5 + sticky_labour_jul21 capital fixed
 
-prefix <- "LAMA36"
+prefix <- "LAMA37"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1

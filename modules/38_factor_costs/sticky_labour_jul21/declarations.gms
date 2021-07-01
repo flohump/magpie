@@ -40,6 +40,12 @@ parameters
  i38_scale(j,kcr)					Scaling factor for total factor productivity (1)
  i38_capital_need(j,kcr)			Initial capital required for one unit of output (USD05MER per ton DM)
  i38_labour_need(j,kcr)				Initial labour required for one unit of output (hours per ton DM)
+
+i38_sh_save(t,j,kcr)
+i38_scale_save(t,j,kcr)
+i38_capital_need_save(t,j,kcr)
+i38_labour_need_save(t,j,kcr)
+p38_capital_cost_share_save(t,i)
 ;
 
 scalars
