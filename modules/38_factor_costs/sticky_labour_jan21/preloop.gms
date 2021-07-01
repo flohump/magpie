@@ -29,9 +29,9 @@ v38_labour.up(j,kcr) = 10 * p38_labour_ini(j,kcr);
 
 vm_prod.l(j,kcr)=sum(cell(i,j),p38_croparea_start(j,kcr)*f38_region_yield(i,kcr)* fm_tau1995(i));
 v38_investment_immobile.l(j,kcr) = vm_prod.l(j,kcr)*v38_capital.l(j,kcr)*s38_immobile
-                                 - sum(ct,p38_capital_immobile(ct,j,kcr));
+                                 - p38_capital_immobile("y1995",j,kcr);
 v38_investment_mobile.l(j) = sum(kcr, vm_prod.l(j,kcr)*v38_capital.l(j,kcr))*(1-s38_immobile)
-                             -sum(ct,p38_capital_mobile(ct,j));
+                             -p38_capital_mobile("y1995",j);
 
 * 	Calibrate the CES function:
 s38_ep = (1/s38_es) - 1 ;
