@@ -38,7 +38,7 @@ p38_fac_req_ini(j,kcr)
 p38_capital_ini(j,kcr)
 p38_labour_ini(j,kcr)
 p38_sh(t,j,kcr)
-
+p38_croparea_start(j,kcr)
 ;
 
 
