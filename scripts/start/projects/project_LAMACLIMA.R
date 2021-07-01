@@ -35,6 +35,7 @@ cfg$input <- c(cellular = "rev4.61labourprodtest_h12_42b44dcd_cellularmagpie_deb
 
 cfg$gms$labor_prod <- "on"
 cfg$gms$factor_costs <- "sticky_labour_jul21"
+cfg$gms$c38_sticky_mode <- "free"
 cfg$force_replace <- TRUE
 #cfg$force_download <- TRUE
 
@@ -51,8 +52,9 @@ cfg$output <- c("rds_report","extra/disaggregation_transitions")
 #35 labour prod*0.5 + mixed_labour_dec20
 #36 labour prod*0.5 + sticky_labour_jul21 =e=
 #37 labour prod*0.5 + sticky_labour_jul21 capital fixed
+#38 labour prod*0.5 + sticky_labour_jul21 capital fixed sticky free
 
-prefix <- "LAMA37"
+prefix <- "LAMA38"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
