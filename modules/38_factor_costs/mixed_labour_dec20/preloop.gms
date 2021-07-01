@@ -7,14 +7,6 @@
 
 vm_cost_inv.fx(i)=0;
 
-$ifthen "%c38_labour_switch%" == "nocc"
-loop(t_all,
- if(m_year(t_all) >= sm_fix_SSP2,
-f38_labour_impact(t_all,j) = f38_labour_impact("y2020",j);
- );
-);
-$endif
-
 * Initialise K, L and C
 p38_fac_req_ini(j,kcr,w) = f38_fac_req(kcr,w);
 s38_beta  = 1 - s38_alpha ; 
