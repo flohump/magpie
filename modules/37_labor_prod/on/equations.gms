@@ -16,7 +16,7 @@
 * And irrigation might be stopped if vm_labor_prod=1, in places that would be irrigated in the absence of q37_labor_prod.
 
  q37_labor_prod(j2) ..
-  vm_labor_prod(j2) =l= sum(ct, i37_labor_prod_cc(ct,j2)) + v37_adapt_irr(j2) + v37_adapt_fore(j2) + v37_adapt_harv(j2);
+  vm_labor_prod(j2) =e= sum(ct, i37_labor_prod_cc(ct,j2)) + v37_adapt_irr(j2) + v37_adapt_fore(j2) + v37_adapt_harv(j2);
 
 *labour prod impacts of irrigation; depends on irrigated cropland; irrigation == cooling
 *Dummy numbers (1-0.7) assume that irrigation has a beneficial effect on labor prod.
