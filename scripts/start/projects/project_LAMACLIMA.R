@@ -18,6 +18,7 @@ oecd_countries <- "AUS,AUT,BEL,CAN,CHL,CZE,DNK,EST,FIN,FRA,DEU,GRC,HUN,ISL,IRL,I
 
 library(gms)
 library(magclass)
+library(gdx)
 
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
@@ -40,7 +41,7 @@ cfg$force_replace <- TRUE
 #cfg$force_download <- TRUE
 
 cfg$results_folder <- "output/:title:"
-cfg$output <- c("rds_report","extra/disaggregation_transitions")
+cfg$output <- c("rds_report","extra/disaggregation")
 
 #28: labour prod*0.5
 #29: labour prod*0.5
@@ -54,8 +55,13 @@ cfg$output <- c("rds_report","extra/disaggregation_transitions")
 #37 labour prod*0.5 + sticky_labour_jul21 capital fixed
 #38 labour prod*0.5 + sticky_labour_jul21 capital fixed sticky free
 #39 sticky_labour_jul21 capital fixed sticky fixed
+#40 sticky_labour_jul21 capital fixed + sticky fixed to 2010 value + croparea fixed
 
-prefix <- "LAMA39"
+x<-readGDX("output/LAMA39_Inequality_noCC/fulldata.gdx","ov_area",select=list(type="level"))
+write.magpie(x,"modules/30_crop/exo/input/f30_croparea.cs3")
+cfg$gms$crop    <- "exo"
+
+prefix <- "LAMA40"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
