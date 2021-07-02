@@ -10,13 +10,13 @@ p38_share_calibration(i) = f38_historical_share("y2010",i)-(f38_reg_parameters("
 
 if (m_year(t)<2010,
 $ifthen "%c38_sticky_mode%" == "free" p38_capital_cost_share(i) = 0;
-$ifthen "%c38_sticky_mode%" == "dynamic" p38_capital_cost_share(i) = f38_historical_share(t,i);
-$ifthen "%c38_sticky_mode%" == "fixed" p38_capital_cost_share(i) = f38_historical_share(t,i);
+$elseif "%c38_sticky_mode%" == "dynamic" p38_capital_cost_share(i) = f38_historical_share(t,i);
+$elseif "%c38_sticky_mode%" == "fixed" p38_capital_cost_share(i) = f38_historical_share(t,i);
 $endif
 elseif (m_year(t)>=2010),
 $ifthen "%c38_sticky_mode%" == "free" p38_capital_cost_share(i) = 0;
-$ifthen "%c38_sticky_mode%" == "dynamic" p38_capital_cost_share(i) = f38_reg_parameters("slope")*log10(sum(i_to_iso(i,iso),im_gdp_pc_ppp_iso(t,iso)))+f38_reg_parameters("intercept")+p38_share_calibration(i);
-$ifthen "%c38_sticky_mode%" == "fixed" p38_capital_cost_share(i) = f38_historical_share("y2010",i);
+$elseif "%c38_sticky_mode%" == "dynamic" p38_capital_cost_share(i) = f38_reg_parameters("slope")*log10(sum(i_to_iso(i,iso),im_gdp_pc_ppp_iso(t,iso)))+f38_reg_parameters("intercept")+p38_share_calibration(i);
+$elseif "%c38_sticky_mode%" == "fixed" p38_capital_cost_share(i) = f38_historical_share("y2010",i);
 $endif
 );
 
