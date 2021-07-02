@@ -16,6 +16,10 @@ positive variables
  vm_area(j,kcr,w)                Agricultural production area (mio. ha)
 ;
 
+variable
+ vm_adjustment_cost(i)			Adjustment cost (mio. USD)
+;
+
 equations
  q30_cropland(j)                 Total cropland calculation (mio. ha)
  q30_avl_cropland(j)             Available cropland constraint (mio. ha)
@@ -25,11 +29,13 @@ equations
  q30_carbon(j,ag_pools)          Cropland above ground carbon content calculation (mio. tC)
  q30_bv_ann(j,potnatveg)         Biodiversity value of annual cropland (Mha)
  q30_bv_per(j,potnatveg)         Biodiversity value of perennial cropland (Mha)
+ q30_adjustment_cost(i)			 Adjustment cost (mio. USD)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  ov_area(t,j,kcr,w,type)             Agricultural production area (mio. ha)
+ ov_adjustment_cost(t,i,type)        Adjustment cost (mio. USD)
  oq30_cropland(t,j,type)             Total cropland calculation (mio. ha)
  oq30_avl_cropland(t,j,type)         Available cropland constraint (mio. ha)
  oq30_rotation_max(t,j,crp30,w,type) Local maximum rotational constraints (mio. ha)
@@ -38,6 +44,7 @@ parameters
  oq30_carbon(t,j,ag_pools,type)      Cropland above ground carbon content calculation (mio. tC)
  oq30_bv_ann(t,j,potnatveg,type)     Biodiversity value of annual cropland (Mha)
  oq30_bv_per(t,j,potnatveg,type)     Biodiversity value of perennial cropland (Mha)
+ oq30_adjustment_cost(t,i,type)      Adjustment cost (mio. USD)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
 

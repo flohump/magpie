@@ -84,6 +84,7 @@ $if "%c30_rotation_constraints%" == "off" f30_rotation_min_shr(crp30) = 0;
 scalar
 s30_set_aside_shr   		Share of available cropland that is witheld for other land cover types (1) / 0 /
 s30_set_aside_shr_noselect 	Share of available cropland that is witheld for other land cover types (1) / 0 /
+s30_adjustment_cost			Adjustment cost (mio. USD) / 1000000 /
 ;
 
 table f30_avl_cropland(j,marginal_land30) Available land area for cropland (mio. ha)
