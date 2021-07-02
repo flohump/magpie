@@ -61,7 +61,7 @@ x<-readGDX("output/LAMA39_Inequality_noCC/fulldata.gdx","ov_area",select=list(ty
 write.magpie(x,"modules/30_crop/exo/input/f30_croparea.cs3")
 cfg$gms$crop    <- "exo"
 
-prefix <- "LAMA40"
+prefix <- "LAMA41"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
