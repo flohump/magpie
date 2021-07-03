@@ -32,14 +32,14 @@
 *' of a cluster:
 
  q30_rotation_max(j2,crpmax30,w) ..
-   sum((crp_kcr30(crpmax30,kcr)), vm_area(j2,kcr,w)) =l=
+   sum((crp_kcr30(crpmax30,kcr)), vm_area(j2,kcr,w)) =n=
      sum(kcr, vm_area(j2,kcr,w)) * f30_rotation_max_shr(crpmax30);
 
 *' On the other hand, it reflects boundary conditions such as minimum self
 *' sufficiency constraints:
 
  q30_rotation_min(j2,crpmin30,w) ..
-   sum((crp_kcr30(crpmin30,kcr)), vm_area(j2,kcr,w)) =g=
+   sum((crp_kcr30(crpmin30,kcr)), vm_area(j2,kcr,w)) =n=
      sum(kcr, vm_area(j2,kcr,w)) * f30_rotation_min_shr(crpmin30);
 
 *' Agricultural production is calculated by multiplying the area under
