@@ -60,8 +60,9 @@ cfg$output <- c("rds_report","extra/disaggregation")
 x<-readGDX("output/LAMA39_Inequality_noCC/fulldata.gdx","ov_area",select=list(type="level"))
 write.magpie(x,"modules/30_crop/exo/input/f30_croparea.cs3")
 cfg$gms$crop    <- "exo"
+cfg$gms$s30_adjustment_cost <- 1000000
 
-prefix <- "LAMA42"
+prefix <- "LAMA43"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
