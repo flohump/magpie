@@ -14,7 +14,7 @@
 
  q30_adjustment_cost(i2)  ..
    vm_adjustment_cost(i2) =e=  
-   sum((cell(i2,j2),kcr,w), power(vm_area(j2,kcr,w) - sum(ct,f30_croparea(ct,j2,kcr,w)),2)) * s30_adjustment_cost;
+   sum((cell(i2,j2),kcr,w), power(vm_area(j2,kcr,w) - sum(ct,f30_croparea(ct,j2,kcr,w)),2)) * s30_adjustment_cost2;
 
 *' We assume that crop production can only take place on suitable cropland area.
 *' We use a suitability index (SI) map from @zabel_global_2014 to exclude areas

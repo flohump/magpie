@@ -62,7 +62,7 @@ write.magpie(x,"modules/30_crop/exo/input/f30_croparea.cs3")
 cfg$gms$crop    <- "exo"
 cfg$gms$s30_adjustment_cost <- 1000000
 
-prefix <- "LAMA43"
+prefix <- "LAMA44"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1

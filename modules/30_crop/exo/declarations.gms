@@ -12,6 +12,10 @@ parameters
  i30_avl_cropland_iso(iso)			Available land area for cropland at ISO level (mio. ha)
 ;
 
+scalar
+ s30_adjustment_cost2			blub (USD per ha)
+;
+
 positive variables
  vm_area(j,kcr,w)                Agricultural production area (mio. ha)
 ;

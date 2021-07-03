@@ -33,4 +33,11 @@ p30_avl_cropland(j) = f30_avl_cropland(j,"%c30_marginal_land%") *
 	+ s30_set_aside_shr_noselect * sum(cell(i,j), 1-p30_region_setaside_shr(i)))); 
 *' @stop
 
-vm_area.l(j,kcr,w) = f30_croparea(t,j,kcr,w);
+if(m_year(t) <= "y2000",
+ vm_area.fx(j,kcr,w) = f30_croparea(t,j,kcr,w);
+ s30_adjustment_cost2 = 0;
+else
+ vm_area.l(j,kcr,w) = f30_croparea(t,j,kcr,w);
+ s30_adjustment_cost2 = s30_adjustment_cost;
+);
+
