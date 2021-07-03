@@ -66,7 +66,7 @@ cfg$files2export$start <- c(cfg$files2export$start,"*.gdx")
 cfg$gms$crop    <- "exo"
 cfg$gms$s30_adjustment_cost <- 1000000
 
-prefix <- "LAMA45"
+prefix <- "LAMA46"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
