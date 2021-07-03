@@ -12,12 +12,10 @@ parameters
  i30_avl_cropland_iso(iso)			Available land area for cropland at ISO level (mio. ha)
 ;
 
-scalar
- s30_adjustment_cost2			blub (USD per ha)
-;
-
 positive variables
  vm_area(j,kcr,w)                Agricultural production area (mio. ha)
+ v30_landexpansion(j,kcr,w)		 blub
+ v30_landreduction(j,kcr,w)		 blub
 ;
 
 variable
@@ -34,11 +32,15 @@ equations
  q30_bv_ann(j,potnatveg)         Biodiversity value of annual cropland (Mha)
  q30_bv_per(j,potnatveg)         Biodiversity value of perennial cropland (Mha)
  q30_adjustment_cost(i)			 Adjustment cost (mio. USD)
+ q30_landexpansion(j,kcr,w)		 blub
+ q30_landreduction(j,kcr,w)		 blub
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  ov_area(t,j,kcr,w,type)             Agricultural production area (mio. ha)
+ ov30_landexpansion(t,j,kcr,w,type)  blub
+ ov30_landreduction(t,j,kcr,w,type)  blub
  ov_adjustment_cost(t,i,type)        Adjustment cost (mio. USD)
  oq30_cropland(t,j,type)             Total cropland calculation (mio. ha)
  oq30_avl_cropland(t,j,type)         Available cropland constraint (mio. ha)
@@ -49,6 +51,8 @@ parameters
  oq30_bv_ann(t,j,potnatveg,type)     Biodiversity value of annual cropland (Mha)
  oq30_bv_per(t,j,potnatveg,type)     Biodiversity value of perennial cropland (Mha)
  oq30_adjustment_cost(t,i,type)      Adjustment cost (mio. USD)
+ oq30_landexpansion(t,j,kcr,w,type)  blub
+ oq30_landreduction(t,j,kcr,w,type)  blub
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
 

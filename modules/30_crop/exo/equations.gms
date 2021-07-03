@@ -14,7 +14,13 @@
 
  q30_adjustment_cost(i2)  ..
    vm_adjustment_cost(i2) =e=  
-   sum((cell(i2,j2),kcr,w), power(vm_area(j2,kcr,w) - sum(ct,f30_croparea(ct,j2,kcr,w)),2)) * s30_adjustment_cost2;
+   sum((cell(i2,j2),kcr,w), 
+   v30_landexpansion(j2,kcr,w) + v30_landreduction(j2,kcr,w)) * s30_adjustment_cost;
+
+ q30_landexpansion(j2,kcr,w) ..
+        v30_landexpansion(j2,kcr,w) =g= vm_area(j2,kcr,w) - vm_area.l(j2,kcr,w);
+ q30_landreduction(j2,kcr,w) ..
+        v30_landreduction(j2,kcr,w) =g= vm_area.l(j2,kcr,w) - vm_area(j2,kcr,w);
 
 *' We assume that crop production can only take place on suitable cropland area.
 *' We use a suitability index (SI) map from @zabel_global_2014 to exclude areas
@@ -32,14 +38,14 @@
 *' of a cluster:
 
  q30_rotation_max(j2,crpmax30,w) ..
-   sum((crp_kcr30(crpmax30,kcr)), vm_area(j2,kcr,w)) =n=
+   sum((crp_kcr30(crpmax30,kcr)), vm_area(j2,kcr,w)) =l=
      sum(kcr, vm_area(j2,kcr,w)) * f30_rotation_max_shr(crpmax30);
 
 *' On the other hand, it reflects boundary conditions such as minimum self
 *' sufficiency constraints:
 
  q30_rotation_min(j2,crpmin30,w) ..
-   sum((crp_kcr30(crpmin30,kcr)), vm_area(j2,kcr,w)) =n=
+   sum((crp_kcr30(crpmin30,kcr)), vm_area(j2,kcr,w)) =g=
      sum(kcr, vm_area(j2,kcr,w)) * f30_rotation_min_shr(crpmin30);
 
 *' Agricultural production is calculated by multiplying the area under
