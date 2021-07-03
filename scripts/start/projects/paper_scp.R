@@ -31,7 +31,9 @@ cfg$output <- c("rds_report","extra/disaggregation")
 
 cfg <- setScenario(cfg,c("SSP2","NPI"))
 
-prefix <- "SCP37"
+#SCP38 sugar_cane conversion factor is 0.01 instead 0.2326 t DM MP per ton DM sugar_cane
+
+prefix <- "SCP38"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
@@ -78,4 +80,4 @@ for (pol in c("Ref")) {
 }
 
 #rd is default. revert back
-file.copy(from = "modules/15_food/anthropometrics_jan18/sets_rd.gms", to = "modules/15_food/anthropometrics_jan18/sets.gms",overwrite = TRUE)
+#file.copy(from = "modules/15_food/anthropometrics_jan18/sets_rd.gms", to = "modules/15_food/anthropometrics_jan18/sets.gms",overwrite = TRUE)

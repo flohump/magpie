@@ -7,6 +7,7 @@
 
 
 i20_processing_conversion_factors(t_all,processing20,ksd,kpr) = f20_processing_conversion_factors(t_all,processing20,ksd,kpr);
+i20_processing_conversion_factors(t_all,"breeding","scp","sugr_cane") = 0.01;
 i20_processing_shares(t_all,i,ksd,kpr) = f20_processing_shares(t_all,i,ksd,kpr);
 i20_processing_unitcosts(ksd,kpr) = f20_processing_unitcosts(ksd,kpr);
 
