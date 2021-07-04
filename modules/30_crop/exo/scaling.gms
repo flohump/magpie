@@ -5,5 +5,5 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-v30_landexpansion.scale(j,kcr,w) = 10e-9;
-v30_landreduction.scale(j,kcr,w) = 10e-9;
+v30_landexpansion.scale(j,kcr,w) = 10e-6;
+v30_landreduction.scale(j,kcr,w) = 10e-6;
