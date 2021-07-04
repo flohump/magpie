@@ -32,8 +32,10 @@ cfg$output <- c("rds_report","extra/disaggregation")
 cfg <- setScenario(cfg,c("SSP2","NPI"))
 
 #SCP38 sugar_cane conversion factor is 0.01 instead 0.2326 t DM MP per ton DM sugar_cane
+#SCP39 sugar_cane conversion factor is 0.105 instead 0.2326 t DM MP per ton DM sugar_cane based on 0.5*0.2+0.5*0.01
+#SCP40 sugar_cane conversion factor is 0.055 instead 0.2326 t DM MP per ton DM sugar_cane based on 0.5*0.1+0.5*0.01
 
-prefix <- "SCP38"
+prefix <- "SCP39"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
