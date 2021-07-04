@@ -35,7 +35,7 @@ cfg <- setScenario(cfg,c("SSP2","NPI"))
 #SCP39 sugar_cane conversion factor is 0.105 instead 0.2326 t DM MP per ton DM sugar_cane based on 0.5*0.2+0.5*0.01
 #SCP40 sugar_cane conversion factor is 0.055 instead 0.2326 t DM MP per ton DM sugar_cane based on 0.5*0.1+0.5*0.01
 
-prefix <- "SCP39"
+prefix <- "SCP40"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
