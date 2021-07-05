@@ -36,7 +36,7 @@ cfg$input <- c(cellular = "rev4.61labourprodtest_h12_42b44dcd_cellularmagpie_deb
 
 cfg$gms$labor_prod <- "on"
 cfg$gms$factor_costs <- "sticky_labour_jul21"
-cfg$gms$c38_sticky_mode <- "fixed"
+cfg$gms$c38_sticky_mode <- "dynamic"
 cfg$force_replace <- TRUE
 #cfg$force_download <- TRUE
 
@@ -57,16 +57,7 @@ cfg$output <- c("rds_report","extra/disaggregation")
 #39 sticky_labour_jul21 capital fixed sticky fixed
 #40 sticky_labour_jul21 capital fixed + sticky fixed to 2010 value + croparea fixed
 
-x<-readGDX("output/LAMA39_Inequality_noCC/fulldata.gdx","ov_area",select=list(type="level"))
-write.magpie(x,"modules/30_crop/exo/input/f30_croparea.cs3")
-files <- Sys.glob(paste0("output/LAMA39_Inequality_noCC/","*.gdx"))
-file.copy(files,to = ".",overwrite = TRUE)
-cfg$files2export$start <- c(cfg$files2export$start,"*.gdx")
-
-cfg$gms$crop    <- "exo"
-cfg$gms$s30_adjustment_cost <- 1000000
-
-prefix <- "LAMA46"
+prefix <- "LAMA47"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
@@ -78,7 +69,7 @@ cfg$qos <- "priority"
 #https://miro.com/app/board/o9J_lVys8js=/
 
 #Scenario 1, based on SDP
-cfg$title <- paste(prefix,"Sustainability","CC",sep="_")
+cfg$title <- paste(prefix,"Sustainability",sep="_")
 cfg <- setScenario(cfg,c("SDP","NDC","ForestryEndo"))
 cfg$gms$c37_labour_switch <- "cc"
 cfg$gms$c35_protect_scenario <- "FF_BH"
@@ -125,15 +116,10 @@ cfg$gms$c55_scen_conf_noselect <- "ssp1"
 cfg$gms$scen_countries55  <- all_iso_countries
 #irrig
 cfg$gms$s42_irrig_eff_scenario <- 3
-#start_run(cfg,codeCheck=FALSE)
-
-cfg$title <- paste(prefix,"Sustainability","noCC",sep="_")
-cfg$gms$c37_labour_switch <- "nocc"
-#start_run(cfg,codeCheck=FALSE)
-
+start_run(cfg,codeCheck=FALSE)
 
 #Scenario 2, based on SSP4
-cfg$title <- paste(prefix,"Inequality","CC",sep="_")
+cfg$title <- paste(prefix,"Inequality",sep="_")
 cfg <- setScenario(cfg,c("SSP4","NDC","ForestryEndo"))
 cfg$gms$c37_labour_switch <- "cc"
 cfg$gms$c35_protect_scenario <- "FF_BH"
@@ -163,8 +149,8 @@ cfg$gms$s15_waste_scen <- 1.2
 cfg$gms$scen_countries15  <- oecd_countries
 #AFF
 cfg$gms$s32_planing_horizon <- 50
-cfg$gms$s32_aff_plantation <- 1
-cfg$gms$s32_aff_bii_coeff <- 1
+cfg$gms$s32_aff_plantation <- 0
+cfg$gms$s32_aff_bii_coeff <- 0
 cfg$gms$s32_max_aff_area <- Inf
 cfg$gms$c32_aff_mask <- "noboreal"
 #EFP
@@ -182,19 +168,9 @@ cfg$gms$scen_countries55  <- oecd_countries
 cfg$gms$s42_irrig_eff_scenario <- 3
 start_run(cfg,codeCheck=FALSE)
 
-cfg$title <- paste(prefix,"Inequality","noCC",sep="_")
-cfg$gms$c37_labour_switch <- "nocc"
+
+cfg$title <- paste(prefix,"Inequality_PlantOECD",sep="_")
+cfg$gms$s32_aff_plantation <- 1
+cfg$gms$s32_aff_bii_coeff <- 1
 start_run(cfg,codeCheck=FALSE)
 
-# cfg$title <- paste(prefix,"Inequality_NatAff","CC",sep="_")
-# cfg$gms$c37_labour_switch <- "cc"
-# cfg$gms$s32_aff_plantation <- 0
-# cfg$gms$s32_aff_bii_coeff <- 0
-# start_run(cfg,codeCheck=FALSE)
-# 
-# cfg$title <- paste(prefix,"Inequality_NatAff","noCC",sep="_")
-# cfg$gms$c37_labour_switch <- "nocc"
-# cfg$gms$s32_aff_plantation <- 0
-# cfg$gms$s32_aff_bii_coeff <- 0
-# start_run(cfg,codeCheck=FALSE)
-# 
