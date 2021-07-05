@@ -19,7 +19,7 @@ positive variables
 ;
 
 variable
- vm_adjustment_cost(i)			Adjustment cost (mio. USD)
+ vm_crop_adjustment_cost(i)		 Cropland adjustment cost (mio. USD)
 ;
 
 equations

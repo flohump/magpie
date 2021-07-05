@@ -16,6 +16,10 @@ positive variables
  vm_area(j,kcr,w)                Agricultural production area (mio. ha)
 ;
 
+variable
+ vm_crop_adjustment_cost(i)		 Cropland adjustment cost (mio. USD)
+;
+
 equations
  q30_cropland(j)                 Total cropland calculation (mio. ha)
  q30_avl_cropland(j)             Available cropland constraint (mio. ha)

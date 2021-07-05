@@ -13,7 +13,7 @@
    sum((kcr,w), vm_area(j2,kcr,w)) =e= vm_land(j2,"crop");
 
  q30_adjustment_cost(i2)  ..
-   vm_adjustment_cost(i2) =e=  
+   vm_crop_adjustment_cost(i2) =e=  
    sum((cell(i2,j2),kcr,w), 
    v30_landexpansion(j2,kcr,w) + v30_landreduction(j2,kcr,w)) * s30_adjustment_cost;
 
