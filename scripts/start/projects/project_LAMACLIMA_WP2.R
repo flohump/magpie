@@ -42,24 +42,10 @@ cfg$force_replace <- TRUE
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation")
 
-#28: labour prod*0.5
-#29: labour prod*0.5
-#30: labour prod*1
-#31 labour prod*1 + sticky_labour_jul21
-#32 labour prod*0.5 + sticky_labour_jul21
-#33 labour prod*0.5 + sticky_labour_jul21
-#34 labour prod*0.5 + sticky_labour_jan21
-#35 labour prod*0.5 + mixed_labour_dec20
-#36 labour prod*0.5 + sticky_labour_jul21 =e=
-#37 labour prod*0.5 + sticky_labour_jul21 capital fixed
-#38 labour prod*0.5 + sticky_labour_jul21 capital fixed sticky free
-#39 sticky_labour_jul21 capital fixed sticky fixed
-#40 sticky_labour_jul21 capital fixed + sticky fixed to 2010 value + croparea fixed
-
 cfg$gms$crop    <- "exo"
 cfg$gms$s30_adjustment_cost <- 0
 
-prefix <- "WP201"
+prefix <- "WP2"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
@@ -100,8 +86,8 @@ cfg$gms$s15_waste_scen <- 1.2
 cfg$gms$scen_countries15  <- oecd_countries
 #AFF
 cfg$gms$s32_planing_horizon <- 50
-cfg$gms$s32_aff_plantation <- 1
-cfg$gms$s32_aff_bii_coeff <- 1
+cfg$gms$s32_aff_plantation <- 0
+cfg$gms$s32_aff_bii_coeff <- 0
 cfg$gms$s32_max_aff_area <- Inf
 cfg$gms$c32_aff_mask <- "noboreal"
 #EFP
@@ -137,24 +123,29 @@ write.magpie(x,"modules/30_crop/exo/input/f30_croparea.cs3")
 files <- Sys.glob(paste0("output/",cfg$title,"/","*.gdx"))
 file.copy(files,to = ".",overwrite = TRUE)
 cfg$files2export$start <- c(cfg$files2export$start,"*.gdx")
-cfg$sequential <- TRUE
+cfg$sequential <- FALSE
 
-cfg$title <- paste(prefix,"Inequality","StickyFix","LabCCon","CropFix",sep="_")
+cfg$title <- paste(prefix,"Inequality","StickyFix","LabCCon","CropFix10000",sep="_")
+cfg$gms$c38_sticky_mode <- "fixed"
+cfg$gms$c37_labour_switch <- "cc"
+cfg$gms$s30_adjustment_cost <- 10000
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"Inequality","StickyFix","LabCCon","CropFix50000",sep="_")
+cfg$gms$c38_sticky_mode <- "fixed"
+cfg$gms$c37_labour_switch <- "cc"
+cfg$gms$s30_adjustment_cost <- 50000
+start_run(cfg,codeCheck=FALSE)
+
+
+cfg$title <- paste(prefix,"Inequality","StickyFix","LabCCon","CropFix100000",sep="_")
+cfg$gms$c38_sticky_mode <- "fixed"
+cfg$gms$c37_labour_switch <- "cc"
+cfg$gms$s30_adjustment_cost <- 100000
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"Inequality","StickyFix","LabCCon","CropFix1000000",sep="_")
 cfg$gms$c38_sticky_mode <- "fixed"
 cfg$gms$c37_labour_switch <- "cc"
 cfg$gms$s30_adjustment_cost <- 1000000
 start_run(cfg,codeCheck=FALSE)
-
-
-# cfg$title <- paste(prefix,"Inequality_NatAff","CC",sep="_")
-# cfg$gms$c37_labour_switch <- "cc"
-# cfg$gms$s32_aff_plantation <- 0
-# cfg$gms$s32_aff_bii_coeff <- 0
-# start_run(cfg,codeCheck=FALSE)
-# 
-# cfg$title <- paste(prefix,"Inequality_NatAff","noCC",sep="_")
-# cfg$gms$c37_labour_switch <- "nocc"
-# cfg$gms$s32_aff_plantation <- 0
-# cfg$gms$s32_aff_bii_coeff <- 0
-# start_run(cfg,codeCheck=FALSE)
-# 
