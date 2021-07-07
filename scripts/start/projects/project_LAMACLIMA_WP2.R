@@ -120,9 +120,9 @@ start_run(cfg,codeCheck=FALSE)
 
 x<-readGDX(paste0("output/",cfg$title,"/fulldata.gdx"),"ov_area",select=list(type="level"))
 write.magpie(x,"modules/30_crop/exo/input/f30_croparea.cs3")
-files <- Sys.glob(paste0("output/",cfg$title,"/","*.gdx"))
-file.copy(files,to = ".",overwrite = TRUE)
-cfg$files2export$start <- c(cfg$files2export$start,"*.gdx")
+# files <- Sys.glob(paste0("output/",cfg$title,"/","*.gdx"))
+# file.copy(files,to = ".",overwrite = TRUE)
+# cfg$files2export$start <- c(cfg$files2export$start,"*.gdx")
 cfg$sequential <- FALSE
 
 cfg$title <- paste(prefix,"Inequality","StickyFix","LabCCon","CropFix10000",sep="_")

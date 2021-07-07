@@ -10,7 +10,7 @@
  ov_area(t,j,kcr,w,"marginal")             = vm_area.m(j,kcr,w);
  ov30_landexpansion(t,j,kcr,w,"marginal")  = v30_landexpansion.m(j,kcr,w);
  ov30_landreduction(t,j,kcr,w,"marginal")  = v30_landreduction.m(j,kcr,w);
- ov_adjustment_cost(t,i,"marginal")        = vm_adjustment_cost.m(i);
+ ov_crop_adjustment_cost(t,i,"marginal")   = vm_crop_adjustment_cost.m(i);
  oq30_cropland(t,j,"marginal")             = q30_cropland.m(j);
  oq30_avl_cropland(t,j,"marginal")         = q30_avl_cropland.m(j);
  oq30_rotation_max(t,j,crp30,w,"marginal") = q30_rotation_max.m(j,crp30,w);
@@ -25,7 +25,7 @@
  ov_area(t,j,kcr,w,"level")                = vm_area.l(j,kcr,w);
  ov30_landexpansion(t,j,kcr,w,"level")     = v30_landexpansion.l(j,kcr,w);
  ov30_landreduction(t,j,kcr,w,"level")     = v30_landreduction.l(j,kcr,w);
- ov_adjustment_cost(t,i,"level")           = vm_adjustment_cost.l(i);
+ ov_crop_adjustment_cost(t,i,"level")      = vm_crop_adjustment_cost.l(i);
  oq30_cropland(t,j,"level")                = q30_cropland.l(j);
  oq30_avl_cropland(t,j,"level")            = q30_avl_cropland.l(j);
  oq30_rotation_max(t,j,crp30,w,"level")    = q30_rotation_max.l(j,crp30,w);
@@ -40,7 +40,7 @@
  ov_area(t,j,kcr,w,"upper")                = vm_area.up(j,kcr,w);
  ov30_landexpansion(t,j,kcr,w,"upper")     = v30_landexpansion.up(j,kcr,w);
  ov30_landreduction(t,j,kcr,w,"upper")     = v30_landreduction.up(j,kcr,w);
- ov_adjustment_cost(t,i,"upper")           = vm_adjustment_cost.up(i);
+ ov_crop_adjustment_cost(t,i,"upper")      = vm_crop_adjustment_cost.up(i);
  oq30_cropland(t,j,"upper")                = q30_cropland.up(j);
  oq30_avl_cropland(t,j,"upper")            = q30_avl_cropland.up(j);
  oq30_rotation_max(t,j,crp30,w,"upper")    = q30_rotation_max.up(j,crp30,w);
@@ -55,7 +55,7 @@
  ov_area(t,j,kcr,w,"lower")                = vm_area.lo(j,kcr,w);
  ov30_landexpansion(t,j,kcr,w,"lower")     = v30_landexpansion.lo(j,kcr,w);
  ov30_landreduction(t,j,kcr,w,"lower")     = v30_landreduction.lo(j,kcr,w);
- ov_adjustment_cost(t,i,"lower")           = vm_adjustment_cost.lo(i);
+ ov_crop_adjustment_cost(t,i,"lower")      = vm_crop_adjustment_cost.lo(i);
  oq30_cropland(t,j,"lower")                = q30_cropland.lo(j);
  oq30_avl_cropland(t,j,"lower")            = q30_avl_cropland.lo(j);
  oq30_rotation_max(t,j,crp30,w,"lower")    = q30_rotation_max.lo(j,crp30,w);

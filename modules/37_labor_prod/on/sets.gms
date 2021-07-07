@@ -9,15 +9,15 @@ sets
   land_fore37(land) Forest land pools
         / forestry, primforest, secdforest /
 
- labour_scen37 Labour productivity scenarios
- / CTL_ISO_300_ensmean,CTL_HOTHAPS_300_ensmean,CTL_ISO_300_ensstd,CTL_HOTHAPS_300_ensstd,
-   CTL_ISO_400_ensmean,CTL_HOTHAPS_400_ensmean,CTL_ISO_400_ensstd,CTL_HOTHAPS_400_ensstd,
-   FRST_ISO_300_ensmean,FRST_HOTHAPS_300_ensmean,FRST_ISO_300_ensstd,FRST_HOTHAPS_300_ensstd,
-   FRST_ISO_400_ensmean,FRST_HOTHAPS_400_ensmean,FRST_ISO_400_ensstd,FRST_HOTHAPS_400_ensstd,
-   CROP_ISO_300_ensmean,CROP_HOTHAPS_300_ensmean,CROP_ISO_300_ensstd,CROP_HOTHAPS_300_ensstd,
-   CROP_ISO_400_ensmean,CROP_HOTHAPS_400_ensmean,CROP_ISO_400_ensstd,CROP_HOTHAPS_400_ensstd,
-   HARV_ISO_300_ensmean,HARV_HOTHAPS_300_ensmean,HARV_ISO_300_ensstd,HARV_HOTHAPS_300_ensstd,
-   HARV_ISO_400_ensmean,HARV_HOTHAPS_400_ensmean,HARV_ISO_400_ensstd,HARV_HOTHAPS_400_ensstd,
-   IRR_ISO_300_ensmean,IRR_HOTHAPS_300_ensmean,IRR_ISO_300_ensstd,IRR_HOTHAPS_300_ensstd,
-   IRR_ISO_400_ensmean,IRR_HOTHAPS_400_ensmean,IRR_ISO_400_ensstd,IRR_HOTHAPS_400_ensstd /
+ rcp37 RCP sceanrios
+ 		/ rcp119, rcp226, rcp370, rcp460, rcp585 /
+
+ metric37 labour productivity impact metric
+ 		/ ISO, HOTHAPS /
+
+ intensity37 intensity level
+ 		/ 300, 400 /
+
+ uncertainty37 blub
+ 		/ enslower,ensmean,ensupper /
 ;

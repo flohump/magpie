@@ -8,6 +8,7 @@
 
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
  ov_area(t,j,kcr,w,"marginal")             = vm_area.m(j,kcr,w);
+ ov_crop_adjustment_cost(t,i,"marginal")   = vm_crop_adjustment_cost.m(i);
  oq30_cropland(t,j,"marginal")             = q30_cropland.m(j);
  oq30_avl_cropland(t,j,"marginal")         = q30_avl_cropland.m(j);
  oq30_rotation_max(t,j,crp30,w,"marginal") = q30_rotation_max.m(j,crp30,w);
@@ -17,6 +18,7 @@
  oq30_bv_ann(t,j,potnatveg,"marginal")     = q30_bv_ann.m(j,potnatveg);
  oq30_bv_per(t,j,potnatveg,"marginal")     = q30_bv_per.m(j,potnatveg);
  ov_area(t,j,kcr,w,"level")                = vm_area.l(j,kcr,w);
+ ov_crop_adjustment_cost(t,i,"level")      = vm_crop_adjustment_cost.l(i);
  oq30_cropland(t,j,"level")                = q30_cropland.l(j);
  oq30_avl_cropland(t,j,"level")            = q30_avl_cropland.l(j);
  oq30_rotation_max(t,j,crp30,w,"level")    = q30_rotation_max.l(j,crp30,w);
@@ -26,6 +28,7 @@
  oq30_bv_ann(t,j,potnatveg,"level")        = q30_bv_ann.l(j,potnatveg);
  oq30_bv_per(t,j,potnatveg,"level")        = q30_bv_per.l(j,potnatveg);
  ov_area(t,j,kcr,w,"upper")                = vm_area.up(j,kcr,w);
+ ov_crop_adjustment_cost(t,i,"upper")      = vm_crop_adjustment_cost.up(i);
  oq30_cropland(t,j,"upper")                = q30_cropland.up(j);
  oq30_avl_cropland(t,j,"upper")            = q30_avl_cropland.up(j);
  oq30_rotation_max(t,j,crp30,w,"upper")    = q30_rotation_max.up(j,crp30,w);
@@ -35,6 +38,7 @@
  oq30_bv_ann(t,j,potnatveg,"upper")        = q30_bv_ann.up(j,potnatveg);
  oq30_bv_per(t,j,potnatveg,"upper")        = q30_bv_per.up(j,potnatveg);
  ov_area(t,j,kcr,w,"lower")                = vm_area.lo(j,kcr,w);
+ ov_crop_adjustment_cost(t,i,"lower")      = vm_crop_adjustment_cost.lo(i);
  oq30_cropland(t,j,"lower")                = q30_cropland.lo(j);
  oq30_avl_cropland(t,j,"lower")            = q30_avl_cropland.lo(j);
  oq30_rotation_max(t,j,crp30,w,"lower")    = q30_rotation_max.lo(j,crp30,w);

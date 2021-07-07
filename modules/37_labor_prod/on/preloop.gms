@@ -5,7 +5,7 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-i37_labor_prod_cc(t,j) = f37_labor_prod_cc(t,j,"CTL_ISO_400_ensmean");
+i37_labor_prod_cc(t,j) = f37_labor_prod_cc(t,j,"%c37_labour_rcp%","%c37_labour_metric%","%c37_labour_intensity%","%c37_labour_uncertainty%");
 
 i37_labor_prod_cc(t,j)$(i37_labor_prod_cc(t,j) = 0) = 1;
 

@@ -27,6 +27,7 @@ equations
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  ov_area(t,j,kcr,w,type)             Agricultural production area (mio. ha)
+ ov_crop_adjustment_cost(t,i,type)   Cropland adjustment cost (mio. USD)
  oq30_cropland(t,j,type)             Total cropland calculation (mio. ha)
  oq30_suitability(t,j,type)          Suitability constraint (mio. ha)
  oq30_rotation_max(t,j,crp30,w,type) Local maximum rotational constraints (mio. ha)

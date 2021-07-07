@@ -41,7 +41,7 @@ parameters
  ov_area(t,j,kcr,w,type)             Agricultural production area (mio. ha)
  ov30_landexpansion(t,j,kcr,w,type)  blub
  ov30_landreduction(t,j,kcr,w,type)  blub
- ov_adjustment_cost(t,i,type)        Adjustment cost (mio. USD)
+ ov_crop_adjustment_cost(t,i,type)   Cropland adjustment cost (mio. USD)
  oq30_cropland(t,j,type)             Total cropland calculation (mio. ha)
  oq30_avl_cropland(t,j,type)         Available cropland constraint (mio. ha)
  oq30_rotation_max(t,j,crp30,w,type) Local maximum rotational constraints (mio. ha)
