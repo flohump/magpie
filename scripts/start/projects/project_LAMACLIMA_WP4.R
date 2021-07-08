@@ -29,7 +29,7 @@ source("scripts/start/extra/lpjml_addon.R")
 cfg$input <- c(cellular = "rev4.61labourprodtest_h12_57347947_cellularmagpie_debug_c200_MRI-ESM2-0-ssp119_lpjml-ab83aee4.tgz",
                regional = "rev4.61labourprodtest_h12_magpie_debug.tgz",
                validation = "rev4.61labourprodtest_h12_validation_debug.tgz",
-               calibration = "calibration_H12_newlpjml_bestcalib_fc-sticky-free_crop-endoApr21_20May21.tgz",
+               calibration = "calibration_H12_newlpjml_bestcalib_fc-sticky-dynamic_crop-endoApr21-allM_20May21.tgz",
                additional = cfg$input[grep("additional_data", cfg$input)])
 #cfg$gms$c52_carbon_scenario  <- "nocc"
 #cfg$gms$c59_som_scenario  <- "nocc"
@@ -40,7 +40,7 @@ cfg$gms$c37_labour_metric <- "ISO"
 cfg$gms$c37_labour_intensity <- 400
 cfg$gms$c37_labour_uncertainty <- "ensmean"
 cfg$gms$factor_costs <- "sticky_labour_jul21"
-cfg$gms$c38_sticky_mode <- "free"
+cfg$gms$c38_sticky_mode <- "dynamic"
 cfg$force_replace <- TRUE
 #cfg$force_download <- TRUE
 
@@ -61,7 +61,7 @@ cfg$output <- c("rds_report","extra/disaggregation")
 #39 sticky_labour_jul21 capital fixed sticky fixed
 #40 sticky_labour_jul21 capital fixed + sticky fixed to 2010 value + croparea fixed
 
-prefix <- "LAMA49"
+prefix <- "LAMA50"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
