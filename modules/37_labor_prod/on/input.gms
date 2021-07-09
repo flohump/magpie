@@ -8,7 +8,7 @@
 $setglobal c37_labour_switch  cc
 $setglobal c37_labour_rcp  rcp119
 $setglobal c37_labour_metric  ISO
-$setglobal c37_labour_intensity  400
+$setglobal c37_labour_intensity  400W
 $setglobal c37_labour_uncertainty  ensmean
 
 scalars

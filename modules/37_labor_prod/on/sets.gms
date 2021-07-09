@@ -16,7 +16,7 @@ sets
  		/ ISO, HOTHAPS /
 
  intensity37 intensity level
- 		/ 300, 400 /
+ 		/ 300W, 400W /
 
  uncertainty37 blub
  		/ enslower,ensmean,ensupper /
