@@ -20,13 +20,13 @@ if(!exists("source_include")) {
   outputdir <- "output/LAMA24_Sustainability/"
   readArgs("outputdir")
 }
-map_file                   <- Sys.glob(path(outputdir, "clustermap_*.rds"))
-gdx                        <- path(outputdir,"fulldata.gdx")
-land_hr_file               <- path(outputdir,"avl_land_t_0.5.mz")
-land_hr_out_file           <- path(outputdir,"cell.land_0.5.mz")
-land_hr_share_out_file     <- path(outputdir,"cell.land_0.5_share.mz")
-land_trans_hr_out_file        <- path(outputdir,"cell.land_transitions_0.5.mz")
-land_trans_hr_share_out_file  <- path(outputdir,"cell.land_transitions_0.5_share.mz")
+map_file                   <- Sys.glob(file.path(outputdir, "clustermap_*.rds"))
+gdx                        <- file.path(outputdir,"fulldata.gdx")
+land_hr_file               <- file.path(outputdir,"avl_land_t_0.5.mz")
+land_hr_out_file           <- file.path(outputdir,"cell.land_0.5.mz")
+land_hr_share_out_file     <- file.path(outputdir,"cell.land_0.5_share.mz")
+land_trans_hr_out_file        <- file.path(outputdir,"cell.land_transitions_0.5.mz")
+land_trans_hr_share_out_file  <- file.path(outputdir,"cell.land_transitions_0.5_share.mz")
 
 load(paste0(outputdir, "/config.Rdata"))
 ################################################################################

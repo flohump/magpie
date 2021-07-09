@@ -20,14 +20,14 @@ if(!exists("source_include")) {
   outputdir <- "output/SSP2_Ref_c200"
   readArgs("outputdir")
 }
-map_file                   <- Sys.glob(path(outputdir, "clustermap_*.rds"))
-gdx                        <- path(outputdir,"fulldata.gdx")
-land_hr_file               <- path(outputdir,"avl_land_t_0.5.mz")
-land_hr_out_file           <- path(outputdir,"cell.land_0.5.mz")
-land_hr_share_out_file     <- path(outputdir,"cell.land_0.5_share.mz")
-croparea_hr_share_out_file <- path(outputdir,"cell.croparea_0.5_share.mz")
-land_hr_split_file         <- path(outputdir,"cell.land_split_0.5.mz")
-land_hr_shr_split_file     <- path(outputdir,"cell.land_split_0.5_share.mz")
+map_file                   <- Sys.glob(file.path(outputdir, "clustermap_*.rds"))
+gdx                        <- file.path(outputdir,"fulldata.gdx")
+land_hr_file               <- file.path(outputdir,"avl_land_t_0.5.mz")
+land_hr_out_file           <- file.path(outputdir,"cell.land_0.5.mz")
+land_hr_share_out_file     <- file.path(outputdir,"cell.land_0.5_share.mz")
+croparea_hr_share_out_file <- file.path(outputdir,"cell.croparea_0.5_share.mz")
+land_hr_split_file         <- file.path(outputdir,"cell.land_split_0.5.mz")
+land_hr_shr_split_file     <- file.path(outputdir,"cell.land_split_0.5_share.mz")
 
 load(paste0(outputdir, "/config.Rdata"))
 ################################################################################
@@ -57,7 +57,7 @@ if (cfg$gms$crop=="endo_apr21"){
   set_aside_shr <- new.magpie(iso, fill = set_aside_noselect)
   set_aside_shr[set_aside_iso,,] <- set_aside_select
   
-  avl_cropland_hr <- path(outputdir, "avl_cropland_0.5.mz")       # available cropland (at high resolution)
+  avl_cropland_hr <- file.path(outputdir, "avl_cropland_0.5.mz")       # available cropland (at high resolution)
   marginal_land <- cfg$gms$c30_marginal_land                      # marginal land scenario
   set_aside_shr <- cfg$gms$s30_set_aside_shr                      # set aside share (default: 0)
   target_year <- cfg$gms$c30_set_aside_target                     # target year of set aside policy (default: "none")
