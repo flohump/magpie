@@ -35,7 +35,12 @@ cfg$input <- c(cellular = "rev4.61labourprodtest_h12_42b44dcd_cellularmagpie_deb
 #cfg$gms$c59_som_scenario  <- "nocc"
 
 cfg$gms$labor_prod <- "on"
+cfg$gms$c37_labour_rcp <- "rcp119"
+cfg$gms$c37_labour_metric <- "ISO"
+cfg$gms$c37_labour_intensity <- "400W"
+cfg$gms$c37_labour_uncertainty <- "ensmean"
 cfg$gms$factor_costs <- "sticky_labour_jul21"
+cfg$gms$c38_sticky_mode <- "dynamic"
 cfg$force_replace <- TRUE
 #cfg$force_download <- TRUE
 
