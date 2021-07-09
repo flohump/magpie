@@ -29,5 +29,5 @@ v38_labour.up(j,kcr,w) = 10 * p38_labour_ini(j,kcr,w);
 * 	Calibrate the CES function:
 s38_ep = (1/s38_es) - 1 ;
 
-vm_prod.l(j,kcr)=sum(cell(i,j),sum(w, fm_croparea("y1995",j,w,kcr))*f38_region_yield(i,kcr)* fm_tau1995(i));
+vm_prod.l(j,kcr)=sum(cell(i,j),sum(w, fm_croparea("y1995",j,w,kcr))*f38_region_yield(i,kcr)* sum(supreg(h,i),fm_tau1995(h)));
 
