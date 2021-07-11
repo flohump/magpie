@@ -33,65 +33,65 @@ getInput <- function(gdx,ghg_price=TRUE,biodem=TRUE) {
 
 #start MAgPIE run
 source("config/default.cfg")
-
-cfg$results_folder <- "output/:title:"
-cfg$gms$s58_rewetting_switch  <- Inf
-#cfg$gms$s80_optfile <- 1
-#cfg$gms$s80_maxiter <- 30
-cfg$output <- c("rds_report")
-#download_and_update(cfg)
-
-prefix <- "LU03"
-
-
 source("scripts/start/extra/lpjml_addon.R")
-#cfg$gms$c52_carbon_scenario  <- "nocc"
-#cfg$gms$c59_som_scenario  <- "nocc"
-#cfg$gms$land <- "feb15"
-#cfg$gms$crop    <- "endo_jun13"
+
 cfg$results_folder <- "output/:title:"
-cfg$gms$s58_rewetting_switch  <- Inf
-#cfg$gms$s80_optfile <- 1
-#cfg$gms$s80_maxiter <- 30
 cfg$output <- c("rds_report")
 #download_and_update(cfg)
 
-# #SSP1
-# cfg$title <- paste(prefix,"SSP1","REF","SPA1",sep="_")
-# cfg <- setScenario(cfg,c("SSP1","NPI"))
-# cfg$gms$c56_pollutant_prices <- "R21M42-SSP1-NPi"
-# cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP1-NPi"
-# start_run(cfg,codeCheck=FALSE)
-# 
-# cfg$title <- paste(prefix,"SSP1","1p5deg","SPA1",sep="_")
-# cfg <- setScenario(cfg,c("SSP1","NDC"))
-# cfg$gms$c56_pollutant_prices <- "R21M42-SSP1-PkBudg900"
-# cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP1-PkBudg900"
-# start_run(cfg,codeCheck=FALSE)
-# 
-# #SSP2
-# cfg$title <- paste(prefix,"SSP2","REF","SPA2",sep="_")
-# cfg <- setScenario(cfg,c("SSP2","NPI"))
-# cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-NPi"
-# cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-NPi"
-# start_run(cfg,codeCheck=FALSE)
-# 
-# cfg$title <- paste(prefix,"SSP2","1p5deg","SPA2",sep="_")
-# cfg <- setScenario(cfg,c("SSP2","NDC"))
-# cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
-# cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
-# start_run(cfg,codeCheck=FALSE)
-# 
-# #SSP5
-# cfg$title <- paste(prefix,"SSP5","REF","SPA5",sep="_")
-# cfg <- setScenario(cfg,c("SSP5","NPI"))
-# cfg$gms$c56_pollutant_prices <- "R21M42-SSP5-NPi"
-# cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP5-NPi"
-# start_run(cfg,codeCheck=FALSE)
+prefix <- "LU04"
+
+#SSP1
+cfg$title <- paste(prefix,"SSP1","REF","SPA0",sep="_")
+cfg <- setScenario(cfg,c("SSP1","NPI"))
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP1-NPi"
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP1-NPi"
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"SSP1","1p5deg","SPA1",sep="_")
+cfg <- setScenario(cfg,c("SSP1","NDC"))
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP1-PkBudg900"
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP1-PkBudg900"
+start_run(cfg,codeCheck=FALSE)
+
+#SSP2
+cfg$title <- paste(prefix,"SSP2","REF","SPA0",sep="_")
+cfg <- setScenario(cfg,c("SSP2","NPI"))
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-NPi"
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-NPi"
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"SSP2","1p5deg","SPA2",sep="_")
+cfg <- setScenario(cfg,c("SSP2","NDC"))
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"SSP2","1p5deg","SPA0",sep="_")
+cfg <- setScenario(cfg,c("SSP2","NDC"))
+cfg$gms$c56_lu_spa <- "none"
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP2-PkBudg900"
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP2-PkBudg900"
+start_run(cfg,codeCheck=FALSE)
+
+#SSP5
+cfg$title <- paste(prefix,"SSP5","REF","SPA0",sep="_")
+cfg <- setScenario(cfg,c("SSP5","NPI"))
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP5-NPi"
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP5-NPi"
+start_run(cfg,codeCheck=FALSE)
 
 cfg$title <- paste(prefix,"SSP5","1p5deg","SPA5",sep="_")
 cfg <- setScenario(cfg,c("SSP5","NDC"))
-cfg$gms$c60_biodem_level <- 1 #otherwise infeasible
+cfg$gms$c56_pollutant_prices <- "R21M42-SSP5-PkBudg900"
+cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP5-PkBudg900"
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- paste(prefix,"SSP5","1p5deg","SPA0",sep="_")
+cfg <- setScenario(cfg,c("SSP5","NDC"))
+cfg$gms$c56_lu_spa <- "none"
+cfg$gms$s32_aff_plantation <- 0
+cfg$gms$s32_aff_bii_coeff <- 0
 cfg$gms$c56_pollutant_prices <- "R21M42-SSP5-PkBudg900"
 cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP5-PkBudg900"
 start_run(cfg,codeCheck=FALSE)
