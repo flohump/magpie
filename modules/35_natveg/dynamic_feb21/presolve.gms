@@ -57,7 +57,6 @@ s35_shift = m_timestep_length_forestry/5;
 *' exceeds a threshold of 20 tC/ha the respective area is shifted from other natural land to secondary forest.
 p35_recovered_forest(t,j,ac)$(not sameas(ac,"acx")) =
 			p35_other(t,j,ac)$(pm_carbon_density_ac(t,j,ac,"vegc") > 20);
-p35_recovered_forest(t,j,ac) = round(p35_recovered_forest(t,j,ac),6);
 p35_other(t,j,ac) = p35_other(t,j,ac) - p35_recovered_forest(t,j,ac);
 p35_secdforest(t,j,ac) =
 			p35_secdforest(t,j,ac) + p35_recovered_forest(t,j,ac);
