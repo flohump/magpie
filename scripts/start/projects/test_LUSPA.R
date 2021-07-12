@@ -39,7 +39,7 @@ cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report")
 #download_and_update(cfg)
 
-prefix <- "LU05"
+prefix <- "LU06"
 
 #SSP1
 cfg$title <- paste(prefix,"SSP1","REF","SPA0",sep="_")
