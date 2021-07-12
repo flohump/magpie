@@ -39,7 +39,7 @@ cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report")
 #download_and_update(cfg)
 
-prefix <- "LU04"
+prefix <- "LU05"
 
 #SSP1
 cfg$title <- paste(prefix,"SSP1","REF","SPA0",sep="_")
@@ -85,6 +85,7 @@ cfg$title <- paste(prefix,"SSP5","1p5deg","SPA5",sep="_")
 cfg <- setScenario(cfg,c("SSP5","NDC"))
 cfg$gms$c56_pollutant_prices <- "R21M42-SSP5-PkBudg900"
 cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP5-PkBudg900"
+cfg$gms$c60_biodem_level <- 0 #otherwise infeasible
 start_run(cfg,codeCheck=FALSE)
 
 cfg$title <- paste(prefix,"SSP5","1p5deg","SPA0",sep="_")
@@ -94,4 +95,5 @@ cfg$gms$s32_aff_plantation <- 0
 cfg$gms$s32_aff_bii_coeff <- 0
 cfg$gms$c56_pollutant_prices <- "R21M42-SSP5-PkBudg900"
 cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP5-PkBudg900"
+cfg$gms$c60_biodem_level <- 0 #otherwise infeasible
 start_run(cfg,codeCheck=FALSE)
