@@ -61,7 +61,7 @@ cfg$output <- c("rds_report","extra/disaggregation")
 #39 sticky_labour_jul21 capital fixed sticky fixed
 #40 sticky_labour_jul21 capital fixed + sticky fixed to 2010 value + croparea fixed
 
-prefix <- "LAMA52"
+prefix <- "LAMA53"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
@@ -120,6 +120,7 @@ cfg$gms$c55_scen_conf_noselect <- "ssp1"
 cfg$gms$scen_countries55  <- all_iso_countries
 #irrig
 cfg$gms$s42_irrig_eff_scenario <- 3
+cfg$gms$c60_biodem_level <- 0 #global demand
 start_run(cfg,codeCheck=FALSE)
 
 #Scenario 2, based on SSP4
@@ -170,6 +171,7 @@ cfg$gms$c55_scen_conf_noselect <- "ssp4"
 cfg$gms$scen_countries55  <- oecd_countries
 #irrig
 cfg$gms$s42_irrig_eff_scenario <- 3
+cfg$gms$c60_biodem_level <- 0 #global demand
 start_run(cfg,codeCheck=FALSE)
 
 
