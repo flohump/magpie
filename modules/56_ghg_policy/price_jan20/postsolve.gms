@@ -31,6 +31,7 @@
  oq56_emission_costs_cell_oneoff(t,j,emis_cell_one56,"marginal")       = q56_emission_costs_cell_oneoff.m(j,emis_cell_one56);
  oq56_reward_cdr_aff_reg(t,i,"marginal")                               = q56_reward_cdr_aff_reg.m(i);
  oq56_reward_cdr_aff(t,j,"marginal")                                   = q56_reward_cdr_aff.m(j);
+ oq56_reward_cdr_aff_limit(t,j,"marginal")                             = q56_reward_cdr_aff_limit.m(j);
  oq56_peatland_emis_cost_reg(t,i,"marginal")                           = q56_peatland_emis_cost_reg.m(i);
  oq56_peatland_emis_cost(t,j,"marginal")                               = q56_peatland_emis_cost.m(j);
  ov_peatland_emis_cost(t,i,"level")                                    = vm_peatland_emis_cost.l(i);
@@ -56,6 +57,7 @@
  oq56_emission_costs_cell_oneoff(t,j,emis_cell_one56,"level")          = q56_emission_costs_cell_oneoff.l(j,emis_cell_one56);
  oq56_reward_cdr_aff_reg(t,i,"level")                                  = q56_reward_cdr_aff_reg.l(i);
  oq56_reward_cdr_aff(t,j,"level")                                      = q56_reward_cdr_aff.l(j);
+ oq56_reward_cdr_aff_limit(t,j,"level")                                = q56_reward_cdr_aff_limit.l(j);
  oq56_peatland_emis_cost_reg(t,i,"level")                              = q56_peatland_emis_cost_reg.l(i);
  oq56_peatland_emis_cost(t,j,"level")                                  = q56_peatland_emis_cost.l(j);
  ov_peatland_emis_cost(t,i,"upper")                                    = vm_peatland_emis_cost.up(i);
@@ -81,6 +83,7 @@
  oq56_emission_costs_cell_oneoff(t,j,emis_cell_one56,"upper")          = q56_emission_costs_cell_oneoff.up(j,emis_cell_one56);
  oq56_reward_cdr_aff_reg(t,i,"upper")                                  = q56_reward_cdr_aff_reg.up(i);
  oq56_reward_cdr_aff(t,j,"upper")                                      = q56_reward_cdr_aff.up(j);
+ oq56_reward_cdr_aff_limit(t,j,"upper")                                = q56_reward_cdr_aff_limit.up(j);
  oq56_peatland_emis_cost_reg(t,i,"upper")                              = q56_peatland_emis_cost_reg.up(i);
  oq56_peatland_emis_cost(t,j,"upper")                                  = q56_peatland_emis_cost.up(j);
  ov_peatland_emis_cost(t,i,"lower")                                    = vm_peatland_emis_cost.lo(i);
@@ -106,6 +109,7 @@
  oq56_emission_costs_cell_oneoff(t,j,emis_cell_one56,"lower")          = q56_emission_costs_cell_oneoff.lo(j,emis_cell_one56);
  oq56_reward_cdr_aff_reg(t,i,"lower")                                  = q56_reward_cdr_aff_reg.lo(i);
  oq56_reward_cdr_aff(t,j,"lower")                                      = q56_reward_cdr_aff.lo(j);
+ oq56_reward_cdr_aff_limit(t,j,"lower")                                = q56_reward_cdr_aff_limit.lo(j);
  oq56_peatland_emis_cost_reg(t,i,"lower")                              = q56_peatland_emis_cost_reg.lo(i);
  oq56_peatland_emis_cost(t,j,"lower")                                  = q56_peatland_emis_cost.lo(j);
 *##################### R SECTION END (OUTPUT DEFINITIONS) ######################
