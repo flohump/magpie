@@ -61,7 +61,7 @@ cfg$output <- c("rds_report","extra/disaggregation")
 #39 sticky_labour_jul21 capital fixed sticky fixed
 #40 sticky_labour_jul21 capital fixed + sticky fixed to 2010 value + croparea fixed
 
-prefix <- "LAMA51"
+prefix <- "LAMA52"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
