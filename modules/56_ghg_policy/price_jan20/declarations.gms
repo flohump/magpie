@@ -27,7 +27,6 @@ equations
  q56_emission_costs_cell_oneoff(j,emis_cell_one56)     	  Calculation of cellular costs for emissions occuring only once in time (mio. USD05MER per yr)
  q56_reward_cdr_aff_reg(i)                                Regional revenues for carbon captured by afforestation (mio. USD05MER per yr)
  q56_reward_cdr_aff(j)			                       	  Cellular revenues for carbon captured by afforestation (mio. USD05MER per yr)
- q56_reward_cdr_aff_limit(j)							  Cellular limit for afforestation revenues (mio. USD05MER per yr)
  q56_peatland_emis_cost_reg(i)                            Regional peatland GHG emissions costs (mio. USD05MER per yr)
  q56_peatland_emis_cost(j)                            	  Cellular peatland GHG emissions costs (mio. USD05MER per yr)
 ;

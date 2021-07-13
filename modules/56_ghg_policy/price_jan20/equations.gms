@@ -116,14 +116,6 @@ q56_cell_to_reg(i2,pollutants,emis_source) ..
             	 / ((1+sum((cell(i2,j2),ct),pm_interest(ct,i2)))**(ac.off*5)))
                  *sum((cell(i2,j2),ct),pm_interest(ct,i2)/(1+pm_interest(ct,i2)));
 
-*' The reward for afforestation shall not exceed the emissions costs of land conversion.
-*' Without this constraint there can be cases in which the model cuts down forest for afforestation.
-*' Cases in which the reward for afforestation is higher then the costs for deforestation can occur 
-*' if the CO2 price grows faster than the interest rate in combination with plantations used for afforestation.
-
- q56_reward_cdr_aff_limit(j2) ..
-                 v56_reward_cdr_aff(j2) =n= sum(emis_cell_one56, v56_emission_costs_cell_oneoff(j2,emis_cell_one56));
-
 
 *' Peatland emission costs depending on s56_peatland_policy
 
