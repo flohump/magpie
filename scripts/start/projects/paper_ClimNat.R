@@ -32,7 +32,7 @@ source("scripts/start/extra/lpjml_addon.R")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation")
 
-prefix <- "CN05"
+prefix <- "CN06"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
