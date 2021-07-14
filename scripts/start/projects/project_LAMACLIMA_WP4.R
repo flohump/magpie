@@ -60,8 +60,10 @@ cfg$output <- c("rds_report","extra/disaggregation")
 #38 labour prod*0.5 + sticky_labour_jul21 capital fixed sticky free
 #39 sticky_labour_jul21 capital fixed sticky fixed
 #40 sticky_labour_jul21 capital fixed + sticky fixed to 2010 value + croparea fixed
+#53 noBPH effect
+#54 BPH effect included
 
-prefix <- "LAMA53"
+prefix <- "LAMA54"
 cfg$force_replace <- TRUE
 
 cfg$gms$s80_optfile <- 1
@@ -107,6 +109,13 @@ cfg$gms$s32_aff_plantation <- 0
 cfg$gms$s32_aff_bii_coeff <- 0
 cfg$gms$s32_max_aff_area <- 500
 cfg$gms$c32_aff_mask <- "noboreal"
+
+#BPH effect on
+cfg$gms$c32_aff_mask <- "unrestricted"
+cfg$gms$c32_aff_bgp <- "ann_bph"
+cfg$gms$s32_tcre_local <- 1 #0<-global;1<-local
+cfg$gms$c32_tcre_ctrl <- "ann_TCREmean"
+
 #EFP
 cfg$gms$c42_env_flow_policy <- "on"
 cfg$gms$EFP_countries  <- all_iso_countries
@@ -158,6 +167,13 @@ cfg$gms$s32_aff_plantation <- 0
 cfg$gms$s32_aff_bii_coeff <- 0
 cfg$gms$s32_max_aff_area <- Inf
 cfg$gms$c32_aff_mask <- "noboreal"
+
+#BPH effect on
+cfg$gms$c32_aff_mask <- "unrestricted"
+cfg$gms$c32_aff_bgp <- "ann_bph"
+cfg$gms$s32_tcre_local <- 1 #0<-global;1<-local
+cfg$gms$c32_tcre_ctrl <- "ann_TCREmean"
+
 #EFP
 cfg$gms$c42_env_flow_policy <- "on"
 cfg$gms$EFP_countries  <- oecd_countries
