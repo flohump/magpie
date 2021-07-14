@@ -81,7 +81,7 @@ prefix <- "LU07"
 # cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP5-NPi"
 # start_run(cfg,codeCheck=FALSE)
 
-cfg$title <- paste(prefix,"SSP5","1p5deg","SPA5","CHECK2",sep="_")
+cfg$title <- paste(prefix,"SSP5","1p5deg","SPA5","CHECK3",sep="_")
 cfg <- setScenario(cfg,c("SSP5","NDC"))
 cfg$gms$c56_pollutant_prices <- "R21M42-SSP5-PkBudg900"
 cfg$gms$c60_2ndgen_biodem <- "R21M42-SSP5-PkBudg900"

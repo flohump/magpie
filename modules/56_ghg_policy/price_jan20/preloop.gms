@@ -67,7 +67,7 @@ im_pollutant_prices(t_all,i,pollutants)$(m_year(t_all) >= s56_ghgprice_start+20)
 im_pollutant_prices(t_all,i,pollutants)$(s56_ghgprice_devstate_scaling = 1) = im_pollutant_prices(t_all,i,pollutants)*im_development_state(t_all,i);
 
 ***GHG emission policy
-$ifthen "%c56_lu_spa%" == "SPA2" OR "%c56_lu_spa%" == "SPA5"
+$ifthen ("%c56_lu_spa%"=="SPA2")or("%c56_lu_spa%"=="SPA5")
  loop (t,
   if (m_year(t) < 2050,
 	i56_emis_policy(t,i,pollutants,emis_source) = f56_emis_policy("redd+_nosoil",pollutants,emis_source);
