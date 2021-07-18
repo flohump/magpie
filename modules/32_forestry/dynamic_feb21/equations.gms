@@ -36,7 +36,7 @@ q32_cost_total(i2) .. vm_cost_fore(i2) =e=
 
 q32_cdr_aff(j2,ac) ..
 vm_cdr_aff(j2,ac,"bgc") =e=
-sum(ac_est, v32_land(j2,"aff",ac_est)) * sum(ct, p32_cdr_ac(ct,j2,ac))
+sum(type32_sub, sum(ac_est, v32_land(j2,type32_sub,ac_est)) * sum(ct, p32_cdr_ac(ct,j2,type32_sub,ac)))
 ;
 
 q32_bgp_aff(j2,ac) ..
@@ -45,7 +45,9 @@ sum(ac_est, v32_land(j2,"aff",ac_est)) * p32_aff_bgp(j2,ac);
 
 *' ac_est can only increase if total afforested land increases
 q32_aff_est(j2) ..
-sum(ac_est, v32_land(j2,"aff",ac_est)) =l= sum(ac, v32_land(j2,"aff",ac)) - sum((ct,ac), p32_land(ct,j2,"aff",ac));
+*sum(ac_est, v32_land(j2,"aff",ac_est)) =l= sum(ac, v32_land(j2,"aff",ac)) - sum((ct,ac), p32_land(ct,j2,"aff",ac));
+sum((type32_sub,ac_est), v32_land(j2,type32_sub,ac_est)) =l= (vm_land(j2,"forestry") + sum(land_natveg, vm_land(j2,land_natveg))) - 
+(pcm_land(j2,"forestry")-sum(land_natveg, pcm_land(j2,land_natveg)));
 
 *-----------------------------------------------
 ****************** Land ************************
@@ -96,6 +98,11 @@ sum(ac_est, v32_land(j2,"aff",ac_est)) =l= sum(ac, v32_land(j2,"aff",ac)) - sum(
 *------------------------------------------
 *********** Biodiversity value ************
 *------------------------------------------
+
+q32_bv_ref(j2,potnatveg) .. vm_bv(j2,"ref_co2p",potnatveg)
+ 				  =e=
+          sum(bii_class_secd, sum(ac_to_bii_class_secd(ac,bii_class_secd), v32_land(j2,"ref",ac)) * 
+          p32_bii_coeff("ref",bii_class_secd,potnatveg)) * fm_luh2_side_layers(j2,potnatveg);
 
 q32_bv_aff(j2,potnatveg) .. vm_bv(j2,"aff_co2p",potnatveg)
  				  =e=

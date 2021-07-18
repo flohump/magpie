@@ -37,11 +37,13 @@ else
 *' Afforestation switch:
 *' 0 = Use natveg growth curve towards LPJmL natural vegetation
 *' 1 = Use plantation growth curve (faster than natveg) towards LPJmL natural vegetation
-if(s32_aff_plantation = 0,
- p32_carbon_density_ac(t,j,"aff",ac,ag_pools) = pm_carbon_density_ac(t,j,ac,ag_pools);
-elseif s32_aff_plantation = 1,
- p32_carbon_density_ac(t,j,"aff",ac,ag_pools) = p32_c_density_ac_fast_forestry(t,j,ac);
-);
+*if(s32_aff_plantation = 0,
+* p32_carbon_density_ac(t,j,type32_sub,ac,ag_pools) = pm_carbon_density_ac(t,j,ac,ag_pools);
+*elseif s32_aff_plantation = 1,
+* p32_carbon_density_ac(t,j,type32_sub,ac,ag_pools) = p32_c_density_ac_fast_forestry(t,j,ac);
+*);
+ p32_carbon_density_ac(t,j,type32_sub,ac,ag_pools) = p32_c_density_ac_fast_forestry(t,j,ac);
+ p32_carbon_density_ac(t,j,"ref",ac,ag_pools) = pm_carbon_density_ac(t,j,ac,ag_pools);
 
 *' Timber plantations carbon densities:
 p32_carbon_density_ac(t,j,"plant",ac,ag_pools) = pm_carbon_density_ac_forestry(t,j,ac,ag_pools);
@@ -50,8 +52,8 @@ p32_carbon_density_ac(t,j,"plant",ac,ag_pools) = pm_carbon_density_ac_forestry(t
 p32_carbon_density_ac(t,j,"ndc",ac,ag_pools) = pm_carbon_density_ac(t,j,ac,ag_pools);
 
 *' CDR from afforestation for each age-class, depending on planning horizon.
-p32_cdr_ac(t,j,ac)$(ord(ac) > 1 AND (ord(ac)-1) <= s32_planing_horizon/5)
-= p32_carbon_density_ac(t,j,"aff",ac,"vegc") - p32_carbon_density_ac(t,j,"aff",ac-1,"vegc");
+p32_cdr_ac(t,j,type32_sub,ac)$(ord(ac) > 1 AND (ord(ac)-1) <= s32_planing_horizon/5)
+= p32_carbon_density_ac(t,j,type32_sub,ac,"vegc") - p32_carbon_density_ac(t,j,type32_sub,ac-1,"vegc");
 
 *' Regrowth of natural vegetation (natural succession) is modelled by shifting
 *' age-classes according to time step length. For first year of simulation, the
@@ -126,22 +128,22 @@ v32_land.lo(j,"ndc",ac_est) = 0;
 v32_land.up(j,"ndc",ac_est) = Inf;
 
 ** fix c price induced afforestation based on s32_planing_horizon, fixed only until end of s32_planing_horizon, ac_est is free
-v32_land.fx(j,"aff",ac)$(ac.off <= s32_planing_horizon/5) = pc32_land(j,"aff",ac);
-v32_land.up(j,"aff",ac)$(ac.off > s32_planing_horizon/5) = pc32_land(j,"aff",ac);
-v32_land.lo(j,"aff",ac_est) = 0;
-v32_land.up(j,"aff",ac_est) = Inf;
-v32_land.l(j,"aff",ac_est) = 0;
+v32_land.fx(j,type32_sub,ac)$(ac.off <= s32_planing_horizon/5) = pc32_land(j,type32_sub,ac);
+v32_land.up(j,type32_sub,ac)$(ac.off > s32_planing_horizon/5) = pc32_land(j,type32_sub,ac);
+v32_land.lo(j,type32_sub,ac_est) = 0;
+v32_land.up(j,type32_sub,ac_est) = Inf;
+v32_land.l(j,type32_sub,ac_est) = 0;
 
 ** Certain areas (e.g. the boreal zone) are excluded from endogenous afforestation.
 ** DON'T USE TYPE32 SET HERE
 if(m_year(t) <= sm_fix_SSP2,
-	v32_land.fx(j,"aff",ac_est) = 0;
+	v32_land.fx(j,type32_sub,ac_est) = 0;
 else
-	v32_land.lo(j,"aff",ac_est) = 0;
-	v32_land.up(j,"aff",ac_est) = f32_aff_mask(j) * sum(land, pcm_land(j,land));
+	v32_land.lo(j,type32_sub,ac_est) = 0;
+	v32_land.up(j,type32_sub,ac_est) = f32_aff_mask(j) * sum(land, pcm_land(j,land));
 );
 *' No afforestation is allowed if carbon density <= 20 tc/ha
-v32_land.fx(j,"aff",ac_est)$(fm_carbon_density(t,j,"forestry","vegc") <= 20) = 0;
+v32_land.fx(j,type32_sub,ac_est)$(fm_carbon_density(t,j,"forestry","vegc") <= 20) = 0;
 
 m_boundfix(v32_land,(j,type32,ac_sub),up,10e-5);
 

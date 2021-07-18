@@ -14,7 +14,10 @@ sets
  / recur, mon /
 
  type32 plantation type
- / aff, ndc, plant /
+ / ref, aff, ndc, plant /
+
+ type32_sub(type32) CO2 price driven afforestation
+ / ref, aff /
 
  pol32 afforestation policy type
  / none, npi, ndc /
