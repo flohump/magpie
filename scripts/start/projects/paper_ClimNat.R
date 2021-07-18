@@ -32,7 +32,7 @@ source("scripts/start/extra/lpjml_addon.R")
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation")
 
-prefix <- "CN08"
+prefix <- "CN09"
 cfg$gms$past <- "manpast_rangeland"
 cfg$gms$s31_fac_req_past  <- 100
 
