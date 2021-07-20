@@ -31,7 +31,11 @@ cfg$output <- c("rds_report","extra/disaggregation")
 
 cfg <- setScenario(cfg,c("SSP2","NPI"))
 
-prefix <- "SCP38"
+#SCP38 sugar_cane conversion factor is 0.01 instead 0.2326 t DM MP per ton DM sugar_cane
+#SCP39 sugar_cane conversion factor is 0.105 instead 0.2326 t DM MP per ton DM sugar_cane based on 0.5*0.2+0.5*0.01
+#SCP40 sugar_cane conversion factor is 0.055 instead 0.2326 t DM MP per ton DM sugar_cane based on 0.5*0.1+0.5*0.01
+#SCP41: c15_rumdairyscen instead of c15_rumdairy_scp_scen
+prefix <- "SCP41"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
@@ -71,7 +75,7 @@ for (pol in c("Ref")) {
     for (scp_level in c(0,20,50,80)) {
       cfg$title <- paste(prefix,paste0("SSP2-",pol,"-BioTech",scp_level),livst_type,sep="_")
       if (scp_level == 0) scp_scen <- "constant" else if (scp_level == 20) scp_scen <- "sigmoid_80pc_20_50" else if (scp_level == 50) scp_scen <- "sigmoid_50pc_20_50" else if (scp_level == 80) scp_scen <- "sigmoid_20pc_20_50"
-#      cfg$gms$c15_rumdairy_scp_scen <- scp_scen
+      #      cfg$gms$c15_rumdairy_scp_scen <- scp_scen
       cfg$gms$c15_rumdairyscen <- scp_scen
       start_run(cfg,codeCheck=FALSE)
     }
