@@ -31,7 +31,7 @@ cfg$output <- c("rds_report","extra/disaggregation")
 
 cfg <- setScenario(cfg,c("SSP2","NPI"))
 
-prefix <- "SCP37"
+prefix <- "SCP38"
 cfg$qos <- "priority"
 
 cfg$gms$s80_optfile <- 1
@@ -71,11 +71,12 @@ for (pol in c("Ref")) {
     for (scp_level in c(0,20,50,80)) {
       cfg$title <- paste(prefix,paste0("SSP2-",pol,"-BioTech",scp_level),livst_type,sep="_")
       if (scp_level == 0) scp_scen <- "constant" else if (scp_level == 20) scp_scen <- "sigmoid_80pc_20_50" else if (scp_level == 50) scp_scen <- "sigmoid_50pc_20_50" else if (scp_level == 80) scp_scen <- "sigmoid_20pc_20_50"
-      cfg$gms$c15_rumdairy_scp_scen <- scp_scen
+#      cfg$gms$c15_rumdairy_scp_scen <- scp_scen
+      cfg$gms$c15_rumdairyscen <- scp_scen
       start_run(cfg,codeCheck=FALSE)
     }
   }
 }
 
 #rd is default. revert back
-file.copy(from = "modules/15_food/anthropometrics_jan18/sets_rd.gms", to = "modules/15_food/anthropometrics_jan18/sets.gms",overwrite = TRUE)
+#file.copy(from = "modules/15_food/anthropometrics_jan18/sets_rd.gms", to = "modules/15_food/anthropometrics_jan18/sets.gms",overwrite = TRUE)
