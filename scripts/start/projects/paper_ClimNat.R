@@ -32,7 +32,7 @@ cfg$force_download <- TRUE
 cfg$results_folder <- "output/:title:"
 cfg$output <- c("rds_report","extra/disaggregation")
 
-prefix <- "CN10"
+prefix <- "CN11"
 #cfg$gms$past <- "manpast_rangeland"
 #cfg$gms$s31_fac_req_past  <- 100
 
@@ -90,8 +90,8 @@ for (pol in c("Ref","Climate","Nature","Climate+Nature")) {
     } else if (pol == "Climate+Nature") {
       cfg <- setScenario(cfg,c(ssp,"NDC"))
       cfg$input[grep("cellularmagpie", cfg$input)] <- "rev4.62_h12_57347947_cellularmagpie_c200_MRI-ESM2-0-ssp119_lpjml-ab83aee4.tgz"
-      cfg$gms$c56_pollutant_prices <- "PIK_NPI"
-      cfg$gms$c60_2ndgen_biodem <- "PIK_LIN"
+      cfg$gms$c56_pollutant_prices <- "PIK_LIN"
+      cfg$gms$c60_2ndgen_biodem <- "PIK_NPI"
       cfg$gms$c60_biodem_level <- 0
       cfg$gms$s32_aff_plantation <- 0
       cfg$gms$s32_aff_bii_coeff <- 0
