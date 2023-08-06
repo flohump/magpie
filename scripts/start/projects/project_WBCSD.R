@@ -217,7 +217,7 @@ start_run(cfg,codeCheck=FALSE)
 
 
 
-## 1p5degInovation
+## 1p5degInnovation
 cfg$title <- paste(prefix,"1.5C-Innovation",sep="_")
 
 #1 set all options to SSP2 defaults including Pop and GDP + NDC
@@ -227,8 +227,8 @@ cfg$input[["cellular"]] <- "rev4.87_FSEC_0bd54110_cellularmagpie_c200_MRI-ESM2-0
 
 #2 GHG price and Bioenergy Demand from https://climatescenariocatalogue.org/explore-the-data/
 cfg$gms$c60_1stgen_biodem <- "phaseout2020"
-cfg$gms$c60_2ndgen_biodem <- "1p5degInovation"
-cfg$gms$c56_pollutant_prices <- "1p5degInovation"
+cfg$gms$c60_2ndgen_biodem <- "1p5degInnovation"
+cfg$gms$c56_pollutant_prices <- "1p5degInnovation"
 cfg$gms$c56_mute_ghgprices_until <- "y2020"   # def = y2030
 
 #3 Diet shift and food waste; No diet shift and no food waste reduction
