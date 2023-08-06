@@ -31,7 +31,7 @@ cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=
 #output folder
 cfg$results_folder <- "output/:title:"
 cfg$results_folder_highres <- "output"
-cfg$output <- c("rds_report")#"extra/disaggregation"
+cfg$output <- c("rds_report","extra/disaggregation")
 cfg$force_replace <- TRUE
 cfg$force_download <- TRUE
 cfg$qos <- "priority"
