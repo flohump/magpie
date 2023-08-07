@@ -45,7 +45,7 @@ cfg$gms$c38_fac_req <- "reg"        # default "glo"
 cfg$input <- c(regional = "rev4.87_FSEC_magpie.tgz",
                cellular = "rev4.87_FSEC_1b5c3817_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1.tgz",
                validation = "rev4.87_FSEC_validation.tgz",
-               calibration = "calibration_FSEC_24Mar23.tgz",
+               calibration = "calibration_FSEC_07Aug23.tgz",
                additional = "additional_data_rev4.43.tgz",
                patch = "WBCSD.tgz")
 
