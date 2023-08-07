@@ -13,7 +13,7 @@
 #### Script to start a MAgPIE run ####
 ######################################
 
-prefix <- "T01"
+prefix <- "T02"
 
 library(gms)
 library(magclass)
@@ -69,7 +69,7 @@ cfg$gms$c60_2ndgen_biodem <- "BAU"
 cfg$gms$c56_pollutant_prices <- "BAU"
 cfg$gms$c56_mute_ghgprices_until <- "y2020"   # def = y2030
 
-#3 Diet shift and food waste; No diet shift and no food waste reduction
+#3 Diet shift and food waste; No diet shift and food waste reduction
 cfg$gms$s15_kcal_pc_livestock_intake_target <- "750"   # def = 430
 cfg$gms$c15_livescen_target <- "constant"           # def = constant
 cfg$gms$s15_exo_waste <- 1
@@ -96,7 +96,7 @@ start_run(cfg,codeCheck=FALSE)
 
 
 ## 2degForecastPol
-cfg$title <- paste(prefix,"2C-ForecastPol",sep="_")
+cfg$title <- paste(prefix,"2degForecastPol",sep="_")
 
 #1 set all options to SSP2 defaults including Pop and GDP + NDC
 cfg <- setScenario(cfg,c("SSP2","NDC","ForestryEndo","cc","rcp2p6"))
@@ -109,14 +109,14 @@ cfg$gms$c60_2ndgen_biodem <- "2degForecastPol"
 cfg$gms$c56_pollutant_prices <- "2degForecastPol"
 cfg$gms$c56_mute_ghgprices_until <- "y2020"   # def = y2030
 
-#3 Diet shift and food waste; No diet shift and no food waste reduction
+#3 Diet shift and food waste; Medium diet shift and food waste reduction
 cfg$gms$s15_kcal_pc_livestock_intake_target <- "600"   # def = 430
 cfg$gms$c15_livescen_target <- "lin_zero_20_50"           # def = constant
 cfg$gms$s15_exo_waste <- 1
 cfg$gms$s15_waste_scen <- 1.2
 cfg$gms$c70_cereal_scp_scen <- "lin_99-98-90pc_20_50-60-100"
 
-#4 Protected areas; WDPA only
+#4 Protected areas; BH protection
 cfg$gms$c22_protect_scenario <- "BH"      # def = None
 cfg$gms$c22_protect_scenario_noselect <- "none"     # def = None
 cfg$gms$policy_countries22  <- highIncomeCountries
@@ -136,7 +136,7 @@ start_run(cfg,codeCheck=FALSE)
 
 
 ## 2degCoordPol
-cfg$title <- paste(prefix,"2C-CoordPol",sep="_")
+cfg$title <- paste(prefix,"2degCoordPol",sep="_")
 
 #1 set all options to SSP2 defaults including Pop and GDP + NDC
 cfg <- setScenario(cfg,c("SSP2","NDC","ForestryEndo","cc","rcp2p6"))
@@ -149,14 +149,14 @@ cfg$gms$c60_2ndgen_biodem <- "2degCoordPol"
 cfg$gms$c56_pollutant_prices <- "2degCoordPol"
 cfg$gms$c56_mute_ghgprices_until <- "y2020"   # def = y2030
 
-#3 Diet shift and food waste; No diet shift and no food waste reduction
+#3 Diet shift and food waste; Medium diet shift and food waste reduction
 cfg$gms$s15_kcal_pc_livestock_intake_target <- "600"   # def = 430
 cfg$gms$c15_livescen_target <- "lin_zero_20_50"           # def = constant
 cfg$gms$s15_exo_waste <- 1
 cfg$gms$s15_waste_scen <- 1.2
 cfg$gms$c70_cereal_scp_scen <- "lin_99-98-90pc_20_50-60-100"
 
-#4 Protected areas; WDPA only
+#4 Protected areas; BH protection
 cfg$gms$c22_protect_scenario <- "BH"      # def = None
 cfg$gms$c22_protect_scenario_noselect <- "none"     # def = None
 cfg$gms$policy_countries22  <- all_iso_countries
@@ -177,7 +177,7 @@ start_run(cfg,codeCheck=FALSE)
 
 
 ## 1p5degSocialTrans
-cfg$title <- paste(prefix,"1.5C-SocialTrans",sep="_")
+cfg$title <- paste(prefix,"1p5degSocialTrans",sep="_")
 
 #1 set all options to SSP2 defaults including Pop and GDP + NDC
 cfg <- setScenario(cfg,c("SSP2","NDC","ForestryEndo","cc","rcp1p9"))
@@ -190,15 +190,15 @@ cfg$gms$c60_2ndgen_biodem <- "1p5degSocialTrans"
 cfg$gms$c56_pollutant_prices <- "1p5degSocialTrans"
 cfg$gms$c56_mute_ghgprices_until <- "y2020"   # def = y2030
 
-#3 Diet shift and food waste; No diet shift and no food waste reduction
+#3 Diet shift and food waste; High diet shift and food waste reduction
 cfg$gms$s15_kcal_pc_livestock_intake_target <- "450"   # def = 430
 cfg$gms$c15_livescen_target <- "lin_zero_20_50"           # def = constant
 cfg$gms$s15_exo_waste <- 1
 cfg$gms$s15_waste_scen <- 1.165
 cfg$gms$c70_cereal_scp_scen <- "lin_99-98-90pc_20_50-60-100"
 
-#4 Protected areas; WDPA only
-cfg$gms$c22_protect_scenario <- "GSN_HalfEarth"      # def = None
+#4 Protected areas; 30by30
+cfg$gms$c22_protect_scenario <- "30by30"      # def = None
 cfg$gms$c22_protect_scenario_noselect <- "none"     # def = None
 cfg$gms$policy_countries22  <- all_iso_countries
 cfg$gms$s22_conservation_start <- 2020       # def = 2020
@@ -218,7 +218,7 @@ start_run(cfg,codeCheck=FALSE)
 
 
 ## 1p5degInnovation
-cfg$title <- paste(prefix,"1.5C-Innovation",sep="_")
+cfg$title <- paste(prefix,"1p5degInnovation",sep="_")
 
 #1 set all options to SSP2 defaults including Pop and GDP + NDC
 cfg <- setScenario(cfg,c("SSP2","NDC","ForestryEndo","cc","rcp1p9"))
@@ -231,14 +231,14 @@ cfg$gms$c60_2ndgen_biodem <- "1p5degInnovation"
 cfg$gms$c56_pollutant_prices <- "1p5degInnovation"
 cfg$gms$c56_mute_ghgprices_until <- "y2020"   # def = y2030
 
-#3 Diet shift and food waste; No diet shift and no food waste reduction
+#3 Diet shift and food waste; Medium diet shift and food waste reduction
 cfg$gms$s15_kcal_pc_livestock_intake_target <- "600"   # def = 430
 cfg$gms$c15_livescen_target <- "lin_zero_20_50"           # def = constant
 cfg$gms$s15_exo_waste <- 1
 cfg$gms$s15_waste_scen <- 1.2
 cfg$gms$c70_cereal_scp_scen <- "lin_99-98-90pc_20_50-60-100"
 
-#4 Protected areas; WDPA only
+#4 Protected areas; BH protection
 cfg$gms$c22_protect_scenario <- "BH"      # def = None
 cfg$gms$c22_protect_scenario_noselect <- "none"     # def = None
 cfg$gms$policy_countries22  <- all_iso_countries
