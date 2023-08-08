@@ -6,14 +6,14 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ----------------------------------------------------------
-# description: LAMACLIMA WP4 runs
+# description: WBCSD runs
 # ----------------------------------------------------------
 
 ######################################
 #### Script to start a MAgPIE run ####
 ######################################
 
-prefix <- "T02"
+prefix <- "T03"
 
 library(gms)
 library(magclass)
@@ -31,15 +31,17 @@ cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=
 #output folder
 cfg$results_folder <- "output/:title:"
 cfg$results_folder_highres <- "output"
-cfg$output <- c("rds_report","extra/disaggregation")
-cfg$force_replace <- TRUE
-cfg$force_download <- TRUE
+cfg$output <- c("extra/disaggregation","rds_report")
+#cfg$force_replace <- TRUE
+#cfg$force_download <- TRUE
 cfg$qos <- "priority"
 
 #general settings
 cfg$gms$c_timesteps <- "5year2050"
 cfg$gms$factor_costs <- "sticky_labor"        # default = per_ton_fao_may22
 cfg$gms$c38_fac_req <- "reg"        # default "glo"
+cfg$gms$crop <- "penalty_apr22"
+
 
 #input file vector (for BAU)
 cfg$input <- c(regional = "rev4.87_FSEC_magpie.tgz",
@@ -92,7 +94,14 @@ cfg$gms$c73_build_demand <- "BAU"
 #7 Yields
 cfg$gms$c13_tccost <- "high"  # def = medium
 
-start_run(cfg,codeCheck=FALSE)
+results_folder <- gsub(":title:", cfg$title, cfg$results_folder, fixed=TRUE)
+if (file.exists(results_folder)) {
+  message(paste0("Results folder ", results_folder,
+                 " already exists. Jumping to next scenario"))
+} else {
+  start_run(cfg,codeCheck=FALSE)    
+}
+
 
 
 ## 2degForecastPol
@@ -132,7 +141,14 @@ cfg$gms$c73_build_demand <- "10pc"
 #7 Yields
 cfg$gms$c13_tccost <- "medium"  # def = medium
 
-start_run(cfg,codeCheck=FALSE)
+results_folder <- gsub(":title:", cfg$title, cfg$results_folder, fixed=TRUE)
+if (file.exists(results_folder)) {
+  message(paste0("Results folder ", results_folder,
+                 " already exists. Jumping to next scenario"))
+} else {
+  start_run(cfg,codeCheck=FALSE)    
+}
+
 
 
 ## 2degCoordPol
@@ -172,7 +188,13 @@ cfg$gms$c73_build_demand <- "10pc"
 #7 Yields
 cfg$gms$c13_tccost <- "medium"  # def = medium
 
-start_run(cfg,codeCheck=FALSE)
+results_folder <- gsub(":title:", cfg$title, cfg$results_folder, fixed=TRUE)
+if (file.exists(results_folder)) {
+  message(paste0("Results folder ", results_folder,
+                 " already exists. Jumping to next scenario"))
+} else {
+  start_run(cfg,codeCheck=FALSE)    
+}
 
 
 
@@ -213,7 +235,13 @@ cfg$gms$c73_build_demand <- "10pc"
 #7 Yields
 cfg$gms$c13_tccost <- "medium"  # def = medium
 
-start_run(cfg,codeCheck=FALSE)
+results_folder <- gsub(":title:", cfg$title, cfg$results_folder, fixed=TRUE)
+if (file.exists(results_folder)) {
+  message(paste0("Results folder ", results_folder,
+                 " already exists. Jumping to next scenario"))
+} else {
+  start_run(cfg,codeCheck=FALSE)    
+}
 
 
 
@@ -254,5 +282,10 @@ cfg$gms$c73_build_demand <- "50pc"
 #7 Yields
 cfg$gms$c13_tccost <- "low"  # def = medium
 
-start_run(cfg,codeCheck=FALSE)
-
+results_folder <- gsub(":title:", cfg$title, cfg$results_folder, fixed=TRUE)
+if (file.exists(results_folder)) {
+  message(paste0("Results folder ", results_folder,
+                 " already exists. Jumping to next scenario"))
+} else {
+  start_run(cfg,codeCheck=FALSE)    
+}
