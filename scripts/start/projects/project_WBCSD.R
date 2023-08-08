@@ -26,7 +26,7 @@ source("scripts/start_functions.R")
 source("config/default.cfg")
 
 #repos
-cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=NULL, "./patch_inputdata"=NULL), getOption("magpie_repos"))
+cfg$repositories <- append(list("./patch_inputdata"=NULL, "https://rse.pik-potsdam.de/data/magpie/public"=NULL), getOption("magpie_repos"))
 
 #output folder
 cfg$results_folder <- "output/:title:"
