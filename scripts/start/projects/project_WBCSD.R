@@ -13,7 +13,7 @@
 #### Script to start a MAgPIE run ####
 ######################################
 
-prefix <- "T03"
+prefix <- "T04"
 
 library(gms)
 library(magclass)
@@ -41,7 +41,7 @@ cfg$gms$c_timesteps <- "5year2050"
 cfg$gms$factor_costs <- "sticky_labor"        # default = per_ton_fao_may22
 cfg$gms$c38_fac_req <- "reg"        # default "glo"
 cfg$gms$crop <- "penalty_apr22"
-
+cfg$gms$past <- "grasslands_apr22"
 
 #input file vector (for BAU)
 cfg$input <- c(regional = "rev4.87_FSEC_magpie.tgz",
