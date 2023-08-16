@@ -13,7 +13,7 @@
 #### Script to start a MAgPIE run ####
 ######################################
 
-prefix <- "T04"
+prefix <- "T05"
 
 library(gms)
 library(magclass)
@@ -35,6 +35,7 @@ cfg$output <- c("extra/disaggregation","rds_report")
 #cfg$force_replace <- TRUE
 #cfg$force_download <- TRUE
 cfg$qos <- "priority"
+cfg$sequential <- FALSE
 
 #general settings
 cfg$gms$c_timesteps <- "5year2050"
