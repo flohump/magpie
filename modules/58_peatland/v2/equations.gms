@@ -24,11 +24,18 @@
 
 *' Managed land area expansion and reduction:
 
+q58_forestryRed(j2,type32) ..
+v32_landreduction_forestry(j2,type32) =g= vm_landreduction_forestry(j2,type32) - vm_landexpansion_forestry(j2,type32);
+
+q58_forestryExp(j2,type32) ..
+v32_landexpansion_forestry(j2,type32) =g= vm_landexpansion_forestry(j2,type32) - vm_landreduction_forestry(j2,type32);
+
+
  q58_manLandExp(j2,manPeat58) ..
-  v58_manLandExp(j2,manPeat58) =e= m58_LandMerge(vm_landexpansion,vm_landexpansion_forestry,"j2");
+  v58_manLandExp(j2,manPeat58) =e= m58_LandMerge(vm_landexpansion,v32_landexpansion_forestry,"j2");
 
  q58_manLandRed(j2,manPeat58) ..
-  v58_manLandRed(j2,manPeat58) =e= m58_LandMerge(vm_landreduction,vm_landreduction_forestry,"j2");
+  v58_manLandRed(j2,manPeat58) =e= m58_LandMerge(vm_landreduction,v32_landreduction_forestry,"j2");
 
 *' Future peatland dynamics (`v58_peatland`) depend on changes in managed land (`v58_manLandExp`, `v58_manLandRed`), 
 *' multiplied with corresponding scaling factors for expansion (`v58_scalingFactorExp`) and reduction (`p58_scalingFactorRed`). 
@@ -42,13 +49,14 @@
   v58_peatland(j2,manPeat58) =e= 
     pc58_peatland(j2,manPeat58) 
     + v58_manLandExp(j2,manPeat58) * v58_scalingFactorExp(j2,manPeat58)
-    - v58_manLandRed(j2,manPeat58) * (s58_dist * sum(ct, p58_scalingFactorRed(ct,j2,manPeat58)) + (1-s58_dist) * 1); 
+    - v58_manLandRed(j2,manPeat58) * (s58_dist * sum(ct, p58_scalingFactorRed(ct,j2,manPeat58)) + (1-s58_dist) * 1)
+    + v58_balance(j2,manPeat58); 
 
 *' Peatland scaling factor for expansion: (maxPeatland - totalManagedPeatland) / (maxLand - totalManagedLand). 
 *' See macro `m58_LandLeft` for details.
 
 q58_scalingFactorExp(j2,manPeat58)$(sum(ct, m_year(ct)) > s58_fix_peatland) ..
-  v58_scalingFactorExp(j2,manPeat58) * m58_LandLeft(pcm_land,"land",v58_manLand,pc58_manLand) + v58_balance(j2,manPeat58)
+  v58_scalingFactorExp(j2,manPeat58) * m58_LandLeft(pcm_land,"land",v58_manLand,pc58_manLand)
   =e= 
   m58_LandLeft(pc58_peatland,"land58",v58_peatland,pc58_peatland);
 
