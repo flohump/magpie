@@ -24,18 +24,18 @@
 
 *' Managed land area expansion and reduction:
 
-q58_forestryRed(j2,type32) ..
-v32_landreduction_forestry(j2,type32) =g= vm_landreduction_forestry(j2,type32) - vm_landexpansion_forestry(j2,type32);
+*q58_forestryRed(j2,type32) ..
+*v32_landreduction_forestry(j2,type32) =g= vm_landreduction_forestry(j2,type32) - vm_landexpansion_forestry(j2,type32);
 
-q58_forestryExp(j2,type32) ..
-v32_landexpansion_forestry(j2,type32) =g= vm_landexpansion_forestry(j2,type32) - vm_landreduction_forestry(j2,type32);
+*q58_forestryExp(j2,type32) ..
+*v32_landexpansion_forestry(j2,type32) =g= vm_landexpansion_forestry(j2,type32) - vm_landreduction_forestry(j2,type32);
 
 
  q58_manLandExp(j2,manPeat58) ..
-  v58_manLandExp(j2,manPeat58) =e= m58_LandMerge(vm_landexpansion,v32_landexpansion_forestry,"j2");
+  v58_manLandExp(j2,manPeat58) =e= m58_LandMerge(vm_landexpansion,vm_landexpansion_forestry,"j2");
 
  q58_manLandRed(j2,manPeat58) ..
-  v58_manLandRed(j2,manPeat58) =e= m58_LandMerge(vm_landreduction,v32_landreduction_forestry,"j2");
+  v58_manLandRed(j2,manPeat58) =e= m58_LandMerge(vm_landreduction,vm_landreduction_forestry,"j2");
 
 *' Future peatland dynamics (`v58_peatland`) depend on changes in managed land (`v58_manLandExp`, `v58_manLandRed`), 
 *' multiplied with corresponding scaling factors for expansion (`v58_scalingFactorExp`) and reduction (`p58_scalingFactorRed`). 

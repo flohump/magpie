@@ -29,8 +29,6 @@ equations
  q58_peatland_cost_annuity(j,cost58)       Annuity costs for peatland conversion in the current timestep (mio. USD05MER per yr)
  q58_peatland_emis_detail(j,land58,emis58) Detailed GHG emissions from peatlands (Tg per yr)
  q58_peatland_emis(i,poll58)               GHG emissions from managed peatland (Tg per yr)
- q58_forestryRed(j,type32)
- q58_forestryExp(j,type32)
 ;
 
 variables
@@ -47,8 +45,6 @@ positive variables
  v58_scalingFactorExp(j,manPeat58) Scaling factor for peatland expansion (1)
  v58_balance(j,manPeat58)          Technical balance term for peatland scaling factor (1)
  v58_peatland_cost_annuity(j,cost58) Annuity costs for peatland conversion in the current timestep (mio. USD05MER per yr)
- v32_landreduction_forestry(j,type32)
- v32_landexpansion_forestry(j,type32)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
@@ -63,8 +59,6 @@ parameters
  ov58_scalingFactorExp(t,j,manPeat58,type)         Scaling factor for peatland expansion (1)
  ov58_balance(t,j,manPeat58,type)                  Technical balance term for peatland scaling factor (1)
  ov58_peatland_cost_annuity(t,j,cost58,type)       Annuity costs for peatland conversion in the current timestep (mio. USD05MER per yr)
- ov32_landreduction_forestry(t,j,type32,type)      
- ov32_landexpansion_forestry(t,j,type32,type)      
  oq58_peatland(t,j,type)                           Constraint for total peatland area (mio. ha)
  oq58_peatlandChange(t,j,land58,type)              Peatland area change (mio. ha)
  oq58_manLand(t,j,manPeat58,type)                  Managed land area (mio. ha)
@@ -76,7 +70,5 @@ parameters
  oq58_peatland_cost_annuity(t,j,cost58,type)       Annuity costs for peatland conversion in the current timestep (mio. USD05MER per yr)
  oq58_peatland_emis_detail(t,j,land58,emis58,type) Detailed GHG emissions from peatlands (Tg per yr)
  oq58_peatland_emis(t,i,poll58,type)               GHG emissions from managed peatland (Tg per yr)
- oq58_forestryRed(t,j,type32,type)                 
- oq58_forestryExp(t,j,type32,type)                 
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

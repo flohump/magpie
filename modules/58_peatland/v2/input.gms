@@ -7,14 +7,14 @@
 
 scalars
   s58_cost_rewet_recur Recurring costs for rewetted peatland (USD05MER per ha) / 200 /
-  s58_cost_rewet_onetime One-time costs for peatland rewetting (USD05MER per ha) / 7000 /
+  s58_cost_rewet_onetime One-time costs for peatland rewetting (USD05MER per ha) / 2000 /
   s58_cost_drain_recur Recurring costs for drained and managed peatlands (USD05MER per ha) / 0 /
-  s58_cost_drain_intact_onetime One-time costs for drainage of intact peatland (USD05MER per ha) / 0 /
+  s58_cost_drain_intact_onetime One-time costs for drainage of intact peatland (USD05MER per ha) / 4000 /
   s58_cost_drain_rewet_onetime One-time costs for drainage of rewetted peatland (USD05MER per ha) / 0 /
   s58_rewetting_switch Peatland rewetting on (Inf) or off (0) / Inf /
   s58_fix_peatland Year indicating until when peatland area should be fixed (year) / 2020 /
   s58_balance_penalty Penalty for technical peatland balance term (USD05MER) / 1e+06 /
-  s58_dist  Distribution of managed peatlands in managed areas 1=equal distribution 0=all together (1) / 0.75 /
+  s58_dist  Distribution of managed peatlands in managed areas 1=equal distribution (1) / 1 /
 ;
 
 *Peatland area based on Global Peatland Map 2.0 and Global Peatland Database
