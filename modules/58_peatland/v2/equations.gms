@@ -46,12 +46,12 @@
 *' In case managed land remains unchanged, also managed peatland remains unchanged. 
 
  q58_peatlandMan(j2,manPeat58)$(sum(ct, m_year(ct)) > s58_fix_peatland) ..
-  v58_peatland(j2,manPeat58) =e= 
+  v58_peatland(j2,manPeat58) =g= 
     pc58_peatland(j2,manPeat58) 
     + v58_manLandExp(j2,manPeat58) * v58_scalingFactorExp(j2,manPeat58)
-    - v58_manLandRed(j2,manPeat58)
+    - v58_manLandRed(j2,manPeat58);
 ** sum(ct, p58_scalingFactorRed(ct,j2,manPeat58)) * 1/s58_probability
-    + v58_balance(j2,manPeat58); 
+* + v58_balance(j2,manPeat58)
 
 *' Peatland scaling factor for expansion: (maxPeatland - totalManagedPeatland) / (maxLand - totalManagedLand). 
 *' See macro `m58_LandLeft` for details.
