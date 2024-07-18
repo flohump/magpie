@@ -112,9 +112,9 @@ $macro m58_LandMerge(land,landForestry,set) \
    + (land(&&set,"forestry") - landForestry(&&set,"aff") - landForestry(&&set,"ndc"))$(sameas(manPeat58,"forestry")) \
 
 $macro m58_LandLeft(pclandFull,setFull,vland,pcland) \
-    (sum(&&setFull,pclandFull(j2,&&setFull)) \
-     - sum(manPeat58_alias$(not sameas(manPeat58_alias,manPeat58)),vland(j2,manPeat58_alias)) \
-     - sum(manPeat58_alias$(sameas(manPeat58_alias,manPeat58)),pcland(j2,manPeat58_alias)))
+    (sum(&&setFull,pclandFull(j,&&setFull)) \
+     - sum(manPeat58_alias$(not sameas(manPeat58_alias,manPeat58)),vland(j,manPeat58_alias)) \
+     - sum(manPeat58_alias$(sameas(manPeat58_alias,manPeat58)),pcland(j,manPeat58_alias)))
 
 * macro for trade module
 $macro m21_baseline_production(supply, excess_prod, self_suff) \

@@ -19,10 +19,12 @@ if (m_year(t) <= s58_fix_peatland,
 * Intact peatland area
   pc58_peatland(j,"intact") = f58_peatland_area(j,"intact");
 
+v58_manLand.l(j,manPeat58) = pc58_manLand(j,manPeat58);
+v58_peatland.l(j,manPeat58) = pc58_peatland(j,manPeat58);
+
 * Peatland area is fixed to `pc58_peatland` until the year given by s58_fix_peatland 
   v58_peatland.fx(j,land58) = pc58_peatland(j,land58);
   v58_scalingFactorExp.fx(j,manPeat58) = 0;
-  v58_balance.fx(j,manPeat58) = 0;
 
   i58_cost_rewet_recur(t) = 0;
   i58_cost_drain_recur(t) = 0;
@@ -39,8 +41,6 @@ else
   v58_peatland.fx(j,"peatExtract") = pc58_peatland(j,"peatExtract");
   v58_scalingFactorExp.lo(j,manPeat58) = 0;
   v58_scalingFactorExp.up(j,manPeat58) = Inf;
-  v58_balance.lo(j,manPeat58) = 0;
-  v58_balance.up(j,manPeat58) = Inf;
 
   i58_cost_rewet_recur(t) = s58_cost_rewet_recur;
   i58_cost_drain_recur(t) = s58_cost_drain_recur;
@@ -56,5 +56,13 @@ p58_scalingFactorRed(t,j,manPeat58) =
     (pc58_peatland(j,manPeat58)/pc58_manLand(j,manPeat58))
     $(pc58_peatland(j,manPeat58) > 1e-10 AND pc58_manLand(j,manPeat58) > 1e-10)
     + 0$(pc58_peatland(j,manPeat58) <= 1e-10 OR pc58_manLand(j,manPeat58) <= 1e-10);
+
+*' Peatland scaling factor for expansion: (maxPeatland - totalManagedPeatland) / (maxLand - totalManagedLand). 
+*' See macro `m58_LandLeft` for details.
+
+p58_scalingFactorExp(t,j,manPeat58) = 
+    (m58_LandLeft(pc58_peatland,"land58",v58_peatland.l,pc58_peatland) / m58_LandLeft(pcm_land,"land",v58_manLand.l,pc58_manLand))
+    $(m58_LandLeft(pc58_peatland,"land58",v58_peatland.l,pc58_peatland) > 1e-10 AND m58_LandLeft(pcm_land,"land",v58_manLand.l,pc58_manLand) > 1e-10)
+    + 0$(m58_LandLeft(pc58_peatland,"land58",v58_peatland.l,pc58_peatland) <= 1e-10 OR m58_LandLeft(pcm_land,"land",v58_manLand.l,pc58_manLand) <= 1e-10);
 
 *' @stop
