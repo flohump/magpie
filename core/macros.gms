@@ -109,7 +109,7 @@ $macro m_carbon_stock_ac(land,carbon_density,sets,sets_sub) \
 $macro m58_LandMerge(land,landForestry,set) \
    land(&&set,"crop")$(sameas(manPeat58,"crop")) \
    + land(&&set,"past")$(sameas(manPeat58,"past")) \
-   + landForestry(&&set,"plant")$(sameas(manPeat58,"forestry"))
+   + (land(&&set,"forestry") - landForestry(&&set,"aff") - landForestry(&&set,"ndc"))$(sameas(manPeat58,"forestry")) \
 
 $macro m58_LandLeft(pclandFull,setFull,vland,pcland) \
     (sum(&&setFull,pclandFull(j2,&&setFull)) \
