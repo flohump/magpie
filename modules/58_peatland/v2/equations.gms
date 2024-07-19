@@ -46,7 +46,7 @@
 *' In case managed land remains unchanged, also managed peatland remains unchanged. 
 
  q58_peatlandMan(j2,manPeat58)$(sum(ct, m_year(ct)) > s58_fix_peatland) ..
-  v58_peatland(j2,manPeat58) =g= 
+  v58_peatland(j2,manPeat58) =e= 
     pc58_peatland(j2,manPeat58) 
     + v58_manLandExp(j2,manPeat58) * sum(ct, p58_scalingFactorExp(ct,j2))
     - v58_manLandRed(j2,manPeat58);
