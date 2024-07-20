@@ -8,7 +8,7 @@
 parameters
  pc58_peatland(j,land58)             Peatland area (mio. ha)
  pc58_manLand(j,manPeat58)           Managed land area (mio. ha)
- p58_scalingFactorRed(t,j,manPeat58) Scaling factor for peatland reduction (1)
+ p58_scalingFactorRed(t,j)           Scaling factor for peatland reduction (1)
  p58_scalingFactorExp(t,j)           Scaling factor for peatland expansion (1)
  p58_mapping_cell_climate(j,clcl58)  Mapping between cells and climate regions (binary)
  i58_cost_rewet_recur(t)             Recurring costs for rewetted peatland (USD05MER per ha)

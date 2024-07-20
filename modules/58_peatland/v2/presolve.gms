@@ -49,10 +49,28 @@ else
 *' @code
 *' Peatland scaling factor for reduction: currentPeatland / currentManagedLand
 
-p58_scalingFactorRed(t,j,manPeat58) = 
-    (pc58_peatland(j,manPeat58)/pc58_manLand(j,manPeat58))
-    $(pc58_peatland(j,manPeat58) > 1e-10 AND pc58_manLand(j,manPeat58) > 1e-10)
-    + 0$(pc58_peatland(j,manPeat58) <= 1e-10 OR pc58_manLand(j,manPeat58) <= 1e-10);
+*p58_scalingFactorRed(t,j,manPeat58) = 
+*    (pc58_peatland(j,manPeat58)/pc58_manLand(j,manPeat58))
+*    $(pc58_peatland(j,manPeat58) > 1e-10 AND pc58_manLand(j,manPeat58) > 1e-10)
+*    + 0$(pc58_peatland(j,manPeat58) <= 1e-10 OR pc58_manLand(j,manPeat58) <= 1e-10);
+
+*manPeatland / maxPeatland = 10 / 100
+
+*manPeatland / manLand / maxPeatland / maxLand 
+
+*manPeatland / manLand * maxLand / maxPeatland
+
+*maxPeatland / maxLand  / manPeatland / manLand
+
+*maxPeatland / maxLand  * manLand / manPeatland
+
+
+*p58_scalingFactorRed(t,j,manPeat58) = 
+*    (pc58_peatland(j,manPeat58)/sum(land58, pc58_peatland(j,land58)))
+*    $(pc58_peatland(j,manPeat58) > 1e-10)
+*    + 0$(pc58_peatland(j,manPeat58) <= 1e-10 OR sum(land58, pc58_peatland(j,land58)) <= 1e-10);
+
+
 
 *' Peatland scaling factor for expansion: maxPeatland / maxLand
 *' See macro `m58_LandLeft` for details.
@@ -62,4 +80,19 @@ p58_scalingFactorExp(t,j) =
     $(sum(land58, pc58_peatland(j,land58)) > 1e-10 AND sum(land, pcm_land(j,land)) > 1e-10)
     + 0$(sum(land58, pc58_peatland(j,land58)) <= 1e-10 OR sum(land, pcm_land(j,land)) <= 1e-10);
 p58_scalingFactorExp(t,j)$(p58_scalingFactorExp(t,j) > 1) = 1; 
+
+
+*' Peatland scaling factor for reduction: maxPeatland / maxLand  * manLand / manPeatland
+
+p58_scalingFactorRed(t,j) = p58_scalingFactorExp(t,j) * 
+    (sum(manPeat58, pc58_manLand(j,manPeat58)) / sum(manPeat58, pc58_peatland(j,manPeat58)))
+    $(sum(manPeat58, pc58_peatland(j,manPeat58)) > 1e-10 AND sum(manPeat58, pc58_manLand(j,manPeat58)) > 1e-10)
+    + 0$(sum(manPeat58, pc58_peatland(j,manPeat58)) <= 1e-10 OR sum(manPeat58, pc58_manLand(j,manPeat58)) <= 1e-10);
+p58_scalingFactorRed(t,j)$(p58_scalingFactorRed(t,j) > 1) = 1; 
+
+
+
+
+
+
 *' @stop
