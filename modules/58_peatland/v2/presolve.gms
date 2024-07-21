@@ -72,27 +72,55 @@ else
 
 
 
-*' Peatland scaling factor for expansion: maxPeatland / maxLand
+
+*' Peatland scaling factor for expansion: maxPeatland-manPeatland / maxLand-manLand = availPeatlandExp / availLandExp
 *' See macro `m58_LandLeft` for details.
 
-p58_scalingFactorExp(t,j) = 
-    (sum(land58, pc58_peatland(j,land58)) / sum(land, pcm_land(j,land)))
-    $(sum(land58, pc58_peatland(j,land58)) > 1e-10 AND sum(land, pcm_land(j,land)) > 1e-10)
-    + 0$(sum(land58, pc58_peatland(j,land58)) <= 1e-10 OR sum(land, pcm_land(j,land)) <= 1e-10);
-p58_scalingFactorExp(t,j)$(p58_scalingFactorExp(t,j) > 1) = 1; 
+*p58_avail_peatland_exp(t,j,manPeat58) = sum(land58$(not sameas(land58,manPeat58)), pc58_peatland(j,land58));
+p58_avail_peatland_exp2(t,j) = sum(land58, pc58_peatland(j,land58)) - sum(manPeat58, pc58_peatland(j,manPeat58));
+p58_avail_land_exp2(t,j) = sum(land, pcm_land(j,land)) - sum(manPeat58, pc58_manLand(j,manPeat58));
+
+*p58_avail_land_exp(t,j) = sum(land$(not sameas(land,manPeat58)), pcm_land(j,land));
+
+*p58_scalingFactorExp(t,j) = 
+*    (p58_avail_peatland_exp2(t,j) / p58_avail_land_exp2(t,j))
+*    $(p58_avail_peatland_exp2(t,j) > 1e-10 AND p58_avail_land_exp2(t,j) > 1e-10)
+*    + 0$(p58_avail_peatland_exp2(t,j) <= 1e-10 OR p58_avail_land_exp2(t,j) <= 1e-10);
+*p58_scalingFactorExp(t,j)$(p58_scalingFactorExp(t,j) > 1) = 1; 
 
 
 *' Peatland scaling factor for reduction: maxPeatland / maxLand  * manLand / manPeatland
 
-p58_scalingFactorRed(t,j) = p58_scalingFactorExp(t,j) * 
-    (sum(manPeat58, pc58_manLand(j,manPeat58)) / sum(manPeat58, pc58_peatland(j,manPeat58)))
-    $(sum(manPeat58, pc58_peatland(j,manPeat58)) > 1e-10 AND sum(manPeat58, pc58_manLand(j,manPeat58)) > 1e-10)
-    + 0$(sum(manPeat58, pc58_peatland(j,manPeat58)) <= 1e-10 OR sum(manPeat58, pc58_manLand(j,manPeat58)) <= 1e-10);
-p58_scalingFactorRed(t,j)$(p58_scalingFactorRed(t,j) > 1) = 1; 
+*manPeat / totalPeatland
+
+*$totalPeatland = 0 dann 0.
+*$manPeatland = 0 dann maxPeatland / maxLand
+*$manPeatland = 0 dann 1
+
+*10/100 * 7/0
+
+p58_scalingFactor(t,j) = 
+    (sum(manPeat58, pc58_peatland(j,manPeat58)) / sum(land58, pc58_peatland(j,land58)))
+    $(sum(manPeat58, pc58_peatland(j,manPeat58)) > 1e-10 AND sum(land58, pc58_peatland(j,land58)) > 1e-10)
+    + 0$(sum(land58, pc58_peatland(j,land58)) <= 1e-10)
+    + 1$(sum(manPeat58, pc58_manLand(j,manPeat58)) <= 1e-10);
+p58_scalingFactor(t,j)$(p58_scalingFactor(t,j) > 1) = 1; 
+
+p58_scalingFactor(t,j) = 
+    (sum(land58, pc58_peatland(j,land58)) / sum(land, pcm_land(j,land)))
+    $(sum(land58, pc58_peatland(j,land58)) > 1e-10 AND sum(land, pcm_land(j,land)) > 1e-10)
+    + 0$(sum(land58, pc58_peatland(j,land58)) <= 1e-10 OR sum(manPeat58, pc58_manLand(j,manPeat58)) <= 1e-10);
+p58_scalingFactor(t,j)$(p58_scalingFactor(t,j) > 1) = 1; 
 
 
 
+*p58_scalingFactorRed(t,j) = 
+*    (sum(land58, pc58_peatland(j,land58)) / sum(land, pcm_land(j,land)))
+*    $(sum(land58, pc58_peatland(j,land58)) > 1e-10 AND sum(land, pcm_land(j,land)) > 1e-10)
+*    + 0$(sum(land58, pc58_peatland(j,land58)) <= 1e-10 OR sum(land, pcm_land(j,land)) <= 1e-10);
 
+*p58_scalingFactorRed(t,j,manPeat58) = 1;
+*p58_scalingFactorRed(t,j,manPeat58)$(pc58_peatland(j,manPeat58) <= 1e-10) = 0;
 
 
 *' @stop

@@ -15,27 +15,22 @@
 *' Peatland area change:
 
  q58_peatlandChange(j2,land58) ..
-        v58_peatlandChange(j2,land58) =e= v58_peatland(j2,land58)-pc58_peatland(j2,land58);
+    v58_peatlandChange(j2,land58) =e= v58_peatland(j2,land58)-pc58_peatland(j2,land58);
  
 *' Managed land area:
 
  q58_manLand(j2,manPeat58) ..
   v58_manLand(j2,manPeat58) =e= m58_LandMerge(vm_land,vm_land_forestry,"j2");
 
-*' Managed land area expansion and reduction:
 
-*q58_forestryRed(j2,type32) ..
-*v32_landreduction_forestry(j2,type32) =g= vm_landreduction_forestry(j2,type32) - vm_landexpansion_forestry(j2,type32);
-
-*q58_forestryExp(j2,type32) ..
-*v32_landexpansion_forestry(j2,type32) =g= vm_landexpansion_forestry(j2,type32) - vm_landreduction_forestry(j2,type32);
+ q58_manLandChange(j2,manPeat58) ..
+    v58_manLandChange(j2,manPeat58) =e= v58_manLand(j2,manPeat58) - pc58_manLand(j2,manPeat58);
 
 
- q58_manLandExp(j2,manPeat58) ..
-  v58_manLandExp(j2,manPeat58) =e= m58_LandMerge(vm_landexpansion,vm_landexpansion_forestry,"j2");
+*' ac_est can only increase if total afforested land increases
+q32_aff_est(j2) ..
+v58_peatland(j2,"rewet") - pc58_peatland(j2,"rewet") =l= -sum(manPeat58, v58_manLandChange(j2,manPeat58));
 
- q58_manLandRed(j2,manPeat58) ..
-  v58_manLandRed(j2,manPeat58) =e= m58_LandMerge(vm_landreduction,vm_landreduction_forestry,"j2");
 
 *' Future peatland dynamics (`v58_peatland`) depend on changes in managed land (`v58_manLandExp`, `v58_manLandRed`), 
 *' multiplied with corresponding scaling factors for expansion (`v58_scalingFactorExp`) and reduction (`p58_scalingFactorRed`). 
@@ -48,9 +43,7 @@
  q58_peatlandMan(j2,manPeat58)$(sum(ct, m_year(ct)) > s58_fix_peatland) ..
   v58_peatland(j2,manPeat58) =g= 
     pc58_peatland(j2,manPeat58) 
-    + v58_manLandExp(j2,manPeat58) * sum(ct, p58_scalingFactorExp(ct,j2))
-    - v58_manLandRed(j2,manPeat58) * sum(ct, p58_scalingFactorRed(ct,j2));
-
+    + v58_manLandChange(j2,manPeat58) * sum(ct, p58_scalingFactor(ct,j2));
 
 *' Costs for peatland degradation and rewetting
 

@@ -70,7 +70,12 @@ sets
            EF .(boreal) "Ice cap climate"
            ET .(boreal) "Tundra"
            /
-
+   land_to_manPeat58(land,manPeat58) blub
+           /
+           crop .(crop)
+           past .(past)
+           forestry .(forestry)
+           /
 ;
 
 alias (manPeat58,manPeat58_alias);
