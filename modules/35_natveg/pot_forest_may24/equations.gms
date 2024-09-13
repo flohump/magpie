@@ -213,7 +213,7 @@ q35_other_regeneration(j2)..
                  sum(ac_est, vm_land_other(j2,"othernat",ac_est))
                  =g=
                  sum((othertype35,ac_sub),v35_hvarea_other(j2,othertype35,ac_sub))
-                 + p35_land_restoration(j2,"other")
+*                 + p35_land_restoration(j2,"other")
                  ;
 
 *' The following two constraints distribute additions to secdforest and other land
