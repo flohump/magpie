@@ -154,9 +154,9 @@ p35_protection_dist(j,ac_sub) = 0;
 p35_protection_dist(j,ac_sub)$(sum(ac_sub2,pc35_secdforest(j,ac_sub2)) > 0) = pc35_secdforest(j,ac_sub) / sum(ac_sub2,pc35_secdforest(j,ac_sub2));
 pm_land_conservation(t,j,"secdforest","protect")$(pm_land_conservation(t,j,"secdforest","protect") > sum(ac_sub, pc35_secdforest(j,ac_sub))) = sum(ac_sub, pc35_secdforest(j,ac_sub));
 if (sum(sameas(t_past,t),1) = 1,
-v35_secdforest.lo(j,ac_sub) = pm_land_conservation(t,j,"secdforest","protect") * p35_protection_dist(j,ac_sub);
+*v35_secdforest.lo(j,ac_sub) = pm_land_conservation(t,j,"secdforest","protect") * p35_protection_dist(j,ac_sub);
 else
-v35_secdforest.lo(j,ac_sub) = max((1-s35_natveg_harvest_shr) * pc35_secdforest(j,ac_sub), pm_land_conservation(t,j,"secdforest","protect") * p35_protection_dist(j,ac_sub));
+*v35_secdforest.lo(j,ac_sub) = max((1-s35_natveg_harvest_shr) * pc35_secdforest(j,ac_sub), pm_land_conservation(t,j,"secdforest","protect") * p35_protection_dist(j,ac_sub));
 );
 * upper bound
 v35_secdforest.up(j,ac_sub) = pc35_secdforest(j,ac_sub);
@@ -177,7 +177,7 @@ p35_land_restoration(j,"secdforest") = p35_land_restoration(j,"secdforest") - p3
 pm_land_conservation(t,j,"other","restore") = pm_land_conservation(t,j,"other","restore") + p35_restoration_shift(j);
 
 * set conservation bound
-*vm_land.lo(j,"secdforest") = pm_land_conservation(t,j,"secdforest","protect") + p35_land_restoration(j,"secdforest");
+vm_land.lo(j,"secdforest") = pm_land_conservation(t,j,"secdforest","protect");
 
 ** Other land
 
@@ -195,7 +195,7 @@ vm_land_other.lo(j,"othernat",ac) = 0;
 vm_land_other.up(j,"othernat",ac) = Inf;
 vm_land_other.lo(j,"youngsecdf",ac) = 0;
 *set lower bound
-vm_land_other.lo(j,othertype35,ac_sub) = pm_land_conservation(t,j,"other","protect") * p35_dist_other(j,othertype35,ac_sub);
+*vm_land_other.lo(j,othertype35,ac_sub) = pm_land_conservation(t,j,"other","protect") * p35_dist_other(j,othertype35,ac_sub);
 *set upper bound
 vm_land_other.up(j,"othernat",ac_sub) = pc35_land_other(j,"othernat",ac_sub);
 vm_land_other.up(j,"youngsecdf",ac_sub) = pc35_land_other(j,"youngsecdf",ac_sub);
@@ -211,7 +211,7 @@ p35_land_restoration(j,"other") = pm_land_conservation(t,j,"other","restore");
 * land area meets the total natural land conservation target
 p35_land_restoration(j,"other")$(sum(land_natveg, pcm_land(j,land_natveg)) >= sum((land_natveg, consv_type), pm_land_conservation(t,j,land_natveg,consv_type))) = 0;
 * set conservation bound
-*vm_land.lo(j,"other") = pm_land_conservation(t,j,"other","protect") + p35_land_restoration(j,"other");
+vm_land.lo(j,"other") = pm_land_conservation(t,j,"other","protect");
 
 * boundfix for land_natveg
 m_boundfix(vm_land,(j,land_natveg),up,1e-6);
