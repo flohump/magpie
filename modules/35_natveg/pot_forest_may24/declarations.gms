@@ -33,6 +33,7 @@ parameters
  p35_protection_dist(j,ac)                               Distribution of secondary forest protection (1)
  p35_land_restoration(j,land_natveg)                     Actual secondary forest and other land restoration area (mio. ha)
  p35_restoration_shift(j)                                Restoration of other land instead of secdforest (mio. ha)
+ p35_dist_other(j,othertype35,ac)
 ;
 
 equations
