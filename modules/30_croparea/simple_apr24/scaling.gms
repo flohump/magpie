@@ -5,5 +5,5 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-vm_cost_AEI.scale(i) = 10e4;
-vm_AEI.scale(j) = 100;
+* Range: 0.001 to 0.5 Mio. ha
+vm_area.scale(j,kcr,w) = 100;

@@ -5,5 +5,12 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-vm_cost_AEI.scale(i) = 10e4;
-vm_AEI.scale(j) = 100;
+* Cropland treecover variables - Range: 0.000 to 0.101 Mio. ha
+* Scale factor 1000 brings: 0.001→1.0, 0.003→3.0, 0.1→100 (optimal for solver)
+vm_treecover.scale(j) = 100;
+v29_treecover.scale(j,ac) = 100;
+v29_treecover_missing.scale(j) = 100;
+
+* Fallow land variables - Similar range to treecover
+vm_fallow.scale(j) = 100;
+v29_fallow_missing.scale(j) = 100;
