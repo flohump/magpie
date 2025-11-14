@@ -25,4 +25,4 @@ v35_hvarea_primforest.scale(j) = 100;
 
 * Natural vegetation land difference
 vm_landdiff_natveg.scale = 100;
-vm_natforest_reduction.scale(j) = 100
+vm_natforest_reduction.scale(j) = 100;
