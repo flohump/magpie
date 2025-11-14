@@ -7,16 +7,16 @@
 
 * Core land use variable - Range: 0.001 to 28 Mio. ha
 * Scale factor 100 brings: 0.001→0.1, 0.003→0.3, 28→2,800 (well-conditioned)
-vm_land.scale(j,land) = 100;
+*vm_land.scale(j,land) = 100;
 * should be aligned with scaling of vm_land
-vm_landdiff.scale = 100;
+*vm_landdiff.scale = 100;
 
 * Range: 0.001 to ~10 Mio. ha
-vm_landexpansion.scale(j,land) = 100;
-vm_landreduction.scale(j,land) = 100;
+*vm_landexpansion.scale(j,land) = 100;
+*vm_landreduction.scale(j,land) = 100;
 
 * Land use transitions matrix
-vm_lu_transitions.scale(j,land_from,land_to) = 100;
+*vm_lu_transitions.scale(j,land_from,land_to) = 100;
 
 * Land conversion costs - must match land scaling for consistency
-vm_cost_landcon.scale(j,land) = 100;
+*vm_cost_landcon.scale(j,land) = 100;
