@@ -6,4 +6,4 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 * Range: 0.001 to 0.5 Mio. ha
-vm_area.scale(j,kcr,w) = 100;
+*vm_area.scale(j,kcr,w) = 100;
