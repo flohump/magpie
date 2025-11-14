@@ -7,4 +7,4 @@
 
 vm_emission_costs.scale(i) = 10e4;
 v56_emission_cost.scale(i,emis_source) = 10e4;
-vm_carbon_stock.scale(j,land,c_pools,stockType) = 100;
+vm_carbon_stock.scale(j,land,c_pools,stockType) = 10e3;
