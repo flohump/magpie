@@ -10,6 +10,7 @@ v32_cost_recur.scale(i) = 10e4;
 vm_cost_fore.scale(i) = 10e5;
 v32_cost_hvarea.scale(i)$(s32_hvarea = 1 OR s32_hvarea = 2) = 10e4;
 
+$ontext
 * Main forestry land pools by type and age class
 v32_land.scale(j,type32,ac) = 100;
 
@@ -27,3 +28,4 @@ vm_landdiff_forestry.scale = 100;
 vm_landexpansion_forestry.scale(j,type32) = 100;
 vm_landreduction_forestry.scale(j,type32) = 100;
 vm_land_forestry.scale(j,type32) = 100;
+$offtext
