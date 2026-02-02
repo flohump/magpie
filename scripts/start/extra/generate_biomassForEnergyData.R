@@ -6,29 +6,38 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ----------------------------------------------------------
-# description: Calculate residue potential for 2nd generation bioenergy for multiple SSP/NPi2025 scenarios
+# description: Calculate biomass for energy (wood fuel, crop residues, manure) for multiple SSP/NPi2025 scenarios
 # position: 5
 # ----------------------------------------------------------
 
-## Load lucode2 and gms to use setScenario later
 library(lucode2)
 library(gms)
+library(jsonlite)
 
-# Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
-
-# Source default cfg. This loads the object "cfg" in R environment
 source("config/default.cfg")
 
-#download default input data
 download_and_update(cfg)
 
-cfg$info$flag <- "residuePot" 
+cfg$info$flag <- "biomassEnergy"
 
-# support function to create standardized title
-.title <- function(cfg, ...) return(paste(cfg$info$flag, sep = "_", ...))
+# Read MAgPIE version from .zenodo.json (machine-readable source)
+getMagpieVersion <- function() {
+  tryCatch({
+    zenodo <- jsonlite::read_json(".zenodo.json")
+    return(zenodo$version)
+  }, error = function(e) {
+    warning("Could not read MAgPIE version from .zenodo.json, using 'unknown'")
+    return("unknown")
+  })
+}
 
-# Define scenarios and their specific parameters, then iterate over them
+magpieVersion <- getMagpieVersion()
+
+.title <- function(cfg, scenario, version = magpieVersion) {
+  return(paste(cfg$info$flag, version, scenario, sep = "-"))
+}
+
 scenarios <- list(
     list(
         name        = "SSP1",
@@ -55,7 +64,7 @@ scenarios <- list(
         name        = "SSP4",
         titleSuffix = "NPi2025",
         scen        = c("SSP4", "NPI", "nocc_hist"),
-        # Note: pollString and bioString intentionally match original SSP4 block (SSP2 strings)
+        # Note: SSP2 default assumptions used here to fill missing SSP4 scenario info
         pollString  = "R34M410-SSP2-NPi2025",
         bioString   = "R34M410-SSP2-NPi2025"
     ),
