@@ -68,7 +68,7 @@ sealsInput <- paste0("cell.land_0.5_SEALS_", title, ".nc")
 reportLandUseForSEALS(
   magCellLand = "cell.land_0.5_share.mz",
   outFile = sealsInput,
-  dir = outputdir, selectyears = rep_years
+  outputdir = outputdir, selectyears = rep_years
 )
 
 
@@ -266,7 +266,7 @@ Sys.chmod(iniLock, mode = "0664")
     "#SBATCH --output=outfile_%j.out",
     "#SBATCH --error=outfile_%j.err",
     "#SBATCH --mail-type=END,FAIL",
-    ifelse(!is.null(dependsID), "#SBATCH --time=5:00:00", "#SBATCH --time=0:20:00"), "\n",
+    ifelse(!is.null(dependsID), "#SBATCH --time=0:20:00", "#SBATCH --time=5:00:00"), "\n",
     "#SBATCH --nodes=1",
     "#SBATCH --ntasks=1",
     ifelse(!is.null(dependsID), paste0(
