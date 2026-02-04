@@ -12,8 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **13_tc** the interface variable `vm_tau` now represents a linear combination of tau on regular cropland (`v13_tau_core`) and tau on cropland in conservation priority areas (`v13_tau_consv`). Per default values in `vm_tau` are equal to `v13_tau_core`.
 - **inputdata** updated input data to rev4.128, including fix for mismatch between historic urban land in LUH3 and projected future urban land, which is still based on LUH2
 - **inputdata** updated input data to rev4.129, which now includes new protected area data for China not covered in the WDPA data base.
+- **inputdata** updated input data to rev4.130, where ge for wood and woodfuel is changed to 18 (instead of 15.36) to be in line with betr and begr values
 - **60_bioenergy** set `i60_res_2ndgenBE_dem` also for historical period to `off` if `c60_res_2ndgenBE_dem` is set to `off` (do not apply scenario harmonization on it)
 - **renv/activate.R** updated to version 1.1.7
+- **scripts/start** updates starting function for biomass collection run including renaming from calc_residuePot2ndBE.R to generate_biomassForEnergyData.R
 
 ### added
 -
