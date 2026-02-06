@@ -258,7 +258,7 @@ Sys.chmod(iniLock, mode = "0664")
   submitFile <- file.path(dirProject, "run_submit", paste0("submit_seals_", title, ".sh"))
 
   # Check job status if dependsID is provided
-  useDependency <- FALSE
+  useDependency <- inputDataExists <- FALSE
   if (!is.null(dependsID)) {
     # check if job is still in SLURM memory using scontrol
     scontrolCheck <- system(paste("scontrol show job", dependsID),
@@ -273,7 +273,9 @@ Sys.chmod(iniLock, mode = "0664")
                           intern = TRUE, ignore.stderr = TRUE)
       if (length(sacctCheck) > 0) {
         jobState <- trimws(sacctCheck[1])
-        if (jobState != "COMPLETED") {
+        if (jobState == "COMPLETED") {
+          inputDataExists <- TRUE
+        } else {
           stop(paste("Initial data preparation run (Job ID:", dependsID, ") did not complete successfully. Status:", jobState))
         }
       } else {
@@ -291,7 +293,7 @@ Sys.chmod(iniLock, mode = "0664")
     "#SBATCH --output=outfile_%j.out",
     "#SBATCH --error=outfile_%j.err",
     "#SBATCH --mail-type=END,FAIL",
-    ifelse(useDependency, "#SBATCH --time=0:20:00", "#SBATCH --time=5:00:00"), "\n",
+    ifelse(useDependency || inputDataExists, "#SBATCH --time=0:20:00", "#SBATCH --time=5:00:00"), "\n",
     "#SBATCH --nodes=1",
     "#SBATCH --ntasks=1",
     ifelse(useDependency, paste0(
