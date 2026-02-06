@@ -277,8 +277,8 @@ Sys.chmod(iniLock, mode = "0664")
           stop(paste("Initial data preparation run (Job ID:", dependsID, ") did not complete successfully. Status:", jobState))
         }
       } else {
-     stop(paste("Could not find initial data preparation run (Job ID:", dependsID, ") in SLURM history"))
-     }
+        stop(paste("Could not find initial data preparation run (Job ID:", dependsID, ") in SLURM history"))
+      }
     }
   }
 
