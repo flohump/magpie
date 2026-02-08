@@ -299,9 +299,7 @@ Sys.chmod(iniLock, mode = "0664")
     ifelse(useDependency, paste0(
       "#SBATCH --dependency=afterok:", dependsID,
       "\n#SBATCH --kill-on-invalid-dep=yes"
-    ),
-    "#SBATCH --dependency=singleton"
-    ), "\n",
+    ), "") , "\n",
     "#SBATCH --cpus-per-task=64", "\n",
     paste("source", miniforgePath),
     paste("conda activate", sealsEnv), "\n",
