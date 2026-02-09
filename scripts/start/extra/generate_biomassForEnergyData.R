@@ -6,7 +6,9 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ----------------------------------------------------------
-# description: Calculate biomass for energy (wood fuel, crop residues, manure) for multiple SSP/NPi2025 scenarios
+# description: Calculate biomass potential for energy use 
+#              (wood fuel, crop residues, manure) for multiple 
+#              SSP/NPi2025 scenarios
 # position: 5
 # ----------------------------------------------------------
 
@@ -34,8 +36,8 @@ getMagpieVersion <- function() {
 
 magpieVersion <- getMagpieVersion()
 
-.title <- function(cfg, scenario, version = magpieVersion) {
-  return(paste(cfg$info$flag, version, scenario, sep = "-"))
+.title <- function(cfg, version = magpieVersion, scenario) {
+  return(paste(cfg$info$flag, version, scenario, sep = "_"))
 }
 
 scenarios <- list(
@@ -85,7 +87,7 @@ scenarios <- list(
 )
 
 for (s in scenarios) {
-    cfg$title <- .title(cfg, paste(s$name, s$titleSuffix, sep = "-"))
+    cfg$title <- .title(cfg, scenario = paste(s$name, s$titleSuffix, sep = "-"))
     cfg <- setScenario(cfg, s$scen)
     cfg$gms$c60_res_2ndgenBE_dem    <- "off"
     cfg$gms$c56_mute_ghgprices_until <- "y2150"
