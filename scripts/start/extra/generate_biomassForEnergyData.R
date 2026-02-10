@@ -14,7 +14,6 @@
 
 library(lucode2)
 library(gms)
-library(jsonlite)
 
 source("scripts/start_functions.R")
 source("config/default.cfg")
