@@ -23,18 +23,8 @@ download_and_update(cfg)
 
 cfg$info$flag <- "biomassEnergy"
 
-# Read MAgPIE version from .zenodo.json (machine-readable source)
-getMagpieVersion <- function() {
-  tryCatch({
-    zenodo <- jsonlite::read_json(".zenodo.json")
-    return(zenodo$version)
-  }, error = function(e) {
-    warning("Could not read MAgPIE version from .zenodo.json, using 'unknown'")
-    return("unknown")
-  })
-}
-
-magpieVersion <- getMagpieVersion()
+# Read MAgPIE version from CITATION.cff (machine-readable source)
+magpieVersion <- citation::read_cff("CITATION.cff")$version
 
 .title <- function(cfg, version = magpieVersion, scenario) {
   return(paste(cfg$info$flag, version, scenario, sep = "_"))
