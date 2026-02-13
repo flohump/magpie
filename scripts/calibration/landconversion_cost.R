@@ -12,14 +12,14 @@
 
 # Wrapper function that executes code with comprehensive logging
 # Captures cat(), messages, warnings, and errors
-with_logging <- function(expr, logfile, putfolder) {
+withLogging <- function(expr, logfile, putfolder) {
   # create putfolder for the calib run
   cat(paste0("Deleting putfolder: ", putfolder, "\n"))
   unlink(putfolder, recursive = TRUE)
   cat(paste0("Creating putfolder: ", putfolder, "\n"))
   dir.create(putfolder)
   # Open file connection for logging
-  logfile_conn <- file(paste0(putfolder, "/", logfile), open = "a")
+  logfileConn <- file(paste0(putfolder, "/", logfile), open = "a")
 
   # Redirect both stdout and stderr to the same log file
   sink(logfile_conn)
@@ -49,7 +49,7 @@ with_logging <- function(expr, logfile, putfolder) {
   )
 }
 
-calibration_run <- function(putfolder, calib_magpie_name, logoption, s_use_gdx) {
+calibrationRun <- function(putfolder, calib_magpie_name, logoption, s_use_gdx) {
   require(lucode2)
   require(magpie4)
 
@@ -73,22 +73,18 @@ calibration_run <- function(putfolder, calib_magpie_name, logoption, s_use_gdx) 
   cat("GAMS run completed\n")
   file.copy("fulldata.gdx", putfolder)
 
-  cat("Clearing cache...\n")
-  # Clear memoise cache immediately after GAMS completes
-  clearCacheMagpie4()
-
   cat("=== CALIBRATION_RUN END ===\n")
 }
 
-getValData <- function(histData, gdx_file) {
+getValData <- function(histData, gdxFile) {
   require(magpie4)
   require(magclass)
   require(gdx2)
   cat("=== retrieve validation data ===\n")
-  y <- readGDX(gdx_file,"t")
-  magpie <- land(gdx_file)[, y, "crop"]
+  y <- readGDX(gdxFile,"t")
+  magpie <- land(gdxFile)[, y, "crop"]
   if (histData == "MAgPIEown") {
-    hist <- dimSums(readGDX(gdx_file, "f10_land")[, , "crop"], dim = 1.2)
+    hist <- dimSums(readGDX(gdxFile, "f10_land")[, , "crop"], dim = 1.2)
     valdata <- hist[, y, "crop"]
   } else if (histData == "FAO") {
     if(file.exists("calib_data.rds")) {
@@ -121,27 +117,28 @@ expandHist <- function(valdata){
 
 # get ratio between modelled area and reference area
 
-getCalibFactor <- function(gdx_file, mode, histData) {
+getCalibFactor <- function(gdxFile, mode, histData) {
 
   require(magclass)
   cat("=== GET_CALIB_FACTOR START ===\n")
-  cat(paste0("GDX file: ", gdx_file, "\n"))
+  cat(paste0("GDX file: ", gdxFile, "\n"))
   cat(paste0("Mode: ", mode, ", histData: ", histData, "\n"))
 
-  valdata <- getValData(histData = histData, gdx_file = gdx_file)
-  magpie <- land(gdx_file)[, getYears(valdata), "crop"]
+  valdata <- getValData(histData = histData, gdxFile = gdxFile)
+  magpie <- land(gdxFile)[, getYears(valdata), "crop"]
 
   if (mode == "gradient") {
     cat(">>> gradient calibration \n")
     # Calibration should not target absolute difference to goal, but matching the increase over time.
     # Otherwise, calibration of first timestep will implicitly also calibrate all further timesteps.
-    expansion_magpie <- expansion_valdata <- valdata * 0
-    for (timestep in 2:length(getYears(expansion_magpie))) {
-      expansion_magpie[,timestep,] <- magpie[,timestep,] / setYears(magpie[,timestep - 1,], NULL)
-      expansion_valdata[,timestep,] <- valdata[,timestep,] / setYears(valdata[,timestep - 1,], NULL)
+    expansionValdata <- valdata * 0
+	expansionMagpie <- valdata * 0
+    for (timestep in 2:length(getYears(expansionMagpie))) {
+      expansionMagpie[,timestep,] <- magpie[,timestep,] / setYears(magpie[,timestep - 1,], NULL)
+      expansionValdata[,timestep,] <- valdata[,timestep,] / setYears(valdata[,timestep - 1,], NULL)
     }
     # if magpie expands more than valdata, out should be smaller than 1
-    out <- expansion_magpie - expansion_valdata + 1
+    out <- expansionMagpie - expansionValdata + 1
   } else {
     cat(">>> timestep calibration \n")
     out <- magpie / valdata
@@ -155,7 +152,7 @@ getCalibFactor <- function(gdx_file, mode, histData) {
   return(magpiesort(out))
 }
 
-time_series_cost <- function(calib_factor) {
+timeSeriesCost <- function(calib_factor) {
   out2 <- new.magpie(getRegions(calib_factor), years = c(seq(1995, 2020, by = 5), seq(2050, 2150, by = 5)), fill = 1)
   out2[, getYears(calib_factor), ] <- calib_factor
   # use average of last two timesteps for 2020
@@ -167,7 +164,7 @@ time_series_cost <- function(calib_factor) {
   return(out2)
 }
 
-time_series_reward <- function(calib_factor) {
+timeSeriesReward <- function(calib_factor) {
   out2 <- new.magpie(getRegions(calib_factor), years = c(seq(1995, 2020, by = 5), seq(2050, 2150, by = 5)), fill = 0)
   out2[, getYears(calib_factor), ] <- calib_factor
   out2[,"y2020",] <- (setYears(calib_factor[,"y2010",],NULL) + setYears(calib_factor[,"y2015",],NULL))/2
@@ -176,24 +173,24 @@ time_series_reward <- function(calib_factor) {
 }
 
 # Calculate the correction factor and save it
-update_calib <- function(gdx_file, calib_accuracy, calib_file, cost_max, cost_min, calibration_step, n_maxcalib, best_calib, histData, putfolder, levelGradientMix) {
+updateCalib <- function(gdxFile, calib_accuracy, calib_file, cost_max, cost_min, calibration_step, n_maxcalib, best_calib, histData, putfolder, levelGradientMix) {
   require(magclass)
   require(magpie4)
   require(gdx2)
 
   cat(paste0("=== UPDATE_CALIB ITERATION ", calibration_step, " START ===\n"))
-  cat(paste0("GDX file: ", gdx_file, "\n"))
+  cat(paste0("GDX file: ", gdxFile, "\n"))
   cat(paste0("calib_accuracy: ", calib_accuracy, "\n"))
 
-  if (!(modelstat(gdx_file)[1, 1, 1] %in% c(1, 2, 7))) stop("Calibration run infeasible")
+  if (!(modelstat(gdxFile)[1, 1, 1] %in% c(1, 2, 7))) stop("Calibration run infeasible")
 
 
   
   # we calculate two different divergence measures: divergence of level (cropland and divergence of gradient (cropland expansion)
-  calib_divergence_level <- getCalibFactor(gdx_file, mode = "level", histData = histData)
-  calib_divergence_gradient <- getCalibFactor(gdx_file, mode = "gradient", histData = histData)
+  calibDivergenceLevel <- getCalibFactor(gdxFile, mode = "level", histData = histData)
+  calibDivergenceGradient <- getCalibFactor(gdxFile, mode = "gradient", histData = histData)
   # mixing calibration approaches for making the best of both approaches
-  calib_divergence <- levelGradientMix * calib_divergence_level + (1 - levelGradientMix) * calib_divergence_gradient
+  calib_divergence <- levelGradientMix * calibDivergenceLevel + (1 - levelGradientMix) * calibDivergenceGradient
   
   # we calculate the correction factor based on a mix of the two divergence measures
   # gradient should lead to faster convergence and better match of gradinet for forwardlooking results
@@ -207,12 +204,12 @@ update_calib <- function(gdx_file, calib_accuracy, calib_file, cost_max, cost_mi
   ### -> in case it is the first step, it forces the initial factors to be equal to 1
   if (file.exists(calib_file)) {
     cat(">>> Starting with existing calibration file\n")
-    old_calib <- magpiesort(read.magpie(calib_file))[,getYears(calib_divergence),]
+    oldCalib <- magpiesort(read.magpie(calib_file))[,getYears(calib_divergence),]
   } else {
     cat(">>> First iteration - initializing calibration factors (cost=1 for expanding countries, cost=2.5 for contracting, reward=0)\n")
-    old_calib <- new.magpie(cells_and_regions = getCells(calib_divergence), years = getYears(calib_divergence), names = c("cost", "reward"), fill = NA)
-    old_calib[,,"cost"] <- (expandHist(getValData(histData = histData, gdx_file = gdx_file)) < 0) * (cost_max - 1) + 1
-    old_calib[,,"reward"] <- 0
+    oldCalib <- new.magpie(cells_and_regions = getCells(calib_divergence), years = getYears(calib_divergence), names = c("cost", "reward"), fill = NA)
+    oldCalib[,,"cost"] <- (expandHist(getValData(histData = histData, gdxFile = gdxFile)) < 0) * (cost_max - 1) + 1
+    oldCalib[,,"reward"] <- 0
   }
 
   ### use first steps to calibrate stronger, such that calibration factors can also achieve low/high levels
@@ -225,21 +222,21 @@ update_calib <- function(gdx_file, calib_accuracy, calib_file, cost_max, cost_mi
   } 
   
   cat(">>> Calib factors are adjusted where needed\n")
-  calib_factor_cost <- setNames(old_calib[, , "cost"], NULL) * calib_correction ^ reinforcement
-  calib_factor_reward <- setNames(old_calib[, , "reward"], NULL) + (calib_correction - 1) * reinforcement
+  calibFactorCost <- setNames(oldCalib[, , "cost"], NULL) * calib_correction ^ reinforcement
+  calibFactorReward <- setNames(oldCalib[, , "reward"], NULL) + (calib_correction - 1) * reinforcement
   # no rewards in case that validation data shows no contraction
-  calib_factor_reward[expandHist(getValData(histData = histData, gdx_file = gdx_file)) >= 0] <- 0
-  calib_factor_reward[calib_factor_reward < 0] <- 0
+  calibFactorReward[expandHist(getValData(histData = histData, gdxFile = gdxFile)) >= 0] <- 0
+  calibFactorReward[calibFactorReward < 0] <- 0
 
   cat(">>> Account for cost_max and cost_min\n")
   if (!is.null(cost_max)) {
-    above_limit <- (calib_factor_cost >= cost_max)
-    calib_factor_cost[above_limit] <- cost_max
+    above_limit <- (calibFactorCost >= cost_max)
+    calibFactorCost[above_limit] <- cost_max
   }
 
   if (!is.null(cost_min)) {
-    below_limit <- (calib_factor_cost <= cost_min)
-    calib_factor_cost[below_limit] <- cost_min
+    below_limit <- (calibFactorCost <= cost_min)
+    calibFactorCost[below_limit] <- cost_min
   }
 
   cat(">>> write down current calib factors (and area_factors) for tracking\n")
@@ -248,18 +245,18 @@ update_calib <- function(gdx_file, calib_accuracy, calib_file, cost_max, cost_mi
     try(write.magpie(round(x, 3), file, append = (calibration_step != 1)))
   }
 
-  write_log(calib_divergence_level, paste0(putfolder, "/land_conversion_divergence_level.cs3"), calibration_step)
-  write_log(calib_divergence_gradient, paste0(putfolder,  "/land_conversion_divergence_gradient.cs3"), calibration_step)
+  write_log(calibDivergenceLevel, paste0(putfolder, "/land_conversion_divergence_level.cs3"), calibration_step)
+  write_log(calibDivergenceGradient, paste0(putfolder,  "/land_conversion_divergence_gradient.cs3"), calibration_step)
   write_log(calib_divergence, paste0(putfolder,  "/land_conversion_divergence.cs3"), calibration_step)
-  write_log(calib_factor_cost, paste0(putfolder,  "/land_conversion_cost_next_calib_factor.cs3"), calibration_step)
-  write_log(calib_factor_reward, paste0(putfolder,  "/land_conversion_reward_next_calib_factor.cs3"), calibration_step)
-  write_log(setNames(old_calib[, , "reward"], NULL), paste0(putfolder,  "/land_conversion_reward_current_calib_factor.cs3"), calibration_step)
-  write_log(setNames(old_calib[, , "cost"], NULL), paste0(putfolder,  "/land_conversion_cost_current_calib_factor.cs3"), calibration_step)
+  write_log(calibFactorCost, paste0(putfolder,  "/land_conversion_cost_next_calib_factor.cs3"), calibration_step)
+  write_log(calibFactorReward, paste0(putfolder,  "/land_conversion_reward_next_calib_factor.cs3"), calibration_step)
+  write_log(setNames(oldCalib[, , "reward"], NULL), paste0(putfolder,  "/land_conversion_reward_current_calib_factor.cs3"), calibration_step)
+  write_log(setNames(oldCalib[, , "cost"], NULL), paste0(putfolder,  "/land_conversion_cost_current_calib_factor.cs3"), calibration_step)
 
   # in case of sufficient convergence, stop here (no additional update of calibration factors!)
   # also stop in case there is no convergence, e.g. because the calib factors are at upper or lower bounds.
   convergence_reached <- abs(calib_divergence - 1) <= calib_accuracy
-  no_convergence <- (calib_factor_cost == old_calib[, , "cost"]) & (calib_factor_reward == old_calib[, , "reward"])
+  no_convergence <- (calibFactorCost == oldCalib[, , "cost"]) & (calibFactorReward == oldCalib[, , "reward"])
 
   if (all(convergence_reached|no_convergence) | calibration_step == n_maxcalib) {
 
@@ -286,14 +283,14 @@ update_calib <- function(gdx_file, calib_accuracy, calib_file, cost_max, cost_mi
       write_log(calib_cost_best,  paste0(putfolder, "/land_conversion_cost_current_calib_factor.cs3"), "best")
       write_log(calib_reward_best,  paste0(putfolder, "/land_conversion_reward_current_calib_factor.cs3"), "best")
   
-      calib_cost_best <- time_series_cost(calib_cost_best)
-      calib_reward_best <- time_series_reward(calib_reward_best)
+      calib_cost_best <- timeSeriesCost(calib_cost_best)
+      calib_reward_best <- timeSeriesReward(calib_reward_best)
   
-      calib_best_full <- mbind(
+      calibBestFull <- mbind(
         add_dimension(calib_cost_best, dim = 3.1, nm = "cost"),
         add_dimension(calib_reward_best, dim = 3.1, nm = "reward")
       )
-      calib_best_full[is.na(calib_best_full)] <- 1
+      calibBestFull[is.na(calibBestFull)] <- 1
 
       comment <- c(
         " description: Regional land conversion cost calibration file",
@@ -303,7 +300,7 @@ update_calib <- function(gdx_file, calib_accuracy, calib_file, cost_max, cost_mi
         paste(" Calibration settings:",  "calib_accuracy=", calib_accuracy, "cost_max=", cost_max, "cost_min=", cost_min, "n_maxcalib=",n_maxcalib, "best_calib=",best_calib, "histData=",histData),
         paste0(" creation date: ", date())
       )
-      write.magpie(round(calib_best_full, 3), calib_file, comment = comment)
+      write.magpie(round(calibBestFull, 3), calib_file, comment = comment)
 
 
       ####
@@ -313,14 +310,14 @@ update_calib <- function(gdx_file, calib_accuracy, calib_file, cost_max, cost_mi
     }
   } else {
     cat("Adjust calibration factors for next iteration \n")
-    calib_factor_cost <- time_series_cost(calib_factor_cost)
-    calib_factor_reward <- time_series_reward(calib_factor_reward)
+    calibFactorCost <- timeSeriesCost(calibFactorCost)
+    calibFactorReward <- timeSeriesReward(calibFactorReward)
 
-    calib_full <- mbind(
-      add_dimension(calib_factor_cost, dim = 3.1, nm = "cost"),
-      add_dimension(calib_factor_reward, dim = 3.1, nm = "reward")
+    calibFull <- mbind(
+      add_dimension(calibFactorCost, dim = 3.1, nm = "cost"),
+      add_dimension(calibFactorReward, dim = 3.1, nm = "reward")
     )
-    calib_full[is.na(calib_full)] <- 1
+    calibFull[is.na(calibFull)] <- 1
 
     comment <- c(
       " description: Regional land conversion cost calibration file",
@@ -331,7 +328,7 @@ update_calib <- function(gdx_file, calib_accuracy, calib_file, cost_max, cost_mi
       paste0(" creation date: ", date())
     )
 
-    write.magpie(round(calib_full, 3), calib_file, comment = comment)
+    write.magpie(round(calibFull, 3), calib_file, comment = comment)
     return(FALSE)
   }
 }
@@ -365,7 +362,7 @@ calibrate_landconversion <- function(n_maxcalib = 20,
   # Clear log file at start
   if (file.exists("calibration_debug.log")) file.remove("calibration_debug.log")
   # Wrap entire calibration process with comprehensive logging
-  with_logging({
+  withLogging({
     cat("##################################################################\n")
     cat("### CALIBRATE_MAGPIE START ###\n")
     cat("##################################################################\n")
@@ -375,7 +372,7 @@ calibrate_landconversion <- function(n_maxcalib = 20,
       
       cat(paste0("### ITERATION ", i, " START (s_use_gdx = ", s_use_gdx, ") ###\n"))
 
-      calibration_run(putfolder = putfolder, calib_magpie_name = calib_magpie_name, logoption = logoption, s_use_gdx = s_use_gdx)
+      calibrationRun(putfolder = putfolder, calib_magpie_name = calib_magpie_name, logoption = logoption, s_use_gdx = s_use_gdx)
 
       if (debug) {
         # Copy listing file with iteration number for debugging
@@ -385,7 +382,7 @@ calibrate_landconversion <- function(n_maxcalib = 20,
         file.copy(paste0(putfolder, "/fulldata.gdx"), paste0(putfolder, "/", "fulldata_calib", i, ".gdx"), overwrite = TRUE)
       }
 
-      done <- update_calib(gdx_file = "fulldata.gdx", calib_accuracy = calib_accuracy, cost_max = cost_max, cost_min = cost_min, 
+      done <- updateCalib(gdxFile = "fulldata.gdx", calib_accuracy = calib_accuracy, cost_max = cost_max, cost_min = cost_min, 
                            calib_file = calib_file, calibration_step = i, n_maxcalib = n_maxcalib, best_calib = best_calib, histData = histData,
                            putfolder = putfolder, levelGradientMix = levelGradientMix)
 
