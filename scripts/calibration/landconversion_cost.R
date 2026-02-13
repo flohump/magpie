@@ -49,27 +49,27 @@ withLogging <- function(expr, logfile, putfolder) {
   )
 }
 
-calibrationRun <- function(putfolder, calib_magpie_name, logoption, s_use_gdx) {
+calibrationRun <- function(putfolder, calibMagpieName, logoption, useGDX) {
   require(lucode2)
   require(magpie4)
 
   cat("=== CALIBRATION_RUN START ===\n")
-  cat(paste0("Putfolder: ", putfolder, ", s_use_gdx: ", s_use_gdx, "\n"))
+  cat(paste0("Putfolder: ", putfolder, ", useGDX: ", useGDX, "\n"))
 
   # create a modified magpie.gms for the calibration run
-  unlink(paste(calib_magpie_name, ".gms", sep = ""))
+  unlink(paste(calibMagpieName, ".gms", sep = ""))
   unlink("fulldata.gdx")
 
-  if (!file.copy("main.gms", paste(calib_magpie_name, ".gms", sep = ""), overwrite = TRUE)) {
-    stop(paste("Unable to create", paste(calib_magpie_name, ".gms", sep = "")))
+  if (!file.copy("main.gms", paste(calibMagpieName, ".gms", sep = ""), overwrite = TRUE)) {
+    stop(paste("Unable to create", paste(calibMagpieName, ".gms", sep = "")))
   }
-  lucode2::manipulateConfig(paste(calib_magpie_name, ".gms", sep = ""), c_timesteps = "calib")
-  lucode2::manipulateConfig(paste(calib_magpie_name, ".gms", sep = ""), s_use_gdx = s_use_gdx)
-  file.copy(paste(calib_magpie_name, ".gms", sep = ""), putfolder, overwrite = TRUE)
+  lucode2::manipulateConfig(paste(calibMagpieName, ".gms", sep = ""), c_timesteps = "calib")
+  lucode2::manipulateConfig(paste(calibMagpieName, ".gms", sep = ""), useGDX = useGDX)
+  file.copy(paste(calibMagpieName, ".gms", sep = ""), putfolder, overwrite = TRUE)
 
   # execute calibration run
   cat("Starting GAMS run...\n")
-  system(paste("gams ", calib_magpie_name, ".gms", " -errmsg=1 -PUTDIR ./", putfolder, " -LOGOPTION=", logoption, sep = ""), wait = TRUE)
+  system(paste("gams ", calibMagpieName, ".gms", " -errmsg=1 -PUTDIR ./", putfolder, " -LOGOPTION=", logoption, sep = ""), wait = TRUE)
   cat("GAMS run completed\n")
   file.copy("fulldata.gdx", putfolder)
 
@@ -173,14 +173,14 @@ timeSeriesReward <- function(calib_factor) {
 }
 
 # Calculate the correction factor and save it
-updateCalib <- function(gdxFile, calib_accuracy, calib_file, cost_max, cost_min, calibrationStep, n_maxcalib, best_calib, histData, putfolder, levelGradientMix) {
+updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, calibrationStep, nMaxcalib, bestCalib, histData, putfolder, levelGradientMix) {
   require(magclass)
   require(magpie4)
   require(gdx2)
 
   cat(paste0("=== UPDATE_CALIB ITERATION ", calibrationStep, " START ===\n"))
   cat(paste0("GDX file: ", gdxFile, "\n"))
-  cat(paste0("calib_accuracy: ", calib_accuracy, "\n"))
+  cat(paste0("calibAccuracy: ", calibAccuracy, "\n"))
 
   if (!(modelstat(gdxFile)[1, 1, 1] %in% c(1, 2, 7))) {
     stop("Calibration run infeasible")
@@ -195,7 +195,7 @@ updateCalib <- function(gdxFile, calib_accuracy, calib_file, cost_max, cost_min,
   calib_divergence <- levelGradientMix * calibDivergenceLevel + (1 - levelGradientMix) * calibDivergenceGradient
   
   # we calculate the correction factor based on a mix of the two divergence measures
-  # gradient should lead to faster convergence and better match of gradinet for forwardlooking results
+  # gradient should lead to faster convergence and more continuous gradient with historical data
   # gradient has disadvantage that the error from incomplete convergence accumulates over time
   # level calibration has advantage that errors from one timestep are balanced out in subsequent timestep.
  
@@ -204,13 +204,13 @@ updateCalib <- function(gdxFile, calib_accuracy, calib_file, cost_max, cost_min,
   calib_correction[,1,] <- 1
  
   ### -> in case it is the first step, it forces the initial factors to be equal to 1
-  if (file.exists(calib_file)) {
+  if (file.exists(calibFile)) {
     cat(">>> Starting with existing calibration file\n")
-    oldCalib <- magpiesort(read.magpie(calib_file))[,getYears(calib_divergence),]
+    oldCalib <- magpiesort(read.magpie(calibFile))[,getYears(calib_divergence),]
   } else {
     cat(">>> First iteration - initializing calibration factors (cost=1 for expanding countries, cost=2.5 for contracting, reward=0)\n")
     oldCalib <- new.magpie(cells_and_regions = getCells(calib_divergence), years = getYears(calib_divergence), names = c("cost", "reward"), fill = NA)
-    oldCalib[,,"cost"] <- (expandHist(getValData(histData = histData, gdxFile = gdxFile)) < 0) * (cost_max - 1) + 1
+    oldCalib[,,"cost"] <- (expandHist(getValData(histData = histData, gdxFile = gdxFile)) < 0) * (costMax - 1) + 1
     oldCalib[,,"reward"] <- 0
   }
 
@@ -230,15 +230,15 @@ updateCalib <- function(gdxFile, calib_accuracy, calib_file, cost_max, cost_min,
   calibFactorReward[expandHist(getValData(histData = histData, gdxFile = gdxFile)) >= 0] <- 0
   calibFactorReward[calibFactorReward < 0] <- 0
 
-  cat(">>> Account for cost_max and cost_min\n")
-  if (!is.null(cost_max)) {
-    aboveLimit <- (calibFactorCost >= cost_max)
-    calibFactorCost[aboveLimit] <- cost_max
+  cat(">>> Account for costMax and costMin\n")
+  if (!is.null(costMax)) {
+    aboveLimit <- (calibFactorCost >= costMax)
+    calibFactorCost[aboveLimit] <- costMax
   }
 
-  if (!is.null(cost_min)) {
-    belowLimit <- (calibFactorCost <= cost_min)
-    calibFactorCost[belowLimit] <- cost_min
+  if (!is.null(costMin)) {
+    belowLimit <- (calibFactorCost <= costMin)
+    calibFactorCost[belowLimit] <- costMin
   }
 
   cat(">>> write down current calib factors (and area_factors) for tracking\n")
@@ -257,15 +257,15 @@ updateCalib <- function(gdxFile, calib_accuracy, calib_file, cost_max, cost_min,
 
   # in case of sufficient convergence, stop here (no additional update of calibration factors!)
   # also stop in case there is no convergence, e.g. because the calib factors are at upper or lower bounds.
-  convergenceReached <- abs(calib_divergence - 1) <= calib_accuracy
+  convergenceReached <- abs(calib_divergence - 1) <= calibAccuracy
   noConvergence <- (calibFactorCost == oldCalib[, , "cost"]) & (calibFactorReward == oldCalib[, , "reward"])
 
-  if (all(convergenceReached | noConvergence) || calibrationStep == n_maxcalib) {
+  if (all(convergenceReached | noConvergence) || calibrationStep == nMaxcalib) {
 
-    ### Depending on the selected calibration selection type (best_calib FALSE or TRUE)
+    ### Depending on the selected calibration selection type (bestCalib FALSE or TRUE)
     # the reported and used regional calibration factors can be either the ones of the last iteration,
     # or the "best" based on the iteration value with the lowest standard deviation of regional divergence.
-    if (best_calib == TRUE) {
+    if (bestCalib == TRUE) {
       cat("Choosing the best calibration...\n")
       divergence_data <- read.magpie(paste0(putfolder, "/land_conversion_divergence.cs3"))
       factors_cost <- read.magpie( paste0(putfolder, "/land_conversion_cost_current_calib_factor.cs3"))
@@ -299,10 +299,10 @@ updateCalib <- function(gdxFile, calib_accuracy, calib_file, cost_max, cost_min,
         " unit: -",
         paste0(" note: Best calibration factor from the run"),
         " origin: scripts/calibration/landconversion_cost.R (path relative to model main directory)",
-        paste(" Calibration settings:",  "calib_accuracy=", calib_accuracy, "cost_max=", cost_max, "cost_min=", cost_min, "n_maxcalib=",n_maxcalib, "best_calib=",best_calib, "histData=",histData),
+        paste(" Calibration settings:",  "calibAccuracy=", calibAccuracy, "costMax=", costMax, "costMin=", costMin, "nMaxcalib=",nMaxcalib, "bestCalib=",bestCalib, "histData=",histData),
         paste0(" creation date: ", date())
       )
-      write.magpie(round(calibBestFull, 3), calib_file, comment = comment)
+      write.magpie(round(calibBestFull, 3), calibFile, comment = comment)
 
 
       ####
@@ -326,11 +326,11 @@ updateCalib <- function(gdxFile, calib_accuracy, calib_file, cost_max, cost_min,
       " unit: -",
       paste0(" note: Calibration step ", calibrationStep),
       " origin: scripts/calibration/landconversion_cost.R (path relative to model main directory)",
-      paste(" Calibration settings:",  "calib_accuracy=", calib_accuracy, "cost_max=", cost_max, "cost_min=", cost_min, "n_maxcalib=",n_maxcalib, "best_calib=",best_calib, "histData=",histData),
+      paste(" Calibration settings:",  "calibAccuracy=", calibAccuracy, "costMax=", costMax, "costMin=", costMin, "nMaxcalib=", nMaxcalib, "bestCalib=", bestCalib, "histData=", histData),
       paste0(" creation date: ", date())
     )
 
-    write.magpie(round(calibFull, 3), calib_file, comment = comment)
+    write.magpie(round(calibFull, 3), calibFile, comment = comment)
     return(FALSE)
   }
 }
@@ -338,27 +338,27 @@ updateCalib <- function(gdxFile, calib_accuracy, calib_file, cost_max, cost_min,
 
 
 
-calibrate_landconversion <- function(n_maxcalib = 20,
+calibrateLandconversion <- function(nMaxcalib = 20,
                              restart = FALSE,
-                             calib_accuracy = 0.01,
-                             cost_max = 2.5,
-                             cost_min = 0.2,
-                             calib_magpie_name = "magpie_calib",
-                             calib_file = "modules/39_landconversion/input/f39_calib.csv",
+                             calibAccuracy = 0.01,
+                             costMax = 2.5,
+                             costMin = 0.2,
+                             calibMagpieName = "magpie_calib",
+                             calibFile = "modules/39_landconversion/input/f39_calib.csv",
                              putfolder = "land_conversion_cost_calib_run",
-                             data_workspace = NULL,
+                             dataWorkspace = NULL,
                              logoption = 3,
                              debug = FALSE,
-                             best_calib = TRUE,
+                             bestCalib = TRUE,
                              histData = "FAO",
                              levelGradientMix = 0.3) {
   require(magclass)
 
   if (!restart) {
     cat(paste0("\nStarting land conversion cost calibration from default values\n"))
-    if (file.exists(calib_file)) file.remove(calib_file)
+    if (file.exists(calibFile)) file.remove(calibFile)
   } else {
-    if (file.exists(calib_file)) cat(paste0("\nStarting land conversion cost calibration from existing values\n")) else cat(paste0("\nStarting land conversion cost calibration from default values\n"))
+    if (file.exists(calibFile)) cat(paste0("\nStarting land conversion cost calibration from existing values\n")) else cat(paste0("\nStarting land conversion cost calibration from default values\n"))
   }
 
   # Clear log file at start
@@ -369,37 +369,37 @@ calibrate_landconversion <- function(n_maxcalib = 20,
     cat("### CALIBRATE_MAGPIE START ###\n")
     cat("##################################################################\n")
 
-    s_use_gdx <- 0
-    for (i in seq_len(n_maxcalib)) {
+    useGDX <- 0
+    for (i in seq_len(nMaxcalib)) {
       
-      cat(paste0("### ITERATION ", i, " START (s_use_gdx = ", s_use_gdx, ") ###\n"))
+      cat(paste0("### ITERATION ", i, " START (useGDX = ", useGDX, ") ###\n"))
 
-      calibrationRun(putfolder = putfolder, calib_magpie_name = calib_magpie_name, logoption = logoption, s_use_gdx = s_use_gdx)
+      calibrationRun(putfolder = putfolder, calibMagpieName = calibMagpieName, logoption = logoption, useGDX = useGDX)
 
       if (debug) {
         # Copy listing file with iteration number for debugging
-        if (file.exists(paste0(calib_magpie_name, ".lst"))) {
-          file.copy(paste0(calib_magpie_name, ".lst"), paste0(putfolder, "/", calib_magpie_name, "_iter", i, ".lst"), overwrite = TRUE)
+        if (file.exists(paste0(calibMagpieName, ".lst"))) {
+          file.copy(paste0(calibMagpieName, ".lst"), paste0(putfolder, "/", calibMagpieName, "_iter", i, ".lst"), overwrite = TRUE)
         }
         file.copy(paste0(putfolder, "/fulldata.gdx"), paste0(putfolder, "/", "fulldata_calib", i, ".gdx"), overwrite = TRUE)
       }
 
-      done <- updateCalib(gdxFile = "fulldata.gdx", calib_accuracy = calib_accuracy, cost_max = cost_max, cost_min = cost_min, 
-                           calib_file = calib_file, calibrationStep = i, n_maxcalib = n_maxcalib, best_calib = best_calib, histData = histData,
+      done <- updateCalib(gdxFile = "fulldata.gdx", calibAccuracy = calibAccuracy, costMax = costMax, costMin = costMin, 
+                           calibFile = calibFile, calibrationStep = i, nMaxcalib = nMaxcalib, bestCalib = bestCalib, histData = histData,
                            putfolder = putfolder, levelGradientMix = levelGradientMix)
 
-      if (done && s_use_gdx == 2) {
-        s_use_gdx <- 0
+      if (done && useGDX == 2) {
+        useGDX <- 0
         next
-      } else if (done && s_use_gdx == 0) {
+      } else if (done && useGDX == 0) {
         break
       } else {
-        s_use_gdx <- 2
+        useGDX <- 2
       }
     }
 
     # delete calib_magpie_gms in the main folder
-    unlink(paste0(calib_magpie_name, ".*"))
+    unlink(paste0(calibMagpieName, ".*"))
     unlink("fulldata.gdx")
     unlink("calib_data.rds")
 
