@@ -101,8 +101,10 @@ getValData <- function(histData, gdx_file) {
       saveRDS(val, file = "calib_data.rds")
     }
     valdata <- val[,y,]
-  } else {stop("unkown histData")}
-  if (nregions(magpie) != nregions(valdata) | !all(getRegions(magpie) %in% getRegions(valdata))) {
+  } else {
+    stop("unkown histData")
+  }
+  if (nregions(magpie) != nregions(valdata) || !all(getRegions(magpie) %in% getRegions(valdata))) {
     stop("Regions in MAgPIE do not agree with regions in reference calibration area data set!")
   }
   cat("=== validation data retrieved ===\n")
@@ -159,7 +161,8 @@ time_series_cost <- function(calib_factor) {
   out2 <- new.magpie(getRegions(calib_factor), years = c(seq(1995, 2020, by = 5), seq(2050, 2150, by = 5)), fill = 1)
   out2[, getYears(calib_factor), ] <- calib_factor
   # use average of last two timesteps for 2020
-  out2050 <- out2[,"y2020",] <- (setYears(calib_factor[,"y2010",],NULL) + setYears(calib_factor[,"y2015",],NULL))/2
+  out2[,"y2020",] <- (setYears(calib_factor[,"y2010",],NULL) + setYears(calib_factor[,"y2015",],NULL))/2
+  out2050 <- out2[,"y2020",]
   # in case calibration factors are below 1, increase them to 1 until 2050. If they are above 1, keep them as is.
   out2050[out2050 < 1] <- 1
   out2[, seq(2050, 2150, by = 5), ] <- out2050
@@ -185,7 +188,9 @@ update_calib <- function(gdx_file, calib_accuracy, calib_file, cost_max, cost_mi
   cat(paste0("GDX file: ", gdx_file, "\n"))
   cat(paste0("calib_accuracy: ", calib_accuracy, "\n"))
 
-  if (!(modelstat(gdx_file)[1, 1, 1] %in% c(1, 2, 7))) stop("Calibration run infeasible")
+  if (!(modelstat(gdx_file)[1, 1, 1] %in% c(1, 2, 7))) {
+    stop("Calibration run infeasible")
+  }
 
 
   
@@ -261,14 +266,14 @@ update_calib <- function(gdx_file, calib_accuracy, calib_file, cost_max, cost_mi
   convergence_reached <- abs(calib_divergence - 1) <= calib_accuracy
   no_convergence <- (calib_factor_cost == old_calib[, , "cost"]) & (calib_factor_reward == old_calib[, , "reward"])
 
-  if (all(convergence_reached|no_convergence) | calibration_step == n_maxcalib) {
+  if (all(convergence_reached | no_convergence) || calibration_step == n_maxcalib) {
 
     ### Depending on the selected calibration selection type (best_calib FALSE or TRUE)
     # the reported and used regional calibration factors can be either the ones of the last iteration,
     # or the "best" based on the iteration value with the lowest standard deviation of regional divergence.
     if (best_calib == TRUE) {
       cat("Choosing the best calibration...\n")
-      divergence_data <- read.magpie( paste0(putfolder, "/land_conversion_divergence.cs3"))
+      divergence_data <- read.magpie(paste0(putfolder, "/land_conversion_divergence.cs3"))
       factors_cost <- read.magpie( paste0(putfolder, "/land_conversion_cost_current_calib_factor.cs3"))
       factors_reward <- read.magpie( paste0(putfolder, "/land_conversion_reward_current_calib_factor.cs3"))
       # The best iteration is chosen for each region as the calibration factors where the sum of divergence over all timesteps is minimal.
@@ -371,7 +376,7 @@ calibrate_landconversion <- function(n_maxcalib = 20,
     cat("##################################################################\n")
 
     s_use_gdx <- 0
-    for (i in 1:n_maxcalib) {
+    for (i in seq_len(n_maxcalib)) {
       
       cat(paste0("### ITERATION ", i, " START (s_use_gdx = ", s_use_gdx, ") ###\n"))
 
@@ -389,10 +394,10 @@ calibrate_landconversion <- function(n_maxcalib = 20,
                            calib_file = calib_file, calibration_step = i, n_maxcalib = n_maxcalib, best_calib = best_calib, histData = histData,
                            putfolder = putfolder, levelGradientMix = levelGradientMix)
 
-      if (done & s_use_gdx == 2) {
+      if (done && s_use_gdx == 2) {
         s_use_gdx <- 0
         next
-      } else if (done & s_use_gdx == 0) {
+      } else if (done && s_use_gdx == 0) {
         break
       } else {
         s_use_gdx <- 2
