@@ -327,7 +327,7 @@ lcClass <- 1:length(getNames(landOut))
 dimLon <- ncdf4::ncdim_def("lon", "degrees_east", lon)
 dimLat <- ncdf4::ncdim_def("lat", "degrees_north", lat)
 dimTime <- ncdf4::ncdim_def("time", "years", calendar = "standard", time, unlim = TRUE)
-dimLandClass <- ncdf4::ncdim_def("lc_class", "1=cropland_other/2=cropland_2Gbioen/3=grassland/4=nat_regen_forest/5=forest_planted/6=rest_abn_crop/7=rest_abn_grass/8=rest_forest/9=other/10=built_up_areas", lcClass)
+dimLandClass <- ncdf4::ncdim_def("lc_class", paste(outNames, collapse = "/"), lcClass)
 
 # create variables
 fillvalue <- NaN
