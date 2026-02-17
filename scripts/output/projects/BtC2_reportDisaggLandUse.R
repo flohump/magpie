@@ -359,7 +359,8 @@ totAreaVar <- ncvar_def(
 # create the empty data array for land cover share
 landCoverVarArray <- array(
   NA,
-  dim = c(length(lon), length(lat), length(lcClass), length(time)), dimnames = list(lon, lat, lcClass, time)
+  dim = c(length(lon), length(lat), length(lcClass), length(time)),
+  dimnames = list(lon, lat, lcClass, time)
 )
 
 # convert magclass object to array
