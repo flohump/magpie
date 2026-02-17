@@ -5,11 +5,10 @@
 # |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 # |  Contact: magpie@pik-potsdam.de
 
-# --------------------------------------------------------------
-# description: Creates a NetCDF file with disaggregated land pools,
-# reclassified to land types used in the Bending the Curve 2.0 project
+# -------------------------------------------------------------------------------------------------
+# description: Creates a NetCDF file with disaggregated land use pools for Bending the Curve 2.0
 # comparison script: FALSE
-# ---------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 # Version 1.00 - Patrick v. Jeetze
 # 1.00: first working version
@@ -21,6 +20,8 @@ library(gms)
 library(gdx2)
 library(mstools)
 library(ncdf4)
+library(tidyr)
+library(dplyr)
 
 ############################# BASIC CONFIGURATION #############################
 # if (!exists("source_include")) {
@@ -30,8 +31,9 @@ library(ncdf4)
 # }
 ###############################################################################
 
-suffix <- "firstruns"
+suffix <- ""
 
+projectName <- "BTC2v04"
 
 mapFile <- Sys.glob(file.path(outputdir, "clustermap_*.rds"))
 gdx <- file.path(outputdir, "fulldata.gdx")
@@ -49,6 +51,10 @@ cfg <- gms::loadConfig(file.path(outputdir, "config.yml"))
   return(dlandPool)
 }
 
+.printSuffix <- function(suffix) {
+  suffix <- ifelse(suffix == "", "", paste0("_", suffix))
+  return(suffix)
+}
 
 # ----------------------
 # Read input data
@@ -223,12 +229,12 @@ for (yrIdx in 2:nyears(landHr)) {
   otherReducResidual[otherReducResidual > otherHr[, yrIdx, "other"]] <-
     otherHr[, yrIdx, "other"][otherReducResidual > otherHr[, yrIdx, "other"]]
 
-  # Using MAgPIE cluster transitions underestimates secondary forest maturation
-  missSecdforestMaturation <- setNames(
+  # Using MAgPIE cluster transitions underestimates loss of recovered land
+  missAbnReduction <- setNames(
     otherReduc[, yrIdx - 1, ] - dimSums(secdforestMaturation + otherReducResidual, dim = 3),
     NULL
   )
-  secdforestMaturation <- secdforestMaturation + missSecdforestMaturation
+  secdforestMaturation <- secdforestMaturation + missAbnReduction
 
   # Total secondary forest maturation is attributed to abandoned/restored land types
   origLandTypesShr <- otherHr[, yrIdx - 1, origLandTypes] / dimSums(otherHr[, yrIdx - 1, origLandTypes], dim = 3)
@@ -261,13 +267,53 @@ landOut <- mbind(
   otherHr,
   urbanHr
 )
-
-# land cover share output
-landOutShr <- landOut / dimSums(landOut, dim = 3)
-landOutShr <- toolConditionalReplace(landOutShr, "is.na()")
+landOut[is.na(landOut)] <- 0
 
 # caculate total land area
 landArea <- dimSums(landOut, dim = 3, na.rm = TRUE)
+
+# land cover share output
+landOutShr <- landOut / landArea
+
+# -----------------------------------
+# Write regional outputs as CSV file
+# -----------------------------------
+
+# LU reporting classes and codes
+outNames <- c(
+  "1=cropland_other", "2=cropland_2Gbioen", "3=grassland",
+  "4=nat_regen_forest", "5=forest_planted", "6=rest_abn_crop",
+  "7=rest_abn_grass", "8=rest_forest", "9=other", "10=built_up_areas"
+)
+
+
+# Write CSV file for regional LU reporting
+for (yr in getYears(landOut)) {
+  csvOut <- landOut[, yr, ]
+  csvOut <- toolAggregate(csvOut, rel = mapFile, from = "cell", to = "region")
+  getNames(csvOut) <- outNames
+  regionsOut <- getItems(csvOut, "region")
+  csvOut <- as.data.frame(csvOut)
+  csvOut <- csvOut %>%
+    pivot_wider(
+      names_from = Region,
+      values_from = Value
+    ) %>%
+    rename(Row = Data1)
+
+  write.csv(
+    csvOut[, c("Row", regionsOut)],
+    file.path(
+      outputdir,
+      paste0(
+        projectName, "_", cfg$title,
+        .printSuffix(suffix), "_", yr, ".csv"
+      )
+    ),
+    row.names = FALSE
+  )
+}
+
 
 # -----------------------------------
 # Write NetCDF in requested format
@@ -321,7 +367,7 @@ for (i in 1:ncells(landArea)) {
 }
 
 # create & fill netcdf with two variables
-ncnew <- nc_create(file.path(outputdir, paste0("BendingTheCurve2_LCproj_MAgPIE_", cfg$title, "_", suffix, ".nc")), list(LandCoverVar, totAreaVar), force_v4 = TRUE)
+ncnew <- nc_create(file.path(outputdir, paste0(projectName, "_", cfg$title, .printSuffix(suffix), ".nc")), list(LandCoverVar, totAreaVar), force_v4 = TRUE)
 ncvar_put(ncnew, totAreaVar, totAreaVarArray)
 ncvar_put(ncnew, LandCoverVar, LandCoverVarArray)
 # add attributes
