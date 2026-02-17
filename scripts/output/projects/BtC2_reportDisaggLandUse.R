@@ -47,7 +47,8 @@ cfg <- gms::loadConfig(file.path(outputdir, "config.yml"))
 # -----------------------------------------
 
 .calcDiffLand <- function(landPool) {
-  dlandPool <- landPool[, 2:nyears(landPool), ] - setYears(landPool[, 1:nyears(landPool) - 1, ], tail(getYears(landPool), -1))
+  dlandPool <- landPool[, 2:nyears(landPool), ] -
+    setYears(landPool[, 1:nyears(landPool) - 1, ], tail(getYears(landPool), -1))
   return(dlandPool)
 }
 
@@ -55,6 +56,16 @@ cfg <- gms::loadConfig(file.path(outputdir, "config.yml"))
   suffix <- ifelse(suffix == "", "", paste0("_", suffix))
   return(suffix)
 }
+
+.printProjectName <- function(projectName, title) {
+  if (grepl(projectName, title)) {
+    projectName <- ""
+  } else {
+    projectName <- paste0(projectName, "_")
+  }
+  return(projectName)
+}
+
 
 # ----------------------
 # Read input data
@@ -306,7 +317,7 @@ for (yr in getYears(landOut)) {
     file.path(
       outputdir,
       paste0(
-        projectName, "_", cfg$title,
+        .printProjectName(projectName, cfg$title), cfg$title,
         .printSuffix(suffix), "_", yr, ".csv"
       )
     ),
@@ -332,7 +343,11 @@ dimLandClass <- ncdf4::ncdim_def("lc_class", paste(outNames, collapse = "/"), lc
 # create variables
 fillvalue <- NaN
 varNameLandShr <- "share of pixel occupied by various land covers"
-LandCoverVar <- ncvar_def(name = "LC_area_share", units = "share of pixel area", longname = varNameLandShr, dim = list(dimLon, dimLat, dimLandClass, dimTime), missval = fillvalue, prec = "double", compression = 9)
+landCoverVar <- ncvar_def(
+  name = "LC_area_share", units = "share of pixel area", longname = varNameLandShr,
+  dim = list(dimLon, dimLat, dimLandClass, dimTime),
+  missval = fillvalue, prec = "double", compression = 9
+)
 varNameTotArea <- "total area of the pixel"
 totAreaVar <- ncvar_def(
   name = "pixel_area", units = "million ha", longname = varNameTotArea,
@@ -342,7 +357,10 @@ totAreaVar <- ncvar_def(
 ### Land cover share
 
 # create the empty data array for land cover share
-LandCoverVarArray <- array(NA, dim = c(length(lon), length(lat), length(lcClass), length(time)), dimnames = list(lon, lat, lcClass, time))
+landCoverVarArray <- array(
+  NA,
+  dim = c(length(lon), length(lat), length(lcClass), length(time)), dimnames = list(lon, lat, lcClass, time)
+)
 
 # convert magclass object to array
 landOutShr <- as.array(landOutShr)
@@ -350,7 +368,7 @@ landOutShr <- aperm(landOutShr, c(1, 3, 2))
 
 coord <- toolGetMappingCoord2Country(pretty = TRUE)
 for (i in 1:ncells(landOutShr)) {
-  LandCoverVarArray[which(coord[i, "lon"] == lon), which(coord[i, "lat"] == lat), , ] <- landOutShr[i, , , drop = FALSE]
+  landCoverVarArray[which(coord[i, "lon"] == lon), which(coord[i, "lat"] == lat), , ] <- landOutShr[i, , , drop = FALSE]
 }
 
 ### Land area
@@ -367,9 +385,15 @@ for (i in 1:ncells(landArea)) {
 }
 
 # create & fill netcdf with two variables
-ncnew <- nc_create(file.path(outputdir, paste0(projectName, "_", cfg$title, .printSuffix(suffix), ".nc")), list(LandCoverVar, totAreaVar), force_v4 = TRUE)
+ncnew <- nc_create(
+  file.path(
+    outputdir, paste0(.printProjectName(projectName, cfg$title), cfg$title, .printSuffix(suffix), ".nc")
+  ),
+  list(landCoverVar, totAreaVar),
+  force_v4 = TRUE
+)
 ncvar_put(ncnew, totAreaVar, totAreaVarArray)
-ncvar_put(ncnew, LandCoverVar, LandCoverVarArray)
+ncvar_put(ncnew, landCoverVar, landCoverVarArray)
 # add attributes
 ncatt_put(ncnew, 0, "title", "MAgPIE land cover projections")
 ncatt_put(ncnew, 0, "scenario", cfg$title)
