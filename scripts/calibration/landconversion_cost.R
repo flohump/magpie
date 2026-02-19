@@ -134,7 +134,7 @@ getCalibFactor <- function(gdxFile, mode, histData) {
     # Calibration should not target absolute difference to goal, but matching the increase over time.
     # Otherwise, calibration of first timestep will implicitly also calibrate all further timesteps.
     expansionValdata <- valdata * 0
-	expansionMagpie <- valdata * 0
+    expansionMagpie <- valdata * 0
     for (timestep in 2:length(getYears(expansionMagpie))) {
       expansionMagpie[,timestep,] <- magpie[,timestep,] / setYears(magpie[,timestep - 1,], NULL)
       expansionValdata[,timestep,] <- valdata[,timestep,] / setYears(valdata[,timestep - 1,], NULL)
@@ -146,7 +146,8 @@ getCalibFactor <- function(gdxFile, mode, histData) {
     out <- magpie / valdata
   }
   getNames(out) <- NULL
-  out[out <= 0.1] <- 0.1 # make sure the multiplier doesnt drop to 0, as this could not be reverted in future iterations
+  out[out <= 0.1] <- 0.1 # make sure the multiplier doesnt drop to 0, as this could not be reverted in future iterations. 
+  # expert guess: 10% of the original land conversion cost estimates seems a reasonable lower limit, as land expansion should also not be free of costs.
 
   return(magpiesort(out))
 }

@@ -486,17 +486,17 @@ start_run <- function(cfg, scenario = NULL, codeCheck = TRUE, lock_model = TRUE,
     cat("Starting land conversion cost calibration factor calculation!\n")
     source("scripts/calibration/landconversion_cost.R")
     calibrateLandconversion(nMaxcalib = cfg$calib_maxiter_landconversion_cost,
-                             restart = cfg$restart_landconversion_cost,
-                             calibAccuracy = cfg$calib_accuracy_landconversion_cost,
-                             costMax = cfg$cost_calib_max_landconversion_cost,
-                             costMin = cfg$cost_calib_min_landconversion_cost,
-                             calibFile = land_calib_file,
-                             dataWorkspace = cfg$val_workspace,
-                             logoption = 3,
-                             debug = cfg$debug,
-                             bestCalib = cfg$best_calib_landconversion_cost,
-                             histData = cfg$cost_calib_hist_data,
-                             levelGradientMix = cfg$level_gradient_mix)
+                            restart = cfg$restart_landconversion_cost,
+                            calibAccuracy = cfg$calib_accuracy_landconversion_cost,
+                            costMax = cfg$cost_calib_max_landconversion_cost,
+                            costMin = cfg$cost_calib_min_landconversion_cost,
+                            calibFile = land_calib_file,
+                            dataWorkspace = cfg$val_workspace,
+                            logoption = 3,
+                            debug = cfg$debug,
+                            bestCalib = cfg$best_calib_landconversion_cost,
+                            histData = cfg$cost_calib_hist_data,
+                            levelGradientMix = cfg$level_gradient_mix)
     cat("Land conversion cost calibration factor calculated!\n")
   }
 
