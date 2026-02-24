@@ -17,7 +17,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **renv/activate.R** updated to version 1.1.7
 - **scripts/start** updated biomass collection start script; renamed from `calc_residuePot2ndBE.R` to `generate_biomassForEnergyData.R`
 - scripts/calibration/landconversion_cost.R: Simplified code, code improved to speed up and improve convergence.
-- **config** New default switched from calibrating to FAO to LanduseInitiatlisation. Update of calibration parameters and removal of lowpass filter setting in line with simplified script.
+- **config** New default switched from calibrating to FAO to LanduseInitialisation. Update of calibration parameters and removal of lowpass filter setting in line with simplified script.
+
 ### added
 -
 
