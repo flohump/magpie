@@ -153,23 +153,19 @@ getCalibFactor <- function(gdxFile, mode, histData) {
 }
 
 timeSeriesCost <- function(calibFactor) {
-  out2 <- new.magpie(getRegions(calibFactor), years = c(seq(1995, 2020, by = 5), seq(2050, 2150, by = 5)), fill = 1)
+  out2 <- new.magpie(getRegions(calibFactor), years = c(seq(1995, 2015, by = 5), seq(2050, 2150, by = 5)), fill = 1)
   out2[, getYears(calibFactor), ] <- calibFactor
-  # use average of last two timesteps for 2020
-  out2[,"y2020",] <- (setYears(calibFactor[,"y2010",],NULL) + setYears(calibFactor[,"y2015",],NULL))/2
-  out2050 <- out2[,"y2020",]
-  # in case calibration factors are below 1, increase them to 1 until 2050. If they are above 1, keep them as is.
+  out2050 <- setYears(calibFactor[,"y2015",],NULL)
   out2050[out2050 < 1] <- 1
   out2[, seq(2050, 2150, by = 5), ] <- out2050
-  out2 <- time_interpolate(out2, seq(2025, 2050, by = 5), integrate_interpolated_years = T)
+  out2 <- time_interpolate(out2, seq(2020, 2050, by = 5), integrate_interpolated_years = T)
   return(out2)
 }
 
 timeSeriesReward <- function(calibFactor) {
-  out2 <- new.magpie(getRegions(calibFactor), years = c(seq(1995, 2020, by = 5), seq(2050, 2150, by = 5)), fill = 0)
+  out2 <- new.magpie(getRegions(calibFactor), years = c(seq(1995, 2015, by = 5), seq(2050, 2150, by = 5)), fill = 0)
   out2[, getYears(calibFactor), ] <- calibFactor
-  out2[,"y2020",] <- (setYears(calibFactor[,"y2010",],NULL) + setYears(calibFactor[,"y2015",],NULL))/2
-  out2 <- time_interpolate(out2, seq(2025, 2050, by = 5), integrate_interpolated_years = T)
+  out2 <- time_interpolate(out2, seq(2020, 2050, by = 5), integrate_interpolated_years = T)
   return(out2)
 }
 
