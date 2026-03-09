@@ -15,7 +15,6 @@
 library(magclass)
 library(magpie4)
 library(lucode2)
-library(quitte)
 library(gms)
 options("magclass.verbosity" = 1)
 
@@ -26,24 +25,16 @@ if (!exists("source_include")) {
 }
 
 cfg     <- gms::loadConfig(file.path(outputdir, "config.yml"))
-gdx     <- file.path(outputdir,"fulldata.gdx")
+gdx     <- file.path(outputdir, "fulldata.gdx")
 rds_iso <- paste0(outputdir, "/report_iso.rds")
 ###############################################################################
 
 report <- getReportIso(gdx, scenario = cfg$title)
 
-mif <- sub(".rds",".mif",rds_iso)
+mif <- sub(".rds", ".mif", rds_iso)
 write.report(report, file = mif, scenario = cfg$title)
 report <- read.report(file = mif, as.list = FALSE)
 
-q <- as.quitte(report)
-# as.quitte converts "World" into "GLO". But we want to keep "World" and therefore undo these changes
-q <- droplevels(q)
-levels(q$region)[levels(q$region) == "GLO"] <- "World"
-q$region <- factor(q$region,levels = sort(levels(q$region)))
-
-if (all(is.na(q$value))) {
-  stop("No values in reporting!")
-}
+q <- magpieReportAsQuitte(report)
 
 saveRDS(q, file = rds_iso, version = 2, compress = "xz")
