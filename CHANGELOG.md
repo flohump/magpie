@@ -20,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **config** New default switched from calibrating to FAO to LanduseInitialisation. Update of calibration parameters and removal of lowpass filter setting in line with simplified script.
 
 ### added
--
+- **scripts/output** new start script to report land use in a thematic resolution specific for the Bending the Curve 2 initiative.
 
 ### removed
 -
