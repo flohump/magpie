@@ -14,14 +14,15 @@
 
 library(magclass)
 library(magpie4)
-library(lucode2)
 library(gms)
+library(quitte)
+source("scripts/helper.R")
 options("magclass.verbosity" = 1)
 
 ############################# BASIC CONFIGURATION #############################
 if (!exists("source_include")) {
-  outputdir <- NULL
   readArgs("outputdir")
+  stopifnot(exists("outputdir"))
 }
 
 cfg     <- gms::loadConfig(file.path(outputdir, "config.yml"))
@@ -33,8 +34,7 @@ report <- getReportIso(gdx, scenario = cfg$title)
 
 mif <- sub(".rds", ".mif", rds_iso)
 write.report(report, file = mif, scenario = cfg$title)
+
 report <- read.report(file = mif, as.list = FALSE)
-
-q <- magpieReportAsQuitte(report)
-
+q <- useWorld(as.quitte(report))
 saveRDS(q, file = rds_iso, version = 2, compress = "xz")
