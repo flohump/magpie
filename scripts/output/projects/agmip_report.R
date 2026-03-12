@@ -16,7 +16,6 @@ library(lucode2)
 library(quitte)
 library(gms)
 library(piamInterfaces)
-library(piamutils)
 options("magclass.verbosity" = 1)
 
 ############################# BASIC CONFIGURATION #############################
