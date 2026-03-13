@@ -32,7 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **32_forestry** bugfix limit for endogenous re/afforestation in historical time steps
 - **highres.R** temporary f32_max_aff_area.cs4 is now deleted in case of error
 - **scripts/calibration/landconversion_cost.R**: Bugfixes, see https://github.com/magpiemodel/magpie/pull/858
-- Replaced scaling factors like `10e3` with the intended `1e3`
+- **scaling** Replaced scaling factors like `10e3` with the intended `1e3`
 
 ## [4.13.0] - 2025-10-23
 
