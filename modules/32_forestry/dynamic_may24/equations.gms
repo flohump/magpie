@@ -154,12 +154,21 @@ q32_bv_plant(j2,potnatveg) .. vm_bv(j2,"plant",potnatveg)
 *' patterns over time. Present value of harvesting costs is (1+`pm_interest`)^`p32_rotation_regional`
 *' and annuity factor of `pm_interest`/(1+`pm_interest`) averages the cost of this
 *' investment over time.
+*'
+*' Replanted plantation area (`v32_land_replant`) receives a reduced establishment cost
+*' (`s32_est_cost_plant_reest` = 1230 USD/ha, 50% of full `p32_est_cost("plant")` = 2460 USD/ha).
+*' This reflects that replanting on recently harvested plantation land is cheaper than
+*' new establishment: no land clearing needed, existing road infrastructure, known site
+*' productivity. The cost reduction is implemented by subtracting the difference
+*' `(p32_est_cost("plant") - s32_est_cost_plant_reest)` for replanted area from the
+*' total establishment cost.
 
 q32_cost_establishment(i2)..
   v32_cost_establishment(i2)
   =e=
-   (sum((cell(i2,j2),type32,ac_est), v32_land(j2,type32,ac_est) * p32_est_cost(type32)))
-     * sum(ct,pm_interest(ct,i2)/(1+pm_interest(ct,i2)))
+   (sum((cell(i2,j2),type32,ac_est), v32_land(j2,type32,ac_est) * p32_est_cost(type32))
+    - sum(cell(i2,j2), v32_land_replant(j2)) * (p32_est_cost("plant") - s32_est_cost_plant_reest)
+   ) * sum(ct,pm_interest(ct,i2)/(1+pm_interest(ct,i2)))
    + sum((ct,kforestry), v32_prod_forestry_future(i2) * p32_forestry_product_dist(ct,i2,kforestry) * im_timber_prod_cost(kforestry))
      / ((1+sum(ct,pm_interest(ct,i2)))**sum(ct, p32_rotation_regional(ct,i2)*5));
 

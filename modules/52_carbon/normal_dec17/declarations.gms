@@ -6,11 +6,32 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 parameters
- pm_carbon_density_secdforest_ac(t_all,j,ac,ag_pools)   Above ground secondary forest carbon density for age classes and carbon pools (tC per ha)
- pm_carbon_density_other_ac(t_all,j,ac,ag_pools)        Above ground other land carbon density for age classes and carbon pools (tC per ha)
- pm_carbon_density_plantation_ac(t_all,j,ac,ag_pools)     Above ground plantation carbon density for age classes and carbon pools (tC per ha)
- pc52_carbon_density_start(t_all,j,ag_pools)  Above ground carbon density for new land in other land pool (tC per ha)
+ pm_carbon_density_secdforest_ac(t_all,j,ac,ag_pools)            Vegetation secondary forest carbon density for age classes and carbon pools (tC per ha)
+ pm_carbon_density_secdforest_ac_default(t_all,j,ac,ag_pools)   Vegetation secondary forest carbon density default uncalibrated (tC per ha)
+ pm_carbon_density_other_ac(t_all,j,ac,ag_pools)                Vegetation other land carbon density for age classes and carbon pools (tC per ha)
+ pm_carbon_density_plantation_ac(t_all,j,ac,ag_pools)            Vegetation plantation carbon density for age classes and carbon pools (tC per ha)
+ pm_carbon_density_plantation_ac_default(t_all,j,ac,ag_pools)   Vegetation plantation carbon density default uncalibrated (tC per ha)
+ pc52_carbon_density_start(t_all,j,ag_pools)  Vegetation carbon density for new land in other land pool (tC per ha)
  i52_land_carbon_sink(t_all,i)        Land carbon sink adjustment factors from Grassi et al 2021 (GtCO2 per year)
+ p52_k_low(i)                         Lower bound for bisection of growth rate k (1)
+ p52_k_high(i)                        Upper bound for bisection of growth rate k (1)
+ p52_k_calib_secdf(i)                 Calibrated growth rate k for secdforest (1)
+ p52_k_calib_plant(i)                 Calibrated growth rate k for plantations (1)
+ p52_gs_current(i)                    Current area-weighted growing stock for secdforest (m3 per ha)
+ p52_gs_prim(i)                       Primforest growing stock from C_max (m3 per ha)
+ p52_prim_area(i)                     Primforest area (mio ha)
+ p52_secdf_area(i)                    Secdforest area from GFAD (mio ha)
+ p52_secdf_ageclass(j,ac)             GFAD age distribution with primforest subtracted from acx (mio ha)
+ p52_fra_secdf_target(i)              FRA NRF growing stock target for secdforest only (m3 per ha)
+ p52_m_avg_natveg(i)                  Region-average shape parameter m for natveg (1)
+ p52_m_avg_plant(i)                   Region-average shape parameter m for plantations (1)
+ pm_vol_conv(i)                       Regional basic wood density (tDM per m3)
+ p52_bef_avg(i)                       Regional average biomass expansion factor (1)
+ p52_aboveground_fraction             Aboveground fraction for secdforest (1)
+ p52_carbon_fraction                  Carbon fraction (tC per tDM)
+ p52_aboveground_fraction_plant       Aboveground fraction for plantations (1)
+ p52_gs_current_plant(i)              Current area-weighted growing stock for plantations (m3 per ha)
+
 ;
 
 equations

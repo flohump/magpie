@@ -24,8 +24,9 @@
 *' Additionally, this module includes forest damage and provides the ability to
 *' harvest natural vegetation for timber. Both wood and woodfuel can be produceed
 *' from primary and secondary forest but other land is only allowed to be harvested
-*' for woodfuel.
-*' @stop
+*' for woodfuel. A per-volume harvest cost surcharge for natural vegetation
+*' (`s35_timber_harvest_cost_natveg_prod`) reflects higher extraction costs
+*' compared to plantations.
 
 *'
 *' @limitations Initialization of both primary and secondary forest in highest

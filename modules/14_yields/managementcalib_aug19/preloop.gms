@@ -5,6 +5,8 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
+pm_bef(clcl) = f14_ipcc_bef(clcl);
+
 i14_yields_calib(t,j,kve,w)   = f14_yields(t,j,kve,w);
 
 ***YIELD CORRECTION FOR 2ND GENERATION BIOENERGY CROPS*************************************

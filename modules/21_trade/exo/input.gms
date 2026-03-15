@@ -7,7 +7,7 @@
 
 scalars
   s21_trade_tariff Trade tariff switch (1=on 0=off)  (1)                   / 1 /
-  s21_min_trade_margin_forestry Minimum trade margin for forestry products (USD17MER per tDM) / 62 /
+  s21_min_trade_margin_forestry Minimum trade margin for forestry products (USD17MER per tDM) / 67 /
 ;
 
 table f21_trade_balance(t_all,h,kall) trade balance of positive exports and negative imports (mio. tDM per yr)

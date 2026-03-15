@@ -68,7 +68,7 @@
           fm_bii_coeff(bii_class_secd,potnatveg)) * fm_luh2_side_layers(j2,potnatveg);
 
 *' NPI/NDC land protection policies based on country reports are implemented as
-*' minium forest and other land stocks. They are not interchangeable (as compared to
+*' minimum forest and other land stocks. They are not interchangeable (as compared to
 *' the natural land conservation constraint) and specifically formulated for forest and
 *' other land stocks.
 
@@ -124,6 +124,12 @@
 *' costs for primary forest are higher than for secondary forest. Harvesting costs
 *' are paid everytime natural vegetation is harvested. The "real" harvested area
 *' are received from the timber module [73_timber].
+*'
+*' Additionally, a per-volume surcharge (`s35_timber_harvest_cost_natveg_prod` = 10 USD/tDM)
+*' is applied to all timber production from natural vegetation. This reflects that
+*' timber extraction from natural forests is more costly per unit volume than from
+*' plantations due to lower road density, longer haulage distances, and more
+*' heterogeneous stand structure.
 
 q35_cost_hvarea(i2)..
                     vm_cost_hvarea_natveg(i2)
@@ -131,6 +137,7 @@ q35_cost_hvarea(i2)..
                    sum((ct,cell(i2,j2),ac_sub), v35_hvarea_secdforest(j2,ac_sub)) * s35_timber_harvest_cost_secdforest
                  + sum((ct,cell(i2,j2),othertype35,ac_sub), v35_hvarea_other(j2,othertype35,ac_sub)) * s35_timber_harvest_cost_other
                  + sum((ct,cell(i2,j2)), v35_hvarea_primforest(j2)) * s35_timber_harvest_cost_primforest
+                 + sum((cell(i2,j2),land_natveg,kforestry), vm_prod_natveg(j2,land_natveg,kforestry)) * s35_timber_harvest_cost_natveg_prod
                     ;
 
 ** Secondary forest

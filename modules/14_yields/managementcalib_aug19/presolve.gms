@@ -11,22 +11,22 @@
 
 *** YIELDS
 
-*` `pm_carbon_density_plantation_ac` for vegetation Carbon is above- and belowground
+*' `pm_carbon_density_plantation_ac` for vegetation Carbon is above- and belowground
 *' carbon density. We convert Carbon density in tC/ha to tDM/ha by using carbon
 *' fraction of `s14_carbon_fraction` in tC/tDM. For assessing wood harvesting
 *' we need only aboveground biomass information, therefore we multiply with
 *' aboveground `f14_aboveground_fraction`. Additionally, we divide aboveground
-*' tree biomass by biomass conversion and expansion (BCE) factor to get stem
-*' biomass in tDM/ha.
+*' tree biomass by the Biomass Expansion Factor (BEF, dimensionless) to get
+*' stem biomass in tDM/ha. BEF = AGB / stem_biomass (always > 1).
 
-*` @code
+*' @code
 
 pm_timber_yield(t,j,ac,"forestry") =
     (
      pm_carbon_density_plantation_ac(t,j,ac,"vegc")
      / s14_carbon_fraction
      * f14_aboveground_fraction("forestry")
-     / sum(clcl, pm_climate_class(j,clcl) * f14_ipcc_bce(clcl,"plantations"))
+     / sum(clcl, pm_climate_class(j,clcl) * pm_bef(clcl))
     )
     ;
 
@@ -35,7 +35,7 @@ pm_timber_yield(t,j,ac,"primforest") =
      fm_carbon_density(t,j,"primforest","vegc")
      / s14_carbon_fraction
      * f14_aboveground_fraction("primforest")
-     / sum(clcl, pm_climate_class(j,clcl) * f14_ipcc_bce(clcl,"natveg"))
+     / sum(clcl, pm_climate_class(j,clcl) * pm_bef(clcl))
     )
     ;
 
@@ -44,7 +44,7 @@ pm_timber_yield(t,j,ac,"secdforest") =
      pm_carbon_density_secdforest_ac(t,j,ac,"vegc")
      / s14_carbon_fraction
      * f14_aboveground_fraction("secdforest")
-     / sum(clcl, pm_climate_class(j,clcl) * f14_ipcc_bce(clcl,"natveg"))
+     / sum(clcl, pm_climate_class(j,clcl) * pm_bef(clcl))
     )
     ;
 
@@ -53,11 +53,11 @@ pm_timber_yield(t,j,ac,"other") =
      pm_carbon_density_other_ac(t,j,ac,"vegc")
      / s14_carbon_fraction
      * f14_aboveground_fraction("other")
-     / sum(clcl, pm_climate_class(j,clcl) * f14_ipcc_bce(clcl,"natveg"))
+     / sum(clcl, pm_climate_class(j,clcl) * pm_bef(clcl))
     )
     ;
 
-*` @stop
+*' @stop
 
 ** Hard constraint to always have a positive number in pm_timber_yield
 pm_timber_yield(t,j,ac,land_timber) = pm_timber_yield(t,j,ac,land_timber)$(pm_timber_yield(t,j,ac,land_timber) > 0) + 0.0001$(pm_timber_yield(t,j,ac,land_timber) = 0);
