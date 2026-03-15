@@ -20,12 +20,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **config** New default switched from calibrating to FAO to LanduseInitialisation. Update of calibration parameters and removal of lowpass filter setting in line with simplified script.
 
 ### added
--
+- **52_carbon** growing stock calibration: bisection of Chapman-Richards growth rate k to match FRA 2025 targets for secdforest (NRF) and plantations, with primforest decomposition; default curves preserved for aff/ndc
+- **73_timber** FAO woodfuel stacking correction (`s73_woodfuel_stacking_factor = 0.65`) applied before density conversion
+- **73_timber** differentiated production costs for natural vegetation (`s73_timber_prod_cost_wood_natveg`, `s73_timber_prod_cost_woodfuel_natveg`)
+- **73_timber** residues from woodfuel harvest added to residue base (justified by BEF-based stem-only yields)
+- **35_natveg** per-volume harvest cost surcharge for natural vegetation (`s35_timber_harvest_cost_natveg_prod`)
+- **32_forestry** reduced re-establishment cost for replanted plantations (`s32_est_cost_plant_reest`)
 
 ### removed
 -
 
 ### fixed
+- **14_yields** replaced BCEF_S values with proper BEF in `f14_ipcc_bef.cs3` (was `f14_ipcc_bce.cs3`); `pm_timber_yield` now in true tDM/ha instead of m3/ha
+- **73_timber/52_carbon** replaced global wood density (0.6/0.3) with IPCC climate-zone-specific values; file moved from `f73_volumetric_conversion.csv` (M73, product-indexed) to `f52_volumetric_conversion.csv` (M52, climate-class-indexed); same density for both products
+- **14_yields, 32_forestry, 35_natveg, 52_carbon, 73_timber** fixed ~25 typos in descriptions; renamed `s73_reisdue_removal_cost` to `s73_residue_removal_cost`; updated realization.gms descriptions
 - **32_forestry** fixed parenthesis placement in discounting formula for establishment costs
 - **scripts/start_functions.R** added all extra `cfg` arguments in `start_run()` to the config check call
 - **32_forestry** bugfix limit for endogenous re/afforestation in historical time steps
