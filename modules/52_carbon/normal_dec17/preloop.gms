@@ -76,12 +76,6 @@ if(s52_growingstock_calib = 1,
 * Ensure non-negative target (if primforest GS exceeds FRA NRF, secdforest target = 0)
   p52_fra_secdf_target(i)$(p52_fra_secdf_target(i) < 0) = 0;
 
-  display "Primforest GS (m3/ha):", p52_gs_prim;
-  display "Primforest area (mio ha):", p52_prim_area;
-  display "Secdforest area from GFAD (mio ha):", p52_secdf_area;
-  display "FRA NRF target (m3/ha):", f52_fra_nrf_gs;
-  display "Derived secdforest target (m3/ha):", p52_fra_secdf_target;
-
 * Initialize bisection bounds
   p52_k_low(i) = 0.001;
   p52_k_high(i) = 0.3;
@@ -106,10 +100,6 @@ if(s52_growingstock_calib = 1,
     p52_k_low(i)$(p52_gs_current(i) < p52_fra_secdf_target(i)) = p52_k_calib_secdf(i);
     p52_k_high(i)$(p52_gs_current(i) >= p52_fra_secdf_target(i)) = p52_k_calib_secdf(i);
   );
-
-  display "Calibrated secdforest k per region:", p52_k_calib_secdf;
-  display "Achieved secdforest GS (m3/ha):", p52_gs_current;
-  display "Secdforest target (m3/ha):", p52_fra_secdf_target;
 
 * Recompute secdforest carbon density with calibrated k
   pm_carbon_density_secdforest_ac(t_all,j,ac,"vegc") =
@@ -145,10 +135,6 @@ if(s52_growingstock_calib = 1,
     p52_k_low(i)$(p52_gs_current_plant(i) < f52_fra_pla_gs(i)) = p52_k_calib_plant(i);
     p52_k_high(i)$(p52_gs_current_plant(i) >= f52_fra_pla_gs(i)) = p52_k_calib_plant(i);
   );
-
-  display "Calibrated plantation k per region:", p52_k_calib_plant;
-  display "Achieved plantation GS (m3/ha):", p52_gs_current_plant;
-  display "FRA plantation target (m3/ha):", f52_fra_pla_gs;
 
 * Recompute plantation carbon density with calibrated k
   pm_carbon_density_plantation_ac(t_all,j,ac,"vegc") =
