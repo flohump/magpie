@@ -15,7 +15,7 @@
 saveToResultsArchive <- function(qu, runstatistics, submit,
                                  resultsarchive = Sys.getenv("MAGPIE_RESULTS_ARCHIVE_PATH")) {
 
-  if (resultsarchive != "") {
+  if (resultsarchive == "") {
     # The following exists to ensure that the uploading of results continues
     # to work even when the env variable has not yet been set in a users session.
     # This block may be removed at some point.
