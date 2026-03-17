@@ -10,13 +10,22 @@
 #' @param runstatistics Path to the runstatistics.rda file.
 #' @param submit Value passed to \code{lucode2::runstatistics(submit = ...)},
 #'   typically \code{cfg$runstatistics}.
-#' @param resultsarchive Path to the results archive directory.
+#' @param resultsarchive Path to the results archive directory. Can also be set
+#' via the env variable MAGPIE_RESULTS_ARCHIVE_PATH
 saveToResultsArchive <- function(qu, runstatistics, submit,
-                                 resultsarchive = "/p/projects/rd3mod/models/results/magpie") {
-  stopifnot(
-    file.exists(runstatistics),
-    dir.exists(resultsarchive)
-  )
+                                 resultsarchive = Sys.getenv("MAGPIE_RESULTS_ARCHIVE_PATH")) {
+
+  if (resultsarchive != "") {
+    # The following exists to ensure that the uploading of results continues
+    # to work even when the env variable has not yet been set in a users session.
+    # This block may be removed at some point.
+    resultsarchive <- "/p/projects/rd3mod/models/results/magpie" # nolint: absolute_path_linter
+  }
+
+  if (!(file.exists(runstatistics) && dir.exists(resultsarchive))) {
+    # We only run in environments that are set up with a results archive
+    return(NULL)
+  }
 
   stats <- list()
   load(runstatistics)
