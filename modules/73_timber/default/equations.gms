@@ -67,17 +67,17 @@ q73_prod_woodfuel(j2)..
 *' recoverable as harvest residues (branches, tops, bark).
 *' USDA reports that ca. 30% of roundwood harvested are residues (@oswalt2019forest).
 *' Not all of this residue is recovered from forest and we assume 50% of residue
-*' removal based on @pokharel2017factors. Residues are generated from all stem
+*' removal based on @pokharel2017factors. Residues are generated from all real
 *' harvest sources (forestry plantations and natural vegetation) for both products.
-*' Note: The woodfuel residue base excludes v73_prod_residues itself (to avoid
-*' circularity) and v73_prod_heaven_timber (no real harvest = no real residues).
+*' The slack variable `v73_prod_heaven_timber` is excluded because it represents
+*' production without real harvest (no trees felled = no residues generated).
+*' `v73_prod_residues` itself is also excluded to avoid circularity.
 
 q73_prod_residues(j2)..
   v73_prod_residues(j2)
   =l=
-  (vm_prod(j2,"wood")
-  + vm_prod_forestry(j2,"woodfuel")
-  + sum(land_natveg, vm_prod_natveg(j2,land_natveg,"woodfuel")))
+  (sum(kforestry, vm_prod_forestry(j2,kforestry))
+  + sum((land_natveg,kforestry), vm_prod_natveg(j2,land_natveg,kforestry)))
   * s73_residue_ratio
   ;
 
