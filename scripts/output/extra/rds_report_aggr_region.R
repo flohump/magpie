@@ -33,15 +33,29 @@ runstatistics  <- file.path(outputdir, "runstatistics.rda")
 #
 # Find aggregated region mapping and convert to long format
 #
-regionmappings <- setdiff(list.files(outputdir, pattern = "regionmapping.*csv"),
-                          "regionmappingH12.csv")
+regionmappings <- list.files(outputdir, pattern = "regionmapping.*csv")
+selectedMappingName <- NULL
 if (length(regionmappings) == 1) {
-  mapping <- mappingToLongFormat(file.path(outputdir, regionmappings[[1]]))
+  selectedMappingName <- regionmappings[[1]]
+} else {
+  # Try a fallback strategy: Check whether only one of the mappings has a fourth column.
+  # This should normally not be necessary, as output folders should only contain one regionmapping.
+  columnCounts <- lapply(regionmappings, function(mappingName) {
+    m <- read.csv(file.path(outputdir, mappingName), sep = ";")
+    return(length(colnames(m)))
+  })
+  if (sum(columnCounts == 4) == 1) {
+    selectedMappingName <- regionmappings[columnCounts == 4]
+  }
+}
+
+if (!is.null(selectedMappingName)) {
+  mapping <- mappingToLongFormat(file.path(outputdir, selectedMappingName))
   aggrRegionMappingFile <- file.path(outputdir, "report_aggr_region_mapping.csv")
   write.csv(mapping, aggrRegionMappingFile, row.names = FALSE)
 } else {
-  stop("Found more than one non-standard regionmapping in the output dir, thus automatic detection of ",
-       "aggregated region mapping failed.")
+  stop("Could not determine a suitable regionmapping in the output dir, thus automatic detection of ",
+        "aggregated region mapping failed (either no suitable mapping or more than one).")
 }
 
 #
