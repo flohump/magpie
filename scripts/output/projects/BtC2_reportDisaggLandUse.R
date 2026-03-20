@@ -33,7 +33,7 @@ library(dplyr)
 
 suffix <- ""
 
-projectName <- "BTC2v04"
+projectName <- "BtC2v04"
 
 mapFile <- Sys.glob(file.path(outputdir, "clustermap_*.rds"))
 gdx <- file.path(outputdir, "fulldata.gdx")
@@ -191,16 +191,14 @@ otherReducLr <- abs(otherReducLr)
 # Other land reduction during optimisation divided by total other land reduction
 # to derive the share of secondary forest maturation in total other land reduction
 otherSecdforestMatShr <- landReducOptLr[, -1, "other"] / otherReducLr
-otherSecdforestMatShr[is.na(otherSecdforestMatShr) | is.infinite(otherSecdforestMatShr)] <- 1
-otherSecdforestMatShr[otherSecdforestMatShr > 1] <- 1
+otherSecdforestMatShr[!is.finite(otherSecdforestMatShr) | otherSecdforestMatShr > 1] <- 1
 # make sure that secondary forest maturation is 0 in the first time step
 otherSecdforestMatShr[, 1, ] <- 0
 
 # Weighted disaggregation of forest maturation share to 0.5 degree
 disaggWeightLr <- dimSums(landLr[, -1, "other"], dim = 3)
 otherSecdforestMatShr <- toolAggregate(otherSecdforestMatShr * disaggWeightLr,
-  rel = mapFile, from = "cluster", to = "cell"
-)
+                                       rel = mapFile, from = "cluster", to = "cell")
 disaggWeightHr <- toolAggregate(disaggWeightLr, rel = mapFile, from = "cluster", to = "cell")
 otherSecdforestMatShr <- otherSecdforestMatShr / disaggWeightHr
 otherSecdforestMatShr[is.na(otherSecdforestMatShr)] <- 0
@@ -223,8 +221,7 @@ for (yrIdx in 2:nyears(landHr)) {
   # concatenate attributed and residual other land expansion
   otherExpanAll <- mbind(otherExpanOrig[, yrIdx - 1, ], otherExpanResidual[, yrIdx - 1, ])
   # Allocate abandoned/restored & other land expansion
-  otherHr[, yrIdx, ] <-
-    setYears(otherHr[, yrIdx - 1, ], NULL) + otherExpanAll[, , ]
+  otherHr[, yrIdx, ] <- setYears(otherHr[, yrIdx - 1, ], NULL) + otherExpanAll
 
   # --- Abandoned/restored & other land reduction -------
 
@@ -249,13 +246,12 @@ for (yrIdx in 2:nyears(landHr)) {
 
   # Total secondary forest maturation is attributed to abandoned/restored land types
   origLandTypesShr <- otherHr[, yrIdx - 1, origLandTypes] / dimSums(otherHr[, yrIdx - 1, origLandTypes], dim = 3)
-  origLandTypesShr[is.na(origLandTypesShr) | is.infinite(origLandTypesShr)] <- 0
+  origLandTypesShr[!is.finite(origLandTypesShr)] <- 0
   secdforestMaturation <- secdforestMaturation * setYears(origLandTypesShr, NULL)
 
   # Allocate abandoned/restored & other land reduction
   otherReducAll <- mbind(secdforestMaturation, otherReducResidual)
-  otherHr[, yrIdx, ] <-
-    setYears(otherHr[, yrIdx, ], NULL) - otherReducAll[, , ]
+  otherHr[, yrIdx, ] <- setYears(otherHr[, yrIdx, ], NULL) - otherReducAll
 }
 
 
