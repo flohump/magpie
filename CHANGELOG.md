@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### changed
+- **config** SSP-differentiated interest rates (`s12_interest_lic`, `s12_interest_hic`) in `scenario_config.csv` and `default.cfg`. Previously all SSPs used identical rates (LIC=10%, HIC=4%). New defaults reflect SSP2 (LIC=15%, HIC=6%). SSP1 and SSP5 unchanged.
 - **inputdata** updated input data to rev4.127, including fix of FAO mass balance and processing shares where maiz to ethanol values were missing for some countries
 - **PR template** minor changes, require all checkboxes to be checked
 - **13_tc** the interface variable `vm_tau` now represents a linear combination of tau on regular cropland (`v13_tau_core`) and tau on cropland in conservation priority areas (`v13_tau_consv`). Per default values in `vm_tau` are equal to `v13_tau_core`.
