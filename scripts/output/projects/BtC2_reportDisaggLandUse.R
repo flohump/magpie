@@ -58,7 +58,7 @@ cfg <- gms::loadConfig(file.path(outputdir, "config.yml"))
 }
 
 .printProjectName <- function(projectName, title) {
-  if (grepl(projectName, title)) {
+  if (grepl(tolower(projectName), tolower(title))) {
     projectName <- ""
   } else {
     projectName <- paste0(projectName, "_")
