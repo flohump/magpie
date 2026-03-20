@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **30_croparea/simple_apr24** Fixed rotation penalty to 0 instead of relying on the solver to not produce small positive values within the tolerance.
 
 ### added
+- **scripts/output** new start script to report land use in a thematic resolution specific for the Bending the Curve 2 initiative.
 - **scaling** Scaling now also includes equations based on level and marginals from `gdx2::calcScaling()`. Upscaling (scaling factors below 1) suggestions commented out per default.
 - **scripts/output** new output script rds_report_agg_region.R, which generates report files with aggregated regions based on the mapping used in the validation input data; useful, e.g., for generating a report that contains an EUR region aggregated from H16/21 EU sub-regions
 
