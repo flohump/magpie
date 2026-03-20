@@ -24,11 +24,11 @@ library(tidyr)
 library(dplyr)
 
 ############################# BASIC CONFIGURATION #############################
-# if (!exists("source_include")) {
-#   outputdir <- NULL
-#   # Define arguments that can be read from command line
-#   readArgs("outputdir")
-# }
+if (!exists("source_include")) {
+  outputdir <- NULL
+  # Define arguments that can be read from command line
+  readArgs("outputdir")
+}
 ###############################################################################
 
 suffix <- ""
