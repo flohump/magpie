@@ -19,7 +19,7 @@ scalars
   s21_trade_tariff_startyear year to start fading out trade tariffs                / 2025 /
   s21_trade_tariff_targetyear year to finish fading out trade tariffs              / 2050 /
   s21_cost_import Cost for additional imports to maintain feasibility (USD17MER per tDM) / 1500 /
-  s21_min_trade_margin_forestry Minimum trade margin for forestry products (USD17MER per tDM) / 67 /
+  s21_min_trade_margin_forestry Minimum trade margin for forestry products (USD17MER per tDM) / 62 /
 ;
 
 table f21_trade_bal_reduction(t_all,trade_groups21,trade_regime21) Share of inelastic trade pool (1)
