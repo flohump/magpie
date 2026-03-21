@@ -17,94 +17,60 @@
 *'   GS = C_density / carbon_fraction * aboveground_fraction / BEF / D
 *' where D = basic wood density (tDM/m3), BEF = biomass expansion factor
 
+* Compute regional wood density (always needed, also used in M73 for demand conversion and cost regionalization)
+im_vol_conv(i) = sum((cell(i,j), clcl), pm_climate_class(j,clcl) * f52_volumetric_conversion(clcl)) / sum(cell(i,j), 1);
+
 if(s52_growingstock_calib = 1,
 
 * Compute regional averages for conversion factors
-  p52_carbon_fraction = 0.5;
-  p52_aboveground_fraction = 0.80;
-  p52_aboveground_fraction_plant = 0.85;
-  pm_vol_conv(i) = sum((cell(i,j), clcl), pm_climate_class(j,clcl) * f52_volumetric_conversion(clcl)) / sum(cell(i,j), 1);
-  p52_bef_avg(i) = sum((cell(i,j), clcl), pm_climate_class(j,clcl) * pm_bef(clcl)) / sum(cell(i,j), 1);
+  i52_bef_avg(i) = sum((cell(i,j), clcl), pm_climate_class(j,clcl) * fm_ipcc_bef(clcl)) / sum(cell(i,j), 1);
 
 * Compute region-average m - kept fixed during calibration
-  p52_m_avg_natveg(i) = sum((cell(i,j), clcl), pm_climate_class(j,clcl) * f52_growth_par(clcl,"m","natveg")) / sum(cell(i,j), 1);
-  p52_m_avg_plant(i) = sum((cell(i,j), clcl), pm_climate_class(j,clcl) * f52_growth_par(clcl,"m","plantations")) / sum(cell(i,j), 1);
+  i52_m_avg_natveg(i) = sum((cell(i,j), clcl), pm_climate_class(j,clcl) * f52_growth_par(clcl,"m","natveg")) / sum(cell(i,j), 1);
+  i52_m_avg_plant(i) = sum((cell(i,j), clcl), pm_climate_class(j,clcl) * f52_growth_par(clcl,"m","plantations")) / sum(cell(i,j), 1);
 
 * ==========================================
 * Secdforest k calibration (bisection)
 *
-* The FRA NRF target is for all naturally regenerating forest (primary + secondary).
-* In MAgPIE, primforest is at static C_max (no growth curve), while secdforest
-* uses a Chapman-Richards curve with calibrated k. To correctly decompose the
-* FRA target, we:
-*   1. Subtract primforest from GFAD acx (same logic as module 35 preloop)
-*   2. Compute primforest GS from C_max using the model's conversion chain
-*   3. Derive the secdforest-only GS target from the combined FRA NRF target
-*   4. Calibrate k to match the secdforest target
+* Calibrates k to match FRA NRF growing stock using the full GFAD age distribution
+* (im_forest_ageclass), which includes primforest in the oldest age class (acx).
+*
+* Note: We do NOT decompose into primforest and secdforest separately because
+* FRA primary forest GS data is highly uncertain (especially in the tropics),
+* and the gap between LPJmL C_max and FRA observed GS reflects multiple factors
+* (degradation, natural disturbance, species composition, spatial heterogeneity,
+* measurement issues) that cannot be attributed to a single correction factor.
 * ==========================================
 
-* Subtract primforest from GFAD acx (mirrors module 35 logic)
-  p52_secdf_ageclass(j,ac) = im_forest_ageclass(j,ac);
-  p52_secdf_ageclass(j,"acx") = im_forest_ageclass(j,"acx") - pcm_land(j,"primforest");
-  p52_secdf_ageclass(j,"acx")$(p52_secdf_ageclass(j,"acx") < 0) = 0;
-
-* Compute primforest GS (m3/ha) from C_max using model's conversion chain
-  p52_prim_area(i) = sum(cell(i,j), pcm_land(j,"primforest"));
-  p52_gs_prim(i)$(p52_prim_area(i) > 0) =
-    sum(cell(i,j),
-      pcm_land(j,"primforest")
-      * fm_carbon_density("y2000",j,"primforest","vegc")
-    )
-    / p52_prim_area(i)
-    / p52_carbon_fraction
-    * p52_aboveground_fraction
-    / p52_bef_avg(i)
-    / pm_vol_conv(i)
-  ;
-
-* Compute secdforest area from GFAD (with primforest subtracted)
-  p52_secdf_area(i) = sum((cell(i,j), ac), p52_secdf_ageclass(j,ac));
-
-* Derive secdforest-only GS target from FRA NRF
-* FRA_NRF = (prim_area * GS_prim + secdf_area * GS_secdf) / (prim_area + secdf_area)
-* => GS_secdf = (FRA_NRF * (prim_area + secdf_area) - prim_area * GS_prim) / secdf_area
-  p52_fra_secdf_target(i)$(p52_secdf_area(i) > 0) =
-    (f52_fra_nrf_gs(i) * (p52_prim_area(i) + p52_secdf_area(i))
-     - p52_prim_area(i) * p52_gs_prim(i))
-    / p52_secdf_area(i)
-  ;
-* Ensure non-negative target (if primforest GS exceeds FRA NRF, secdforest target = 0)
-  p52_fra_secdf_target(i)$(p52_fra_secdf_target(i) < 0) = 0;
-
 * Initialize bisection bounds
-  p52_k_low(i) = 0.001;
-  p52_k_high(i) = 0.3;
+  i52_k_low(i) = 0.001;
+  i52_k_high(i) = 0.3;
 
   loop(iter52,
-    p52_k_calib_secdf(i) = (p52_k_low(i) + p52_k_high(i)) / 2;
+    i52_k_calib_secdf(i) = (i52_k_low(i) + i52_k_high(i)) / 2;
 
-*   Area-weighted growing stock (m3/ha) for secdforest only with trial k
-    p52_gs_current(i)$(p52_secdf_area(i) > 0) =
+*   Area-weighted growing stock (m3/ha) with trial k using full GFAD age distribution
+    i52_gs_current(i)$(sum((cell(i,j),ac), im_forest_ageclass(j,ac)) > 0) =
       sum((cell(i,j), ac),
-        p52_secdf_ageclass(j,ac)
-        * fm_carbon_density("y2000",j,"secdforest","vegc")
-        * (1 - exp(-p52_k_calib_secdf(i) * (ord(ac)-1) * 5))**p52_m_avg_natveg(i)
+        im_forest_ageclass(j,ac)
+        * fm_carbon_density("y2025",j,"secdforest","vegc")
+        * (1 - exp(-i52_k_calib_secdf(i) * (ord(ac)-1) * 5))**i52_m_avg_natveg(i)
       )
-      / p52_secdf_area(i)
-      / p52_carbon_fraction
-      * p52_aboveground_fraction
-      / p52_bef_avg(i)
-      / pm_vol_conv(i)
+      / sum((cell(i,j), ac), im_forest_ageclass(j,ac))
+      / sm_carbon_fraction
+      * fm_aboveground_fraction("secdforest")
+      / i52_bef_avg(i)
+      / im_vol_conv(i)
     ;
 
-    p52_k_low(i)$(p52_gs_current(i) < p52_fra_secdf_target(i)) = p52_k_calib_secdf(i);
-    p52_k_high(i)$(p52_gs_current(i) >= p52_fra_secdf_target(i)) = p52_k_calib_secdf(i);
+    i52_k_low(i)$(i52_gs_current(i) < f52_fra_nrf_gs(i)) = i52_k_calib_secdf(i);
+    i52_k_high(i)$(i52_gs_current(i) >= f52_fra_nrf_gs(i)) = i52_k_calib_secdf(i);
   );
 
-* Recompute secdforest carbon density with calibrated k
+* Overwrite secdforest carbon density with calibrated k
   pm_carbon_density_secdforest_ac(t_all,j,ac,"vegc") =
     fm_carbon_density(t_all,j,"secdforest","vegc")
-    * (1 - exp(-sum(cell(i,j), p52_k_calib_secdf(i)) * (ord(ac)-1) * 5))**sum(cell(i,j), p52_m_avg_natveg(i));
+    * (1 - exp(-sum(cell(i,j), i52_k_calib_secdf(i)) * (ord(ac)-1) * 5))**sum(cell(i,j), i52_m_avg_natveg(i));
 
 * ==========================================
 * Plantation k calibration (bisection)
@@ -112,33 +78,41 @@ if(s52_growingstock_calib = 1,
 * ==========================================
 
 * Initialize bisection bounds
-  p52_k_low(i) = 0.001;
-  p52_k_high(i) = 0.3;
+  i52_k_low(i) = 0.001;
+  i52_k_high(i) = 0.3;
 
   loop(iter52,
-    p52_k_calib_plant(i) = (p52_k_low(i) + p52_k_high(i)) / 2;
+    i52_k_calib_plant(i) = (i52_k_low(i) + i52_k_high(i)) / 2;
 
-*   Area-weighted growing stock (m3/ha) at y2000 with trial k
-    p52_gs_current_plant(i)$(sum((cell(i,j),ac), pm_land_plantation(j,ac)) > 0) =
+*   Area-weighted growing stock (m3/ha) at y2025 with trial k
+    i52_gs_current_plant(i)$(sum((cell(i,j),ac), pm_land_plantation(j,ac)) > 0) =
       sum((cell(i,j), ac),
         pm_land_plantation(j,ac)
-        * fm_carbon_density("y2000",j,"secdforest","vegc")
-        * (1 - exp(-p52_k_calib_plant(i) * (ord(ac)-1) * 5))**p52_m_avg_plant(i)
+        * fm_carbon_density("y2025",j,"secdforest","vegc")
+        * (1 - exp(-i52_k_calib_plant(i) * (ord(ac)-1) * 5))**i52_m_avg_plant(i)
       )
       / sum((cell(i,j), ac), pm_land_plantation(j,ac))
-      / p52_carbon_fraction
-      * p52_aboveground_fraction_plant
-      / p52_bef_avg(i)
-      / pm_vol_conv(i)
+      / sm_carbon_fraction
+      * fm_aboveground_fraction("forestry")
+      / i52_bef_avg(i)
+      / im_vol_conv(i)
     ;
 
-    p52_k_low(i)$(p52_gs_current_plant(i) < f52_fra_pla_gs(i)) = p52_k_calib_plant(i);
-    p52_k_high(i)$(p52_gs_current_plant(i) >= f52_fra_pla_gs(i)) = p52_k_calib_plant(i);
+    i52_k_low(i)$(i52_gs_current_plant(i) < f52_fra_pla_gs(i)) = i52_k_calib_plant(i);
+    i52_k_high(i)$(i52_gs_current_plant(i) >= f52_fra_pla_gs(i)) = i52_k_calib_plant(i);
+  );
+
+* Log growing stock calibration results
+  put_utility "log" / "Growing stock calibration to FRA 2025 (m3/ha):";
+  put_utility "log" / "         NRF (nat.forest)    plantation";
+  put_utility "log" / "       target  achieved    target  achieved";
+  loop(i,
+    put_utility "log" / "  " i.tl:3 f52_fra_nrf_gs(i):8:1 i52_gs_current(i):8:1 "  " f52_fra_pla_gs(i):8:1 i52_gs_current_plant(i):8:1;
   );
 
 * Recompute plantation carbon density with calibrated k
   pm_carbon_density_plantation_ac(t_all,j,ac,"vegc") =
     fm_carbon_density(t_all,j,"secdforest","vegc")
-    * (1 - exp(-sum(cell(i,j), p52_k_calib_plant(i)) * (ord(ac)-1) * 5))**sum(cell(i,j), p52_m_avg_plant(i));
+    * (1 - exp(-sum(cell(i,j), i52_k_calib_plant(i)) * (ord(ac)-1) * 5))**sum(cell(i,j), i52_m_avg_plant(i));
 
 );

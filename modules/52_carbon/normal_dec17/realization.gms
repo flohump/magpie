@@ -15,11 +15,10 @@
 *' When enabled (`s52_growingstock_calib = 1`), the growth rate parameter `k` in the
 *' Chapman-Richards equation is calibrated per region via bisection to match
 *' FAO FRA 2025 growing stock targets. Secdforest `k` is calibrated to FRA NRF
-*' (naturally regenerating forest) growing stock, with primforest contribution
-*' decomposed using LPJmL C_max. Plantation `k` is calibrated to FRA plantation
-*' growing stock. Default (uncalibrated) growth curves are preserved for use by
-*' afforestation and NDC forest commitments, which represent new establishment
-*' rather than existing managed forests.
+*' (naturally regenerating forest) growing stock using the full GFAD age distribution.
+*' Plantation `k` is calibrated to FRA plantation growing stock.
+*' Uncalibrated growth curves are preserved for use by afforestation and NDC forest
+*' commitments, which represent new establishment rather than existing managed forests.
 
 *' @limitations Carbon density asymptote (C_max) comes from LPJmL potential
 *' vegetation and may exceed observed growing stock in degraded tropical forests.

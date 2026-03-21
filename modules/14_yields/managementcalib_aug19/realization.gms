@@ -17,9 +17,9 @@
 *' Finally, crop yields are calibrated to FAO [@FAOSTAT] regional yield levels of the
 *' initial time step. An additional feature of this realization is to allow crop yields
 *' technological change from the precedent times step to spillover to pasture areas.
-*' This realization also calculates timber yields (`pm_timber_yield`) as stem biomass
-*' (tDM/ha) by dividing aboveground biomass by the IPCC biomass expansion factor (BEF).
-*' BEF is always > 1 and converts total aboveground biomass to stem-only biomass.
+*' This realization also calculates harvestable growing stock (`im_growing_stock`) as
+*' stem biomass (tDM/ha) by dividing aboveground biomass by the IPCC biomass expansion
+*' factor (BEF). BEF is always > 1 and converts total aboveground biomass to stem-only biomass.
 
 *' @limitations The exogenous implementation of pasture intensification cannot
 *' capture feedbacks between land scarcity and efforts to improve pasture

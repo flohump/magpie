@@ -12,18 +12,20 @@ $setglobal c73_build_demand  BAU
 * options BAU, 10pc, 50pc, 90pc
 
 scalars
-* Based on UNECE timber prices (~60 EUR/m3), converted to USD/tDM using wood density
-* and inflated from USD05 to USD17MER (factor 1.23). Source: https://unece.org/forests/prices
-  s73_timber_prod_cost_wood            Cost for producing one unit of wood (USD17MER per tDM) / 148 /
-  s73_timber_prod_cost_woodfuel        Cost for producing one unit of woodfuel (USD17MER per tDM) / 74 /
+* UNECE roundwood price (60 EUR per m3 = 72 USD05 per m3 x 1.23 = 89 USD17MER per m3)
+* Source: https://unece.org/forests/prices
+* Converted to regional USD17MER per tDM in preloop using im_vol_conv(i)
+  s73_timber_prod_cost_wood            Cost for producing one unit of wood (USD17MER per m3) / 89 /
+* Half of roundwood cost (LUKE 2025: energywood ~50 pct of sawlog price)
+  s73_timber_prod_cost_woodfuel        Cost for producing one unit of woodfuel (USD17MER per m3) / 44 /
   s73_free_prod_cost                   Very high cost for settling demand without production (USD17MER per tDM) / 1e+06 /
   s73_timber_demand_switch             Logical switch to turn on or off timber demand 1=on 0=off (1) / 1 /
   s73_income_threshold                 Threshold for income-elastic industrial roundwood demand (USD17PPP per cap per yr) / 10000 /
   s73_residue_ratio                    Proportion of timber harvest recoverable as logging residues such as branches and tops (1) / 0.15 /
   s73_residue_removal_cost             Cost of removing residues left after industrial roundwood harvest (USD17MER per tDM) / 2.7 /
   s73_expansion                        Construction wood demand expansion factor by end of century based on industrial roundwood demand as base (1=100 percent increase) / 0 /
-  s73_timber_prod_cost_wood_natveg     Cost for producing one unit of wood from natural vegetation (USD17MER per tDM) / 170 /
-  s73_timber_prod_cost_woodfuel_natveg Cost for producing one unit of woodfuel from natural vegetation (USD17MER per tDM) / 85 /
+* Expert estimate for processing premium of heterogeneous natveg timber over plantation timber
+  s73_natveg_cost_premium              Cost premium for natveg timber production relative to plantation (1) / 0.15 /
   s73_woodfuel_stacking_factor         Stacking factor to convert stere to solid m3 (1) / 0.65 /
 ;
 

@@ -8,13 +8,11 @@
 *' @equations
 
 *' Timber production cost has four components:
-*' 1. Base production cost: all timber (plantation + natveg) pays `im_timber_prod_cost`
-*'    per tDM (wood: 148, woodfuel: 74 USD17MER/tDM).
-*' 2. Natveg cost premium: natveg timber pays an additional premium per tDM equal to
-*'    `i73_timber_prod_cost_natveg - im_timber_prod_cost` (wood: 170-148 = +22,
-*'    woodfuel: 85-74 = +11 USD17MER/tDM). This reflects higher processing costs for
-*'    heterogeneous natural forest timber. When natveg cost equals plantation cost,
-*'    the premium is zero and the term vanishes.
+*' 1. Base production cost: all timber (plantation + natveg) pays `im_timber_prod_cost(i)`
+*'    per tDM, regionalized via wood density (source: 89/44 USD17MER/m3 for wood/woodfuel).
+*' 2. Natveg cost premium: natveg timber pays an additional `s73_natveg_cost_premium` (15%)
+*'    on top of the base cost. This reflects higher processing costs for heterogeneous
+*'    natural forest timber. When premium is zero, the term vanishes.
 *' 3. Residue removal cost: `s73_residue_removal_cost` (2.7 USD17MER/tDM) for
 *'    collecting logging residues (branches, tops) from the harvest site.
 *' 4. Slack variable cost: `s73_free_prod_cost` (1e6 USD17MER/tDM) — prohibitively
@@ -25,9 +23,9 @@
 q73_cost_timber(i2)..
                     vm_cost_timber(i2)
                     =e=
-                      sum((cell(i2,j2),kforestry), vm_prod(j2,kforestry) * im_timber_prod_cost(kforestry))
+                      sum((cell(i2,j2),kforestry), vm_prod(j2,kforestry) * im_timber_prod_cost(i2,kforestry))
                     + sum((cell(i2,j2),land_natveg,kforestry), vm_prod_natveg(j2,land_natveg,kforestry)
-                        * (i73_timber_prod_cost_natveg(kforestry) - im_timber_prod_cost(kforestry)))
+                        * (i73_timber_prod_cost_natveg(i2,kforestry) - im_timber_prod_cost(i2,kforestry)))
                     + sum(cell(i2,j2), v73_prod_residues(j2)) * s73_residue_removal_cost
                     + sum((cell(i2,j2),kforestry), v73_prod_heaven_timber(j2,kforestry) * s73_free_prod_cost)
                     ;

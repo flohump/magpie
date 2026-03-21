@@ -11,7 +11,7 @@
 *' This realization can also account for construction wood demand based on
 *' @churkina2020buildings which is added on top of industrial roundwood demand (see @mishra_timbercities_2022).
 *' FAO demand volumes (m3) are converted to dry matter (tDM) using IPCC climate-zone-specific
-*' basic wood density (`pm_vol_conv`). For woodfuel, a stacking factor (0.65) is applied
+*' basic wood density (`im_vol_conv`). For woodfuel, a stacking factor (0.65) is applied
 *' before density conversion to correct for FAO reporting in stacked m3 rather than solid m3.
 *' Timber can be produced from both timber plantations `vm_prod_forestry` provided by [32_forestry]
 *' and natural vegetation `vm_prod_natveg` provided by [35_natveg]. Production costs

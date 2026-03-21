@@ -21,7 +21,7 @@ parameters
  p32_carbon_density_ac_marg(t_all,j,ac)             Marginal above ground carbon density for age classes and carbon pools (tC per ha)
  p32_land(t,j,type32,ac)                            Forestry land pools before optimization (mio. ha)
  pc32_land(j,type32,ac)                             Forestry land pools in current time step (mio. ha)
- p32_yield_forestry_future(t,j)                     Cellular timber yield expected in the future (m3 per ha per year)
+ i32_growing_stock_at_harvest(t,j)                     Expected growing stock at rotation age for new plantations (tDM per ha)
  p32_IGR(t_all,j,ac)                                Instantaneous growth rate or periodic annual increment of forest growth (1)
  p32_rot_flg(t_all,j,ac)                            Identifier flag when calculating rotation length (1)
  p32_rotation_regional(t_all,i)                     Regional average rotation length of plantations translated to age class equivalent for future (1)

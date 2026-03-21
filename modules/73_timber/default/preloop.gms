@@ -46,9 +46,9 @@ p73_timber_demand_gdp_pop(t_all,i,"woodfuel") = p73_timber_demand_gdp_pop(t_all,
 ** pm_demand_forestry in mio tDM
 ** Hold constraint beyond 2150 - First every time step gets 2150 values
 **** Extend for Churkina et al 2020 demand scenarios
-pm_demand_forestry(t_ext,i,kforestry) = round(p73_timber_demand_gdp_pop("y2150",i,kforestry) * pm_vol_conv(i),3);
+pm_demand_forestry(t_ext,i,kforestry) = round(p73_timber_demand_gdp_pop("y2150",i,kforestry) * im_vol_conv(i),3);
 ** overwrite timesteps below 2150 with actual values
-pm_demand_forestry(t_all,i,kforestry) = round(p73_timber_demand_gdp_pop(t_all,i,kforestry) * pm_vol_conv(i),3);
+pm_demand_forestry(t_all,i,kforestry) = round(p73_timber_demand_gdp_pop(t_all,i,kforestry) * im_vol_conv(i),3);
 
 ** Initialize fraction
 p73_fraction(t_all)    = s73_expansion/(m_year("y2100") - sm_fix_SSP2);
@@ -86,8 +86,10 @@ pm_demand_forestry(t_all,i,kforestry)$(m_year(t_all)>2100) = pm_demand_forestry(
 ** Calculate global demand
 p73_glo_wood(t_all,kforestry) = sum(i,pm_demand_forestry(t_all,i,kforestry));
 
-im_timber_prod_cost("wood") = s73_timber_prod_cost_wood;
-im_timber_prod_cost("woodfuel") = s73_timber_prod_cost_woodfuel;
+** Convert per-m3 costs to regional per-tDM using wood density
+im_timber_prod_cost(i,"wood") = s73_timber_prod_cost_wood / im_vol_conv(i);
+im_timber_prod_cost(i,"woodfuel") = s73_timber_prod_cost_woodfuel / im_vol_conv(i);
 
-i73_timber_prod_cost_natveg("wood") = s73_timber_prod_cost_wood_natveg;
-i73_timber_prod_cost_natveg("woodfuel") = s73_timber_prod_cost_woodfuel_natveg;
+** Natveg cost = base cost * (1 + premium)
+i73_timber_prod_cost_natveg(i,"wood") = im_timber_prod_cost(i,"wood") * (1 + s73_natveg_cost_premium);
+i73_timber_prod_cost_natveg(i,"woodfuel") = im_timber_prod_cost(i,"woodfuel") * (1 + s73_natveg_cost_premium);

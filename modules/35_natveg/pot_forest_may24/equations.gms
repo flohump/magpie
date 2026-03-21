@@ -124,12 +124,7 @@
 *' costs for primary forest are higher than for secondary forest. Harvesting costs
 *' are paid everytime natural vegetation is harvested. The "real" harvested area
 *' are received from the timber module [73_timber].
-*'
-*' Additionally, a per-volume surcharge (`s35_timber_harvest_cost_natveg_prod` = 10 USD/tDM)
-*' is applied to all timber production from natural vegetation. This reflects that
-*' timber extraction from natural forests is more costly per unit volume than from
-*' plantations due to lower road density, longer haulage distances, and more
-*' heterogeneous stand structure.
+
 
 q35_cost_hvarea(i2)..
                     vm_cost_hvarea_natveg(i2)
@@ -137,36 +132,35 @@ q35_cost_hvarea(i2)..
                    sum((ct,cell(i2,j2),ac_sub), v35_hvarea_secdforest(j2,ac_sub)) * s35_timber_harvest_cost_secdforest
                  + sum((ct,cell(i2,j2),othertype35,ac_sub), v35_hvarea_other(j2,othertype35,ac_sub)) * s35_timber_harvest_cost_other
                  + sum((ct,cell(i2,j2)), v35_hvarea_primforest(j2)) * s35_timber_harvest_cost_primforest
-                 + sum((cell(i2,j2),land_natveg,kforestry), vm_prod_natveg(j2,land_natveg,kforestry)) * s35_timber_harvest_cost_natveg_prod
                     ;
 
 ** Secondary forest
 *' Woody biomass production from secondary forests is calculated by multiplying the
-*' area under production with corresponding yields of secondary forests, divided by the timestep length.
+*' area under production with corresponding growing stock of secondary forests, divided by the timestep length.
 
 q35_prod_secdforest(j2)..
                sum(kforestry, vm_prod_natveg(j2,"secdforest",kforestry))
                =e=
-               sum(ac_sub, v35_hvarea_secdforest(j2,ac_sub) * sum(ct,pm_timber_yield(ct,j2,ac_sub,"secdforest"))) / m_timestep_length_forestry;
+               sum(ac_sub, v35_hvarea_secdforest(j2,ac_sub) * sum(ct,im_growing_stock(ct,j2,ac_sub,"secdforest"))) / m_timestep_length_forestry;
 
 ** Primary forest
 *' Woody biomass production from primary forests is calculated by multiplying the
-*' area under production with corresponding yields of primary forests, divided by the timestep length.
+*' area under production with corresponding growing stock of primary forests, divided by the timestep length.
 
 q35_prod_primforest(j2)..
               sum(kforestry, vm_prod_natveg(j2,"primforest",kforestry))
               =e=
-              v35_hvarea_primforest(j2) * sum(ct, pm_timber_yield(ct,j2,"acx","primforest")) / m_timestep_length_forestry;
+              v35_hvarea_primforest(j2) * sum(ct, im_growing_stock(ct,j2,"acx","primforest")) / m_timestep_length_forestry;
 
 ** Other land
 *' Woody biomass production from other land is calculated by multiplying the area under
-*' production with corresponding yields of other land, divided by the timestep length.
+*' production with corresponding growing stock of other land, divided by the timestep length.
 
 q35_prod_other(j2)..
               sum(kforestry, vm_prod_natveg(j2,"other",kforestry))
                =e=
-               (sum(ac_sub, v35_hvarea_other(j2,"othernat",ac_sub) * sum(ct, pm_timber_yield(ct,j2,ac_sub,"other")))
-              + sum(ac_sub, v35_hvarea_other(j2,"youngsecdf",ac_sub) * sum(ct, pm_timber_yield(ct,j2,ac_sub,"secdforest"))))
+               (sum(ac_sub, v35_hvarea_other(j2,"othernat",ac_sub) * sum(ct, im_growing_stock(ct,j2,ac_sub,"other")))
+              + sum(ac_sub, v35_hvarea_other(j2,"youngsecdf",ac_sub) * sum(ct, im_growing_stock(ct,j2,ac_sub,"secdforest"))))
               / m_timestep_length_forestry
                 ;
 
