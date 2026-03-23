@@ -35,6 +35,7 @@ i52_k_calib_secdf(i) = 0;
 i52_k_calib_plant(i) = 0;
 i52_gs_current(i) = 0;
 i52_gs_current_plant(i) = 0;
+
 * Fallback value; overwritten by climate-zone-specific values in preloop
 im_vol_conv(i) = 0.5;
 
