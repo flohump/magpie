@@ -61,15 +61,16 @@ q73_prod_woodfuel(j2)..
   v73_prod_heaven_timber(j2,"woodfuel");
 
 *' Production of residues is calculated based on `s73_residue_ratio`. This fraction
-*' of total timber harvest (industrial roundwood and woodfuel) is assumed to be
-*' recoverable as harvest residues (branches, tops, bark).
-*' USDA reports that ca. 30% of roundwood harvested are residues (@oswalt2019forest).
-*' Not all of this residue is recovered from forest and we assume 50% of residue
-*' removal based on @pokharel2017factors. Residues are generated from all real
-*' harvest sources (forestry plantations and natural vegetation) for both products.
-*' The slack variable `v73_prod_heaven_timber` is excluded because it represents
-*' production without real harvest (no trees felled = no residues generated).
-*' `v73_prod_residues` itself is also excluded to avoid circularity.
+*' of total timber harvest is assumed to be recoverable as harvest residues
+*' (branches, tops, bark). The theoretical potential of logging residues is 27%
+*' of stem harvest [@oswalt2019forest]. The average technical recovery rate is
+*' 52% [@thiffault2015recovery], giving 0.27 * 0.52 = 0.14 ~ 0.15.
+*' Independently, [@difulvio2016logging] report technically recoverable logging
+*' residues at 13.5% of roundwood volume for the EU28.
+*' Residues are generated from all real harvest sources (forestry plantations and
+*' natural vegetation) for both products. The slack variable `v73_prod_heaven_timber`
+*' is excluded (no real harvest = no residues). `v73_prod_residues` itself is also
+*' excluded to avoid circularity.
 
 q73_prod_residues(j2)..
   v73_prod_residues(j2)
