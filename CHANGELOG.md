@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### changed
+- **inputdata** inputdata updated calibraion of land conversion costs in the input data for H12, based on the recent development of the calibration procedure
 - **inputdata** updated input data to rev4.131, including IPCC wood density, FAO woodfuel stacking correction, FRA2025 growing stock targets, and FRA2025 validation data
 - **inputdata** updated input data to rev4.127, including fix of FAO mass balance and processing shares where maiz to ethanol values were missing for some countries
 - **PR template** minor changes, require all checkboxes to be checked
