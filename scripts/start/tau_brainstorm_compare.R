@@ -18,7 +18,7 @@ suppressPackageStartupMessages({
 runs <- c(
   Tref = "output/tauBS_Tref/fulldata.gdx",
   TB   = "output/tauBS_TB_exp07/fulldata.gdx",
-  TA   = "output/tauBS_TA_maint50/fulldata.gdx"
+  TA   = "output/tauBS_TA_maint10/fulldata.gdx"
 )
 
 reportYears <- c("y1995", "y2020", "y2050", "y2100")
