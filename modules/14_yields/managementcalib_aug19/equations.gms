@@ -35,11 +35,11 @@ q14_yield_crop(j2,kcr,w) ..
  vm_yld(j2,kcr,w) =e= sum(ct,i14_yields_calib(ct,j2,kcr,w))
    * (1 - s14_tau_degradation_on * p14_tau_degradation(j2,w))
    * ( 1
-       + (s14_adoption_on * f14_adoption(j2,w) + (1 - s14_adoption_on))
+       + (p14_adoption_on_active * f14_adoption(j2,w) + (1 - p14_adoption_on_active))
          * ( ( vm_tau(j2,"crop")
                / sum((cell(i2,j2), supreg(h2,i2)), fm_tau1995(h2)) )
-             ** (s14_tau_exponent_on * s14_tau_exponent
-                 + (1 - s14_tau_exponent_on))
+             ** (p14_tau_exp_on_active * s14_tau_exponent
+                 + (1 - p14_tau_exp_on_active))
              - 1 ) );
 
 *' For the current time step of the optimization, cellular yields of irrigated

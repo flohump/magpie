@@ -21,6 +21,8 @@ parameters
  i14_target_ratio(i)                                     Target irrigated to rainfed ratio as upper bound (1)
  i14_modeled_yields_hist2(i,knbe14)                      Calibrated yields average over region and water supply type at the historical reference year (tDM per ha per yr)
  p14_tau_degradation(j,w)                                Accumulated overshoot-triggered tau degradation state (1)
+ p14_tau_exp_on_active                                   Time-gated effective s14_tau_exponent_on switch (1)
+ p14_adoption_on_active                                  Time-gated effective s14_adoption_on switch (1)
  ;
 
 positive variables

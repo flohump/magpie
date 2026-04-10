@@ -64,6 +64,16 @@ im_growing_stock(t,j,ac,land_timber) = im_growing_stock(t,j,ac,land_timber)$(im_
 ** Set growing stock to 0 where it does not exceed a minimum for harvest
 im_growing_stock(t,j,ac,land_natveg)$(im_growing_stock(t,j,ac,land_natveg) < s14_minimum_growing_stock) = 0;
 
+*** TIME-GATED EFFECTIVE SWITCH VALUES (Switches B and C) ***
+*' Switches s14_tau_exponent_on and s14_adoption_on are scalars without a
+*' time dimension, so they would otherwise apply to every timestep. To
+*' preserve historical calibration these effective switches are zero until
+*' m_year(t) > sm_fix_SSP2 and take the user-configured value thereafter.
+*' The yield equation then uses p14_tau_exp_on_active and
+*' p14_adoption_on_active instead of the raw scalars.
+p14_tau_exp_on_active  = s14_tau_exponent_on$(m_year(t) > sm_fix_SSP2);
+p14_adoption_on_active = s14_adoption_on$(m_year(t) > sm_fix_SSP2);
+
 *** TAU-OVERSHOOT DEGRADATION STATE UPDATE (Switch D) ***
 *' Overshoot-triggered tau degradation accumulates a cell- and water-regime-
 *' specific state variable that penalises realised yields. Overshoot is measured
