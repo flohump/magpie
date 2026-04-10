@@ -20,6 +20,15 @@ s14_minimum_growing_stock          Minimum growing stock for timber harvest in n
 s14_yld_past_switch                Spillover parameter for translating technological change in the crop sector into pasture yieldincreases  (1)     / 0.25 /
 s14_yld_reduction_soil_loss        Decline of land productivity in areas with severe soil loss (1)     / 0.08 /
 sm_carbon_fraction                 Carbon fraction of dry matter (tC per tDM) / 0.5 /
+s14_tau_exponent_on                Switch for concave tau yield response (0=linear 1=apply exponent) gated at sm_fix_SSP2 (1) / 0 /
+s14_tau_exponent                   Concave exponent beta on (vm_tau divided by fm_tau1995) (1)                                / 1 /
+s14_adoption_on                    Switch for cell-level tau adoption dampener (0=off 1=on) gated at sm_fix_SSP2 (1)          / 0 /
+s14_tau_degradation_on             Switch for overshoot-triggered tau degradation (0=off 1=on) gated at sm_fix_SSP2 (1)       / 0 /
+s14_tau_degr_rate                  Tau-overshoot degradation accumulation rate per unit overshoot per yr (1)                 / 0.02 /
+s14_tau_rec_rate                   Tau-degradation recovery rate per yr when no overshoot (1)                                / 0.001 /
+s14_tau_degr_max                   Maximum accumulated tau-degradation fraction (1)                                          / 0.30 /
+s14_adoption_uniform_default       Uniform adoption share used to fill f14_adoption when the input file is absent (1)        / 1 /
+s14_tau_ceiling_uniform_default    Uniform tau ceiling used to fill f14_tau_ceiling when the input file is absent (1)        / 100 /
 ;
 
 
@@ -94,3 +103,27 @@ $include "./modules/14_yields/input/f14_kcr_pollinator_dependence.csv"
 $offdelim
 /
 ;
+
+*' Optional input for the cell-level tau adoption dampener (Switch C).
+*' If the file is absent an empty table is declared and the preloop falls back
+*' to a uniform value of 1 (i.e. dampener has no effect). Units are a share in
+*' (0,1] giving the fraction of the regional tau uplift that materialises in a
+*' given cell and water regime.
+$onEmpty
+table f14_adoption(j,w) Cell-level tau adoption share (1)
+$ondelim
+$if exist "./modules/14_yields/input/f14_adoption.cs3" $include "./modules/14_yields/input/f14_adoption.cs3"
+$offdelim
+;
+$offEmpty
+
+*' Optional input for the sustainable τ ceiling per cell (Switch D). If the file
+*' is absent the preloop falls back to a uniform ceiling of 2.5. The ceiling is
+*' a unitless ratio compared against `vm_tau(j,"crop") / fm_tau1995(h)`.
+$onEmpty
+table f14_tau_ceiling(j,w) Sustainable tau ceiling per cell and water regime (1)
+$ondelim
+$if exist "./modules/14_yields/input/f14_tau_ceiling.cs3" $include "./modules/14_yields/input/f14_tau_ceiling.cs3"
+$offdelim
+;
+$offEmpty

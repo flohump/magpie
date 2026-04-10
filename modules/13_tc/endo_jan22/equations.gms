@@ -37,9 +37,20 @@ q13_cost_tc(i2, tautype) ..
 *' time horizon by multiplication with the interest rate `pm_interest(i)`
 *' (annuity with infinite time horizon):
 
+*' An optional maintenance cost term is added to reflect that agricultural
+*' intensification cannot be "bought once and owned forever" — fertiliser,
+*' machinery, extension services and seed turnover incur recurring expense.
+*' The maintenance term is proportional to the current τ in excess of the
+*' 1995 baseline and is gated to activate only after `sm_fix_SSP2` so that
+*' historical calibration is preserved. Controlled by `s13_maintenance_cost`
+*' (default 0 = off).
+
 q13_tech_cost(i2, tautype) ..
  v13_tech_cost(i2, tautype) =e= sum(supreg(h2,i2), v13_tau_core(h2,tautype)/pc13_tau(h2,tautype)-1) * v13_cost_tc(i2,tautype)
-                               * sum(ct,pm_interest(ct,i2)/(1+pm_interest(ct,i2)));
+                               * sum(ct,pm_interest(ct,i2)/(1+pm_interest(ct,i2)))
+                               + ( s13_maintenance_cost * pc13_land(i2,tautype)
+                                   * sum(supreg(h2,i2), v13_tau_core(h2,tautype) - 1)
+                                 )$(sum(ct, m_year(ct)) > sm_fix_SSP2);
 
 q13_tech_cost_sum(i2) ..
  vm_tech_cost(i2) =e= sum(tautype, v13_tech_cost(i2, tautype));

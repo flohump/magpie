@@ -63,3 +63,26 @@ im_growing_stock(t,j,ac,"other") =
 im_growing_stock(t,j,ac,land_timber) = im_growing_stock(t,j,ac,land_timber)$(im_growing_stock(t,j,ac,land_timber) > 0) + 0.0001$(im_growing_stock(t,j,ac,land_timber) = 0);
 ** Set growing stock to 0 where it does not exceed a minimum for harvest
 im_growing_stock(t,j,ac,land_natveg)$(im_growing_stock(t,j,ac,land_natveg) < s14_minimum_growing_stock) = 0;
+
+*** TAU-OVERSHOOT DEGRADATION STATE UPDATE (Switch D) ***
+*' Overshoot-triggered tau degradation accumulates a cell- and water-regime-
+*' specific state variable that penalises realised yields. Overshoot is measured
+*' against `pcm_tau`, i.e. the τ solved in the previous timestep, since the
+*' penalty reflects a delayed response to prior over-application. The 13_tc
+*' postsolve writes `pcm_tau = vm_tau.l` at the end of every timestep and
+*' modules run in numerical order, so 14_yields presolve in timestep t reads
+*' the τ from timestep t−1. The penalty then applies via `q14_yield_crop`
+*' during the solve of timestep t. Recovery is slow (`s14_tau_rec_rate`) and
+*' independent of overshoot sign; with the default 0.001/yr it implies
+*' decades-to-centuries recovery timescales consistent with SOM literature.
+*' Gated at `sm_fix_SSP2` to preserve historical calibration.
+if ((s14_tau_degradation_on = 1) AND (m_year(t) > sm_fix_SSP2),
+  p14_tau_degradation(j,w) = min( s14_tau_degr_max,
+    max( 0,
+      p14_tau_degradation(j,w)
+      + s14_tau_degr_rate * m_yeardiff(t)
+        * max(0, sum((cell(i,j), supreg(h,i)),
+                     pcm_tau(j,"crop") / fm_tau1995(h))
+                 - f14_tau_ceiling(j,w))
+      - s14_tau_rec_rate * m_yeardiff(t) ) );
+);

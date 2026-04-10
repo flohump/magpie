@@ -188,3 +188,22 @@ if ((s14_degradation = 1),
 );
 
 *' @stop
+
+***TAU DEGRADATION / ADOPTION DAMPENER INITIALISATION*************************
+*' State variable for overshoot-triggered tau degradation (Switch D). Starts
+*' at zero and is updated each timestep in presolve.gms based on pcm_tau.
+p14_tau_degradation(j,w) = 0;
+
+*' Fallback defaults for the optional input files f14_adoption.cs3 and
+*' f14_tau_ceiling.cs3. When the input file is absent the empty table is
+*' populated here with a uniform value, defined by the scalars
+*' `s14_adoption_uniform_default` (default 1 = no dampening) and
+*' `s14_tau_ceiling_uniform_default` (default 100 = ceiling never bites).
+*' To smoke-test Switch C or D without generating cell-specific input files,
+*' lower these scalars in the scenario config.
+if (sum((j,w), f14_adoption(j,w)) = 0,
+  f14_adoption(j,w) = s14_adoption_uniform_default;
+);
+if (sum((j,w), f14_tau_ceiling(j,w)) = 0,
+  f14_tau_ceiling(j,w) = s14_tau_ceiling_uniform_default;
+);

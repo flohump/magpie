@@ -9,11 +9,38 @@
 
 ***CROP YIELD CALCULATIONS**********************************************
 
-*' Technological change can increase the initial calibrated yields by:
+*' Crop yields scale the calibrated biophysical input yields
+*' `i14_yields_calib` by the ratio of the current agricultural intensity
+*' `vm_tau(j,"crop")` to its 1995 baseline `fm_tau1995(h)`.
+*'
+*' Three optional switches modify this base relation (all default off, all
+*' gated at `sm_fix_SSP2` to preserve historical calibration):
+*'
+*' 1. `s14_tau_exponent_on` — raises the tau ratio to a concave exponent
+*'    `s14_tau_exponent` (β < 1) to represent diminishing returns of
+*'    intensification. When off, exponent is 1 (linear).
+*' 2. `s14_adoption_on` — multiplies the tau uplift by a cell- and
+*'    water-regime-specific adoption share `f14_adoption(j,w) ∈ (0,1]`,
+*'    reflecting that regional tau does not propagate uniformly to every
+*'    cell. Generalises the existing `s14_yld_past_switch` pasture
+*'    mechanism (see `q14_yield_past` below) to the crop side.
+*' 3. `s14_tau_degradation_on` — subtracts an accumulated degradation state
+*'    `p14_tau_degradation(j,w)` (updated in presolve.gms from overshoots of
+*'    `f14_tau_ceiling(j,w)`) from realised yields.
+*'
+*' With all three switches off the equation reduces to the baseline
+*' `i14_yields_calib · vm_tau/fm_tau1995` form.
 
 q14_yield_crop(j2,kcr,w) ..
- vm_yld(j2,kcr,w) =e= sum(ct,i14_yields_calib(ct,j2,kcr,w)) *
-                         vm_tau(j2,"crop") / sum((cell(i2,j2), supreg(h2,i2)), fm_tau1995(h2));
+ vm_yld(j2,kcr,w) =e= sum(ct,i14_yields_calib(ct,j2,kcr,w))
+   * (1 - s14_tau_degradation_on * p14_tau_degradation(j2,w))
+   * ( 1
+       + (s14_adoption_on * f14_adoption(j2,w) + (1 - s14_adoption_on))
+         * ( ( vm_tau(j2,"crop")
+               / sum((cell(i2,j2), supreg(h2,i2)), fm_tau1995(h2)) )
+             ** (s14_tau_exponent_on * s14_tau_exponent
+                 + (1 - s14_tau_exponent_on))
+             - 1 ) );
 
 *' For the current time step of the optimization, cellular yields of irrigated
 *' and rainfed crops are calculated by multiplying calibrated input yields from

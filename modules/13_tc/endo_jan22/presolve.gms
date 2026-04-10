@@ -18,6 +18,13 @@ else
 
   v13_tau_core.up(h,tautype) = 2 * pc13_tau(h,tautype);
 
+* P0-freeze diagnostic: fix v13_tau_core at the previous timestep value from
+* s13_tau_freeze_year onwards. Default 0 disables this block. Used to compute
+* the lower envelope of yields achievable when τ is not allowed to grow further.
+if (s13_tau_freeze_year > 0 AND m_year(t) >= s13_tau_freeze_year,
+  v13_tau_core.fx(h, tautype) = pc13_tau(h, tautype);
+);
+
 if(m_year(t) > sm_fix_SSP2 AND s13_max_gdp_shr <> Inf,
 
 * We constrain tech cost to a defined share of regional GDP to avoid unrealistically
