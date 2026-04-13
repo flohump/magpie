@@ -9,11 +9,6 @@ pc59_som_pool(j,land) = v59_som_pool.l(j,land);
 pc59_land_before(j,land) = vm_land.l(j,land);
 pc59_carbon_density(j,land)$(pc59_land_before(j,land) > 1e-10) = pc59_som_pool(j,land) / pc59_land_before(j,land);
 
-* Cross-module export of cropland SOC density for the SOM-coupled yield
-* feedback in module 14_yields (Switch D2). Mirrors pc59_carbon_density
-* but with the m-prefix marking it readable by other modules.
-pcm_carbon_density(j,land) = pc59_carbon_density(j,land);
-
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
  ov59_som_target(t,j,land,"marginal")                      = v59_som_target.m(j,land);
  ov59_som_pool(t,j,land,"marginal")                        = v59_som_pool.m(j,land);

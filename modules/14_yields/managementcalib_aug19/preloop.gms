@@ -224,23 +224,3 @@ p14_adoption_dist_term(j) =
     / (log10(s14_adoption_d_hi) - log10(s14_adoption_d_lo))));
 
 i14_adoption(j) = 1;
-
-*' Switch D2 — SOM-coupled yield feedback.
-*' Couples realised cropland yields to MAgPIE's existing soil organic
-*' carbon stock from module 59_som via the cross-module parameter
-*' `pcm_carbon_density(j,"crop")`. The 1995 cropland SOC density is captured
-*' as the baseline at the first timestep in `presolve.gms` (because 59_som's
-*' preloop runs after 14_yields' preloop in module-numerical order). The
-*' yield-loss factor then compares each timestep's SOC density to that
-*' baseline and applies a linear yield penalty up to `s14_som_max_yld_loss`
-*' (default 0.30) when SOC drops below baseline.
-*'
-*' Unlike the original LPJmL-ceiling design, this mechanism uses the model's
-*' own state (the SOC pool that 59_som already tracks dynamically based on
-*' management choices in 18_residues, 50_nr_soil_budget, 55_awms, fallow
-*' and treecover decisions). The closed loop creates a productivity reason
-*' for the optimiser to invest in soil-conservation practices that
-*' currently only have an emissions-accounting role.
-
-p14_som_baseline_density(j) = 0;
-p14_som_yld_loss(j) = 0;

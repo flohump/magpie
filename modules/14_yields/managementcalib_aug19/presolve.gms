@@ -64,14 +64,12 @@ im_growing_stock(t,j,ac,land_timber) = im_growing_stock(t,j,ac,land_timber)$(im_
 ** Set growing stock to 0 where it does not exceed a minimum for harvest
 im_growing_stock(t,j,ac,land_natveg)$(im_growing_stock(t,j,ac,land_natveg) < s14_minimum_growing_stock) = 0;
 
-*** TIME-GATED EFFECTIVE SWITCH VALUES (Switches B and C) ***
-*' Switches s14_tau_exponent_on and s14_adoption_on are scalars without a
-*' time dimension, so they would otherwise apply to every timestep. To
-*' preserve historical calibration these effective switches are zero until
-*' m_year(t) > sm_fix_SSP2 and take the user-configured value thereafter.
-*' The yield equation then uses p14_tau_exp_on_active and
-*' p14_adoption_on_active instead of the raw scalars.
-p14_tau_exp_on_active  = s14_tau_exponent_on$(m_year(t) > sm_fix_SSP2);
+*** TIME-GATED EFFECTIVE SWITCH VALUE (Switch C) ***
+*' s14_adoption_on is a scalar without a time dimension, so it would
+*' otherwise apply to every timestep. To preserve historical calibration the
+*' effective switch is zero until m_year(t) > sm_fix_SSP2 and takes the
+*' user-configured value thereafter. The yield equation uses
+*' p14_adoption_on_active instead of the raw scalar.
 p14_adoption_on_active = s14_adoption_on$(m_year(t) > sm_fix_SSP2);
 
 *** SWITCH C — i14_adoption(j) UPDATE (governance + travel-time) ***
@@ -84,39 +82,3 @@ i14_adoption(j) = max(s14_adoption_floor, min(1.0,
       s14_adoption_w_dist * p14_adoption_dist_term(j)
     + s14_adoption_w_gov  * sum(cell(i,j), 1 - im_governance_indicator(t,i))
   )));
-
-*** SWITCH D2 — SOM-coupled yield-loss factor ***
-*' Capture the 1995 cropland SOC density as baseline at the first timestep.
-*' This must happen in presolve (not preloop) because 59_som's own preloop
-*' runs after 14_yields' preloop, so pcm_carbon_density is empty during
-*' 14_yields preloop.
-if (ord(t) = 1,
-  p14_som_baseline_density(j) = pcm_carbon_density(j,"crop");
-);
-
-*' Compares the current cropland SOC density (carried forward by 59_som
-*' via the new cross-module `pcm_carbon_density(j,"crop")`) to the 1995
-*' baseline density captured above.
-*' If current density falls below baseline, the yield-loss factor scales
-*' linearly up to `s14_som_max_yld_loss` (default 0.30 = 30 % max penalty).
-*' If current density meets or exceeds baseline, the penalty is zero.
-*'
-*' This closes the missing SOM → yield feedback loop. MAgPIE's optimiser
-*' chooses management practices in 18_residues, 50_nr_soil_budget, 55_awms
-*' and the 59_som SCM/fallow/treecover decisions, all of which feed into
-*' the SOC pool. Adding a yield consequence gives the optimiser a
-*' productivity reason to invest in soil conservation when intensification
-*' would otherwise mine the SOC stock.
-*'
-*' Gated at `sm_fix_SSP2` and behind `s14_som_yld_loss_on`. The SOC
-*' density is read from `pcm_carbon_density` which is set in 59_som's
-*' postsolve at the end of each timestep — so 14_yields presolve in
-*' timestep t reads the SOC pool from timestep t-1, giving the correct
-*' lagged feedback.
-p14_som_yld_loss(j) = 0;
-if ((s14_som_yld_loss_on = 1) AND (m_year(t) > sm_fix_SSP2),
-  p14_som_yld_loss(j)$(p14_som_baseline_density(j) > 1e-10) =
-    max(0, min(s14_som_max_yld_loss,
-      s14_som_max_yld_loss * (1 - pcm_carbon_density(j,"crop")
-                                 / p14_som_baseline_density(j))));
-);

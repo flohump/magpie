@@ -20,16 +20,12 @@ s14_minimum_growing_stock          Minimum growing stock for timber harvest in n
 s14_yld_past_switch                Spillover parameter for translating technological change in the crop sector into pasture yieldincreases  (1)     / 0.25 /
 s14_yld_reduction_soil_loss        Decline of land productivity in areas with severe soil loss (1)     / 0.08 /
 sm_carbon_fraction                 Carbon fraction of dry matter (tC per tDM) / 0.5 /
-s14_tau_exponent_on                Switch for concave tau yield response (0=linear 1=apply exponent) gated at sm_fix_SSP2 (1) / 0 /
-s14_tau_exponent                   Concave exponent beta on (vm_tau divided by fm_tau1995) (1)                                / 1 /
 s14_adoption_on                    Switch for cell-level tau adoption dampener (0=off 1=on) gated at sm_fix_SSP2 (1)          / 0 /
 s14_adoption_w_dist                Weight of travel-time term in i14_adoption (1)                                              / 0.4 /
 s14_adoption_w_gov                 Weight of governance term in i14_adoption (1)                                               / 0.6 /
 s14_adoption_d_lo                  Travel-time anchor min (cells below get full adoption) (min)                                / 10 /
 s14_adoption_d_hi                  Travel-time anchor max (cells beyond get the floor) (min)                                   / 2000 /
 s14_adoption_floor                 Lower bound on i14_adoption (1)                                                             / 0.4 /
-s14_som_yld_loss_on                Switch for SOM-coupled yield feedback (Switch D2) gated at sm_fix_SSP2 (0=off 1=on)         / 0 /
-s14_som_max_yld_loss               Maximum yield reduction from SOC depletion vs 1995 baseline (1)                             / 0.3 /
 ;
 
 
