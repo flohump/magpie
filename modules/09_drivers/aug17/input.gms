@@ -43,6 +43,11 @@ $ondelim
 $include "./modules/09_drivers/input/f09_development_state.cs3"
 $offdelim;
 
+table f09_governance_indicator(t_all,i,pop_gdp_scen09) Governance Indicator in range from 0 to 1 derived from World Bank Worldwide Governance Indicators (1)
+$ondelim
+$include "./modules/09_drivers/input/f09_governance_indicator.cs3"
+$offdelim;
+
 table f09_demography(t_all,iso,pop_gdp_scen09,sex,age) Population (mio. capita per yr)
 $ondelim
 $include "./modules/09_drivers/input/f09_demography.cs3"

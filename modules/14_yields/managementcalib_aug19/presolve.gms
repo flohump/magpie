@@ -74,25 +74,49 @@ im_growing_stock(t,j,ac,land_natveg)$(im_growing_stock(t,j,ac,land_natveg) < s14
 p14_tau_exp_on_active  = s14_tau_exponent_on$(m_year(t) > sm_fix_SSP2);
 p14_adoption_on_active = s14_adoption_on$(m_year(t) > sm_fix_SSP2);
 
-*** TAU-OVERSHOOT DEGRADATION STATE UPDATE (Switch D) ***
-*' Overshoot-triggered tau degradation accumulates a cell- and water-regime-
-*' specific state variable that penalises realised yields. Overshoot is measured
-*' against `pcm_tau`, i.e. the τ solved in the previous timestep, since the
-*' penalty reflects a delayed response to prior over-application. The 13_tc
-*' postsolve writes `pcm_tau = vm_tau.l` at the end of every timestep and
-*' modules run in numerical order, so 14_yields presolve in timestep t reads
-*' the τ from timestep t−1. The penalty then applies via `q14_yield_crop`
-*' during the solve of timestep t. Recovery is slow (`s14_tau_rec_rate`) and
-*' independent of overshoot sign; with the default 0.001/yr it implies
-*' decades-to-centuries recovery timescales consistent with SOM literature.
-*' Gated at `sm_fix_SSP2` to preserve historical calibration.
-if ((s14_tau_degradation_on = 1) AND (m_year(t) > sm_fix_SSP2),
-  p14_tau_degradation(j,w) = min( s14_tau_degr_max,
-    max( 0,
-      p14_tau_degradation(j,w)
-      + s14_tau_degr_rate * m_yeardiff(t)
-        * max(0, sum((cell(i,j), supreg(h,i)),
-                     pcm_tau(j,"crop") / fm_tau1995(h))
-                 - f14_tau_ceiling(j,w))
-      - s14_tau_rec_rate * m_yeardiff(t) ) );
+*** SWITCH C — i14_adoption(j) UPDATE (governance + travel-time) ***
+*' Recompute the adoption share each timestep so the governance term
+*' (which is time-varying via `im_governance_indicator(t,i)`) is picked up.
+*' The distance term is static and was set in preloop. Combined penalty in
+*' [0, 1] is mapped linearly to alpha in [s14_adoption_floor, 1].
+i14_adoption(j) = max(s14_adoption_floor, min(1.0,
+  1.0 - (1 - s14_adoption_floor) * (
+      s14_adoption_w_dist * p14_adoption_dist_term(j)
+    + s14_adoption_w_gov  * sum(cell(i,j), 1 - im_governance_indicator(t,i))
+  )));
+
+*** SWITCH D2 — SOM-coupled yield-loss factor ***
+*' Capture the 1995 cropland SOC density as baseline at the first timestep.
+*' This must happen in presolve (not preloop) because 59_som's own preloop
+*' runs after 14_yields' preloop, so pcm_carbon_density is empty during
+*' 14_yields preloop.
+if (ord(t) = 1,
+  p14_som_baseline_density(j) = pcm_carbon_density(j,"crop");
+);
+
+*' Compares the current cropland SOC density (carried forward by 59_som
+*' via the new cross-module `pcm_carbon_density(j,"crop")`) to the 1995
+*' baseline density captured above.
+*' If current density falls below baseline, the yield-loss factor scales
+*' linearly up to `s14_som_max_yld_loss` (default 0.30 = 30 % max penalty).
+*' If current density meets or exceeds baseline, the penalty is zero.
+*'
+*' This closes the missing SOM → yield feedback loop. MAgPIE's optimiser
+*' chooses management practices in 18_residues, 50_nr_soil_budget, 55_awms
+*' and the 59_som SCM/fallow/treecover decisions, all of which feed into
+*' the SOC pool. Adding a yield consequence gives the optimiser a
+*' productivity reason to invest in soil conservation when intensification
+*' would otherwise mine the SOC stock.
+*'
+*' Gated at `sm_fix_SSP2` and behind `s14_som_yld_loss_on`. The SOC
+*' density is read from `pcm_carbon_density` which is set in 59_som's
+*' postsolve at the end of each timestep — so 14_yields presolve in
+*' timestep t reads the SOC pool from timestep t-1, giving the correct
+*' lagged feedback.
+p14_som_yld_loss(j) = 0;
+if ((s14_som_yld_loss_on = 1) AND (m_year(t) > sm_fix_SSP2),
+  p14_som_yld_loss(j)$(p14_som_baseline_density(j) > 1e-10) =
+    max(0, min(s14_som_max_yld_loss,
+      s14_som_max_yld_loss * (1 - pcm_carbon_density(j,"crop")
+                                 / p14_som_baseline_density(j))));
 );

@@ -49,6 +49,10 @@ cfg$recalibrate_landconversion_cost <- FALSE
 # Key: run each start_run in the background so all scenarios launch in parallel
 cfg$sequential      <- FALSE
 
+# Speed up post-processing — only generate the rds report, skip the slow
+# 0.5-degree disaggregation and the output_check step.
+cfg$output          <- c("rds_report")
+
 # Sanity check — the cs3 inputs must exist or Switches C and D degenerate
 # to the uniform fallback (α = 1, ceiling = 100 → mechanism inactive).
 stopifnot(file.exists("modules/14_yields/input/f14_adoption.cs3"))

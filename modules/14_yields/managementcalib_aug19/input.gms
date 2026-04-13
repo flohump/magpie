@@ -23,12 +23,13 @@ sm_carbon_fraction                 Carbon fraction of dry matter (tC per tDM) / 
 s14_tau_exponent_on                Switch for concave tau yield response (0=linear 1=apply exponent) gated at sm_fix_SSP2 (1) / 0 /
 s14_tau_exponent                   Concave exponent beta on (vm_tau divided by fm_tau1995) (1)                                / 1 /
 s14_adoption_on                    Switch for cell-level tau adoption dampener (0=off 1=on) gated at sm_fix_SSP2 (1)          / 0 /
-s14_tau_degradation_on             Switch for overshoot-triggered tau degradation (0=off 1=on) gated at sm_fix_SSP2 (1)       / 0 /
-s14_tau_degr_rate                  Tau-overshoot degradation accumulation rate per unit overshoot per yr (1)                 / 0.02 /
-s14_tau_rec_rate                   Tau-degradation recovery rate per yr when no overshoot (1)                                / 0.001 /
-s14_tau_degr_max                   Maximum accumulated tau-degradation fraction (1)                                          / 0.30 /
-s14_adoption_uniform_default       Uniform adoption share used to fill f14_adoption when the input file is absent (1)        / 1 /
-s14_tau_ceiling_uniform_default    Uniform tau ceiling used to fill f14_tau_ceiling when the input file is absent (1)        / 100 /
+s14_adoption_w_dist                Weight of travel-time term in i14_adoption (1)                                              / 0.4 /
+s14_adoption_w_gov                 Weight of governance term in i14_adoption (1)                                               / 0.6 /
+s14_adoption_d_lo                  Travel-time anchor min (cells below get full adoption) (min)                                / 10 /
+s14_adoption_d_hi                  Travel-time anchor max (cells beyond get the floor) (min)                                   / 2000 /
+s14_adoption_floor                 Lower bound on i14_adoption (1)                                                             / 0.4 /
+s14_som_yld_loss_on                Switch for SOM-coupled yield feedback (Switch D2) gated at sm_fix_SSP2 (0=off 1=on)         / 0 /
+s14_som_max_yld_loss               Maximum yield reduction from SOC depletion vs 1995 baseline (1)                             / 0.3 /
 ;
 
 
@@ -104,26 +105,13 @@ $offdelim
 /
 ;
 
-*' Optional input for the cell-level tau adoption dampener (Switch C).
-*' If the file is absent an empty table is declared and the preloop falls back
-*' to a uniform value of 1 (i.e. dampener has no effect). Units are a share in
-*' (0,1] giving the fraction of the regional tau uplift that materialises in a
-*' given cell and water regime.
-$onEmpty
-table f14_adoption(j,w) Cell-level tau adoption share (1)
-$ondelim
-$if exist "./modules/14_yields/input/f14_adoption.cs3" $include "./modules/14_yields/input/f14_adoption.cs3"
-$offdelim
-;
-$offEmpty
-
-*' Optional input for the sustainable τ ceiling per cell (Switch D). If the file
-*' is absent the preloop falls back to a uniform ceiling of 2.5. The ceiling is
-*' a unitless ratio compared against `vm_tau(j,"crop") / fm_tau1995(h)`.
-$onEmpty
-table f14_tau_ceiling(j,w) Sustainable tau ceiling per cell and water regime (1)
-$ondelim
-$if exist "./modules/14_yields/input/f14_tau_ceiling.cs3" $include "./modules/14_yields/input/f14_tau_ceiling.cs3"
-$offdelim
-;
-$offEmpty
+*' Note: the cell- and water-regime-specific adoption share `i14_adoption(j,w)`
+*' (Switch C) and the sustainable tau ceiling `i14_tau_ceiling(j,w)` (Switch D)
+*' used to be loaded from optional cs3 files. They are now computed directly
+*' inside `preloop.gms` from `f14_yields` (LPJmL staple-crop trajectory, already
+*' loaded above) and `fm_croparea` (1995 crop-area distribution), using a
+*' crop-area-weighted mean across food/feed crops (set `knbe14`, i.e. kcr
+*' excluding `begr` and `betr`). This removes the external preprocessing
+*' step, makes both mechanisms horizon-adaptive (last simulated year is used
+*' as the LPJmL end point), and makes them automatically responsive to the
+*' climate scenario selected via `c14_yields_scenario`.

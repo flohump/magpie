@@ -114,3 +114,8 @@ pc59_land_before(j,land) = pm_land_start(j,land);
 p59_carbon_density(t,j,land) = 0;
 pc59_carbon_density(j,land) = 0;
 pc59_carbon_density(j,land)$(pc59_land_before(j,land) > 1e-10) = pc59_som_pool(j,land) / pc59_land_before(j,land);
+
+* Cross-module export of cropland SOC density for the SOM-coupled yield
+* feedback in module 14_yields (Switch D2). Initialised here in preloop
+* and updated each timestep in postsolve.gms.
+pcm_carbon_density(j,land) = pc59_carbon_density(j,land);

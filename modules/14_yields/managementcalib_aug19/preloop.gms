@@ -189,21 +189,58 @@ if ((s14_degradation = 1),
 
 *' @stop
 
-***TAU DEGRADATION / ADOPTION DAMPENER INITIALISATION*************************
-*' State variable for overshoot-triggered tau degradation (Switch D). Starts
-*' at zero and is updated each timestep in presolve.gms based on pcm_tau.
-p14_tau_degradation(j,w) = 0;
+***SWITCH C / D INITIALISATION************************************************
 
-*' Fallback defaults for the optional input files f14_adoption.cs3 and
-*' f14_tau_ceiling.cs3. When the input file is absent the empty table is
-*' populated here with a uniform value, defined by the scalars
-*' `s14_adoption_uniform_default` (default 1 = no dampening) and
-*' `s14_tau_ceiling_uniform_default` (default 100 = ceiling never bites).
-*' To smoke-test Switch C or D without generating cell-specific input files,
-*' lower these scalars in the scenario config.
-if (sum((j,w), f14_adoption(j,w)) = 0,
-  f14_adoption(j,w) = s14_adoption_uniform_default;
-);
-if (sum((j,w), f14_tau_ceiling(j,w)) = 0,
-  f14_tau_ceiling(j,w) = s14_tau_ceiling_uniform_default;
-);
+*' Switch C — cell-level adoption dampener.
+*' Two complementary indicators capture the structural barriers to
+*' agricultural-technology adoption that MAgPIE does not otherwise model:
+*'
+*'   1. JRC travel-time accessibility (Weiss et al. 2018, downscaled to
+*'      MAgPIE clusters by module 40_transport via `f40_distance(j)`).
+*'      Cells next to urban centres are at full adoption; cells far from
+*'      cities cannot rely on extension, markets and input supply.
+*'      Mapped log-linearly to a [0, 1] penalty between `s14_adoption_d_lo`
+*'      and `s14_adoption_d_hi` (defaults 10 min and 2000 min).
+*'
+*'   2. Governance quality (`im_governance_indicator`, sourced from World
+*'      Bank Worldwide Governance Indicators via mrcommons). Captures
+*'      institutional capacity, rule of law, regulatory quality and
+*'      government effectiveness — the things that determine whether
+*'      agricultural research, extension, credit and tenure security
+*'      actually reach farmers. Region-level, time-varying, SSP-dependent.
+*'
+*' The two are combined via weights (`s14_adoption_w_dist`,
+*' `s14_adoption_w_gov`, default 0.4 / 0.6) and mapped linearly to the
+*' adoption share `i14_adoption(j)` in [`s14_adoption_floor`, 1].
+*'
+*' The distance term is static and computed here in preloop. The governance
+*' term is time-varying and combined into `i14_adoption(j)` each timestep
+*' in `presolve.gms`. The cost equation in 13_tc is blind to `i14_adoption`,
+*' so the solver cannot compensate for the dampener by over-investing in τ.
+
+p14_adoption_dist_term(j) =
+  max(0, min(1,
+    (log10(max(1, f40_distance(j))) - log10(s14_adoption_d_lo))
+    / (log10(s14_adoption_d_hi) - log10(s14_adoption_d_lo))));
+
+i14_adoption(j) = 1;
+
+*' Switch D2 — SOM-coupled yield feedback.
+*' Couples realised cropland yields to MAgPIE's existing soil organic
+*' carbon stock from module 59_som via the cross-module parameter
+*' `pcm_carbon_density(j,"crop")`. The 1995 cropland SOC density is captured
+*' as the baseline at the first timestep in `presolve.gms` (because 59_som's
+*' preloop runs after 14_yields' preloop in module-numerical order). The
+*' yield-loss factor then compares each timestep's SOC density to that
+*' baseline and applies a linear yield penalty up to `s14_som_max_yld_loss`
+*' (default 0.30) when SOC drops below baseline.
+*'
+*' Unlike the original LPJmL-ceiling design, this mechanism uses the model's
+*' own state (the SOC pool that 59_som already tracks dynamically based on
+*' management choices in 18_residues, 50_nr_soil_budget, 55_awms, fallow
+*' and treecover decisions). The closed loop creates a productivity reason
+*' for the optimiser to invest in soil-conservation practices that
+*' currently only have an emissions-accounting role.
+
+p14_som_baseline_density(j) = 0;
+p14_som_yld_loss(j) = 0;

@@ -33,9 +33,9 @@
 
 q14_yield_crop(j2,kcr,w) ..
  vm_yld(j2,kcr,w) =e= sum(ct,i14_yields_calib(ct,j2,kcr,w))
-   * (1 - s14_tau_degradation_on * p14_tau_degradation(j2,w))
+   * (1 - s14_som_yld_loss_on * p14_som_yld_loss(j2))
    * ( 1
-       + (p14_adoption_on_active * f14_adoption(j2,w) + (1 - p14_adoption_on_active))
+       + (p14_adoption_on_active * i14_adoption(j2) + (1 - p14_adoption_on_active))
          * ( ( vm_tau(j2,"crop")
                / sum((cell(i2,j2), supreg(h2,i2)), fm_tau1995(h2)) )
              ** (p14_tau_exp_on_active * s14_tau_exponent

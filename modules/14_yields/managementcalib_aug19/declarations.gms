@@ -20,9 +20,12 @@ parameters
  i14_calib_yields_ratio(i)                               Irrigated to rainfed yield ratio for calibrated yields (1)
  i14_target_ratio(i)                                     Target irrigated to rainfed ratio as upper bound (1)
  i14_modeled_yields_hist2(i,knbe14)                      Calibrated yields average over region and water supply type at the historical reference year (tDM per ha per yr)
- p14_tau_degradation(j,w)                                Accumulated overshoot-triggered tau degradation state (1)
  p14_tau_exp_on_active                                   Time-gated effective s14_tau_exponent_on switch (1)
  p14_adoption_on_active                                  Time-gated effective s14_adoption_on switch (1)
+ i14_adoption(j)                                         Cell-level tau adoption share derived from JRC travel time and governance (1)
+ p14_adoption_dist_term(j)                               Static log-linear travel-time penalty in [0 1] (1)
+ p14_som_baseline_density(j)                             Cropland SOC density at simulation start used as baseline for Switch D2 (tC per ha)
+ p14_som_yld_loss(j)                                     Realised cropland yield reduction from SOC depletion vs baseline (1)
  ;
 
 positive variables
