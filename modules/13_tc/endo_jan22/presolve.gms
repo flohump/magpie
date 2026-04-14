@@ -18,6 +18,23 @@ else
 
   v13_tau_core.up(h,tautype) = 2 * pc13_tau(h,tautype);
 
+* Switch E (rate cap, tau-brainstorm branch): tighten the v13_tau_core upper bound
+* to enforce a level-dependent annual growth rate cap on regional tau. Linear
+* interpolation between a catch-up rate (s13_rate_catchup) at low tau and a
+* frontier rate (s13_rate_frontier) at s13_tau_cap. Anchored in Fischer &
+* Edmeades 2010 (frontier plateau ~1.5 %/yr) and Cassman & Grassini 2020 /
+* Grassini et al. 2013 (catch-up regional envelope). Gated at sm_fix_SSP2
+* so historical calibration is bit-identical to develop when off.
+if (s13_rate_cap_on = 1 AND m_year(t) > sm_fix_SSP2,
+  p13_rate_cap(h) = s13_rate_frontier
+    + (s13_rate_catchup - s13_rate_frontier)
+      * max(0, min(1, (s13_tau_cap - pc13_tau(h,"crop")) / (s13_tau_cap - 1)));
+  v13_tau_core.up(h,"crop") = min(
+    v13_tau_core.up(h,"crop"),
+    pc13_tau(h,"crop") * (1 + p13_rate_cap(h) * m_yeardiff(t))
+  );
+);
+
 * P0-freeze diagnostic: fix v13_tau_core at the previous timestep value from
 * s13_tau_freeze_year onwards. Default 0 disables this block. Used to compute
 * the lower envelope of yields achievable when τ is not allowed to grow further.

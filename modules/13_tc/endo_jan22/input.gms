@@ -11,6 +11,10 @@ scalars
  s13_max_gdp_shr                         Maximum tech cost as share of regional GDP / Inf /
  s13_maintenance_cost                    Maintenance cost per ha per unit tau above 1 per yr gated at sm_fix_SSP2 (USD17MER per ha per yr) / 0 /
  s13_tau_freeze_year                     If >0 fixes v13_tau_core at previous tau for years from this year onward (used by P0-freeze diagnostic) / 0 /
+ s13_rate_cap_on                         Switch for tau growth-rate cap (0=off 1=on) gated at sm_fix_SSP2 (1)                                    / 0 /
+ s13_rate_frontier                       Frontier tau annual growth rate cap (1 per yr)                                                          / 0.015 /
+ s13_rate_catchup                        Catch-up tau annual growth rate cap (1 per yr)                                                          / 0.025 /
+ s13_tau_cap                             Tau level at which rate cap interpolates to s13_rate_frontier (1)                                       / 3.0 /
  c13_croparea_consv                      Switch for crop area conservation either in conservation priority areas or in a given share of the total croparea (0=no 1=yes) / 0 /
  c13_croparea_consv_tau_increase         Switch for tau increase on crop area conservation (0=no 1=yes) / 1 /
  s13_croparea_consv_tau_factor           Tau factor for crop area conservation / 0.8 /

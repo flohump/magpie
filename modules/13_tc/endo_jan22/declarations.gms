@@ -37,6 +37,7 @@ parameters
  p13_country_weight(i)                Policy country weight per region (1)
  p13_country_switch(iso)              Switch indicating whether country is affected by selected cropland policy (1)
  p13_country_wght_supreg(h)           Policy country weight per super region (1)
+ p13_rate_cap(h)                      Level-dependent annual tau growth rate cap per super-region (1 per yr)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
