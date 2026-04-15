@@ -26,6 +26,11 @@ s14_adoption_w_gov                 Weight of governance term in i14_adoption (1)
 s14_adoption_d_lo                  Travel-time anchor min (cells below get full adoption) (min)                                / 10 /
 s14_adoption_d_hi                  Travel-time anchor max (cells beyond get the floor) (min)                                   / 2000 /
 s14_adoption_floor                 Lower bound on i14_adoption (1)                                                             / 0.4 /
+s14_damage_on                      Switch for overshoot damage G (0=off 1=on) gated at sm_fix_SSP2 (1)                         / 0 /
+s14_damage_threshold_rate          Tau growth rate threshold above which damage accumulates (1 per yr)                         / 0.010 /
+s14_damage_accumulation            Damage accumulation per unit of rate overshoot per yr (1)                                   / 0.20 /
+s14_damage_recovery                Damage recovery rate per yr (1)                                                             / 0.02 /
+s14_damage_max                     Maximum damage (cap on yield loss fraction) (1)                                             / 0.25 /
 ;
 
 

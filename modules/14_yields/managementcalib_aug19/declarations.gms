@@ -23,6 +23,8 @@ parameters
  p14_adoption_on_active                                  Time-gated effective s14_adoption_on switch (1)
  i14_adoption(j)                                         Cell-level tau adoption share derived from JRC travel time and governance (1)
  p14_adoption_dist_term(j)                               Static log-linear travel-time penalty in [0 1] (1)
+ p14_damage_on_active                                    Time-gated effective s14_damage_on switch (1)
+ p14_damage(h)                                           Overshoot damage state per super-region (1)
  ;
 
 positive variables

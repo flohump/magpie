@@ -7,6 +7,14 @@
 
 i14_yields_calib(t,j,kve,w)   = f14_yields(t,j,kve,w);
 
+* Switch G (overshoot damage) initial state: zero damage at start of run.
+* Decay and accumulation are applied each timestep in presolve based on
+* pc13_tcguess(h,"crop") (previous period's tau growth rate). Gated at
+* sm_fix_SSP2 via p14_damage_on_active so historical timesteps are
+* bit-identical to develop when the switch is off.
+p14_damage(h) = 0;
+p14_damage_on_active = 0;
+
 ***YIELD CORRECTION FOR 2ND GENERATION BIOENERGY CROPS*************************************
 i14_yields_calib(t,j,"begr",w) = f14_yields(t,j,"begr",w) * sum((supreg(h,i),cell(i,j)),fm_tau1995(h))/smax(h,fm_tau1995(h));
 i14_yields_calib(t,j,"betr",w) = f14_yields(t,j,"betr",w) * sum((supreg(h,i),cell(i,j)),fm_tau1995(h))/smax(h,fm_tau1995(h));

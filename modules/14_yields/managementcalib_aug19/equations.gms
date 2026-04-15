@@ -26,6 +26,8 @@
 
 q14_yield_crop(j2,kcr,w) ..
  vm_yld(j2,kcr,w) =e= sum(ct,i14_yields_calib(ct,j2,kcr,w))
+   * ( 1 - p14_damage_on_active
+           * sum((cell(i2,j2), supreg(h2,i2)), p14_damage(h2)) )
    * ( 1
        + (p14_adoption_on_active * i14_adoption(j2) + (1 - p14_adoption_on_active))
          * ( vm_tau(j2,"crop")

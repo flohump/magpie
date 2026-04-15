@@ -82,3 +82,24 @@ i14_adoption(j) = max(s14_adoption_floor, min(1.0,
       s14_adoption_w_dist * p14_adoption_dist_term(j)
     + s14_adoption_w_gov  * sum(cell(i,j), 1 - im_governance_indicator(t,i))
   )));
+
+*** SWITCH G — overshoot damage state update ***
+*' p14_damage(h) is a super-region-level state variable that accumulates
+*' when the previous period's tau growth rate exceeds s14_damage_threshold_rate
+*' and decays over time at s14_damage_recovery per year. It is capped at
+*' s14_damage_max. The growth-rate signal comes from pc13_tcguess(h,"crop")
+*' which 13_tc postsolve computes as (v13_tau_core.l / pc13_tau)^(1/dt) - 1
+*' for the period that just ended. Damage enters q14_yield_crop as a
+*' multiplicative (1 - p14_damage) factor, so yields decline in super-regions
+*' that have been pushing tau too hard even when the current period's rate
+*' slows. Gated at sm_fix_SSP2 so historical calibration is preserved.
+*' Anchored in Borrelli 2017 / Sanderman 2017 (recovery magnitudes) and
+*' Grassini 2013 (plateau regions overshoot evidence).
+p14_damage_on_active = s14_damage_on$(m_year(t) > sm_fix_SSP2);
+
+if (s14_damage_on = 1 AND m_year(t) > sm_fix_SSP2,
+  p14_damage(h) = min(s14_damage_max,
+                       p14_damage(h) * max(0, 1 - s14_damage_recovery * m_yeardiff(t))
+                     + max(0, pc13_tcguess(h,"crop") - s14_damage_threshold_rate)
+                         * s14_damage_accumulation * m_yeardiff(t));
+);
