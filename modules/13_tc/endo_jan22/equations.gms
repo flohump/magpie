@@ -45,8 +45,19 @@ q13_cost_tc(i2, tautype) ..
 *' historical calibration is preserved. Controlled by `s13_maintenance_cost`
 *' (default 0 = off).
 
+*' Note on the =g= sign: when Switch F (R&D decay, `s13_decay_on = 1`)
+*' allows tau to decline, the term `(v13_tau_core/pc13_tau − 1)` can
+*' become negative. With the original `=e=` and `v13_tech_cost` as a
+*' positive variable the equation would be infeasible during decay.
+*' Changing the constraint to `=g=` lets the solver set
+*' `v13_tech_cost = 0` when the RHS is negative while still
+*' enforcing equality when the RHS is non-negative (the solver
+*' minimizes v13_tech_cost). In all non-decay cases this is
+*' mathematically identical to the original `=e=` formulation, so
+*' historical calibration and all non-F configurations are unchanged.
+
 q13_tech_cost(i2, tautype) ..
- v13_tech_cost(i2, tautype) =e= sum(supreg(h2,i2), v13_tau_core(h2,tautype)/pc13_tau(h2,tautype)-1) * v13_cost_tc(i2,tautype)
+ v13_tech_cost(i2, tautype) =g= sum(supreg(h2,i2), v13_tau_core(h2,tautype)/pc13_tau(h2,tautype)-1) * v13_cost_tc(i2,tautype)
                                * sum(ct,pm_interest(ct,i2)/(1+pm_interest(ct,i2)))
                                + ( s13_maintenance_cost * pc13_land(i2,tautype)
                                    * sum(supreg(h2,i2), v13_tau_core(h2,tautype) - 1)

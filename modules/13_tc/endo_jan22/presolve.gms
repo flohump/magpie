@@ -18,6 +18,24 @@ else
 
   v13_tau_core.up(h,tautype) = 2 * pc13_tau(h,tautype);
 
+* Switch F (R&D decay, tau-brainstorm branch): relax the v13_tau_core
+* lower bound for crop tau to allow tau to DECLINE by up to
+* s13_decay_rate per year if the solver finds the marginal benefit of
+* maintaining tau below its maintenance cost (Switch A) or below the
+* yield benefit (e.g., when Switch G's damage factor reduces the
+* realized yield uplift from tau). Structurally converts tau from
+* Dietrich 2014's "bought once, owned forever" asset into a depreciating
+* capability whose continuous spending is required to stay in place.
+* Anchored in Alston 2010 / Pardey 2013 R&D depreciation (2-4 %/yr);
+* 0.5 %/yr is the conservative lower end. Gated at sm_fix_SSP2 so
+* historical calibration is preserved. Must be combined with the
+* q13_tech_cost =g= relaxation in equations.gms, otherwise the cost
+* equation becomes infeasible when tau declines.
+if (s13_decay_on = 1 AND m_year(t) > sm_fix_SSP2,
+  v13_tau_core.lo(h,"crop") = pc13_tau(h,"crop")
+                              * max(0, 1 - s13_decay_rate * m_yeardiff(t));
+);
+
 * Switch E (rate cap, tau-brainstorm branch): tighten the v13_tau_core upper bound
 * to enforce a level-dependent annual growth rate cap on regional tau. Linear
 * interpolation between a catch-up rate (s13_rate_catchup) at low tau and a
