@@ -20,6 +20,9 @@ parameters
  i14_calib_yields_ratio(i)                               Irrigated to rainfed yield ratio for calibrated yields (1)
  i14_target_ratio(i)                                     Target irrigated to rainfed ratio as upper bound (1)
  i14_modeled_yields_hist2(i,knbe14)                      Calibrated yields average over region and water supply type at the historical reference year (tDM per ha per yr)
+ p14_corr_last(i)                                        Last t_past value of pasture yield correction ratio (1)
+ p14_corr_prev(i)                                        Second to last t_past value of pasture yield correction ratio (1)
+ p14_corr_trend(i)                                       Per 5-year linear trend in pasture yield correction for extrapolation through sm_fix_SSP2 (1)
  ;
 
 positive variables

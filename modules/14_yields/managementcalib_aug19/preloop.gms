@@ -15,8 +15,24 @@ i14_yields_calib(t,j,"betr",w) = f14_yields(t,j,"betr",w) * sum((supreg(h,i),cel
 p14_pyield_LPJ_reg(t,i) = (sum(cell(i,j),i14_yields_calib(t,j,"pasture","rainfed") * pm_land_start(j,"past")) /
                             sum(cell(i,j),pm_land_start(j,"past")) );
 
+*' Pasture yield correction from historical data for t_past, then extrapolated
+*' with the last historical trend through sm_fix_SSP2 to avoid a discontinuity
+*' at the t_past boundary (capped at +/-10% per 5-year step). Frozen after sm_fix_SSP2.
 p14_pyield_corr(t,i) = (f14_pyld_hist(t,i)/p14_pyield_LPJ_reg(t,i))$(sum(sameas(t_past,t),1) = 1)
       + sum(t_past,(f14_pyld_hist(t_past,i)/(p14_pyield_LPJ_reg(t_past,i)+0.000001))$(ord(t_past)=card(t_past)))$(sum(sameas(t_past,t),1) <> 1);
+
+p14_corr_last(i) = sum(t_past,
+  (f14_pyld_hist(t_past,i)/(p14_pyield_LPJ_reg(t_past,i)+0.000001))$(ord(t_past)=card(t_past)));
+p14_corr_prev(i) = sum(t_past,
+  (f14_pyld_hist(t_past,i)/(p14_pyield_LPJ_reg(t_past,i)+0.000001))$(ord(t_past)=card(t_past)-1));
+p14_corr_trend(i) = p14_corr_last(i) - p14_corr_prev(i);
+p14_corr_trend(i)$(p14_corr_trend(i) >  0.10 * p14_corr_last(i)) =  0.10 * p14_corr_last(i);
+p14_corr_trend(i)$(p14_corr_trend(i) < -0.10 * p14_corr_last(i)) = -0.10 * p14_corr_last(i);
+
+loop(t$(m_year(t) > sum(t_past$(ord(t_past)=card(t_past)), m_year(t_past)) and m_year(t) <= sm_fix_SSP2),
+  p14_pyield_corr(t,i) = p14_pyield_corr(t-1,i) + p14_corr_trend(i);
+);
+
 i14_yields_calib(t,j,"pasture",w) = i14_yields_calib(t,j,"pasture",w) * sum(cell(i,j),p14_pyield_corr(t,i));
 
 
