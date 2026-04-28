@@ -41,7 +41,7 @@ vm_land.l(j,"primforest") = pcm_land(j,"primforest");
 
 * Reduce natural-origin tracking proportionally with disturbance losses.
 * Damaged area keeps its origin mix (natural vs existing ratio preserved).
-pc35_secdforest_natural(j,ac_sub)$(pc35_secdforest(j,ac_sub) > 1e-12) =
+pc35_secdforest_natural(j,ac_sub)$(pc35_secdforest(j,ac_sub) > 1e-6) =
   pc35_secdforest_natural(j,ac_sub) * (1 - p35_disturbance_loss_secdf(t,j,ac_sub) / (pc35_secdforest(j,ac_sub) + p35_disturbance_loss_secdf(t,j,ac_sub)));
 
 
@@ -176,8 +176,7 @@ pm_land_conservation(t,j,"secdforest","protect")$(pm_land_conservation(t,j,"secd
 if (sum(sameas(t_past,t),1) = 1,
 v35_secdforest.lo(j,ac_sub) = max(pm_land_conservation(t,j,"secdforest","protect") * p35_protection_dist(j,ac_sub), pc35_secdforest_natural(j,ac_sub));
 else
-v35_secdforest.lo(j,ac_sub) = max((1-s35_natveg_harvest_shr) * pc35_secdforest(j,ac_sub), pm_land_conservation(t,j,"secdforest","protect") * p35_protection_dist(j,ac_sub));
-v35_secdforest.lo(j,ac_sub) = max(v35_secdforest.lo(j,ac_sub), pc35_secdforest_natural(j,ac_sub));
+v35_secdforest.lo(j,ac_sub) = max((1-s35_natveg_harvest_shr) * pc35_secdforest(j,ac_sub), pm_land_conservation(t,j,"secdforest","protect") * p35_protection_dist(j,ac_sub), pc35_secdforest_natural(j,ac_sub));
 );
 * upper bound
 v35_secdforest.up(j,ac_sub) = pc35_secdforest(j,ac_sub);
