@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **scripts/output** Refactored report output scripts and moved several repeated parts to magpie4 and quitte. As a result, `piamutils` is not a dependency anymore.
 - **config** New default switched from calibrating to FAO to LanduseInitialisation. Update of calibration parameters and removal of lowpass filter setting in line with simplified script.
 - **30_croparea/simple_apr24** Fixed rotation penalty to 0 instead of relying on the solver to not produce small positive values within the tolerance.
+- **21_trade** New implementation of bilateral trade realization, based on import-supply-ratio instead of redistributing bilateral flows in a unconstrained manner.
 
 ### added
 - **35_natveg** natural-origin tracking for secdforest: distinguishes area from natural succession (uncalibrated natveg curve) from existing/managed secdforest (FRA-calibrated curve); blended carbon density per age class
