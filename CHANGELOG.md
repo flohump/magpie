@@ -24,6 +24,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **30_croparea/simple_apr24** Fixed rotation penalty to 0 instead of relying on the solver to not produce small positive values within the tolerance.
 
 ### added
+- **35_natveg** natural-origin tracking for secdforest: distinguishes area from natural succession (uncalibrated natveg curve) from existing/managed secdforest (FRA-calibrated curve); blended carbon density per age class
+- **52_carbon** configurable bisection bounds `s52_k_high_secdf` (0.1) and `s52_k_high_plant` (0.15), reduced from hardcoded 0.3
+- **14_yields** pasture yield correction trend extrapolation through `sm_fix_SSP2` to smooth t_past boundary discontinuity
 - **52_carbon** growing stock calibration: bisection of Chapman-Richards growth rate k to match FRA 2025 targets for secdforest (NRF) and plantations; uncalibrated curves preserved for aff/ndc
 - **73_timber** FAO woodfuel stacking correction (`s73_woodfuel_stacking_factor = 0.65`) applied before density conversion
 - **73_timber** regionalized timber production costs: costs specified in USD/m3 (UNECE source), converted to regional USD/tDM via `im_vol_conv(i)`; natveg cost premium as single scalar `s73_natveg_cost_premium`
