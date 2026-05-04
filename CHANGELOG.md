@@ -1262,7 +1262,6 @@ First open source release of the framework. See [MAgPIE 4.0 paper](https://doi.o
 
 
 [Unreleased]: https://github.com/magpiemodel/magpie/compare/v4.14.0...develop
-[4.14.0]: https://github.com/magpiemodel/magpie/compare/v4.14.0...v4.14.0
 [4.14.0]: https://github.com/magpiemodel/magpie/compare/v4.13.0...v4.14.0
 [4.13.0]: https://github.com/magpiemodel/magpie/compare/v4.12.0...v4.13.0
 [4.12.0]: https://github.com/magpiemodel/magpie/compare/v4.11.0...v4.12.0
