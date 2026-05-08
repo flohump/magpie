@@ -5,6 +5,10 @@
 #' Ensures that run statistics have a valid id, saves the quitte object as an
 #' RDS file named after that id in the results archive, and updates the file
 #' list used by shinyresults.
+#' If an inbox folder (`paste0(normalizePath(resultsarchive), "-inbox")`)
+#' exists the rds file is put there instead. This is useful to then sync only
+#' the inbox files to another machine, before moving them to the actual
+#' results archive, potentially via cronjob.
 #'
 #' @param qu A quitte object to be saved.
 #' @param runstatistics Path to the runstatistics.rda file.
@@ -32,11 +36,13 @@ saveToResultsArchive <- function(qu, runstatistics, submit,
     save(stats, file = runstatistics, compress = "xz")
   }
 
+  inbox <- paste0(normalizePath(resultsarchive), "-inbox")
+  if (dir.exists(inbox)) {
+    resultsarchive <- inbox
+  }
+
   # Save report to results archive
   saveRDS(qu, file = paste0(resultsarchive, "/", stats$id, ".rds"), version = 2)
-  withr::with_dir(resultsarchive, {
-    system("find -type f -name '1*.rds' -printf '%f\n' | sort > fileListForShinyresults")
-  })
 }
 
 chooseSubmit <- function(title, slurmModes) {
