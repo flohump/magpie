@@ -7,7 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### changed
--
+- **scripts** saveToResultsArchive saves to inbox folder if available
+- **renv/activate.R** updated to version 1.2.2
 
 ### added
 - **80_optimization/nlp_ipopt** New realization, using IPOPT instead of CONOPT4 (and the fallback CONOPT3) as the NLP solver for the MAgPIE model.
