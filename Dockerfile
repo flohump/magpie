@@ -90,6 +90,17 @@ ENV PATH="${GAMS_PATH}:${PATH}"
 # and uncomment the following line:
 # COPY gamslice.txt /opt/gams/gamslice.txt
 
+# Set up R package manager pak
+ENV RSPM='https://packagemanager.posit.co/cran/__linux__/noble/latest'
+ENV RENV_CONFIG_REPOS_OVERRIDE='https://packagemanager.posit.co/cran/__linux__/noble/latest'
+RUN <<EOF 
+echo "options(repos = c(pikpiam = 'https://pik-piam.r-universe.dev',
+                        CRAN = Sys.getenv('RSPM')))" > ~/.Rprofile
+EOF
+
+RUN Rscript -e 'install.packages("pak")'
+
+
 # Set working directory
 WORKDIR /opt/magpie
 
@@ -100,18 +111,11 @@ RUN git clone --depth=1 https://github.com/magpiemodel/magpie.git .
 # We use a temporarily mounted directory to cache build artifacts between
 # docker builds and in the end copy it to the original renv cache location
 # to not confuse renv when we start runs later.
-ENV RSPM='https://packagemanager.posit.co/cran/__linux__/noble/latest'
-ENV RENV_CONFIG_REPOS_OVERRIDE='https://packagemanager.posit.co/cran/__linux__/noble/latest'
-
-RUN <<EOF 
-echo "options(repos = c(pikpiam = 'https://pik-piam.r-universe.dev',
-                        CRAN = Sys.getenv('RSPM')))" > /root/.Rprofile
-EOF
-
 RUN --mount=type=cache,target=/tmp/renv-cache \
     RENV_PATHS_CACHE=/tmp/renv-cache \
     RENV_CONFIG_INSTALL_VERBOSE=true \
-    Rscript -e 'options(renv.config.pak.enabled = TRUE); "dummy evaluation to start the renv auto-setup"' && \
+    RENV_CONFIG_PAK_ENABLED=true \
+    Rscript -e '"dummy evaluation to start the renv auto-setup"' && \
     mkdir -p /root/.cache/R/renv/cache && \
     cp -r /tmp/renv-cache/* /root/.cache/R/renv/cache/ 2>/dev/null
 
