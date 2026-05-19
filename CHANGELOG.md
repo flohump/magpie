@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **80_optimization/nlp_ipopt** New realization, using IPOPT instead of CONOPT4 (and the fallback CONOPT3) as the NLP solver for the MAgPIE model.
 - **scripts/start/extra/ipopt.R** Start script for solving MAgPIE with IPOPT.
 - **Dockerfile** Re-added a Dockerfile, which can be used to build a local docker image as well as a GH codespace
-- **.devcontainer.json/devcontainer.json** A new configuration for development containers, which allow for reproducible, prepared development environments
+- **.devcontainer/devcontainer.json** A new configuration for development containers, which allow for reproducible, prepared development environments
 
 ### removed
 -
