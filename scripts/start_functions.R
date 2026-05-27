@@ -377,7 +377,10 @@ start_run <- function(cfg, scenario = NULL, codeCheck = TRUE, lock_model = TRUE,
     ad_aolc_pol <- magclass::read.magpie("modules/35_natveg/input/npi_ndc_ad_aolc_pol.cs3")
     ad_pol     <- ad_aolc_pol[,,"forest"]
     aolc_pol    <- ad_aolc_pol[,,"other"]
-    if((all(aff_pol == 0)   & (cfg$gms$c32_aff_policy != "none")) |
+    affexp_missing <- (cfg$gms$c32_aff_policy == "affexp") &&
+                      !("affexp" %in% magclass::getNames(aff_pol))
+
+    if((all(aff_pol == 0)   & (cfg$gms$c32_aff_policy != "none")) | affexp_missing                                              |
        (all(ad_pol == 0)    & (cfg$gms$c35_ad_policy != "none"))  |
        (all(aolc_pol == 0) & (cfg$gms$c35_aolc_policy != "none")))
     {
