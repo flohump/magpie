@@ -12,6 +12,7 @@ parameters
  i21_trade_bilat_stddev(t_all,i_ex,i_im,k_trade)           Standard deviation of historical import supply ratios used as flexibility window (1)
  i21_import_supply_scenario(t_all)                         Time-varying scalar on import supply ratios for scenario experiments (1)
  i21_stddev_lib_factor(t_all)                              Time-varying scalar on the flexibility window width (1)
+ p21_import_supply_sum(i_im,t_all,k_trade)                 Sum of import supply ratios across all exporters after scenario scaling - used to cap at 1 (1)
 ;
 
 variables
@@ -19,11 +20,13 @@ variables
 ;
 
 positive variables
- v21_trade(i_ex,i_im,k_trade)            Bilateral trade flow from exporter to importer (mio. tDM per yr)
- v21_cost_margin_reg(i,k_trade)          Regional transport margin costs summed over all bilateral partners (mio. USD17MER per yr)
- vm_cost_trade_tariff(i)                 Regional tariff costs across all commodities entering objective (mio. USD17MER per yr)
- vm_cost_trade_margin(i)                 Regional transport margin costs across all commodities entering objective (mio. USD17MER per yr)
- vm_cost_trade_feasibility(i)            Regional feasibility penalty costs across all commodities entering objective (mio. USD17MER per yr)
+ v21_trade(i_ex,i_im,k_trade)                    Bilateral trade flow from exporter to importer (mio. tDM per yr)
+ v21_cost_margin_reg(i,k_trade)                  Regional transport margin costs summed over all bilateral partners (mio. USD17MER per yr)
+ vm_cost_trade_tariff(i)                         Regional tariff costs across all commodities entering objective (mio. USD17MER per yr)
+ vm_cost_trade_margin(i)                         Regional transport margin costs across all commodities entering objective (mio. USD17MER per yr)
+ vm_cost_trade_feasibility(i)                    Regional feasibility penalty costs across all commodities entering objective (mio. USD17MER per yr)
+ v21_import_for_feasibility(i_ex,i_im,k_trade)   Additional imports to maintain feasibility (mio. tDM per yr)
+ v21_excess_prod(h,k_trade)                       Excess regional production beyond material balance requirement (mio. tDM per yr)
 ;
 
 equations
@@ -35,6 +38,8 @@ equations
  q21_costs_margins(i,k_trade)            Bilateral transport margin costs assigned to exporting region (mio. USD17MER per yr)
  q21_cost_trade_tariff(i)                Regional tariff costs aggregated over all commodities (mio. USD17MER per yr)
  q21_cost_trade_margin(i)                Regional margin costs aggregated over all commodities (mio. USD17MER per yr)
+ q21_cost_trade_feasibility(i)           Regional feasibility penalty costs (mio. USD17MER per yr)
+ q21_trade_reg_up(h,k_trade)             Regional production upper bound: production must not exceed material balance requirement (mio. tDM per yr)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
