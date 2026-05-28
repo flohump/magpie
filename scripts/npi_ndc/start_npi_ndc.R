@@ -192,7 +192,7 @@ calc_NPI_NDC <- function(policyregions = "iso",
   ad_aolc_pol <- mbind(none_ad_aolc_pol,npi_ad,npi_aolc,ndc_ad,ndc_aolc)
 
   adfiles <- paste0(outfolder_ad_aolc, out_ad_file)
-  write.magpie(floor(ad_aolc_pol*1e6)/1e6, adfiles[1])
+  write.magpie(round(ad_aolc_pol, 6), adfiles[1])
   if (length(adfiles) > 1) {
     for (i in 2:length(adfiles)) file.copy(adfiles[1],adfiles[i], overwrite=TRUE)
   }
@@ -289,7 +289,7 @@ calc_NPI_NDC <- function(policyregions = "iso",
   # Write AFF policies: none / npi / ndc / affexp (affexp included only when defined)
   aff_pol <- if (!is.null(affexp)) mbind(none_aff_pol, npi_aff, ndc_aff, affexp) else mbind(none_aff_pol, npi_aff, ndc_aff)
   afffiles <- paste0(outfolder_aff, out_aff_file)
-  write.magpie(floor(aff_pol*1e6)/1e6, afffiles[1])
+  write.magpie(round(aff_pol, 6), afffiles[1])
   if(length(afffiles) > 1) for (i in 2:length(afffiles)) file.copy(afffiles[1],afffiles[i], overwrite=TRUE)
 }
 
