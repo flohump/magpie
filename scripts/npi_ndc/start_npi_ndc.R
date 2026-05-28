@@ -4,8 +4,14 @@
 # |  AGPL-3.0, you are granted additional permissions described in the
 # |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 # |  Contact: magpie@pik-potsdam.de
-## Functions for the policy targets calculations
-## calculates policy for protecting different land pools from land use change
+## Functions for the national policy targets calculations
+## Structure of policy is defined in the policy_definitions.csv file
+## Policy target value. Interpretation depends on policy/landpool:
+##                  #  - ad   : % protection in targetyear (0..1)
+##                  #  - aff  : afforestation in Mha
+##                  #  - affexp: pipe-delimited "TARGET_POTENTIAL|EXPANSION_SPEED"
+##                  #           share of available 2030 potential (%) and
+##                  #           annual expansion speed (% of remaining/yr)
 calc_NPI_NDC <- function(policyregions = "iso",
                          pol_def_file = "policies/policy_definitions.csv",
                          cellmapping  = "policies/country2cell.rds",
@@ -35,19 +41,12 @@ calc_NPI_NDC <- function(policyregions = "iso",
   # use pol_mapping to update spatial mapping of cells to regions
   # so that not only countries can be used for policies but also smaller
   # units such as provinces
-  if (dim(land_stock)[1] == 59199) { # 59199 cells
-    if (dim(pol_mapping)[1] > 59199) {
-      pol_mapping <- pol_mapping[order(pol_mapping$cell), ]
-      pol_mapping <- pol_mapping[!is.na(pol_mapping$cell), ]
-    }
-    getItems(land_stock, dim = 1, raw = TRUE) <- paste(pol_mapping$policyregions, 1:59199, sep = ".") 
-  } else {
-    coords <- getCoords(land_stock)
-    names(coords) <- c("lon", "lat")
-    m <- merge(coords, pol_mapping, sort = FALSE)
-    getItems(land_stock, dim = "iso") <- m$policyregions
-  }
-
+    
+  coords <- getCoords(land_stock)
+  names(coords) <- c("lon", "lat")
+  m <- merge(coords, pol_mapping, sort = FALSE)
+  getItems(land_stock, dim = "iso") <- m$policyregions
+  
   # select map_file if more than one has been found
   if (length(map_file) > 1) {
     if (dim(land_stock)[1] == 67420) {
@@ -62,32 +61,24 @@ calc_NPI_NDC <- function(policyregions = "iso",
   getNames(forest_stock) <- "forest"
 
   # Load potential forest area at cell level, align items with land_stock
-  # convention, then aggregate to country level for the affexp math.
+  # convention, then aggregate to country level for the affexp calculation.
   # The cell-level copy (potential_forest_cell) is kept for the disaggregation 
   # weight further down.
   potential_forest_cell <- read.magpie(potential_forest_file)
 
-  if (dim(potential_forest_cell)[1] == 59199) {
-    getItems(potential_forest_cell, dim = 1, raw = TRUE) <- 
-      paste(pol_mapping$policyregions, 1:59199, sep = ".")
-    rel_pot <- data.frame(
-      from = getItems(potential_forest_cell, dim = 1),
-      to   = pol_mapping$policyregions,
-      stringsAsFactors = FALSE
-    )
-  } else {
-    coords <- getCoords(potential_forest_cell)
-    names(coords) <- c("lon", "lat")
-    m <- merge(coords, pol_mapping, sort = FALSE)
-    getItems(potential_forest_cell, dim = "iso") <- m$policyregions
-    lon <- sub(".", "p", pol_mapping$lon, fixed = TRUE)
-    lat <- sub(".", "p", pol_mapping$lat, fixed = TRUE)
-    rel_pot <- data.frame(
-      from = paste(lon, lat, pol_mapping$policyregions, sep = "."),
-      to   = pol_mapping$policyregions,
-      stringsAsFactors = FALSE
-    )
-  }
+
+  coords <- getCoords(potential_forest_cell)
+  names(coords) <- c("lon", "lat")
+  m <- merge(coords, pol_mapping, sort = FALSE)
+  getItems(potential_forest_cell, dim = "iso") <- m$policyregions
+  lon <- sub(".", "p", pol_mapping$lon, fixed = TRUE)
+  lat <- sub(".", "p", pol_mapping$lat, fixed = TRUE)
+  rel_pot <- data.frame(
+    from = paste(lon, lat, pol_mapping$policyregions, sep = "."),
+    to   = pol_mapping$policyregions,
+    stringsAsFactors = FALSE
+  )
+
   potential_forest <- madrat::toolAggregate(potential_forest_cell, rel_pot)
   getNames(potential_forest) <- "pot_forest"
 
@@ -202,8 +193,10 @@ calc_NPI_NDC <- function(policyregions = "iso",
 
   adfiles <- paste0(outfolder_ad_aolc, out_ad_file)
   write.magpie(floor(ad_aolc_pol*1e6)/1e6, adfiles[1])
-  if (length(adfiles) > 1) for (i in 2:length(adfiles)) file.copy(adfiles[1],adfiles[i], overwrite=TRUE)
-  cat(paste0(" (time elapsed: ",format(proc.time()["elapsed"]-ptm,width=6,nsmall=2,digits=2),"s)\n"))
+  if (length(adfiles) > 1) {
+    for (i in 2:length(adfiles)) file.copy(adfiles[1],adfiles[i], overwrite=TRUE)
+  }
+  cat(paste0(" (time elapsed: ", format(proc.time()["elapsed"]-ptm, width = 6, nsmall = 2, digits = 2), "s)\n"))
 
   addline("")
   addline("##----------------------------------------------------------------------------")
@@ -270,10 +263,10 @@ calc_NPI_NDC <- function(policyregions = "iso",
                               - setYears(forest_now_cell[, tail(getYears(forest_now_cell), 1), ], NULL), 0) + 1e-10
 
     affexp <- calc_policy(affexp_def, forest_stock, pol_type = "affexp",
-                          pol_mapping   = pol_mapping,
+                          pol_mapping     = pol_mapping,
                           potential_stock = potential_forest,
-                          weight        = affexp_weight,
-                          map_file      = map_file)
+                          weight          = affexp_weight,
+                          map_file        = map_file)
     getNames(affexp) <- "affexp"
 
     # Build affexp on top of npi_aff baseline, mirroring how ndc_aff uses npi_aff:
@@ -347,11 +340,7 @@ calc_policy <- function(policy, stock, pol_type="aff", pol_mapping=pol_mapping,
   #set stock to zero or Inf for countries without policies
   # (representing no constraint for min and max constraints)
   if (pol_type == "ad") {
-    if(dim(stock)[1] == 59199) {
-      stock[!(sub("\\..*$", "", getCells(stock)) %in% policy_countries),,] <- 0
-    } else {
-      stock[!(getItems(stock, "iso", full = TRUE) %in% policy_countries),,] <- 0
-    }
+    stock[!(getItems(stock, "iso", full = TRUE) %in% policy_countries),,] <- 0
     #calculate flows
     flow <- calc_flows(stock)
     #account only for positive flows, i.e. deforestation
@@ -363,19 +352,12 @@ calc_policy <- function(policy, stock, pol_type="aff", pol_mapping=pol_mapping,
   stock_country <- NULL
   tperiods      <- NULL
   if (pol_type == "affexp") {
-    if (dim(stock)[1] == 59199) {
-      rel_stock <- data.frame(
-        from = paste(pol_mapping$policyregions, 1:59199, sep = "."),
-        to   = pol_mapping$policyregions,
-        stringsAsFactors = FALSE)
-    } else {
-      lon <- sub(".", "p", pol_mapping$lon, fixed = TRUE)
-      lat <- sub(".", "p", pol_mapping$lat, fixed = TRUE)
-      rel_stock <- data.frame(
-        from = paste(lon, lat, pol_mapping$policyregions, sep = "."),
-        to   = pol_mapping$policyregions,
-        stringsAsFactors = FALSE)
-    }
+    lon <- sub(".", "p", pol_mapping$lon, fixed = TRUE)
+    lat <- sub(".", "p", pol_mapping$lat, fixed = TRUE)
+    rel_stock <- data.frame(
+      from = paste(lon, lat, pol_mapping$policyregions, sep = "."),
+      to   = pol_mapping$policyregions,
+      stringsAsFactors = FALSE)
     stock_country <- madrat::toolAggregate(stock, rel_stock)
  
     # Extend potential_stock with constant fill if its time axis is shorter than tp.
@@ -467,21 +449,15 @@ calc_policy <- function(policy, stock, pol_type="aff", pol_mapping=pol_mapping,
 }
 
   #calculate the reduction target in absolute numbers / dissagregate to cells
-  if (dim(pol_mapping)[1] == 59199) {
-    rel <- data.frame(
-      from = pol_mapping$policyregions,
-      to = paste(pol_mapping$policyregions, 1:59199, sep = "."),
-      stringsAsFactors = FALSE)
-    countryCell <- paste(pol_mapping$iso, 1:59199, sep = ".")
-  } else {
-    lon <- sub(".", "p", pol_mapping$lon, fixed = TRUE)
-    lat <- sub(".", "p", pol_mapping$lat, fixed = TRUE)
-    rel <- data.frame(
-      from = pol_mapping$policyregions,
-      to = paste(lon, lat, pol_mapping$policyregions, sep = "."),
-      stringsAsFactors = FALSE)
-    countryCell <- paste(lon, lat, pol_mapping$iso, sep = ".")
-  }
+  
+  lon <- sub(".", "p", pol_mapping$lon, fixed = TRUE)
+  lat <- sub(".", "p", pol_mapping$lat, fixed = TRUE)
+  rel <- data.frame(
+    from = pol_mapping$policyregions,
+    to = paste(lon, lat, pol_mapping$policyregions, sep = "."),
+    stringsAsFactors = FALSE)
+  countryCell <- paste(lon, lat, pol_mapping$iso, sep = ".")
+  
   if (pol_type == "aff" || pol_type == "affexp") {
     magpie_policy <- madrat::toolAggregate(x = magpie_policy, rel = rel, weight = weight)
   } else if (pol_type == "ad") {
