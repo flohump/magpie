@@ -33,17 +33,6 @@ q21_trade_reg(h2,k_trade)..
                               sum(ct, f21_trade_export_balanceflow(ct, i2, k_trade)) +
                               sum(ct, f21_trade_regional_balanceflow(ct, i2, k_trade)));
 
-*' Regional production upper bound: production within a super-region must not exceed the material balance
-*' requirement (supply minus imports plus exports, adjusted by balance flows) plus a soft slack variable
-*' v21_excess_prod. This mirrors the structure of q21_trade_upper and prevents phantom overproduction
-*' when the lower-bound constraint q21_trade_reg is non-binding. The slack is penalised via
-*' q21_cost_trade_feasibility to drive it to zero under normal conditions.
-q21_trade_reg_up(h2,k_trade)..
- sum(supreg(h2, i2), vm_prod_reg(i2, k_trade)) =l= sum(supreg(h2,i2), vm_supply(i2, k_trade) -
-                              sum(i_ex, v21_trade(i_ex, i2, k_trade))  + sum(i_im, v21_trade(i2, i_im, k_trade)) +
-                              sum(ct, f21_trade_export_balanceflow(ct, i2, k_trade)) +
-                              sum(ct, f21_trade_regional_balanceflow(ct, i2, k_trade)))
- + v21_excess_prod(h2, k_trade);
 
 *' For non-tradable commodities, the regional supply should be larger or equal to the regional demand.
  q21_notrade(h2,k_notrade)..
@@ -107,5 +96,4 @@ q21_costs_margins(i2,k_trade)..
 
  q21_cost_trade_feasibility(i2)..
  vm_cost_trade_feasibility(i2) =g=
- sum((i_im,k_trade), v21_import_for_feasibility(i2,i_im,k_trade) * s21_cost_import)
- + sum((supreg(h2,i2),k_trade), v21_excess_prod(h2,k_trade) * s21_cost_import);
+ sum((i_im,k_trade), v21_import_for_feasibility(i2,i_im,k_trade) * s21_cost_import);
