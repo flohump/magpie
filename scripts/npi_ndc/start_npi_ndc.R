@@ -241,7 +241,7 @@ calc_NPI_NDC <- function(policyregions = "iso",
   none_aff_pol <- npi_aff
   none_aff_pol[] <- 0
   getNames(none_aff_pol) <- "none"
-  cat(paste0(" (time elapsed: ",format(proc.time()["elapsed"]-ptm,width=6,nsmall=2,digits=2),"s)\n"))
+  cat(paste0(" (time elapsed: ", format(proc.time()["elapsed"] - ptm, width = 6, nsmall = 2, digits = 2), "s)\n"))
 
   addline("")
   addline("##----------------------------------------------------------------------------")
