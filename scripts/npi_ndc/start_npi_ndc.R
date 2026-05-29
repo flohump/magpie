@@ -49,11 +49,7 @@ calc_NPI_NDC <- function(policyregions = "iso",
   
   # select map_file if more than one has been found
   if (length(map_file) > 1) {
-    if (dim(land_stock)[1] == 67420) {
-      map_file <- grep("67420", map_file, value = TRUE)
-    } else {
-      map_file <- grep("67420", map_file, value = TRUE, invert = TRUE)
-    }
+    map_file <- grep("67420", map_file, value = TRUE, invert = TRUE)
   }
   stopifnot(length(map_file) == 1)
 
