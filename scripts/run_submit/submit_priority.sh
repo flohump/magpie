@@ -8,4 +8,4 @@
 #SBATCH --mem-per-cpu=5G
 #SBATCH --time=24:00:00
 
-Rscript submit.R
+apptainer exec /p/tmp/pascalfu/piam-apptainer/piam.sif Rscript submit.R
