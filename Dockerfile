@@ -63,7 +63,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     pandoc \
     # Other utilities
     ca-certificates \
+    # basic LaTeX tools
+    texlive-latex-recommended \
     && rm -rf /var/lib/apt/lists/*
+
+# Install basic latex packages
+RUN tlmgr init-usertree && \
+  tlmgr option repository https://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/2023/tlnet-final && \
+  tlmgr install sourcesanspro sourcecodepro pagecolor framed
 
 # Install GAMS
 # Note: GAMS requires a license file. This downloads GAMS but you need to provide your own license.
