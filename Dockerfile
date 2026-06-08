@@ -99,7 +99,6 @@ ENV PATH="${GAMS_PATH}:${PATH}"
 
 # Set up R package manager pak
 ENV RSPM='https://packagemanager.posit.co/cran/__linux__/noble/latest'
-ENV RENV_CONFIG_REPOS_OVERRIDE='https://packagemanager.posit.co/cran/__linux__/noble/latest'
 RUN <<EOF 
 echo "options(repos = c(pikpiam = 'https://pik-piam.r-universe.dev',
                         CRAN = Sys.getenv('RSPM')))" > ~/.Rprofile
