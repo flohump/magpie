@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **scripts/start/extra/ipopt.R** Start script for solving MAgPIE with IPOPT.
 - **Dockerfile** Re-added a Dockerfile, which can be used to build a local docker image as well as a GH codespace
 - **.devcontainer/devcontainer.json** A new configuration for development containers, which allow for reproducible, prepared development environments
+- **scripts** added $RSCRIPT_SLURM_HOOK to run on slurm compute nodes via apptainer
 
 ### removed
 -
