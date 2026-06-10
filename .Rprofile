@@ -20,7 +20,9 @@ options(renv.config.synchronized.check = FALSE,
 
 source("renv/activate.R")
 
-options(repos = unique(c(getOption("repos"), pikpiam = "https://pik-piam.r-universe.dev", pik = "https://rse.pik-potsdam.de/r/packages")))
+# unique strips names which breaks renv, so use duplicated
+options(repos = c(getOption("repos"), pikpiam = "https://pik-piam.r-universe.dev", pik = "https://rse.pik-potsdam.de/r/packages"))
+options(repos = getOption("repos")[!duplicated(getOption("repos"))])
 
 # bootstrapping, will only run once after this repo is freshly cloned
 if (isTRUE(rownames(installed.packages(priority = "NA")) == "renv")) {
