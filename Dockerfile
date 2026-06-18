@@ -63,7 +63,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     pandoc \
     # Other utilities
     ca-certificates \
+    # basic LaTeX tools
+    texlive-latex-recommended \
     && rm -rf /var/lib/apt/lists/*
+
+# Install basic latex packages
+RUN tlmgr init-usertree && \
+  tlmgr option repository https://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/2023/tlnet-final && \
+  tlmgr install sourcesanspro sourcecodepro pagecolor framed
 
 # Install GAMS
 # Note: GAMS requires a license file. This downloads GAMS but you need to provide your own license.
@@ -92,7 +99,6 @@ ENV PATH="${GAMS_PATH}:${PATH}"
 
 # Set up R package manager pak
 ENV RSPM='https://packagemanager.posit.co/cran/__linux__/noble/latest'
-ENV RENV_CONFIG_REPOS_OVERRIDE='https://packagemanager.posit.co/cran/__linux__/noble/latest'
 RUN <<EOF 
 echo "options(repos = c(pikpiam = 'https://pik-piam.r-universe.dev',
                         CRAN = Sys.getenv('RSPM')))" > ~/.Rprofile
