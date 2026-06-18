@@ -35,7 +35,7 @@ gms$s42_irrig_eff_scenario;2;3;3
 gms$c42_env_flow_policy;on;on;on
 gms$s42_efp_targetyear;2050;2050;2050
 gms$s44_bii_target;0.7;0;0.7 
-gms$c44_bii_decrease;1;1;1
+gms$c44_bii_decrease;0;1;0
 gms$s44_start_year;2030;2030;2030
 gms$c50_scen_neff;baseeff_add3_add10_add20_max75;baseeff_add3_add15_add25_max75;baseeff_add3_add15_add25_max75
 gms$c55_scen_conf;ssp1;ssp1;ssp1
