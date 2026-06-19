@@ -41,4 +41,4 @@ gms$c50_scen_neff;baseeff_add3_add10_add20_max75;baseeff_add3_add15_add25_max75;
 gms$c55_scen_conf;ssp1;ssp1;ssp1
 gms$c60_1stgen_biodem;const2020;phaseout2020;phaseout2020
 gms$c60_res_2ndgenBE_dem;ssp2;sdp;sdp
-gms$c70_feed_scen;ssp2;ssp1;ssp1
+gms$c70_feed_scen;ssp2;ssp2;ssp2
