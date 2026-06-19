@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **renv/activate.R** updated to version 1.2.2
 
 ### added
+- **sceanrio_config_susmip.csv** A set of sceanrio for the SusMIP excercise in the PRISMA project
 - **calc_npi_ndc.R** New policy, AFFEXP, on defining afforestation targets based on the share of potential forest land and speed of afforestation.
 - **80_optimization/nlp_ipopt** New realization, using IPOPT instead of CONOPT4 (and the fallback CONOPT3) as the NLP solver for the MAgPIE model.
 - **scripts/start/extra/ipopt.R** Start script for solving MAgPIE with IPOPT.
