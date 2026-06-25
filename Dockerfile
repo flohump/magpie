@@ -101,9 +101,7 @@ ENV PATH="${GAMS_PATH}:${PATH}"
 ENV RSPM='https://packagemanager.posit.co/cran/__linux__/noble/latest'
 RUN echo "options(repos = c(pikpiam = 'https://pik-piam.r-universe.dev', CRAN = Sys.getenv('RSPM')))" > $HOME/.Rprofile
 
-RUN Rscript -e 'install.packages("pak")'
-#RUN Rscript -e 'pak::pkg_install("languageserver")'
-RUN Rscript -e 'install.packages("languageserver")'
+RUN Rscript -e 'install.packages("pak"); pak::pkg_install("languageserver")'
 
 # Set working directory
 WORKDIR /opt/magpie
