@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - just testing for the workshop
 
 ### added
+- **scenario_config_susmip.csv** A set of sceanrios for the SusMIP excercise in the PRISMA project
 - **calc_npi_ndc.R** New policy, AFFEXP, on defining afforestation targets based on the share of potential forest land and speed of afforestation.
 - **80_optimization/nlp_ipopt** New realization, using IPOPT instead of CONOPT4 (and the fallback CONOPT3) as the NLP solver for the MAgPIE model.
 - **scripts/start/extra/ipopt.R** Start script for solving MAgPIE with IPOPT.
@@ -20,7 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **scripts** added $RSCRIPT_SLURM_HOOK to run on slurm compute nodes via apptainer
 
 ### removed
--
+- **scripts/projects/fsec.R** Removed FSEC_nitrogenPollution (grid-level nitrogen pollution downscaling) from the FSEC run output pipeline.
 
 ### fixed
 - **21_trade** Bugfix and refinement of bilateral trade realization to avoid infeasibiliteis in SSP4 and SSP5.
