@@ -1,11 +1,10 @@
 on:
   push:
-    branches: [master]
-  workflow_dispatch:
+    branches: [develop]
+    paths:
+      - 'Dockerfile'
 
 name: build-magpie-image
-
-permissions: read-all
 
 jobs:
   build:
