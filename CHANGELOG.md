@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **scripts** saveToResultsArchive saves to inbox folder if available
 - **renv/activate.R** updated to version 1.2.3
 - **CI** test-code.yaml: use ubuntu-latest and checkout@v7
+- **Makefile** `make reset-renv` resets renv
+- **.Rprofile** add r-universe repo, use envvars if present
 
 ### added
 - **scenario_config_susmip.csv** A set of sceanrios for the SusMIP excercise in the PRISMA project
