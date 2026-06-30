@@ -137,17 +137,6 @@ RUN echo "Verifying installations..." && \
 
 ENV MAGPIE_IMAGE_VERSION="2.0"
 
-# can be removed once we have https://github.com/magpiemodel/magpie/pull/884 in master
-RUN printf "\
-  - som\n\
-  - ssp1\n\
-  - ssp2\n\
-  - ssp3\n\
-  - ssp4\n\
-  - ssp5\n\
-  - sdp\n\
-  - default\n" >> .codeCheck
-
 # Default command: Start MAgPIE interactively
 # Users can run: docker run -it magpie
 # Or specify a run script: docker run magpie Rscript start.R default direct
