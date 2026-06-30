@@ -1,4 +1,4 @@
-.PHONY: help docs update-renv update-renv-all archive-renv restore-renv check check-fix start output
+.PHONY: help docs update-renv update-renv-all archive-renv restore-renv reset-renv check check-fix start output
 .DEFAULT_GOAL := help
 
 # extracts the help text and formats it nicely
@@ -29,6 +29,11 @@ archive-renv: ## Write renv.lock to archive.
 restore-renv: ## Restore renv to the state described in interactively
               ## selected renv.lock from the archive or a run folder.
 	Rscript -e 'piamenv::restoreRenv()'
+
+reset-renv: ## reset renv to state of a freshly cloned repo
+	chmod +w -R renv
+	rm -r renv
+	git restore renv
 
 check: ## Check if the GAMS code follows the coding etiquette
        ## using gms::codeCheck.

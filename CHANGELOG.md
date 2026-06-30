@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **scripts** saveToResultsArchive saves to inbox folder if available
 - **renv/activate.R** updated to version 1.2.3
 - **CI** test-code.yaml: use ubuntu-latest and checkout@v7
+- **Makefile** `make reset-renv` resets renv
+- **.Rprofile** add r-universe repo, use envvars if present
 
 ### added
 - **scenario_config_susmip.csv** A set of sceanrios for the SusMIP excercise in the PRISMA project
@@ -24,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **scripts/projects/fsec.R** Removed FSEC_nitrogenPollution (grid-level nitrogen pollution downscaling) from the FSEC run output pipeline.
 
 ### fixed
+- **59_som** Carry the soil carbon stock (`pcm_carbon_stock(...,"soilc",...)`) forward each timestep in `postsolve` (both `cellpool_jan23` and `static_jan19`), so the soil term in `vm_emissions_reg` (`q52_emis_co2_actual`) is a per-timestep flux instead of a cumulative-since-initialisation change.
 - **21_trade** Bugfix and refinement of bilateral trade realization to avoid infeasibiliteis in SSP4 and SSP5.
 
 
