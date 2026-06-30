@@ -1,14 +1,15 @@
 on:
   push:
-    branches: [master]
-  workflow_dispatch:
+    branches: [develop]
+    paths:
+      - 'Dockerfile'
+  workflow_dispatch: # need empty workflow_dispatch so we can manually trigger in web ui
 
 name: build-magpie-image
 
-permissions: read-all
-
 jobs:
   build:
+    if: github.repository == 'magpiemodel/magpie'
     runs-on: ubuntu-latest
     permissions:
       contents: read
