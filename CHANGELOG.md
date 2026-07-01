@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **CI** test-code.yaml: use ubuntu-latest and checkout@v7
 - **Makefile** `make reset-renv` resets renv
 - **.Rprofile** add r-universe repo, use envvars if present
+- **Dockerfile** now based on ubuntu 26.04, R 4.6, gams 54.1
 
 ### added
 - **scenario_config_susmip.csv** A set of sceanrios for the SusMIP excercise in the PRISMA project
