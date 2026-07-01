@@ -258,11 +258,12 @@ Sys.chmod(iniLock, mode = "0664")
   submitFile <- file.path(dirProject, "run_submit", paste0("submit_seals_", title, ".sh"))
 
   # Check job status if dependsID is provided
-  useDependency <- inputDataExists <- FALSE
+  useDependency <- FALSE
+  inputDataExists <- FALSE
   if (!is.null(dependsID)) {
     # check if job is still in SLURM memory using scontrol
     scontrolCheck <- system(paste("scontrol show job", dependsID),
-                           intern = TRUE, ignore.stderr = TRUE)
+                            intern = TRUE, ignore.stderr = TRUE)
 
     if (length(scontrolCheck) > 0 && !any(grepl("Invalid job id", scontrolCheck))) {
       # Job is still in SLURM memory - use dependency
@@ -270,16 +271,17 @@ Sys.chmod(iniLock, mode = "0664")
     } else {
       # Job purged from SLURM memory - check completion status with sacct
       sacctCheck <- system(paste("sacct -j", dependsID, "-o State -n -X"),
-                          intern = TRUE, ignore.stderr = TRUE)
+                           intern = TRUE, ignore.stderr = TRUE)
       if (length(sacctCheck) > 0) {
         jobState <- trimws(sacctCheck[1])
         if (jobState == "COMPLETED") {
           inputDataExists <- TRUE
         } else {
-          stop(paste("Initial data preparation run (Job ID:", dependsID, ") did not complete successfully. Status:", jobState))
+          stop("Initial data preparation run (Job ID: ",
+               dependsID, ") did not complete successfully. Status: ", jobState)
         }
       } else {
-        stop(paste("Could not find initial data preparation run (Job ID:", dependsID, ") in SLURM history"))
+        stop("Could not find initial data preparation run (Job ID: ", dependsID, ") in SLURM history")
       }
     }
   }
