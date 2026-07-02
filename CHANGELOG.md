@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### fixed
 - **59_som** Carry the soil carbon stock (`pcm_carbon_stock(...,"soilc",...)`) forward each timestep in `postsolve` (both `cellpool_jan23` and `static_jan19`), so the soil term in `vm_emissions_reg` (`q52_emis_co2_actual`) is a per-timestep flux instead of a cumulative-since-initialisation change.
 - **21_trade** Bugfix and refinement of bilateral trade realization to avoid infeasibiliteis in SSP4 and SSP5.
+- **09_drivers**, **14_yields**, **15_food** Minor stylistic improvements to GAMS code corresponding to new gms::codeCheck version.
 
 
 ## [4.14.0] - 2026-05-05
