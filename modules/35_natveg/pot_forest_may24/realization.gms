@@ -27,12 +27,11 @@
 *' for woodfuel.
 
 *'
-*' @limitations Initialization of both primary and secondary forest in highest
-*' age class or equal distrivution of such areas in all age classes. Data exists
-*' on a more emperically obtained distribution in different age classes based
-*' on satellite data but this results is highly negative land-use change emissions.
-*' Inclusion of this data in MAgPIE remains work in progess and is not available for release yet.
-*' Additionally, in this module realization, harvested secondary forest stays
+*' @limitations The satellite age-class data (module [28_ageclass]) contain a large share of very
+*' young secondary forest whose regrowth MAgPIE would over-credit, because disturbances that keep this
+*' forest young in reality (shifting cultivation, fire, small-scale clearing) are not represented
+*' explicitly. To avoid this, the youngest secondary-forest age classes are initialised with the area
+*' of the ~35-year class. Additionally, in this module realization, harvested secondary forest stays
 *' secondary forest and harvested primary forest is reclassified as secondary forest.
 
 *####################### R SECTION START (PHASES) ##############################

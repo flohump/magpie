@@ -34,18 +34,24 @@ fm_carbon_density(t_all,j,land_forest,c_pools)$(fm_carbon_density(t_all,j,land_f
 * fm_carbon_density does not provide meaningful numbers for urban.
 fm_carbon_density(t_all,j,"urban","soilc") = fm_carbon_density(t_all,j,"other","soilc")
 
+*' The forest growth-curve (Chapman-Richards k,m) parameters are read from f52_growth_par_3curve.csv,
+*' which provides one curve for each of the three forest types along the FRA continuum: naturally
+*' regenerating forest ("natveg", from Robinson et al 2025), other planted forest ("other_planted", an
+*' intermediate curve between naturally regenerating forest and plantations), and plantations
+*' ("plantations", from Bukoski et al 2022, m=0.67; this curve has no establishment lag and therefore
+*' uses the external rotation f32_plant_rotation).
+
 parameter f52_growth_par(clcl,chap_par,forest_type) Parameters for chapman-richards equation (1)
 /
 $ondelim
-$include "./modules/52_carbon/input/f52_growth_par.csv"
+$include "./modules/52_carbon/input/f52_growth_par_3curve.csv"
 $offdelim
 /
 ;
 
 scalars
-  s52_growingstock_calib Switch for growing stock calibration of secdforest growth curves 1=on 0=off (1) / 1 /
-  s52_k_high_secdf       Upper bound for secdforest k bisection - kept low because FRA NRF growing stock is below LPJmL potential in most regions (1) / 0.1 /
-  s52_k_high_plant       Upper bound for plantation k bisection - slightly higher than secdf because plantations can exceed natural growth rates (1) / 0.15 /
+  s52_growingstock_calib Switch for growing stock wood-multiplier (lambda) calibration to FRA - secdforest and plantations 1=on 0=off (1) / 1 /
+  s52_gs_niche_floor     Niche floor on mature secdforest veg carbon for the WOOD conversion only - lifts arid divide-by-near-zero cells 0=off (tC per ha) / 15 /
 ;
 
 parameter f52_fra_nrf_gs(i) FRA growing stock target for naturally regenerating forests (m3 per ha)
