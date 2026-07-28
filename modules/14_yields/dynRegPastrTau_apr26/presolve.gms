@@ -57,25 +57,36 @@ im_growing_stock(t,j,ac,"other") =
     )
     ;
 
-*' Growing stock for young secondary forest (youngsecdf) regrowing on other land.
-*' It is derived from the *uncalibrated* secondary-forest carbon curve (the same
-*' curve youngsecdf carbon uses in 35_natveg), with the secondary-forest aboveground
-*' fraction, so that its wood yield and its carbon stock are consistent.
-im_growing_stock_ysf(t,j,ac) =
-    (
-     pm_carbon_density_secdforest_ac_uncalib(t,j,ac,"vegc")
+*' @stop
+
+** Wood-only niche floor (module 52): lift arid low-asymptote cells' harvestable growing stock
+** consistently with the m52 lambda denominator so lambda stays FRA-exact; carbon untouched. 0=off.
+im_growing_stock(t,j,ac,"forestry")   = im_growing_stock(t,j,ac,"forestry")   * pm_gs_niche_fac(j);
+im_growing_stock(t,j,ac,"secdforest") = im_growing_stock(t,j,ac,"secdforest") * pm_gs_niche_fac(j);
+
+** Wood-only FRA calibration: scale the harvestable growing stock by the per-region
+** multiplier from module 52 so that reported wood matches the FRA target. Carbon density
+** is NOT touched here. Applied BEFORE the floors below so they act on calibrated wood.
+** forestry uses the plantation multiplier, secdforest the natural-forest multiplier;
+** primforest and other are deliberately left unscaled (never FRA-calibrated).
+im_growing_stock(t,j,ac,"forestry")   = im_growing_stock(t,j,ac,"forestry")   * sum(cell(i,j), pm_lambda_pla(i));
+im_growing_stock(t,j,ac,"secdforest") = im_growing_stock(t,j,ac,"secdforest") * sum(cell(i,j), pm_lambda_nrf(i));
+
+** Other-planted forest wood: the secdforest (natveg) conversion chain on the
+** other_planted carbon curve, sharing the natural-forest wood multiplier pm_lambda_nrf (no FRA other-planted
+** GS target exists). Dedicated param (not a land_timber element -> other_planted lives inside forestry, not
+** in `land`).
+im_growing_stock_oplant(t,j,ac) =
+    ( pm_carbon_density_other_planted_ac(t,j,ac,"vegc")
      / sm_carbon_fraction
      * fm_aboveground_fraction("secdforest")
-     / sum(clcl, pm_climate_class(j,clcl) * fm_ipcc_bef(clcl))
-    )
-    ;
-
-*' @stop
+     / sum(clcl, pm_climate_class(j,clcl) * fm_ipcc_bef(clcl)) )
+    * pm_gs_niche_fac(j)
+    * sum(cell(i,j), pm_lambda_nrf(i));
+** managed pool -> positive floor like "forestry" (NOT the land_natveg minimum-GS zeroing).
+im_growing_stock_oplant(t,j,ac)$(im_growing_stock_oplant(t,j,ac) <= 0) = 0.0001;
 
 ** Hard constraint to always have a positive number in im_growing_stock
 im_growing_stock(t,j,ac,land_timber) = im_growing_stock(t,j,ac,land_timber)$(im_growing_stock(t,j,ac,land_timber) > 0) + 0.0001$(im_growing_stock(t,j,ac,land_timber) = 0);
 ** Set growing stock to 0 where it does not exceed a minimum for harvest
 im_growing_stock(t,j,ac,land_natveg)$(im_growing_stock(t,j,ac,land_natveg) < s14_minimum_growing_stock) = 0;
-** Apply the same positivity and minimum-growing-stock clamps to the youngsecdf growing stock
-im_growing_stock_ysf(t,j,ac) = im_growing_stock_ysf(t,j,ac)$(im_growing_stock_ysf(t,j,ac) > 0) + 0.0001$(im_growing_stock_ysf(t,j,ac) = 0);
-im_growing_stock_ysf(t,j,ac)$(im_growing_stock_ysf(t,j,ac) < s14_minimum_growing_stock) = 0;
