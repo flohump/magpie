@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### changed
+- **52_carbon** Forest carbon growth curves are now observation-based (naturally regenerating: Robinson et al. 2025; plantations: Bukoski et al. 2022; other planted: derived from naturally regenerating) instead of the modelled Braakhekke et al. 2019 curves. The carbon growth curve is separated from the FRA growing-stock (timber) calibration: one realistic carbon curve for all forest, with wood matched to the FRA target by a per-region multiplier on the harvestable growing stock. New switch `c52_growth_par_source` (default `refit`) keeps the legacy Braakhekke curves selectable (`braakhekke`; other planted then falls back to naturally regenerating).
+- **28_ageclass** New default forest age-class source GAMI (Besnard et al. 2024, satellite-derived global forest age); GFAD remains selectable via `c28_ageclass_source`.
+- **32_forestry** Cleaned up the forestry module: the plantation rotation now comes solely from the external per-Köppen rotation table, retiring the curve-derived rotation machinery (CAI/MAI/Faustmann) and the associated unused parameters and switches.
+- **56_ghg_policy** Default `s56_minimum_cprice` set to 0 (was 3.67 USD/tC), which had suppressed historical deforestation; the emission jumps it dampened are now handled in reporting by the magpie4 legacy land-clearing reframe.
+- **56_ghg_policy/60_bioenergy** Added the R36M414 coupled REMIND-MAgPIE scenarios to the GHG-price and 2nd-generation bioenergy-demand scenario sets.
+- **inputdata** updated to rev4.133 (FRA2025 forest data, three-curve growth parameters, GAMI forest ages, R36M414 coupled scenarios)
 - **inputdata** updated input data to rev4.132, added f14_yld_past_switch.csv
 - **scripts** saveToResultsArchive saves to inbox folder if available
 - **renv/activate.R** updated to version 1.2.3
@@ -16,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Dockerfile** now based on ubuntu 26.04, R 4.6, gams 54.1
 
 ### added
+- **32_forestry** Other-planted forest as its own harvestable pool with its own growth curve, matching the FRA 2025 taxonomy (naturally regenerating / other planted / plantation). Reported as `Planted Forest|+|Timber` and `Planted Forest|+|Other Planted`. Plantation rotation read from an external per-Köppen-zone table (`f32_plant_rotation.cs4`).
 - **scenario_config_susmip.csv** A set of sceanrios for the SusMIP excercise in the PRISMA project
 - **calc_npi_ndc.R** New policy, AFFEXP, on defining afforestation targets based on the share of potential forest land and speed of afforestation.
 - **14_yields/dynRegPastrTau_apr26** New realization, allows changing tau factor spillover to pastures by region and timestep.
@@ -28,10 +35,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **22_land_conservation** new options for IPLC land conservation
 
 ### removed
+- **52_carbon/35_natveg/32_forestry** Retired workarounds that are no longer needed once the wood calibration is separated from the carbon growth curve: the k-bisection growth-curve calibration, the "natural-origin" secondary-forest carbon blend and harvest floor, and the young-secondary-forest wood-harvest loophole.
 - **scripts/projects/fsec.R** Removed FSEC_nitrogenPollution (grid-level nitrogen pollution downscaling) from the FSEC run output pipeline.
 
 ### fixed
-- **35_natveg/14_yields** Fix `youngsecdf` wood production: derive its growing stock (`im_growing_stock_ysf`) from the *uncalibrated* secondary-forest carbon curve — the same curve its carbon density uses — instead of the FRA-2025-calibrated `im_growing_stock(...,"secdforest")`. Previously young secondary forest on other land yielded calibrated (high) wood volumes while booking uncalibrated (low) carbon, letting the optimiser evade land-CO2 caps/prices by relocating wood harvest onto `youngsecdf`. Result-changing for scenarios with land-CO2 pricing or AFOLU caps; explains the "other-land wood harvest" anomaly flagged under PR #876's Known limitations.
 - **59_som** Carry the soil carbon stock (`pcm_carbon_stock(...,"soilc",...)`) forward each timestep in `postsolve` (both `cellpool_jan23` and `static_jan19`), so the soil term in `vm_emissions_reg` (`q52_emis_co2_actual`) is a per-timestep flux instead of a cumulative-since-initialisation change.
 - **21_trade** Bugfix and refinement of bilateral trade realization to avoid infeasibiliteis in SSP4 and SSP5.
 - **09_drivers**, **14_yields**, **15_food** Minor stylistic improvements to GAMS code following capitalization consistency rules in `gms::codeCheck`.
