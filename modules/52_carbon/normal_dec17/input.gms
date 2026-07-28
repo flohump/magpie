@@ -34,20 +34,33 @@ fm_carbon_density(t_all,j,land_forest,c_pools)$(fm_carbon_density(t_all,j,land_f
 * fm_carbon_density does not provide meaningful numbers for urban.
 fm_carbon_density(t_all,j,"urban","soilc") = fm_carbon_density(t_all,j,"other","soilc")
 
-*' The forest growth-curve (Chapman-Richards k,m) parameters are read from f52_growth_par_3curve.csv,
-*' which provides one curve for each of the three forest types along the FRA continuum: naturally
-*' regenerating forest ("natveg", from Robinson et al 2025), other planted forest ("other_planted", an
-*' intermediate curve between naturally regenerating forest and plantations), and plantations
-*' ("plantations", from Bukoski et al 2022, m=0.67; this curve has no establishment lag and therefore
-*' uses the external rotation f32_plant_rotation).
+*' The forest growth-curve (Chapman-Richards k,m) parameters are read per forest type. With
+*' c52_growth_par_source = refit (default) they come from f52_growth_par_3curve.csv: naturally
+*' regenerating forest ("natveg", Robinson et al 2025), other planted forest ("other_planted", an
+*' intermediate curve between naturally regenerating forest and plantations) and plantations
+*' ("plantations", Bukoski et al 2022, m=0.67; no establishment lag, uses the external rotation
+*' f32_plant_rotation). With c52_growth_par_source = braakhekke the legacy curves (Braakhekke et al
+*' 2019) are used instead; they have no other_planted curve, so other_planted falls back to natveg.
+
+$setglobal c52_growth_par_source  refit
+* options: refit (default), braakhekke
 
 parameter f52_growth_par(clcl,chap_par,forest_type) Parameters for chapman-richards equation (1)
 /
 $ondelim
+$ifthen "%c52_growth_par_source%" == "braakhekke"
+$include "./modules/52_carbon/input/f52_growth_par.csv"
+$else
 $include "./modules/52_carbon/input/f52_growth_par_3curve.csv"
+$endif
 $offdelim
 /
 ;
+
+* legacy Braakhekke curves carry no other_planted type -> fall back to naturally regenerating forest
+$ifthen "%c52_growth_par_source%" == "braakhekke"
+f52_growth_par(clcl,chap_par,"other_planted") = f52_growth_par(clcl,chap_par,"natveg");
+$endif
 
 scalars
   s52_growingstock_calib Switch for growing stock wood-multiplier (lambda) calibration to FRA - secdforest and plantations 1=on 0=off (1) / 1 /
