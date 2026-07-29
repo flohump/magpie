@@ -390,11 +390,14 @@ farea_hr <- madrat::toolAggregate(farea_shr, map_file, to = "cell") * setNames(l
 # check
 if (abs(sum(dimSums(farea_hr, dim = 3) - setNames(land_split_hr[, , "forestry"], NULL), na.rm = T)) > 0.1) warning("large Difference in forestry disaggregation detected!")
 # rename
-df <- data.frame(matrix(nrow = 3, ncol = 2))
+df <- data.frame(matrix(nrow = 4, ncol = 2))
 names(df) <- c("internal", "output")
 df[1, ] <- c("aff", "PlantedForest_Afforestation")
 df[2, ] <- c("ndc", "PlantedForest_NPiNDC")
 df[3, ] <- c("plant", "PlantedForest_Timber")
+# other planted forest is a separate forestry pool; for the gridded land split it is
+# folded into the "other planted" (NPiNDC) category, consistent with develop
+df[4, ] <- c("other_planted", "PlantedForest_NPiNDC")
 farea_hr <- madrat::toolAggregate(farea_hr, df, from = "internal", to = "output", dim = 3.1)
 
 # drop forestry
