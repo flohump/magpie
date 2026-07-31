@@ -65,6 +65,20 @@ $endif
 scalars
   s52_growingstock_calib Switch for growing stock wood-multiplier (lambda) calibration to FRA - secdforest and plantations 1=on 0=off (1) / 1 /
   s52_gs_niche_floor     Niche floor on mature secdforest veg carbon for the WOOD conversion only - lifts arid divide-by-near-zero cells 0=off (tC per ha) / 15 /
+  s52_plant_asymp_anchor Anchor plantation carbon asymptote to observed managed plateau - 0=off (LPJmL natural) 1=tropical-only 2=all Bukoski biomes (1) / 1 /
+;
+
+* Tropical Koeppen classes used by the tropical-only plantation asymptote anchor (s52_plant_asymp_anchor=1)
+set clcl_trop52(clcl) Tropical Koeppen classes for the plantation asymptote anchor / Af, Am, As, Aw /;
+
+* Observed managed-plantation aboveground-carbon asymptote target by climate class, used to anchor the
+* plantation carbon curve to the observed managed plateau (see the cs4 header for source and values).
+parameter f52_plant_asymp_agc(clcl) Managed-plantation aboveground-C asymptote target - Bukoski 2022 (tC per ha)
+/
+$ondelim
+$include "./modules/52_carbon/input/f52_plant_asymp_agc.cs4"
+$offdelim
+/
 ;
 
 parameter f52_fra_nrf_gs(i) FRA growing stock target for naturally regenerating forests (m3 per ha)
