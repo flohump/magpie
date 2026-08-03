@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **56_ghg_policy** Default `s56_minimum_cprice` set to 0 (was 3.67 USD/tC), which had suppressed historical deforestation; the emission jumps it dampened are now handled in reporting by the magpie4 legacy land-clearing reframe.
 - **56_ghg_policy/60_bioenergy** Added the R36M414 coupled REMIND-MAgPIE scenarios to the GHG-price and 2nd-generation bioenergy-demand scenario sets.
 - **inputdata** updated to rev4.133 (FRA2025 forest data, three-curve growth parameters, GAMI forest ages, R36M414 coupled scenarios)
+- **14_yields** pasture yield correction added to dynRegPastrTau_apr26 realization to match managementcalib_aug19
 - **inputdata** updated input data to rev4.132, added f14_yld_past_switch.csv
 - **scripts** saveToResultsArchive saves to inbox folder if available
 - **renv/activate.R** updated to version 1.2.3
