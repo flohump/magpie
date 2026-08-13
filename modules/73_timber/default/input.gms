@@ -22,6 +22,14 @@ scalars
   s73_expansion                        Construction wood demand expansion factor by end of century based on industrial roundwood demand as base (1=100 percent increase) / 0 /
   s73_natveg_cost_premium              Cost premium for natveg timber production relative to plantation (1) / 0.15 /
   s73_woodfuel_stacking_factor         Stacking factor to convert stere to solid m3 (1) / 0.65 /
+* Sticky harvest-capacity cost: treats natveg (primforest secdforest other) harvest capacity as a
+* depreciating capital stock that must be built by (annuitized) investment when harvest is ramped up.
+* This penalizes fast timestep-to-timestep swings in regional natveg harvest (the source-switching
+* sawtooth) without changing the FRA-pinned wood volume or the carbon curves. Mirrors 38_factor_costs
+* sticky_feb18. Only active for years > sm_fix_SSP2. s73_sticky_harvest=0 disables it (default).
+  s73_sticky_harvest                   Switch for sticky natveg harvest-capacity cost 1=on 0=off (1) / 0 /
+  s73_hvcapital_intensity              Intensity of the sticky harvest-capacity cost - multiplier on the capitalized natveg harvest cost (1) / 1 /
+  s73_hvcapital_depreciation           Depreciation rate of harvest-capacity capital (share per yr) / 0.05 /
 ;
 
 table f73_prod_specific_timber(t_all,iso,total_wood_products) End use timber product demand (mio. m3 per yr)

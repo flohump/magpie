@@ -28,7 +28,28 @@ q73_cost_timber(i2)..
                         * (i73_timber_prod_cost_natveg(i2,kforestry) - im_timber_prod_cost(i2,kforestry)))
                     + sum(cell(i2,j2), v73_prod_residues(j2)) * s73_residue_removal_cost
                     + sum((cell(i2,j2),kforestry), v73_prod_heaven_timber(j2,kforestry) * s73_free_prod_cost)
+*' 5. Sticky harvest-capacity investment: annuitized cost of the investment needed to expand
+*'    natveg harvest capacity (see `q73_invest_harvest`). Zero unless `s73_sticky_harvest`=1 and
+*'    the year is past sm_fix_SSP2 (`v73_invest_harvest` is bound to zero otherwise).
+                    + sum((cell(i2,j2),land_natveg), v73_invest_harvest(j2,land_natveg))
+                        * sum(ct, (pm_interest(ct,i2) + s73_hvcapital_depreciation) / (1+pm_interest(ct,i2)))
                     ;
+
+*' Sticky harvest-capacity investment: natveg harvest of each source (primforest, secdforest, other)
+*' requires a capital stock proportional to production (`p73_hvcapital_need`). Investment covers the gap
+*' between the capital required for this timestep's production and the pre-existing (depreciated) stock,
+*' so ramping harvest up is costly while steady or falling harvest is not. The whole right-hand side is
+*' scaled by `p73_sticky_active` (0 before sm_fix_SSP2 or when the switch is off), which forces
+*' investment to zero and reproduces the base model exactly.
+
+q73_invest_harvest(j2,land_natveg)..
+  v73_invest_harvest(j2,land_natveg)
+  =g=
+  ( sum(kforestry, vm_prod_natveg(j2,land_natveg,kforestry))
+      * sum(cell(i2,j2), sum(ct, p73_hvcapital_need(ct,i2)))
+    - sum(ct, p73_hvcapital(ct,j2,land_natveg)) )
+  * sum(ct, p73_sticky_active(ct))
+  ;
 
 *' The following equations describes cellular level production (in dry matter) of
 *' woody biomass `vm_prod` as the sum of the cluster level production of
