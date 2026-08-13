@@ -29,6 +29,11 @@ pm_carbon_density_plantation_ac(t_all,j,ac,"litc") = m_growth_litc_soilc(pc52_ca
 
 *** Secondary forest
 *calculate vegetation age-class carbon density in current time step with chapman richards equation
+*** The naturally-regrowing rate k has already been pre-scaled by s52_natveg_growth_scalar in input.gms
+*** (default 0.83 = p25 lower quartile of Robinson 2025 cell rates), consistently for every curve built
+*** from "natveg" (this and other land below) and the natveg-derived other-planted curve. Same asymptote,
+*** slower approach -> carbon only; the FRA wood multiplier pm_lambda_nrf (52 preloop) recomputes from this
+*** curve, so secdforest wood stays FRA-pinned (module 14).
 pm_carbon_density_secdforest_ac(t_all,j,ac,"vegc") = m_growth_vegc(pc52_carbon_density_start(t_all,j,"vegc"),fm_carbon_density(t_all,j,"secdforest","vegc"),sum(clcl,pm_climate_class(j,clcl)*f52_growth_par(clcl,"k","natveg")),sum(clcl,pm_climate_class(j,clcl)*f52_growth_par(clcl,"m","natveg")),(ord(ac)-1));
 
 *calculate litter carbon density based on linear growth funktion: carbon_density(ac) = intercept + slope*ac (20 year time horizon taken from IPCC)
@@ -37,6 +42,9 @@ pm_carbon_density_secdforest_ac(t_all,j,ac,"litc") = m_growth_litc_soilc(pc52_ca
 *** Other planted forest (FRA "other planted"): the in-between Chapman-Richards curve read directly from
 *** f52_growth_par(clcl,{k,m},"other_planted") and cell-weighted exactly like natveg and plantations above.
 *** Asymptote = the shared LPJmL-secdforest vegc; litter follows the secdforest linear IPCC curve unchanged.
+*** Its rate k was pre-scaled by s52_natveg_growth_scalar in input.gms (same p25 correction as natveg, since
+*** this curve is the natveg rate times a per-biome factor). Wood borrows pm_lambda_nrf, which rises 1/scalar
+*** with secdforest -> the scaling cancels and other-planted wood is left exactly unchanged (carbon only).
 pm_carbon_density_other_planted_ac(t_all,j,ac,"vegc") = m_growth_vegc(pc52_carbon_density_start(t_all,j,"vegc"),fm_carbon_density(t_all,j,"secdforest","vegc"),sum(clcl,pm_climate_class(j,clcl)*f52_growth_par(clcl,"k","other_planted")),sum(clcl,pm_climate_class(j,clcl)*f52_growth_par(clcl,"m","other_planted")),(ord(ac)-1));
 pm_carbon_density_other_planted_ac(t_all,j,ac,"litc") = m_growth_litc_soilc(pc52_carbon_density_start(t_all,j,"litc"),fm_carbon_density(t_all,j,"secdforest","litc"),(ord(ac)-1));
 
@@ -45,6 +53,9 @@ im_vol_conv(i) = 0.5;
 
 *** Other land
 *calculate vegetation age-class carbon density in current time step with chapman richards equation
+*** Uses the same "natveg" rate, pre-scaled by s52_natveg_growth_scalar in input.gms - so natural regrowth on
+*** other land stays consistent with secondary forest. Other land is not FRA-calibrated (no lambda), so its
+*** growing stock/wood follows this carbon curve directly (roundwood demand is pinned -> total wood unchanged).
 pm_carbon_density_other_ac(t_all,j,ac,"vegc") = m_growth_vegc(pc52_carbon_density_start(t_all,j,"vegc"),fm_carbon_density(t_all,j,"other","vegc"),sum(clcl,pm_climate_class(j,clcl)*f52_growth_par(clcl,"k","natveg")),sum(clcl,pm_climate_class(j,clcl)*f52_growth_par(clcl,"m","natveg")),(ord(ac)-1));
 
 *calculate litter carbon density based on linear growth funktion: carbon_density(ac) = intercept + slope*ac (20 year time horizon taken from IPCC)

@@ -63,10 +63,23 @@ f52_growth_par(clcl,chap_par,"other_planted") = f52_growth_par(clcl,chap_par,"na
 $endif
 
 scalars
-  s52_growingstock_calib Switch for growing stock wood-multiplier (lambda) calibration to FRA - secdforest and plantations 1=on 0=off (1) / 1 /
-  s52_gs_niche_floor     Niche floor on mature secdforest veg carbon for the WOOD conversion only - lifts arid divide-by-near-zero cells 0=off (tC per ha) / 15 /
-  s52_plant_asymp_anchor Anchor plantation carbon asymptote to observed managed plateau - 0=off (LPJmL natural) 1=tropical-only 2=all Bukoski biomes (1) / 1 /
+  s52_growingstock_calib   Switch for growing stock wood-multiplier (lambda) calibration to FRA - secdforest and plantations 1=on 0=off (1) / 1 /
+  s52_gs_niche_floor       Niche floor on mature secdforest veg carbon for the WOOD conversion only - lifts arid divide-by-near-zero cells 0=off (tC per ha) / 15 /
+  s52_plant_asymp_anchor   Anchor plantation carbon asymptote to observed managed plateau - 0=off (LPJmL natural) 1=tropical-only 2=all Bukoski biomes (1) / 1 /
+  s52_natveg_growth_scalar Global multiplier on the naturally regenerating vegetation growth-rate k - secdforest other natural land and the natveg-derived other-planted curve - default 0.83 = lower quartile (p25) of Robinson 2025 mapped cell rates - carbon only 1=central (1) / 0.83 /
 ;
+
+* Lean the naturally-regrowing growth RATE k to the p25 lower quartile of Robinson (2025) mapped cell rates
+* (the fitted mean is biased to well-sampled productive northern sites and sparse in the tropics). Applied to
+* the rate PARAMETER, so every curve built from it stays mutually consistent: secondary forest and other
+* natural land both read "natveg" (52 start.gms), and the natveg-derived other-planted curve (= natveg rate x
+* a per-biome factor) is scaled the same way. Plantations (Bukoski, independent data) are untouched. Only k is
+* scaled - the asymptote A and shape m are unchanged, so the curve reaches the same ceiling more slowly (carbon
+* only). Wood: secdforest stays FRA-pinned (pm_lambda_nrf recomputes), other-planted cancels (it borrows
+* pm_lambda_nrf), other land is not FRA-calibrated so its growing stock follows its carbon (roundwood demand is
+* pinned -> total wood unchanged). s52_natveg_growth_scalar = 1 recovers the central Robinson curves.
+f52_growth_par(clcl,"k","natveg")        = s52_natveg_growth_scalar * f52_growth_par(clcl,"k","natveg");
+f52_growth_par(clcl,"k","other_planted") = s52_natveg_growth_scalar * f52_growth_par(clcl,"k","other_planted");
 
 * Tropical Koeppen classes used by the tropical-only plantation asymptote anchor (s52_plant_asymp_anchor=1)
 set clcl_trop52(clcl) Tropical Koeppen classes for the plantation asymptote anchor / Af, Am, As, Aw /;
