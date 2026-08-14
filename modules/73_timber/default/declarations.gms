@@ -28,6 +28,7 @@ vm_cost_timber(i)                                                           Actu
 v73_prod_heaven_timber(j,kforestry)                                         Production of woody biomass from heaven (mio. tDM per yr)
 v73_prod_residues(j)                                                        Production of residues from industrial roundwood harvest (mio. tDM per yr)
 v73_invest_harvest(j,land_natveg)                                           Investment into natveg harvest capacity (mio. USD17MER per yr)
+v73_disinvest_harvest(j,land_natveg)                                        Reduction of natveg harvest below existing harvest capacity (mio. USD17MER per yr)
 ;
 
 equations
@@ -36,6 +37,7 @@ q73_prod_wood(j)                                                            Prod
 q73_prod_woodfuel(j)                                                        Production of wood fuel (mio. tDM per yr)
 q73_prod_residues(j)                                                        Production of residues from industrial roundwood harvest (mio. tDM per yr)
 q73_invest_harvest(j,land_natveg)                                           Investment into natveg harvest capacity (mio. USD17MER per yr)
+q73_disinvest_harvest(j,land_natveg)                                        Reduction of natveg harvest below existing harvest capacity (mio. USD17MER per yr)
 ;
 
 
@@ -50,5 +52,7 @@ parameters
  oq73_prod_residues(t,j,type)                Production of residues from industrial roundwood harvest (mio. tDM per yr)
  ov73_invest_harvest(t,j,land_natveg,type)   Investment into natveg harvest capacity (mio. USD17MER per yr)
  oq73_invest_harvest(t,j,land_natveg,type)   Investment into natveg harvest capacity (mio. USD17MER per yr)
+ ov73_disinvest_harvest(t,j,land_natveg,type) Reduction of natveg harvest below existing harvest capacity (mio. USD17MER per yr)
+ oq73_disinvest_harvest(t,j,land_natveg,type) Reduction of natveg harvest below existing harvest capacity (mio. USD17MER per yr)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

@@ -7,6 +7,7 @@
 
 vm_cost_timber.scale(i)$(s73_timber_demand_switch = 1) = 1e4;
 v73_invest_harvest.scale(j,land_natveg) = 1e3;
+v73_disinvest_harvest.scale(j,land_natveg) = 1e3;
 *q73_prod_residues.scale(j) = 1e-2;
 *q73_prod_wood.scale(j) = 1e-2;
 *q73_prod_woodfuel.scale(j) = 1e-2;

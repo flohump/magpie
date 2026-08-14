@@ -14,7 +14,8 @@ if (sum(ct, p73_sticky_active(ct)) = 0,
                                      * sum(cell(i,j), p73_hvcapital_need(t,i,land_natveg));
 else
   p73_hvcapital(t+1,j,land_natveg) = p73_hvcapital(t,j,land_natveg)
-                                     + v73_invest_harvest.l(j,land_natveg);
+                                     + v73_invest_harvest.l(j,land_natveg)
+                                     - v73_disinvest_harvest.l(j,land_natveg);
 );
 
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
@@ -54,4 +55,12 @@ else
  oq73_invest_harvest(t,j,land_natveg,"level")      = q73_invest_harvest.l(j,land_natveg);
  oq73_invest_harvest(t,j,land_natveg,"upper")      = q73_invest_harvest.up(j,land_natveg);
  oq73_invest_harvest(t,j,land_natveg,"lower")      = q73_invest_harvest.lo(j,land_natveg);
+ ov73_disinvest_harvest(t,j,land_natveg,"marginal")= v73_disinvest_harvest.m(j,land_natveg);
+ ov73_disinvest_harvest(t,j,land_natveg,"level")   = v73_disinvest_harvest.l(j,land_natveg);
+ ov73_disinvest_harvest(t,j,land_natveg,"upper")   = v73_disinvest_harvest.up(j,land_natveg);
+ ov73_disinvest_harvest(t,j,land_natveg,"lower")   = v73_disinvest_harvest.lo(j,land_natveg);
+ oq73_disinvest_harvest(t,j,land_natveg,"marginal")= q73_disinvest_harvest.m(j,land_natveg);
+ oq73_disinvest_harvest(t,j,land_natveg,"level")   = q73_disinvest_harvest.l(j,land_natveg);
+ oq73_disinvest_harvest(t,j,land_natveg,"upper")   = q73_disinvest_harvest.up(j,land_natveg);
+ oq73_disinvest_harvest(t,j,land_natveg,"lower")   = q73_disinvest_harvest.lo(j,land_natveg);
 *##################### R SECTION END (OUTPUT DEFINITIONS) ######################

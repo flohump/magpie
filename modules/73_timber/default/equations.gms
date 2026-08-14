@@ -33,6 +33,11 @@ q73_cost_timber(i2)..
 *'    the year is past sm_fix_SSP2 (`v73_invest_harvest` is bound to zero otherwise).
                     + sum((cell(i2,j2),land_natveg), v73_invest_harvest(j2,land_natveg))
                         * sum(ct, (pm_interest(ct,i2) + s73_hvcapital_depreciation) / (1+pm_interest(ct,i2)))
+*' 6. Symmetric down-ramp penalty: annuitized cost of reducing natveg harvest below the existing capacity
+*'    (see `q73_disinvest_harvest`). Zero unless `s73_sticky_symmetric`=1; scaled by `s73_symmetry_weight`.
+                    + sum((cell(i2,j2),land_natveg), v73_disinvest_harvest(j2,land_natveg))
+                        * sum(ct, (pm_interest(ct,i2) + s73_hvcapital_depreciation) / (1+pm_interest(ct,i2)))
+                        * s73_symmetry_weight
                     ;
 
 *' Sticky harvest-capacity investment: natveg harvest of each source (primforest, secdforest, other)
@@ -49,6 +54,21 @@ q73_invest_harvest(j2,land_natveg)..
       * sum(cell(i2,j2), sum(ct, p73_hvcapital_need(ct,i2,land_natveg)))
     - sum(ct, p73_hvcapital(ct,j2,land_natveg)) )
   * sum(ct, p73_sticky_active(ct))
+  ;
+
+*' Symmetric down-ramp penalty (optional). When `s73_sticky_symmetric`=1, reducing a source's harvest below
+*' the existing (depreciated) capacity — i.e. shedding capacity faster than it naturally retires — is penalized
+*' the same way as building it, so the free down-leg of the source-switching sawtooth is damped. `v73_disinvest`
+*' captures the shortfall of this timestep's required capital below the pre-existing stock. Zero when the switch
+*' is off (then the base one-sided sticky is reproduced) or before sm_fix_SSP2.
+
+q73_disinvest_harvest(j2,land_natveg)..
+  v73_disinvest_harvest(j2,land_natveg)
+  =g=
+  ( sum(ct, p73_hvcapital(ct,j2,land_natveg))
+    - sum(kforestry, vm_prod_natveg(j2,land_natveg,kforestry))
+        * sum(cell(i2,j2), sum(ct, p73_hvcapital_need(ct,i2,land_natveg))) )
+  * sum(ct, p73_sticky_active(ct)) * s73_sticky_symmetric
   ;
 
 *' The following equations describes cellular level production (in dry matter) of
