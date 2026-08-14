@@ -34,10 +34,9 @@ q73_cost_timber(i2)..
                     + sum((cell(i2,j2),land_natveg), v73_invest_harvest(j2,land_natveg))
                         * sum(ct, (pm_interest(ct,i2) + s73_hvcapital_depreciation) / (1+pm_interest(ct,i2)))
 *' 6. Symmetric down-ramp penalty: annuitized cost of reducing natveg harvest below the existing capacity
-*'    (see `q73_disinvest_harvest`). Zero unless `s73_sticky_symmetric`=1; scaled by `s73_symmetry_weight`.
+*'    (see `q73_disinvest_harvest`), at the same per-unit rate as the up-ramp. Zero unless `s73_sticky_symmetric`=1.
                     + sum((cell(i2,j2),land_natveg), v73_disinvest_harvest(j2,land_natveg))
                         * sum(ct, (pm_interest(ct,i2) + s73_hvcapital_depreciation) / (1+pm_interest(ct,i2)))
-                        * s73_symmetry_weight
                     ;
 
 *' Sticky harvest-capacity investment: natveg harvest of each source (primforest, secdforest, other)

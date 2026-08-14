@@ -26,8 +26,8 @@ scalars
 * depreciating capital stock that must be built by (annuitized) investment when harvest is ramped up.
 * This penalizes fast timestep-to-timestep swings in regional natveg harvest (the source-switching
 * sawtooth) without changing the FRA-pinned wood volume or the carbon curves. Mirrors 38_factor_costs
-* sticky_feb18. Only active for years > sm_fix_SSP2. s73_sticky_harvest=0 disables it (default).
-  s73_sticky_harvest                   Switch for sticky natveg harvest-capacity cost 1=on 0=off (1) / 0 /
+* sticky_feb18. Only active for years > sm_fix_SSP2. s73_sticky_harvest=0 disables it (base model).
+  s73_sticky_harvest                   Switch for sticky natveg harvest-capacity cost 1=on 0=off (1) / 1 /
 * Per-source intensity of the sticky harvest-capacity cost (multiplier on the capitalized natveg harvest
 * cost). Set higher for the jumpy sources (primary forest other land) and lower for secondary forest to
 * concentrate the temporal damping where the source-switching sawtooth is worst. Plantations are excluded
@@ -36,12 +36,11 @@ scalars
   s73_hvint_secdf                      Sticky harvest-capacity cost intensity for secondary forest (1) / 0.3 /
   s73_hvint_other                      Sticky harvest-capacity cost intensity for other land (1) / 1 /
   s73_hvcapital_depreciation           Depreciation rate of harvest-capacity capital (share per yr) / 0.05 /
-* Symmetric adjustment: by default the sticky cost only penalizes RAMPING harvest UP (building capacity).
-* When s73_sticky_symmetric=1 it also penalizes reducing harvest faster than natural depreciation (the free
-* down-leg of a sawtooth), mirroring the cropland conversion cost which penalizes change in both directions.
-* s73_symmetry_weight scales the down-penalty relative to the up-penalty (1 = fully symmetric).
-  s73_sticky_symmetric                 Switch for symmetric (two-sided) sticky harvest cost 1=on 0=off (1) / 0 /
-  s73_symmetry_weight                  Weight of the down-ramp penalty relative to the up-ramp penalty (1) / 1 /
+* Symmetric adjustment: with s73_sticky_symmetric=0 the sticky cost only penalizes RAMPING harvest UP
+* (building capacity). With s73_sticky_symmetric=1 it also penalizes reducing harvest faster than natural
+* depreciation (the free down-leg of a sawtooth), mirroring the cropland conversion cost which penalizes
+* change in both directions. The down-penalty per unit equals the up-penalty (fully symmetric).
+  s73_sticky_symmetric                 Switch for symmetric (two-sided) sticky harvest cost 1=on 0=off (1) / 1 /
 ;
 
 table f73_prod_specific_timber(t_all,iso,total_wood_products) End use timber product demand (mio. m3 per yr)
