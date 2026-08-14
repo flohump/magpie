@@ -30,10 +30,10 @@ p32_plant_rotation_yr(j) = 0;
 p32_plant_rotation_yr(j)$(sum(clcl, pm_climate_class(j,clcl)) > 0)
     = sum(clcl, pm_climate_class(j,clcl) * f32_plant_rotation(clcl)) / sum(clcl, pm_climate_class(j,clcl));
 
-** Convert to age-class equivalent (5-yr classes), clamped to [1,18] (18 = 90-yr commercial cap)
-pm_rotation_cellular_estb(t_all,j)       = round(p32_plant_rotation_yr(j)/5);
+** Convert to age-class equivalent (s32_ageclass_length-yr classes), clamped to [1, s32_max_rotation/s32_ageclass_length]
+pm_rotation_cellular_estb(t_all,j)       = round(p32_plant_rotation_yr(j)/s32_ageclass_length);
 pm_rotation_cellular_estb(t_all,j)$(pm_rotation_cellular_estb(t_all,j) < 1)  = 1;
-pm_rotation_cellular_estb(t_all,j)$(pm_rotation_cellular_estb(t_all,j) > 18) = 18;
+pm_rotation_cellular_estb(t_all,j)$(pm_rotation_cellular_estb(t_all,j) > s32_max_rotation/s32_ageclass_length) = s32_max_rotation/s32_ageclass_length;
 
 ** Harvest rotation equals establishment rotation (time-invariant external rotation)
 p32_rotation_cellular_harvesting(t_all,j) = pm_rotation_cellular_estb(t_all,j);

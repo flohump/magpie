@@ -16,7 +16,7 @@ sets
  type32 plantation type
  / aff, ndc, plant, other_planted /
 
- harvest32(type32) harvestable self-replanting managed-forestry pools
+ harvest32(type32) harvestable managed-forestry pools replanted to the same pool after harvest
  / plant, other_planted /
 
  pol32 afforestation policy type
