@@ -7,10 +7,16 @@
 
 *' Sticky natveg harvest-capacity cost (see input.gms / equations.gms).
 
+*' Map the per-source intensity switches into a land_natveg-indexed parameter (config can only set
+*' scalars). Higher intensity = stronger temporal damping of that source's harvest ramps.
+p73_hvcapital_intensity("primforest") = s73_hvint_primf;
+p73_hvcapital_intensity("secdforest") = s73_hvint_secdf;
+p73_hvcapital_intensity("other")      = s73_hvint_other;
+
 *' Capital required per unit of natveg timber production: the natveg per-tDM harvest cost,
-*' scaled by the intensity switch and capitalized by dividing by (interest + depreciation),
+*' scaled by the per-source intensity and capitalized by dividing by (interest + depreciation),
 *' analogously to 38_factor_costs sticky_feb18.
-p73_hvcapital_need(t,i) = s73_hvcapital_intensity * i73_timber_prod_cost_natveg(i,"wood")
+p73_hvcapital_need(t,i,land_natveg) = p73_hvcapital_intensity(land_natveg) * i73_timber_prod_cost_natveg(i,"wood")
                           / (pm_interest(t,i) + s73_hvcapital_depreciation);
 
 *' The mechanism is only active after the SSP2 fix year, and only when switched on. Before that

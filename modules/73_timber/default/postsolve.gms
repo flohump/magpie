@@ -11,7 +11,7 @@
 *' When active, it accumulates the investment made this timestep (mirrors 38 sticky_feb18).
 if (sum(ct, p73_sticky_active(ct)) = 0,
   p73_hvcapital(t+1,j,land_natveg) = sum(kforestry, vm_prod_natveg.l(j,land_natveg,kforestry))
-                                     * sum(cell(i,j), p73_hvcapital_need(t,i));
+                                     * sum(cell(i,j), p73_hvcapital_need(t,i,land_natveg));
 else
   p73_hvcapital(t+1,j,land_natveg) = p73_hvcapital(t,j,land_natveg)
                                      + v73_invest_harvest.l(j,land_natveg);

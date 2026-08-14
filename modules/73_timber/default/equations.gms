@@ -46,7 +46,7 @@ q73_invest_harvest(j2,land_natveg)..
   v73_invest_harvest(j2,land_natveg)
   =g=
   ( sum(kforestry, vm_prod_natveg(j2,land_natveg,kforestry))
-      * sum(cell(i2,j2), sum(ct, p73_hvcapital_need(ct,i2)))
+      * sum(cell(i2,j2), sum(ct, p73_hvcapital_need(ct,i2,land_natveg)))
     - sum(ct, p73_hvcapital(ct,j2,land_natveg)) )
   * sum(ct, p73_sticky_active(ct))
   ;

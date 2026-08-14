@@ -17,7 +17,8 @@ p73_fraction_sm_fix                                                         Modi
 im_timber_prod_cost(i,kforestry)                                            Regional base cost for timber production based on UNECE market prices (USD17MER per tDM)
 i73_timber_prod_cost_natveg(i,kforestry)                                    Regional cost for timber production from natural vegetation incl natveg premium (USD17MER per tDM)
 p73_income_elasticity(t_all,iso,total_wood_products)                        Income elasticities of wood products (1)
-p73_hvcapital_need(t,i)                                                     Harvest-capacity capital required per unit natveg timber production (USD17MER per tDM)
+p73_hvcapital_intensity(land_natveg)                                        Sticky harvest-capacity cost intensity per natveg source (1)
+p73_hvcapital_need(t,i,land_natveg)                                         Harvest-capacity capital required per unit natveg timber production (USD17MER per tDM)
 p73_hvcapital(t,j,land_natveg)                                              Preexisting natveg harvest-capacity capital stock before investment (mio. USD17MER)
 p73_sticky_active(t)                                                        Sticky harvest-capacity mechanism active this timestep (0 before sm_fix_SSP2 or when switched off) (1)
 ;

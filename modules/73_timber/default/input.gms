@@ -28,7 +28,13 @@ scalars
 * sawtooth) without changing the FRA-pinned wood volume or the carbon curves. Mirrors 38_factor_costs
 * sticky_feb18. Only active for years > sm_fix_SSP2. s73_sticky_harvest=0 disables it (default).
   s73_sticky_harvest                   Switch for sticky natveg harvest-capacity cost 1=on 0=off (1) / 0 /
-  s73_hvcapital_intensity              Intensity of the sticky harvest-capacity cost - multiplier on the capitalized natveg harvest cost (1) / 1 /
+* Per-source intensity of the sticky harvest-capacity cost (multiplier on the capitalized natveg harvest
+* cost). Set higher for the jumpy sources (primary forest other land) and lower for secondary forest to
+* concentrate the temporal damping where the source-switching sawtooth is worst. Plantations are excluded
+* (no sticky cost) so they stay the flexible buffer that absorbs demand swings.
+  s73_hvint_primf                      Sticky harvest-capacity cost intensity for primary forest (1) / 1 /
+  s73_hvint_secdf                      Sticky harvest-capacity cost intensity for secondary forest (1) / 0.3 /
+  s73_hvint_other                      Sticky harvest-capacity cost intensity for other land (1) / 1 /
   s73_hvcapital_depreciation           Depreciation rate of harvest-capacity capital (share per yr) / 0.05 /
 ;
 
