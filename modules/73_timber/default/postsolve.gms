@@ -5,10 +5,9 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-*' Update the natveg harvest-capacity capital stock carried into the next timestep.
-*' When the sticky mechanism is inactive (before sm_fix_SSP2 or switched off) the stock simply
-*' tracks the solved production, so the capital is correctly initialised at the first active step.
-*' When active, it accumulates the investment made this timestep (mirrors 38 sticky_feb18).
+*' Update the natveg harvest-capacity capital carried into the next timestep. While inactive (the ord(t)=1
+*' seed step, or when off) it tracks the solved production, warm-starting the capital for the first active step;
+*' while active it accumulates this timestep's net investment (mirrors the sticky cost in module 38).
 if (sum(ct, p73_sticky_active(ct)) = 0,
   p73_hvcapital(t+1,j,land_natveg) = sum(kforestry, vm_prod_natveg.l(j,land_natveg,kforestry))
                                      * sum(cell(i,j), p73_hvcapital_need(t,i,land_natveg));

@@ -15,14 +15,13 @@ p73_hvcapital_intensity("other")      = s73_hvint_other;
 
 *' Capital required per unit of natveg timber production: the natveg per-tDM harvest cost,
 *' scaled by the per-source intensity and capitalized by dividing by (interest + depreciation),
-*' analogously to 38_factor_costs sticky_feb18.
+*' analogously to the sticky cost in module 38.
 p73_hvcapital_need(t,i,land_natveg) = p73_hvcapital_intensity(land_natveg) * i73_timber_prod_cost_natveg(i,"wood")
                           / (pm_interest(t,i) + s73_hvcapital_depreciation);
 
-*' The mechanism is only active after the SSP2 fix year, and only when switched on. Before that
-*' (and when off) p73_sticky_active is zero, which zeroes the investment and the sticky cost, so
-*' the base model is reproduced bit-for-bit.
-p73_sticky_active(t) = s73_sticky_harvest$(m_year(t) > sm_fix_SSP2);
+*' Active from the second timestep (ord(t)>1) when on; no sm_fix_SSP2 gate (a scenario-invariant cost feature,
+*' like the sticky cost in module 38). The ord(t)=1 step seeds the capital via the postsolve warm-start.
+p73_sticky_active(t) = s73_sticky_harvest$(ord(t) > 1);
 
 *' Depreciate the capital stock carried from the previous timestep (the stock at ord(t)=1 is zero).
 if (ord(t) > 1,

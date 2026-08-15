@@ -17,7 +17,7 @@
 *' as regrowth of natural vegetation (see @humpenoder_investigating_2014 for details on the implemenation).
 *' The regrowth of natural vegetation follows S-shaped growth curves parametrized via
 *' module [52_carbon], which provides three forest growth curves along the FRA continuum: naturally
-*' regenerating forest (Robinson et al 2025), other planted forest (an intermediate curve), and
+*' regenerating forest (Robinson et al 2025), other planted forest (a natveg-derived curve), and
 *' plantations (Bukoski et al 2022). Additionally this module handles the production of two timber
 *' products i.e., wood and woodfuel from plantation forests while still accounting for afforestation
 *' policies. New plantations are also established in the simulation step to account for future timber

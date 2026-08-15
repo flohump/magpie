@@ -7,7 +7,7 @@
 
 parameters
  pm_carbon_density_secdforest_ac(t_all,j,ac,ag_pools)            Vegetation secondary forest carbon density for age classes and carbon pools (tC per ha)
- pm_carbon_density_other_planted_ac(t_all,j,ac,ag_pools)        Vegetation other-planted forest carbon density - in-between curve read from f52_growth_par other_planted (tC per ha)
+ pm_carbon_density_other_planted_ac(t_all,j,ac,ag_pools)        Vegetation other-planted forest carbon density - natveg-derived curve read from f52_growth_par other_planted (tC per ha)
  pm_carbon_density_other_ac(t_all,j,ac,ag_pools)                Vegetation other land carbon density for age classes and carbon pools (tC per ha)
  pm_carbon_density_plantation_ac(t_all,j,ac,ag_pools)            Vegetation plantation carbon density for age classes and carbon pools (tC per ha)
  pc52_carbon_density_start(t_all,j,ag_pools)  Vegetation carbon density for new land in other land pool (tC per ha)

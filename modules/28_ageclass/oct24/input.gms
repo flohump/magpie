@@ -5,9 +5,8 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-*' @param c28_ageclass_source source of the forest age-class distribution:
-*'   gfad = GFAD V1.1 (Poulter et al 2019); gami = GAMI v2.1 (Besnard et al 2024, default)
 $setglobal c28_ageclass_source  gami
+* options: gfad (GFAD V1.1), gami (GAMI v2.1, default)
 
 table f28_forestageclasses(j,ac_gfad) Forest area in 15 10-year age classes (Mha)
 $ondelim

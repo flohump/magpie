@@ -67,10 +67,9 @@ p32_carbon_density_ac(t,j,"plant",ac,ag_pools) = pm_carbon_density_plantation_ac
 *' NDC carbon densities are natveg carbon densities.
 p32_carbon_density_ac(t,j,"ndc",ac,ag_pools) = pm_carbon_density_secdforest_ac(t,j,ac,ag_pools);
 
-*' Other-planted (FRA "other planted") carbon densities: the in-between curve read from f52_growth_par
-*' other_planted (built in module 52). CRITICAL: must be set before q32_carbon (which sums the full type32
-*' set) or other_planted would be
-*' booked at density 0.
+*' Other-planted (FRA "other planted") carbon densities: the natveg-derived curve read from f52_growth_par
+*' other_planted (built in module 52 = natveg curve, no establishment lag, rate scaled per biome). CRITICAL:
+*' must be set before q32_carbon (which sums the full type32 set) or other_planted would be booked at density 0.
 p32_carbon_density_ac(t,j,"other_planted",ac,ag_pools) = pm_carbon_density_other_planted_ac(t,j,ac,ag_pools);
 
 *' CDR from afforestation for each age-class, depending on planning horizon.

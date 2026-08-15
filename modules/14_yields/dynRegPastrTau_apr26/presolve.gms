@@ -59,36 +59,27 @@ im_growing_stock(t,j,ac,"other") =
 
 *' @stop
 
-** Wood-only niche floor (module 52): lift arid low-asymptote cells' harvestable growing stock
-** consistently with the m52 lambda denominator so lambda stays FRA-exact; carbon untouched. 0=off.
-** Applied to natural forest (primforest + secdforest): both share the LPJmL asymptote, so same lift.
+** Wood-only niche floor (module 52): lift arid low-asymptote cells' harvestable growing stock in step with
+** the m52 lambda denominators so lambda stays FRA-exact; carbon untouched. Applied to all three pools below.
 im_growing_stock(t,j,ac,"forestry")   = im_growing_stock(t,j,ac,"forestry")   * pm_gs_niche_fac(j);
 im_growing_stock(t,j,ac,"secdforest") = im_growing_stock(t,j,ac,"secdforest") * pm_gs_niche_fac(j);
 im_growing_stock(t,j,ac,"primforest") = im_growing_stock(t,j,ac,"primforest") * pm_gs_niche_fac(j);
 
-** Wood-only FRA calibration: scale the harvestable growing stock by the per-region
-** multiplier from module 52 so that reported wood matches the FRA target. Carbon density
-** is NOT touched here. Applied BEFORE the floors below so they act on calibrated wood.
-** forestry uses the plantation multiplier; primforest and secdforest both use the natural-forest
-** multiplier pm_lambda_nrf - they are one FRA "naturally regenerating forest" category (FRA reports
-** no reliable primary-only growing stock) sharing the LPJmL asymptote, so mature secondary and
-** primary forest carry the same harvestable stock. "Other" land has no FRA target of its own (non-forest);
-** it is handled by the cap below.
+** Wood-only FRA calibration: scale harvestable growing stock to the FRA target via the m52 multipliers
+** (carbon untouched), before the floors. Plantation uses pm_lambda_pla; secdforest and primforest share
+** pm_lambda_nrf - FRA's single "naturally regenerating forest" category - so mature secondary == primary.
 im_growing_stock(t,j,ac,"forestry")   = im_growing_stock(t,j,ac,"forestry")   * sum(cell(i,j), pm_lambda_pla(i));
 im_growing_stock(t,j,ac,"secdforest") = im_growing_stock(t,j,ac,"secdforest") * sum(cell(i,j), pm_lambda_nrf(i));
 im_growing_stock(t,j,ac,"primforest") = im_growing_stock(t,j,ac,"primforest") * sum(cell(i,j), pm_lambda_nrf(i));
 
-** Other-land wood cap: other land is non-forest and absent from the FRA growing-stock inventory, so it has
-** no lambda and sits at raw LPJmL potential. Where natural forest is calibrated DOWN (pm_lambda_nrf < 1,
-** e.g. the tropics) uncalibrated other land would out-yield primary/secondary forest - implausible. Apply
-** the natural-forest downward correction to other-land wood too, capped at 1 so it is never inflated where
-** lambda_nrf > 1 (a forest-specific definitional gap). Wood only; carbon is NOT touched.
+** Other-land wood cap: other land has no FRA target and sits at raw LPJmL potential. Where natural forest is
+** calibrated DOWN (pm_lambda_nrf < 1, e.g. the tropics) uncalibrated other land would out-yield forest, so
+** apply the same downward correction, capped at 1 (never inflated). Wood only; carbon untouched.
 im_growing_stock(t,j,ac,"other") = im_growing_stock(t,j,ac,"other") * min(1, sum(cell(i,j), pm_lambda_nrf(i)));
 
-** Other-planted forest wood: the secdforest (natveg) conversion chain on the
-** other_planted carbon curve, sharing the natural-forest wood multiplier pm_lambda_nrf (no FRA other-planted
-** GS target exists). Dedicated param (not a land_timber element -> other_planted lives inside forestry, not
-** in `land`).
+** Other-planted forest wood: the secdforest (natveg) conversion chain on the other_planted carbon curve,
+** sharing pm_lambda_nrf (no FRA other-planted GS target). Dedicated param - other_planted lives inside
+** forestry, not in `land`.
 im_growing_stock_oplant(t,j,ac) =
     ( pm_carbon_density_other_planted_ac(t,j,ac,"vegc")
      / sm_carbon_fraction

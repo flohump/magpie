@@ -20,7 +20,7 @@ p73_income_elasticity(t_all,iso,total_wood_products)                        Inco
 p73_hvcapital_intensity(land_natveg)                                        Sticky harvest-capacity cost intensity per natveg source (1)
 p73_hvcapital_need(t,i,land_natveg)                                         Harvest-capacity capital required per unit natveg timber production (USD17MER per tDM)
 p73_hvcapital(t,j,land_natveg)                                              Preexisting natveg harvest-capacity capital stock before investment (mio. USD17MER)
-p73_sticky_active(t)                                                        Sticky harvest-capacity mechanism active this timestep (0 before sm_fix_SSP2 or when switched off) (1)
+p73_sticky_active(t)                                                        Sticky harvest-capacity mechanism active this timestep (0 at the ord(t)=1 seed step or when switched off) (1)
 ;
 
 positive variables

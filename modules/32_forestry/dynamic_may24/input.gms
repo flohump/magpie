@@ -87,11 +87,6 @@ $include "./modules/32_forestry/input/f32_plantedforest.cs4"
 $offdelim
 /;
 
-* Representative managed-plantation rotation length by Koeppen biome (yr). This external rotation is
-* the single source of truth for both the cellular and the regional plantation rotation, because the
-* plantation carbon curve (module 52) has no establishment lag and does not yield a silvicultural
-* rotation. Values: tropical (A) 15, temperate (C) 30, boreal (D) 60; arid (B) 30 / polar (E) 60
-* fallbacks (timber plantations there are negligible).
 parameter f32_plant_rotation(clcl) Representative managed-plantation rotation length by Koeppen biome (yr)
 /
 $ondelim
