@@ -42,6 +42,8 @@ scalars
   s32_npi_ndc_reversal              Year in which NPI NDC reversal should take place (1) / Inf /
   s32_min_plant_shr                 Minimum share of plantations in planted forests (1) / 0.05 /
   s32_annual_aff_limit              Annual upper limit for re-afforestation as share of overall forest establishment potential (1) / 0.03 /
+  s32_max_rotation                  Maximum commercial plantation rotation (yr) / 90 /
+  s32_ageclass_length               Length of one age class (yr) / 5 /
 ;
 
 parameter f32_aff_mask(j) afforestation mask (binary)

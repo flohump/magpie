@@ -87,8 +87,7 @@ im_growing_stock_oplant(t,j,ac) =
      / sum(clcl, pm_climate_class(j,clcl) * fm_ipcc_bef(clcl)) )
     * pm_gs_niche_fac(j)
     * sum(cell(i,j), pm_lambda_nrf(i));
-** managed pool -> positive floor like "forestry" (NOT the land_natveg minimum-GS zeroing).
-im_growing_stock_oplant(t,j,ac)$(im_growing_stock_oplant(t,j,ac) <= 0) = 0.0001;
+** other_planted growing stock needs no positive floor (only a multiplier in q32_prod_forestry; GS=0 harmless).
 
 ** Hard constraint to always have a positive number in im_growing_stock
 im_growing_stock(t,j,ac,land_timber) = im_growing_stock(t,j,ac,land_timber)$(im_growing_stock(t,j,ac,land_timber) > 0) + 0.0001$(im_growing_stock(t,j,ac,land_timber) = 0);

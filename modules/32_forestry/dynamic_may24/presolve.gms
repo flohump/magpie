@@ -185,6 +185,11 @@ m_boundfix(v32_land,(j,type32,ac_sub),up,1e-6);
 ** Calculate expected growing stock at rotation age
 i32_growing_stock_at_harvest(t,j) = sum(ac$(ac.off = pm_rotation_cellular_estb(t,j)), im_growing_stock(t,j,ac,"forestry"));
 
+** Growing stock of the harvestable forestry pools by harvest sub-pool, so q32_prod_forestry sums over
+** harvest32 in one term (pure re-indexing of im_growing_stock + im_growing_stock_oplant).
+p32_gs_forestry(j,ac,"plant")         = im_growing_stock(t,j,ac,"forestry");
+p32_gs_forestry(j,ac,"other_planted") = im_growing_stock_oplant(t,j,ac);
+
 * Fader for plantation share in establishment decision
 if(ord(t) = 1,
   pc32_prod_forestry_ini(i) = sum(cell(i,j), sum(ac$(ac.off = p32_rotation_cellular_harvesting(t,j)), im_growing_stock(t,j,ac,"forestry") * p32_land(t,j,"plant",ac))) / m_timestep_length_forestry;

@@ -248,8 +248,7 @@ q32_hvarea_forestry(j2,harvest32,ac_sub) ..
 q32_prod_forestry(j2)..
                          sum(kforestry, vm_prod_forestry(j2,kforestry))
                          =e=
-                         ( sum(ac_sub, v32_hvarea_forestry(j2,"plant",ac_sub)         * sum(ct, im_growing_stock(ct,j2,ac_sub,"forestry")))
-                         + sum(ac_sub, v32_hvarea_forestry(j2,"other_planted",ac_sub) * sum(ct, im_growing_stock_oplant(ct,j2,ac_sub))) )
+                         sum((harvest32,ac_sub), v32_hvarea_forestry(j2,harvest32,ac_sub) * p32_gs_forestry(j2,ac_sub,harvest32))
                          / m_timestep_length_forestry;
 
 *' Harvesting cost in plantations is defined as the cost incurred while removing

@@ -20,6 +20,7 @@ parameters
  p32_land(t,j,type32,ac)                            Forestry land pools before optimization (mio. ha)
  pc32_land(j,type32,ac)                             Forestry land pools in current time step (mio. ha)
  i32_growing_stock_at_harvest(t,j)                  Expected growing stock at rotation age for new plantations (tDM per ha)
+ p32_gs_forestry(j,ac,harvest32)                    Growing stock of the harvestable forestry pools by age class (tDM per ha)
  p32_rotation_regional(t_all,i)                     Regional average rotation length of plantations translated to age class equivalent for future (1)
  pm_rotation_cellular_estb(t_all,j)                Establishment rotation length translated to age classes on cellular level (1)
  p32_rotation_cellular_harvesting(t_all,j)          Harvesting rotation length of plantations translated to age class equivalent for future (1)
