@@ -59,6 +59,7 @@ scalars
   s52_gs_niche_floor       Niche floor on mature secdforest veg carbon for the WOOD conversion only - lifts arid divide-by-near-zero cells 0=off (tC per ha) / 15 /
   s52_plant_asymp_anchor   Anchor plantation carbon asymptote to observed managed plateau - 0=off (LPJmL natural) 1=tropical-only 2=all Bukoski biomes (1) / 1 /
   s52_natveg_growth_scalar Global multiplier on the naturally regenerating vegetation growth-rate k - secdforest other natural land and the natveg-derived other-planted curve - default 0.83 = lower quartile (p25) of Robinson 2025 mapped cell rates - carbon only 1=central (1) / 0.83 /
+  s52_lambda_bef_cap       Cap wood multiplier lambda at the biomass expansion factor - lambda greater than BEF implies harvested stemwood exceeding aboveground biomass 1=on 0=off (1) / 1 /
 ;
 
 f52_growth_par(clcl,"k","natveg")        = s52_natveg_growth_scalar * f52_growth_par(clcl,"k","natveg");
