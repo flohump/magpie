@@ -20,6 +20,7 @@ parameters
  pm_lambda_pla(i)                     Wood-only FRA growing-stock multiplier for plantations (1)
  i52_plant_asymptote(t_all,j)         Plantation carbon-curve vegc asymptote (tC per ha)- LPJmL-natural
  pm_gs_niche_fac(j)                   Per-cell wood-only vegc niche-floor factor for arid low-asymptote forest cells (1)
+ p52_nrf_ref_ac(j)                    Per-cell natural-forest reference age-class offset for s52_nrf_ref=3 (1)
  p52_plant_asymp_agc_eff(clcl)        Effective plantation AGC asymptote target after anchor-mode masking (tC per ha)
  p52_lpjml_asymp_agc(clcl)            Plantation-area-weighted mean LPJmL AGC asymptote per climate class (tC per ha)
  p52_plant_asymp_factor(clcl)         Per-class plantation carbon-asymptote re-levelling factor - observed plateau over LPJmL (1)
