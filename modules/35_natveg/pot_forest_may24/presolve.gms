@@ -155,6 +155,10 @@ v35_secdforest.up(j,ac) = Inf;
 p35_protection_dist(j,ac_sub) = 0;
 p35_protection_dist(j,ac_sub)$(sum(ac_sub2,pc35_secdforest(j,ac_sub2)) > 0) = pc35_secdforest(j,ac_sub) / sum(ac_sub2,pc35_secdforest(j,ac_sub2));
 pm_land_conservation(t,j,"secdforest","protect")$(pm_land_conservation(t,j,"secdforest","protect") > sum(ac_sub, pc35_secdforest(j,ac_sub))) = sum(ac_sub, pc35_secdforest(j,ac_sub));
+* Secondary-forest lower bound: conservation protection (WDPA) and, for future steps, the per-period
+* harvest-share cap. There is no age-specific protection of old stands, so cost-minimizing harvest takes
+* the densest (oldest) secondary forest first (most wood per hectare, least area disturbed). To protect
+* old secondary forest as policy, use pm_land_conservation(...,"secdforest","protect").
 if (sum(sameas(t_past,t),1) = 1,
 v35_secdforest.lo(j,ac_sub) = pm_land_conservation(t,j,"secdforest","protect") * p35_protection_dist(j,ac_sub);
 else
