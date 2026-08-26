@@ -103,6 +103,21 @@ if(s52_growingstock_calib = 1,
 
   pm_lambda_pla(i)$(i52_gs_realistic_pla(i) > 0) = f52_fra_pla_gs(i) / i52_gs_realistic_pla(i);
 
+* Cap lambda at the biomass expansion factor (BEF): lambda > BEF would harvest more stemwood than the
+* stand aboveground biomass holds. It occurs where the FRA growing-stock target exceeds the LPJmL biomass
+* (e.g. arid or intensively managed forest regions) - a per-region data mismatch the reference age cannot
+* fix. The hard cap enforces this physical limit; the capped regions then no longer reproduce FRA GS.
+  if(s52_lambda_bef_cap = 1,
+    loop(i$(pm_lambda_nrf(i) > i52_bef_avg(i)),
+      put_utility "log" / "  lambda_nrf capped at BEF in " i.tl:3 ": " pm_lambda_nrf(i):8:3 " -> " i52_bef_avg(i):8:3;
+    );
+    loop(i$(pm_lambda_pla(i) > i52_bef_avg(i)),
+      put_utility "log" / "  lambda_pla capped at BEF in " i.tl:3 ": " pm_lambda_pla(i):8:3 " -> " i52_bef_avg(i):8:3;
+    );
+    pm_lambda_nrf(i)$(pm_lambda_nrf(i) > i52_bef_avg(i)) = i52_bef_avg(i);
+    pm_lambda_pla(i)$(pm_lambda_pla(i) > i52_bef_avg(i)) = i52_bef_avg(i);
+  );
+
 * Log wood-multiplier (lambda) calibration to FRA 2025
   put_utility "log" / "Wood multiplier (lambda) calibration to FRA 2025 (m3/ha):";
   put_utility "log" / "         NRF (nat.forest)               plantation";
