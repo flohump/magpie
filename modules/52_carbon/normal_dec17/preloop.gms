@@ -64,11 +64,24 @@ if(s52_growingstock_calib = 1,
     max(1, s52_gs_niche_floor / fm_carbon_density("y2025",j,"secdforest","vegc"));
 
 * Natural forest (NRF) wood multiplier (lambda). Reference growing stock (m3/ha), scaled to the FRA target.
-* s52_nrf_ref selects the reference age: 0 = area-weighted mean over the forest age distribution
-* (im_forest_ageclass) of the secdforest carbon curve (young-heavy -> inflates lambda above BEF in low-stock or
-* young-forest regions); 1 = the mature secdforest ceiling (fm_carbon_density secdforest), a maturity reference
-* like the one lambda_pla uses (rotation age), keeping lambda a biomass ratio rather than an age-structure fix.
-  if(s52_nrf_ref = 1,
+* s52_nrf_ref selects the reference: 0 = area-weighted mean over the forest age distribution (im_forest_ageclass)
+* of the secdforest carbon curve (young-heavy -> inflates lambda above BEF); 1 = the mature secdforest ceiling
+* (fm_carbon_density secdforest, old-growth); 2 = the secdforest curve sampled at a fixed reference age
+* s52_nrf_ref_age (years), mirroring how lambda_pla samples at the rotation age. Older reference -> lower lambda.
+  if(s52_nrf_ref = 2,
+    i52_gs_realistic_nrf(i)$(sum((cell(i,j),ac), im_forest_ageclass(j,ac)) > 0) =
+      sum(cell(i,j),
+        sum(ac, im_forest_ageclass(j,ac))
+        * sum(ac2$(ac2.off = round(s52_nrf_ref_age / 5)), pm_carbon_density_secdforest_ac("y2025",j,ac2,"vegc"))
+        * pm_gs_niche_fac(j)
+      )
+      / sum((cell(i,j),ac), im_forest_ageclass(j,ac))
+      / sm_carbon_fraction
+      * fm_aboveground_fraction("secdforest")
+      / i52_bef_avg(i)
+      / im_vol_conv(i)
+    ;
+  elseif s52_nrf_ref = 1,
     i52_gs_realistic_nrf(i)$(sum((cell(i,j),ac), im_forest_ageclass(j,ac)) > 0) =
       sum(cell(i,j),
         sum(ac, im_forest_ageclass(j,ac))

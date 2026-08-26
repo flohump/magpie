@@ -60,7 +60,8 @@ scalars
   s52_plant_asymp_anchor   Anchor plantation carbon asymptote to observed managed plateau - 0=off (LPJmL natural) 1=tropical-only 2=all Bukoski biomes (1) / 1 /
   s52_natveg_growth_scalar Global multiplier on the naturally regenerating vegetation growth-rate k - secdforest other natural land and the natveg-derived other-planted curve - default 0.83 = lower quartile (p25) of Robinson 2025 mapped cell rates - carbon only 1=central (1) / 0.83 /
   s52_lambda_bef_cap       Cap wood multiplier lambda at the biomass expansion factor - lambda greater than BEF implies harvested stemwood exceeding aboveground biomass 1=on 0=off (1) / 1 /
-  s52_nrf_ref              Reference age for the natural-forest wood multiplier lambda - 0=area-weighted over the forest age distribution 1=mature secdforest ceiling (maturity reference like lambda_pla) (0) / 0 /
+  s52_nrf_ref              Reference for the natural-forest wood multiplier lambda - 0=area-weighted over the forest age distribution 1=mature secdforest ceiling 2=secdforest curve at fixed reference age s52_nrf_ref_age (0) / 0 /
+  s52_nrf_ref_age          Reference age (years) for the natural-forest lambda when s52_nrf_ref=2 - secdforest curve sampled here (rounded to the nearest 5-year age class) (60) / 60 /
 ;
 
 f52_growth_par(clcl,"k","natveg")        = s52_natveg_growth_scalar * f52_growth_par(clcl,"k","natveg");
