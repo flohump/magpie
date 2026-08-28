@@ -17,7 +17,7 @@ p32_est_cost("other_planted") = s32_est_cost_plant;
 
 ** External per-biome plantation rotation -- the single source of truth for both the cellular
 ** (establishment/harvest) rotation and the regional (economic) rotation. The plantation carbon curve
-** (module 52) has no establishment lag, so a silvicultural rotation cannot be derived from it; the
+** (module 52) describes carbon, not merchantable stem volume, so a silvicultural rotation cannot be derived from it; the
 ** rotation is instead an explicit management input: f32_plant_rotation (years by Koeppen biome),
 ** area-weighted per cell and converted to 5-yr age classes. It is time-invariant, so the establishment
 ** rotation is constant across t_all and the harvesting rotation is identical.

@@ -12,7 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **32_forestry** Cleaned up the forestry module: the plantation rotation now comes solely from the external per-Köppen rotation table, retiring the curve-derived rotation machinery (CAI/MAI/Faustmann) and the associated unused parameters and switches.
 - **56_ghg_policy** Default `s56_minimum_cprice` set to 0 (was 3.67 USD/tC), which had suppressed historical deforestation; the emission jumps it dampened are now handled in reporting by the magpie4 legacy land-clearing reframe.
 - **56_ghg_policy/60_bioenergy** Added the R36M414 coupled REMIND-MAgPIE scenarios to the GHG-price and 2nd-generation bioenergy-demand scenario sets.
-- **inputdata** updated to rev4.133 (FRA2025 forest data, three-curve growth parameters, GAMI forest ages, R36M414 coupled scenarios)
+- **inputdata** updated to rev4.133 (FRA2025 forest data, GAMI forest ages, R36M414 coupled scenarios)
+- **config** additional data updated to `additional_data_rev4.72.tgz` (three-curve forest growth parameters, plantation rotation lengths and carbon-asymptote targets)
 
 ### added
 - **32_forestry** Other-planted forest as its own harvestable pool with its own growth curve, matching the FRA 2025 taxonomy (naturally regenerating / other planted / plantation). Reported as `Planted Forest|+|Timber` and `Planted Forest|+|Other Planted`. Plantation rotation read from an external per-Köppen-zone table (`f32_plant_rotation.cs4`).

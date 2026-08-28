@@ -6,8 +6,8 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 *' Growing-stock calibration of secdforest and plantation WOOD only (carbon is never bent). Per region an
-*' analytic wood multiplier lambda = FRA growing-stock target / area-weighted growing stock of the realistic
-*' curve, applied to im_growing_stock in module 14:
+*' analytic wood multiplier lambda = FRA growing-stock target / area-weighted growing stock of the
+*' observation-based carbon curve, applied to im_growing_stock in module 14:
 *'   - Secdforest (pm_lambda_nrf): weighted by the GFAD/GAMI age distribution (im_forest_ageclass, module 28)
 *'   - Plantations (pm_lambda_pla): sampled at the cellular rotation age (pm_rotation_cellular_estb, module 32)
 *' Runs in preloop after module 28 populates im_forest_ageclass. Conversion C_density (tC/ha) -> GS (m3/ha):
@@ -66,7 +66,7 @@ if(s52_growingstock_calib = 1,
 * Natural forest (NRF) wood multiplier (lambda). Reference growing stock (m3/ha) = area-weighted mean over the
 * forest age distribution (im_forest_ageclass) of the secdforest carbon curve converted to volume; lambda scales
 * it to the FRA target.
-  i52_gs_realistic_nrf(i)$(sum((cell(i,j),ac), im_forest_ageclass(j,ac)) > 0) =
+  i52_gs_curve_nrf(i)$(sum((cell(i,j),ac), im_forest_ageclass(j,ac)) > 0) =
     sum((cell(i,j), ac),
       im_forest_ageclass(j,ac)
       * pm_carbon_density_secdforest_ac("y2025",j,ac,"vegc")
@@ -79,15 +79,14 @@ if(s52_growingstock_calib = 1,
     / im_vol_conv(i)
   ;
 
-  pm_lambda_nrf(i)$(i52_gs_realistic_nrf(i) > 0) = f52_fra_nrf_gs(i) / i52_gs_realistic_nrf(i);
+  pm_lambda_nrf(i)$(i52_gs_curve_nrf(i) > 0) = f52_fra_nrf_gs(i) / i52_gs_curve_nrf(i);
 
-* Plantation wood multiplier (lambda). Realistic plantation curve sampled at the cellular ROTATION age
+* Plantation wood multiplier (lambda). Plantation carbon curve sampled at the cellular ROTATION age
 * (pm_rotation_cellular_estb, module 32), area-weighted by plantation cell area. Rotation-age is the correct
-* reference because harvest samples im_growing_stock(forestry) at exactly that age (32 presolve), so
-* lambda*V(rot) = FRA by construction. Weighting by the plantation age SHAPE (pm_land_plantation) is wrong: that
-* estate is curve-endogenous and collapses onto ac0 for a fast/no-lag curve, driving the reference to ~0 and
-* lambda to non-physical values.
-  i52_gs_realistic_pla(i)$(sum(cell(i,j), sum(ac, pm_land_plantation(j,ac))) > 0) =
+* reference because harvest samples im_growing_stock(forestry) at exactly that age (module 32 presolve): lambda
+* is set to FRA / (growing stock at the rotation age), so the harvested growing stock reproduces the FRA target
+* exactly.
+  i52_gs_curve_pla(i)$(sum(cell(i,j), sum(ac, pm_land_plantation(j,ac))) > 0) =
     sum(cell(i,j),
       sum(ac, pm_land_plantation(j,ac))
       * sum(ac2$(ac2.off = pm_rotation_cellular_estb("y2025",j)),
@@ -101,12 +100,12 @@ if(s52_growingstock_calib = 1,
     / im_vol_conv(i)
   ;
 
-  pm_lambda_pla(i)$(i52_gs_realistic_pla(i) > 0) = f52_fra_pla_gs(i) / i52_gs_realistic_pla(i);
+  pm_lambda_pla(i)$(i52_gs_curve_pla(i) > 0) = f52_fra_pla_gs(i) / i52_gs_curve_pla(i);
 
 * Cap lambda at the biomass expansion factor (BEF): lambda > BEF would harvest more stemwood than the
 * stand aboveground biomass holds. It occurs where the FRA growing-stock target exceeds the LPJmL biomass
-* (e.g. arid or intensively managed forest regions) - a per-region data mismatch the reference age cannot
-* fix. The hard cap enforces this physical limit; the capped regions then no longer reproduce FRA GS.
+* (e.g. arid or intensively managed forest regions). The hard cap enforces this physical limit; the capped
+* regions then no longer reproduce FRA GS.
   if(s52_lambda_bef_cap = 1,
     loop(i$(pm_lambda_nrf(i) > i52_bef_avg(i)),
       put_utility "log" / "  lambda_nrf capped at BEF in " i.tl:3 ": " pm_lambda_nrf(i):8:3 " -> " i52_bef_avg(i):8:3;
@@ -121,9 +120,9 @@ if(s52_growingstock_calib = 1,
 * Log wood-multiplier (lambda) calibration to FRA 2025
   put_utility "log" / "Wood multiplier (lambda) calibration to FRA 2025 (m3/ha):";
   put_utility "log" / "         NRF (nat.forest)               plantation";
-  put_utility "log" / "     target  realistic  lambda     target  realistic  lambda";
+  put_utility "log" / "     target   curve GS  lambda     target   curve GS  lambda";
   loop(i,
-    put_utility "log" / "  " i.tl:3 f52_fra_nrf_gs(i):8:1 i52_gs_realistic_nrf(i):8:1 pm_lambda_nrf(i):8:3 "  " f52_fra_pla_gs(i):8:1 i52_gs_realistic_pla(i):8:1 pm_lambda_pla(i):8:3;
+    put_utility "log" / "  " i.tl:3 f52_fra_nrf_gs(i):8:1 i52_gs_curve_nrf(i):8:1 pm_lambda_nrf(i):8:3 "  " f52_fra_pla_gs(i):8:1 i52_gs_curve_pla(i):8:1 pm_lambda_pla(i):8:3;
   );
 
 );

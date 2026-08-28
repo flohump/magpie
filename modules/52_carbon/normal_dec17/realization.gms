@@ -17,7 +17,7 @@
 *' target. Instead, when `s52_growingstock_calib = 1`, harvestable wood is matched to
 *' FAO FRA 2025 growing stock by a per-region wood multiplier `lambda`, applied to
 *' `im_growing_stock` in [14_yields] and leaving carbon density untouched:
-*' `lambda = FRA target / area-weighted growing stock of the realistic curve`
+*' `lambda = FRA target / area-weighted growing stock of the observation-based carbon curve`
 *' (naturally regenerating forest weighted by the age-class distribution -> `pm_lambda_nrf`;
 *' plantations sampled at the cellular rotation age -> `pm_lambda_pla`).
 

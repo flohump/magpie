@@ -13,8 +13,8 @@ pc52_carbon_density_start(t_all,j,"litc") = fm_carbon_density(t_all,j,"past","li
 * Forestry
 * ----------------------------
 
-* Plantation carbon-curve asymptote (vegc): LPJmL natural potential. LPJmL is already ~ the managed
-* plantation level for plantation cells (verified), so no managed-plateau override is applied.
+* Plantation carbon-curve asymptote (vegc): the LPJmL natural potential (secdforest ceiling). Module 52
+* preloop optionally re-levels it per climate class to an observed managed plateau (s52_plant_asymp_anchor).
 i52_plant_asymptote(t_all,j) = fm_carbon_density(t_all,j,"secdforest","vegc");
 
 *calculate vegetation age-class carbon density in current time step with chapman richards equation
@@ -40,8 +40,8 @@ pm_carbon_density_secdforest_ac(t_all,j,ac,"vegc") = m_growth_vegc(pc52_carbon_d
 pm_carbon_density_secdforest_ac(t_all,j,ac,"litc") = m_growth_litc_soilc(pc52_carbon_density_start(t_all,j,"litc"),fm_carbon_density(t_all,j,"secdforest","litc"),(ord(ac)-1));
 
 *** Other planted forest (FRA "other planted"): a natveg-derived Chapman-Richards curve read from
-*** f52_growth_par(clcl,{k,m},"other_planted") = the natveg curve with no establishment lag (m=1) and rate
-*** k = r x k_natveg (per-biome r), sharing the LPJmL-secdforest asymptote; cell-weighted like natveg. Its k
+*** f52_growth_par(clcl,{k,m},"other_planted") = the natveg curve with the SAME shape (m = m_natveg, so the same
+*** establishment lag) and rate k = r x k_natveg (per-biome r), sharing the LPJmL-secdforest asymptote; cell-weighted like natveg. Its k
 *** was pre-scaled (input.gms) and wood borrows pm_lambda_nrf, so the scaling cancels -> wood unchanged (carbon only).
 pm_carbon_density_other_planted_ac(t_all,j,ac,"vegc") = m_growth_vegc(pc52_carbon_density_start(t_all,j,"vegc"),fm_carbon_density(t_all,j,"secdforest","vegc"),sum(clcl,pm_climate_class(j,clcl)*f52_growth_par(clcl,"k","other_planted")),sum(clcl,pm_climate_class(j,clcl)*f52_growth_par(clcl,"m","other_planted")),(ord(ac)-1));
 pm_carbon_density_other_planted_ac(t_all,j,ac,"litc") = m_growth_litc_soilc(pc52_carbon_density_start(t_all,j,"litc"),fm_carbon_density(t_all,j,"secdforest","litc"),(ord(ac)-1));
