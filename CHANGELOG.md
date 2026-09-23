@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### changed
-- **scripts/start/projects** `project_ScenarioMIP.R` updated to the ScenarioMIP CMIP7 submission (`SMIP7_report_coupling.tgz`): 6 main runs, 7 SSP sensitivity runs as option
+- **scripts/start/projects** `project_ScenarioMIP.R` updated to the ScenarioMIP CMIP7 submission (`SMIP7_report_coupling.tgz`), main scenarios only
 - **default.cfg** Correction: removed ALB from isoCountriesEUR list
 - **scripts/output/extra/runSEALSallocation.R** adjusted to SEALS v2.0.0
 - **config** additional data updated to `additional_data_rev4.73.tgz` (updated seals_scenario_config.csv to conform to SEALS v2.0.0)
