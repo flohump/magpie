@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **30_croparea** Removed the `detail_apr24` realization and its switch `s30_implementation`, superseded by `penalties_sep26` (`s30_implementation = 0`) and `rules_sep26` (`s30_implementation = 1`).
 
 ### fixed
+- **32_forestry** With `s32_hvarea = 1`, forced harvest wood that exceeds use and export limits is left unused (`v32_prod_surplus`, costed at wood production cost), which made ForestryExo infeasible in 1995.
 -
 
 
