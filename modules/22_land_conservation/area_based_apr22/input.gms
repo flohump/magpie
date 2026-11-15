@@ -15,6 +15,10 @@ s22_restore_land  If land restoration is allowed (0=no 1=yes) / 1 /
 s22_conservation_start    Land conservation start year        / 2025 /
 s22_conservation_target   Land conservation target year       / 2050 /
 s22_base_protect_reversal Year in which base protection reversal should take place (1) / Inf /
+s22_reconversion          Switch for exogenous reconversion targets (0=off 1=on) / 0 /
+s22_reconv_start          Reconversion start year / 2025 /
+s22_reconv_year1          Year of first reconversion milestone / 2030 /
+s22_reconv_year2          Year of second reconversion milestone / 2050 /
 ;
 
 * Set-switch for countries affected by regional land conservation policy
@@ -67,4 +71,12 @@ $ondelim
 $include "./modules/22_land_conservation/input/consv_prio_areas.cs3"
 $offdelim
 ;
+
+$onEmpty
+table f22_reconv_target(j,reconv_pool22,reconv_stage22) Cumulative reconversion targets since start year (mio. ha)
+$ondelim
+$if exist "./modules/22_land_conservation/input/f22_reconv_target.cs3" $include "./modules/22_land_conservation/input/f22_reconv_target.cs3"
+$offdelim
+;
+$offEmpty
 

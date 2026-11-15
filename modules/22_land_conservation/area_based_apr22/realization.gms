@@ -22,6 +22,8 @@
 *' taken from @brooks_global_2006.
 *' Future land conservation is distributed proportionally across natural vegetation types
 *' (primary forest, secondary forest and other natural land).
+*' Optional exogenous reconversion targets (`s22_reconversion`) require gross transitions of agricultural
+*' land to natural land and protect secondary forest from harvest.
 *' @stop
 
 *'
@@ -34,6 +36,8 @@
 $Ifi "%phase%" == "sets" $include "./modules/22_land_conservation/area_based_apr22/sets.gms"
 $Ifi "%phase%" == "declarations" $include "./modules/22_land_conservation/area_based_apr22/declarations.gms"
 $Ifi "%phase%" == "input" $include "./modules/22_land_conservation/area_based_apr22/input.gms"
+$Ifi "%phase%" == "equations" $include "./modules/22_land_conservation/area_based_apr22/equations.gms"
 $Ifi "%phase%" == "preloop" $include "./modules/22_land_conservation/area_based_apr22/preloop.gms"
 $Ifi "%phase%" == "presolve_ini" $include "./modules/22_land_conservation/area_based_apr22/presolve_ini.gms"
+$Ifi "%phase%" == "postsolve" $include "./modules/22_land_conservation/area_based_apr22/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################

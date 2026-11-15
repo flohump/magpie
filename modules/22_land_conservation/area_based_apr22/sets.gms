@@ -28,4 +28,13 @@ sets
   consv_type Type of land conservation
   / protect, restore /
 
+  reconv_pool22 Land pools with reconversion targets
+  / ag, forest /
+
+  reconv_stage22 Milestones of reconversion targets
+  / m1, m2 /
+
+  land_reconv22(land) Natural land receiving reconverted agricultural land
+  / secdforest, other /
+
 ;
