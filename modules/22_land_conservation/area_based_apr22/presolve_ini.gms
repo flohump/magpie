@@ -117,6 +117,24 @@ pm_land_conservation(t,j,land,"restore") = 0;
 
 );
 
+* -------------------
+* Reconversion
+* -------------------
+p22_reconv(t,j) = 0;
+if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
+* Agricultural land still to be reconverted, limited by the agricultural land available
+p22_reconv(t,j) = i22_reconv_target(t,j,"ag") - sum(land_reconv22, p22_reconv_done(j,land_reconv22));
+p22_reconv(t,j)$(p22_reconv(t,j) > pcm_land(j,"crop") - vm_land.lo(j,"crop") + pcm_land(j,"past") - pm_land_conservation(t,j,"past","protect")) =
+        pcm_land(j,"crop") - vm_land.lo(j,"crop") + pcm_land(j,"past") - pm_land_conservation(t,j,"past","protect");
+p22_reconv(t,j)$(p22_reconv(t,j) < 1e-6) = 0;
+* Reconverted land stays natural
+pm_land_conservation(t,j,land_reconv22,"protect") =
+        min(pcm_land(j,land_reconv22), pm_land_conservation(t,j,land_reconv22,"protect") + p22_reconv_done(j,land_reconv22));
+* Managed forest is reconverted by protecting secondary forest, which excludes it from harvest
+pm_land_conservation(t,j,"secdforest","protect") =
+        min(pcm_land(j,"secdforest"), pm_land_conservation(t,j,"secdforest","protect") + i22_reconv_target(t,j,"forest"));
+);
+
 if (m_year(t) >= s22_base_protect_reversal,
   pm_land_conservation(t,j,land,consv_type) = 0;
 );

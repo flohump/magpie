@@ -21,5 +21,20 @@ parameters
  p22_country_weight(i)                              Land conservation country weight per region (1)
  p22_country_switch(iso)                             Switch indicating whether country is affected by selected land conservation policy (1)
  i22_land_iso(iso)                                  Total land area at ISO level (mio. ha)
+ p22_reconv_fader1(t_all)                           Linear fader towards first reconversion milestone (1)
+ p22_reconv_fader2(t_all)                           Linear fader towards second reconversion milestone (1)
+ i22_reconv_target(t,j,reconv_pool22)               Cumulative reconversion target (mio. ha)
+ p22_reconv(t,j)                                    Agricultural land to be reconverted in current time step (mio. ha)
+ p22_reconv_done(j,land_reconv22)                   Cumulative reconversion of agricultural land since start year (mio. ha)
 ;
+
+equations
+ q22_reconversion(j)                                Minimum reconversion of agricultural land (mio. ha)
+;
+
+*#################### R SECTION START (OUTPUT DECLARATIONS) ####################
+parameters
+ oq22_reconversion(t,j,type) Minimum reconversion of agricultural land (mio. ha)
+;
+*##################### R SECTION END (OUTPUT DECLARATIONS) #####################
 

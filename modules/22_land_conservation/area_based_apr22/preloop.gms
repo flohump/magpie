@@ -41,3 +41,11 @@ p22_add_consv(t,j,consv22_all,land) = 0;
 * Get additional conservation area in conservation priority areas
 p22_add_consv(t,j,consv_prio22,land) = f22_consv_prio(j,consv_prio22,land)*p22_conservation_fader(t);
 
+
+** Reconversion targets: linear from start year to first milestone, then to second milestone
+m_linear_time_interpol(p22_reconv_fader1,s22_reconv_start,s22_reconv_year1,0,1);
+m_linear_time_interpol(p22_reconv_fader2,s22_reconv_year1,s22_reconv_year2,0,1);
+i22_reconv_target(t,j,reconv_pool22) = s22_reconversion *
+      (f22_reconv_target(j,reconv_pool22,"m1") * p22_reconv_fader1(t)
+     + (f22_reconv_target(j,reconv_pool22,"m2") - f22_reconv_target(j,reconv_pool22,"m1")) * p22_reconv_fader2(t));
+p22_reconv_done(j,land_reconv22) = 0;
