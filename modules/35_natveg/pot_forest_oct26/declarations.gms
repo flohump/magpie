@@ -19,6 +19,7 @@ parameters
  p35_min_forest(t,j)                                     Minimum forest and other stock based on NPI or NDC targets (mio. ha)
  p35_min_other(t,j)                                      Minimum forest and other stock based on NPI or NDC targets (mio. ha)
  p35_damage_fader(t_all)                                 Fader for forest damage (1)
+ p35_reconv_shift(j)                                     Protected reconverted land shifted from other land to secondary forest (mio. ha)
  pc35_forest_recovery_shr(j)                             Forest share in natveg recovery (1)
  p35_forest_recovery_area(t,j,ac)                        Recovered forest (mio. ha)
  p35_maturesecdf(t,j,ac)                                 Matured secondary forest (mio. ha)
