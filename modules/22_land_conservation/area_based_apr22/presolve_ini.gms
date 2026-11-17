@@ -131,6 +131,8 @@ p22_reconv(t,j)$(p22_reconv(t,j) < 1e-6) = 0;
 pm_land_conservation(t,j,land_reconv22,"protect") =
         min(pcm_land(j,land_reconv22), pm_land_conservation(t,j,land_reconv22,"protect") + p22_reconv_done(j,land_reconv22));
 * Managed forest is reconverted by protecting secondary forest, which excludes it from harvest
+p22_reconv_shortfall(t,j,"forest") = max(0, pm_land_conservation(t,j,"secdforest","protect")
+        + i22_reconv_target(t,j,"forest") - pcm_land(j,"secdforest"));
 pm_land_conservation(t,j,"secdforest","protect") =
         min(pcm_land(j,"secdforest"), pm_land_conservation(t,j,"secdforest","protect") + i22_reconv_target(t,j,"forest"));
 );

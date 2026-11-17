@@ -8,6 +8,12 @@
 if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
   p22_reconv_done(j,land_reconv22) = p22_reconv_done(j,land_reconv22)
         + sum(land_ag, vm_lu_transitions.l(j,land_ag,land_reconv22));
+* Only reconversion up to the target is protected; abandonment beyond it stays unprotected
+  pm_land_reconv(j) = sum(land_reconv22, p22_reconv_done(j,land_reconv22));
+  p22_reconv_done(j,land_reconv22)$(pm_land_reconv(j) > i22_reconv_target(t,j,"ag")) =
+        p22_reconv_done(j,land_reconv22) * i22_reconv_target(t,j,"ag") / pm_land_reconv(j);
+  p22_reconv_shortfall(t,j,"ag") = max(0, i22_reconv_target(t,j,"ag") - pm_land_reconv(j));
+  pm_land_reconv(j) = min(pm_land_reconv(j), i22_reconv_target(t,j,"ag"));
 );
 
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
