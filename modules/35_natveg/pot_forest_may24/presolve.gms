@@ -128,6 +128,10 @@ pcm_land(j,"other") = sum((othertype35,ac), pc35_land_other(j,othertype35,ac));
 * In contrast, other natural land can decrease and increase within the optimization.
 * For instance, other natural land increases if agricultural land is abandoned.
 
+* Protected reconverted land that matured from other land to secondary forest stays protected
+p35_reconv_shift(j) = min(pm_land_reconv(j), max(0, pm_land_conservation(t,j,"other","protect") - pcm_land(j,"other")));
+pm_land_conservation(t,j,"secdforest","protect") = pm_land_conservation(t,j,"secdforest","protect") + p35_reconv_shift(j);
+
 * Correct land conservation for damage
 pm_land_conservation(t,j,land_natveg,"protect")$(pm_land_conservation(t,j,land_natveg,"protect") > pcm_land(j,land_natveg)) = pcm_land(j,land_natveg);
 
