@@ -6,8 +6,12 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
+* Reconversion counts net of conversion of natural vegetation to agricultural land
+  p22_reconv_net_shr(j) = sum((land_ag,land_reconv22), vm_lu_transitions.l(j,land_ag,land_reconv22));
+  p22_reconv_net_shr(j)$(p22_reconv_net_shr(j) > 0) =
+        max(0, 1 - sum((land_natveg,land_ag), vm_lu_transitions.l(j,land_natveg,land_ag)) / p22_reconv_net_shr(j));
   p22_reconv_done(j,land_reconv22) = p22_reconv_done(j,land_reconv22)
-        + sum(land_ag, vm_lu_transitions.l(j,land_ag,land_reconv22));
+        + sum(land_ag, vm_lu_transitions.l(j,land_ag,land_reconv22)) * p22_reconv_net_shr(j);
 * Only reconversion up to the target is protected; abandonment beyond it stays unprotected
   pm_land_reconv(j) = sum(land_reconv22, p22_reconv_done(j,land_reconv22));
   p22_reconv_done(j,land_reconv22)$(pm_land_reconv(j) > i22_reconv_target(t,j,"ag")) =

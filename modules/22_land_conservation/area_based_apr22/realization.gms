@@ -22,8 +22,8 @@
 *' taken from @brooks_global_2006.
 *' Future land conservation is distributed proportionally across natural vegetation types
 *' (primary forest, secondary forest and other natural land).
-*' Optional exogenous reconversion targets (`s22_reconversion`) require gross transitions of agricultural
-*' land to natural land and protect secondary forest from harvest.
+*' Optional exogenous reconversion targets (`s22_reconversion`) require transitions of agricultural land
+*' to natural land, net of conversion of natural vegetation in the same cluster, and protect secondary forest from harvest.
 *' @stop
 
 *'
