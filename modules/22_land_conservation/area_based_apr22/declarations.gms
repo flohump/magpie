@@ -26,6 +26,7 @@ parameters
  i22_reconv_target(t,j,reconv_pool22)               Cumulative reconversion target (mio. ha)
  p22_reconv(t,j)                                    Agricultural land to be reconverted in current time step (mio. ha)
  p22_reconv_done(j,land_reconv22)                   Cumulative reconversion of agricultural land since start year (mio. ha)
+ p22_reconv_net_shr(j)                              Share of reconversion not offset by conversion of natural vegetation (1)
  pm_land_reconv(j)                                  Protected reconverted agricultural land (mio. ha)
  p22_reconv_shortfall(t,j,reconv_pool22)            Cumulative reconversion target not met (mio. ha)
 ;

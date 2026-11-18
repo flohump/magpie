@@ -6,10 +6,12 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 *' @equations
-*' Gross transitions from cropland and pasture to secondary forest and other natural land
-*' must at least match the reconversion due in the current time step (abandonment counts).
+*' Transitions from cropland and pasture to secondary forest and other natural land, net of
+*' conversion of natural vegetation to cropland and pasture in the same cluster, must at least match
+*' the reconversion due in the current time step (abandonment counts).
 
  q22_reconversion(j2)$(sum(ct, p22_reconv(ct,j2)) > 0) ..
           sum((land_ag,land_reconv22), vm_lu_transitions(j2,land_ag,land_reconv22))
+          - sum((land_natveg,land_ag), vm_lu_transitions(j2,land_natveg,land_ag))
           =g=
           sum(ct, p22_reconv(ct,j2));
