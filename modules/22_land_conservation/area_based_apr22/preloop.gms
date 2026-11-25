@@ -50,4 +50,5 @@ i22_reconv_target(t,j,reconv_pool22) = s22_reconversion *
      + (f22_reconv_target(j,reconv_pool22,"m2") - f22_reconv_target(j,reconv_pool22,"m1")) * p22_reconv_fader2(t));
 p22_reconv_done(j,land_reconv22) = 0;
 pm_land_reconv(j) = 0;
+p22_reconv_forest_add(j) = 0;
 p22_reconv_shortfall(t,j,reconv_pool22) = 0;

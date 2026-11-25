@@ -18,7 +18,7 @@ library(gms)
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
-cfg$info$flag <- "BTC2v05"
+cfg$info$flag <- "BTC2v06"
 cfg$results_folder <- "output/:title:"
 cfg$force_replace <- TRUE
 cfg$qos <- if (length(system("squeue -u $USER -h -q priority -o %i", intern = TRUE)) < 5) "priority" else "standby"
@@ -29,6 +29,9 @@ cellHash <- c(ssp245 = "4b926f9a", ssp126 = "5033a1ce", ssp119 = "44b34b8f")
 cfg$input["regional"] <- "rev4.137_b9baff04_magpie.tgz"
 cfg$input["validation"] <- "rev4.137_b9baff04_92e02314_validation.tgz"
 cfg$input["calibration"] <- "calibration_AgMIP_FAO_16Nov26.tgz"
+
+# No CO2-price or NPI/NDC afforestation on existing secondary forest (all runs)
+cfg$gms$s32_aff_secdforest <- 0
 
 # GHG prices and 2nd gen bioenergy demand from ScenarioMIP (CMIP7)
 smip <- c(M = "SMIP7-M-SSP2-main", L = "SMIP7-L-SSP2-main", VL = "SMIP7-VL-SSP2-sens")

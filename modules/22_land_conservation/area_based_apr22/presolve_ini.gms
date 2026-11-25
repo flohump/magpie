@@ -130,11 +130,22 @@ p22_reconv(t,j)$(p22_reconv(t,j) < 1e-6) = 0;
 * Reconverted land stays natural
 pm_land_conservation(t,j,land_reconv22,"protect") =
         min(pcm_land(j,land_reconv22), pm_land_conservation(t,j,land_reconv22,"protect") + p22_reconv_done(j,land_reconv22));
-* Managed forest is reconverted by protecting secondary forest, which excludes it from harvest
-p22_reconv_shortfall(t,j,"forest") = max(0, pm_land_conservation(t,j,"secdforest","protect")
-        + i22_reconv_target(t,j,"forest") - pcm_land(j,"secdforest"));
-pm_land_conservation(t,j,"secdforest","protect") =
-        min(pcm_land(j,"secdforest"), pm_land_conservation(t,j,"secdforest","protect") + i22_reconv_target(t,j,"forest"));
+* Managed forest is reconverted by protecting secondary forest, which excludes it from harvest.
+* Targets above the unprotected secondary forest of a cluster move to clusters of the same region; moved targets are kept.
+p22_forest_cap(j) = max(0, pcm_land(j,"secdforest") - pm_land_conservation(t,j,"secdforest","protect"));
+p22_forest_gap(i) = max(0, sum(cell(i,j), i22_reconv_target(t,j,"forest")
+        - min(p22_forest_cap(j), i22_reconv_target(t,j,"forest") + p22_reconv_forest_add(j))));
+p22_forest_spare(j) = max(0, p22_forest_cap(j) - i22_reconv_target(t,j,"forest") - p22_reconv_forest_add(j));
+p22_forest_spare_reg(i) = sum(cell(i,j), p22_forest_spare(j));
+p22_reconv_forest_add(j) = p22_reconv_forest_add(j) + p22_forest_spare(j)
+        * sum(cell(i,j)$(p22_forest_spare_reg(i) > 0), min(1, p22_forest_gap(i) / p22_forest_spare_reg(i)));
+* Regional remainder, reported in the clusters that miss their own target
+p22_forest_short(j) = max(0, i22_reconv_target(t,j,"forest") - p22_forest_cap(j));
+p22_forest_short_reg(i) = sum(cell(i,j), p22_forest_short(j));
+p22_reconv_shortfall(t,j,"forest") = p22_forest_short(j) * sum(cell(i,j)$(p22_forest_short_reg(i) > 0),
+        max(0, p22_forest_gap(i) - p22_forest_spare_reg(i)) / p22_forest_short_reg(i));
+pm_land_conservation(t,j,"secdforest","protect") = min(pcm_land(j,"secdforest"),
+        pm_land_conservation(t,j,"secdforest","protect") + i22_reconv_target(t,j,"forest") + p22_reconv_forest_add(j));
 );
 
 if (m_year(t) >= s22_base_protect_reversal,
