@@ -122,10 +122,17 @@ pm_land_conservation(t,j,land,"restore") = 0;
 * -------------------
 p22_reconv(t,j) = 0;
 if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
-* Agricultural land still to be reconverted, limited by the agricultural land available
-p22_reconv(t,j) = i22_reconv_target(t,j,"ag") - sum(land_reconv22, p22_reconv_done(j,land_reconv22));
-p22_reconv(t,j)$(p22_reconv(t,j) > pcm_land(j,"crop") - vm_land.lo(j,"crop") - vm_treecover.l(j) + pcm_land(j,"past") - pm_land_conservation(t,j,"past","protect")) =
-        pcm_land(j,"crop") - vm_land.lo(j,"crop") - vm_treecover.l(j) + pcm_land(j,"past") - pm_land_conservation(t,j,"past","protect");
+* Agricultural land still to be reconverted, limited by the agricultural land available.
+* Targets above the available land of a cluster move to clusters of the same region; moved targets are kept.
+p22_ag_cap(j) = max(0, pcm_land(j,"crop") - vm_land.lo(j,"crop") - vm_treecover.l(j) + pcm_land(j,"past") - pm_land_conservation(t,j,"past","protect"));
+p22_ag_due(j) = i22_reconv_target(t,j,"ag") + p22_reconv_ag_add(j) - sum(land_reconv22, p22_reconv_done(j,land_reconv22));
+p22_ag_gap(i) = max(0, sum(cell(i,j), i22_reconv_target(t,j,"ag") - sum(land_reconv22, p22_reconv_done(j,land_reconv22))
+        - min(p22_ag_cap(j), p22_ag_due(j))));
+p22_ag_spare(j) = max(0, p22_ag_cap(j) - p22_ag_due(j));
+p22_ag_spare_reg(i) = sum(cell(i,j), p22_ag_spare(j));
+p22_reconv_ag_add(j) = p22_reconv_ag_add(j) + p22_ag_spare(j)
+        * sum(cell(i,j)$(p22_ag_spare_reg(i) > 0), min(1, p22_ag_gap(i) / p22_ag_spare_reg(i)));
+p22_reconv(t,j) = min(p22_ag_cap(j), i22_reconv_target(t,j,"ag") + p22_reconv_ag_add(j) - sum(land_reconv22, p22_reconv_done(j,land_reconv22)));
 p22_reconv(t,j)$(p22_reconv(t,j) < 1e-6) = 0;
 * Reconverted other land that matured to secondary forest is tracked as secondary forest
 p22_reconv_mature(j) = min(p22_reconv_done(j,"other"),
