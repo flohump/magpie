@@ -52,3 +52,4 @@ p22_reconv_done(j,land_reconv22) = 0;
 pm_land_reconv(j) = 0;
 p22_reconv_forest_add(j) = 0;
 p22_reconv_shortfall(t,j,reconv_pool22) = 0;
+p22_reconv_forest(t,j) = 0;
