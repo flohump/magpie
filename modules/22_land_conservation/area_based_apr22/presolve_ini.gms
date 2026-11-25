@@ -149,8 +149,10 @@ p22_forest_short(j) = max(0, i22_reconv_target(t,j,"forest") - p22_forest_cap(j)
 p22_forest_short_reg(i) = sum(cell(i,j), p22_forest_short(j));
 p22_reconv_shortfall(t,j,"forest") = p22_forest_short(j) * sum(cell(i,j)$(p22_forest_short_reg(i) > 0),
         max(0, p22_forest_gap(i) - p22_forest_spare_reg(i)) / p22_forest_short_reg(i));
+p22_reconv_forest(t,j) = - pm_land_conservation(t,j,"secdforest","protect");
 pm_land_conservation(t,j,"secdforest","protect") = min(pcm_land(j,"secdforest"),
         pm_land_conservation(t,j,"secdforest","protect") + i22_reconv_target(t,j,"forest") + p22_reconv_forest_add(j));
+p22_reconv_forest(t,j) = p22_reconv_forest(t,j) + pm_land_conservation(t,j,"secdforest","protect");
 );
 
 if (m_year(t) >= s22_base_protect_reversal,

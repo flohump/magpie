@@ -38,6 +38,7 @@ parameters
  p22_forest_spare_reg(i)                            Regional secondary forest available beyond the cluster targets (mio. ha)
  p22_forest_short_reg(i)                            Regional sum of managed forest targets exceeding available secondary forest (mio. ha)
  p22_reconv_forest_add(j)                           Managed forest target moved from other clusters of the region (mio. ha)
+ p22_reconv_forest(t,j)                             Secondary forest protected as reconverted managed forest (mio. ha)
 ;
 
 equations
