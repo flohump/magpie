@@ -18,7 +18,7 @@ library(gms)
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
-cfg$info$flag <- "BTC2v07"
+cfg$info$flag <- "BTC2v08"
 cfg$results_folder <- "output/:title:"
 cfg$force_replace <- TRUE
 cfg$qos <- if (length(system("squeue -u $USER -h -q priority -o %i", intern = TRUE)) < 5) "priority" else "standby"

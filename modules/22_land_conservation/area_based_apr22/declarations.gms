@@ -39,6 +39,15 @@ parameters
  p22_forest_short_reg(i)                            Regional sum of managed forest targets exceeding available secondary forest (mio. ha)
  p22_reconv_forest_add(j)                           Managed forest target moved from other clusters of the region (mio. ha)
  p22_reconv_forest(t,j)                             Secondary forest protected as reconverted managed forest (mio. ha)
+ p22_ag_cap(j)                                      Agricultural land available for reconversion (mio. ha)
+ p22_ag_due(j)                                      Agricultural land still to be reconverted incl. moved targets (mio. ha)
+ p22_ag_spare(j)                                    Agricultural land available beyond the reconversion due (mio. ha)
+ p22_ag_gap(i)                                      Regional agricultural land target not met in its own clusters (mio. ha)
+ p22_ag_spare_reg(i)                                Regional agricultural land available beyond the reconversion due (mio. ha)
+ p22_reconv_ag_add(j)                               Agricultural land target moved from other clusters of the region (mio. ha)
+ p22_ag_short(j)                                    Agricultural land target not met in its own cluster (mio. ha)
+ p22_ag_short_reg(i)                                Regional sum of agricultural land targets not met in their own clusters (mio. ha)
+ p22_ag_over_reg(i)                                 Regional reconversion beyond the own cluster targets (mio. ha)
 ;
 
 equations

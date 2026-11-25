@@ -15,12 +15,17 @@ if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
   p22_reconv_done(j,land_reconv22)$(sum(land_reconv22_2, p22_reconv_grow(j,land_reconv22_2)) > 0) =
         p22_reconv_done(j,land_reconv22)
         + p22_reconv_booked(j) * p22_reconv_grow(j,land_reconv22) / sum(land_reconv22_2, p22_reconv_grow(j,land_reconv22_2));
-* Only reconversion up to the target is protected; abandonment beyond it stays unprotected
+* Only reconversion up to the target (incl. moved targets) is protected; abandonment beyond it stays unprotected
   pm_land_reconv(j) = sum(land_reconv22, p22_reconv_done(j,land_reconv22));
-  p22_reconv_done(j,land_reconv22)$(pm_land_reconv(j) > i22_reconv_target(t,j,"ag")) =
-        p22_reconv_done(j,land_reconv22) * i22_reconv_target(t,j,"ag") / pm_land_reconv(j);
-  p22_reconv_shortfall(t,j,"ag") = max(0, i22_reconv_target(t,j,"ag") - pm_land_reconv(j));
-  pm_land_reconv(j) = min(pm_land_reconv(j), i22_reconv_target(t,j,"ag"));
+  p22_reconv_done(j,land_reconv22)$(pm_land_reconv(j) > i22_reconv_target(t,j,"ag") + p22_reconv_ag_add(j)) =
+        p22_reconv_done(j,land_reconv22) * (i22_reconv_target(t,j,"ag") + p22_reconv_ag_add(j)) / pm_land_reconv(j);
+  pm_land_reconv(j) = min(pm_land_reconv(j), i22_reconv_target(t,j,"ag") + p22_reconv_ag_add(j));
+* Regional remainder, reported in the clusters that miss their own target
+  p22_ag_short(j) = max(0, i22_reconv_target(t,j,"ag") - pm_land_reconv(j));
+  p22_ag_short_reg(i) = sum(cell(i,j), p22_ag_short(j));
+  p22_ag_over_reg(i) = sum(cell(i,j), max(0, pm_land_reconv(j) - i22_reconv_target(t,j,"ag")));
+  p22_reconv_shortfall(t,j,"ag") = sum(cell(i,j)$(p22_ag_short_reg(i) > 0),
+        p22_ag_short(j) * max(0, p22_ag_short_reg(i) - p22_ag_over_reg(i)) / p22_ag_short_reg(i));
 );
 
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
