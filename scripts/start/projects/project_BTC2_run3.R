@@ -18,17 +18,19 @@ library(gms)
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
-cfg$info$flag <- "BTC2v06"
+cfg$info$flag <- "BTC2v07"
 cfg$results_folder <- "output/:title:"
 cfg$force_replace <- TRUE
 cfg$qos <- if (length(system("squeue -u $USER -h -q priority -o %i", intern = TRUE)) < 5) "priority" else "standby"
 
 # rev4.137, AgMIP regions; cellular data with the BTC2 protocol layers (consv_prio_areas incl. BTC2, f22_reconv_target)
-rev <- "rev4.137BTC2v3_b9baff04"
+rev <- "rev4.137BTC2v4_b9baff04"
 cellHash <- c(ssp245 = "4b926f9a", ssp126 = "5033a1ce", ssp119 = "44b34b8f")
 cfg$input["regional"] <- "rev4.137_b9baff04_magpie.tgz"
 cfg$input["validation"] <- "rev4.137_b9baff04_92e02314_validation.tgz"
 cfg$input["calibration"] <- "calibration_AgMIP_FAO_16Nov26.tgz"
+# rehabilitation targets (pool B), read by the BTC2 land reporting only
+cfg$files2export$start <- c(cfg$files2export$start, "input/rehab_target_0.5.mz")
 
 # GHG prices and 2nd gen bioenergy demand from ScenarioMIP (CMIP7)
 smip <- c(M = "SMIP7-M-SSP2-main", L = "SMIP7-L-SSP2-main", VL = "SMIP7-VL-SSP2-sens")
