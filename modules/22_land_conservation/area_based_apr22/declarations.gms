@@ -41,15 +41,13 @@ parameters
 ;
 
 equations
- q22_reconversion(j)                                Minimum reconversion of agricultural land (mio. ha)
- q22_reconversion_stock(j)                          Minimum growth of natural vegetation under reconversion (mio. ha)
+ q22_reconversion(j)                                Minimum growth of natural vegetation under reconversion (mio. ha)
  q22_reconversion_ag(j)                             Minimum decline of agricultural land under reconversion (mio. ha)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- oq22_reconversion(t,j,type) Minimum reconversion of agricultural land (mio. ha)
- oq22_reconversion_stock(t,j,type) Minimum growth of natural vegetation under reconversion (mio. ha)
+ oq22_reconversion(t,j,type) Minimum growth of natural vegetation under reconversion (mio. ha)
  oq22_reconversion_ag(t,j,type) Minimum decline of agricultural land under reconversion (mio. ha)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

@@ -6,20 +6,10 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 *' @equations
-*' Transitions from cropland and pasture to secondary forest and other natural land, net of
-*' conversion of natural vegetation to cropland and pasture in the same cluster, must at least match
-*' the reconversion due in the current time step (abandonment counts).
+*' Natural vegetation must grow and cropland plus pasture shrink by at least the reconversion due
+*' in the current time step (abandonment counts). Stock changes, since land transitions are not unique.
 
  q22_reconversion(j2)$(sum(ct, p22_reconv(ct,j2)) > 0) ..
-          sum((land_ag,land_reconv22), vm_lu_transitions(j2,land_ag,land_reconv22))
-          - sum((land_natveg,land_ag), vm_lu_transitions(j2,land_natveg,land_ag))
-          =g=
-          sum(ct, p22_reconv(ct,j2));
-
-*' Transitions are not unique (agricultural land to forestry can be booked via secondary forest),
-*' so natural vegetation must also grow and agricultural land shrink by at least the reconversion due.
-
- q22_reconversion_stock(j2)$(sum(ct, p22_reconv(ct,j2)) > 0) ..
           sum(land_natveg, vm_land(j2,land_natveg) - pcm_land(j2,land_natveg))
           =g=
           sum(ct, p22_reconv(ct,j2));

@@ -6,11 +6,9 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
-* Reconversion counted = min of net transitions, natural vegetation growth and agricultural decline,
-* split by the net growth of each receiving pool (stock changes from transitions: pcm_land is already updated)
+* Reconversion counted = min of natural vegetation growth and agricultural decline, split by the net growth
+* of each receiving pool (stock changes from transitions: pcm_land is already updated)
   p22_reconv_booked(j) = max(0, min(
-        sum((land_ag,land_reconv22), vm_lu_transitions.l(j,land_ag,land_reconv22))
-          - sum((land_natveg,land_ag), vm_lu_transitions.l(j,land_natveg,land_ag)),
         sum((land,land_natveg), vm_lu_transitions.l(j,land,land_natveg) - vm_lu_transitions.l(j,land_natveg,land)),
         sum((land_ag,land), vm_lu_transitions.l(j,land_ag,land) - vm_lu_transitions.l(j,land,land_ag))));
   p22_reconv_grow(j,land_reconv22) = max(0, sum(land, vm_lu_transitions.l(j,land,land_reconv22) - vm_lu_transitions.l(j,land_reconv22,land)));
@@ -30,10 +28,6 @@ if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
  oq22_reconversion(t,j,"level")    = q22_reconversion.l(j);
  oq22_reconversion(t,j,"upper")    = q22_reconversion.up(j);
  oq22_reconversion(t,j,"lower")    = q22_reconversion.lo(j);
- oq22_reconversion_stock(t,j,"marginal") = q22_reconversion_stock.m(j);
- oq22_reconversion_stock(t,j,"level")    = q22_reconversion_stock.l(j);
- oq22_reconversion_stock(t,j,"upper")    = q22_reconversion_stock.up(j);
- oq22_reconversion_stock(t,j,"lower")    = q22_reconversion_stock.lo(j);
  oq22_reconversion_ag(t,j,"marginal") = q22_reconversion_ag.m(j);
  oq22_reconversion_ag(t,j,"level")    = q22_reconversion_ag.l(j);
  oq22_reconversion_ag(t,j,"upper")    = q22_reconversion_ag.up(j);
