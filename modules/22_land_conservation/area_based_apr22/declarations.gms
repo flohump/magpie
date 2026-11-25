@@ -29,15 +29,24 @@ parameters
  p22_reconv_net_shr(j)                              Share of reconversion not offset by conversion of natural vegetation (1)
  pm_land_reconv(j)                                  Protected reconverted agricultural land (mio. ha)
  p22_reconv_shortfall(t,j,reconv_pool22)            Cumulative reconversion target not met (mio. ha)
+ p22_forest_cap(j)                                  Secondary forest available for managed forest reconversion (mio. ha)
+ p22_forest_spare(j)                                Secondary forest available beyond the cluster target (mio. ha)
+ p22_forest_short(j)                                Managed forest target exceeding available secondary forest (mio. ha)
+ p22_forest_gap(i)                                  Regional managed forest target not met in its own clusters (mio. ha)
+ p22_forest_spare_reg(i)                            Regional secondary forest available beyond the cluster targets (mio. ha)
+ p22_forest_short_reg(i)                            Regional sum of managed forest targets exceeding available secondary forest (mio. ha)
+ p22_reconv_forest_add(j)                           Managed forest target moved from other clusters of the region (mio. ha)
 ;
 
 equations
  q22_reconversion(j)                                Minimum reconversion of agricultural land (mio. ha)
+ q22_reconversion_stock(j)                          Minimum growth of natural vegetation under reconversion (mio. ha)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  oq22_reconversion(t,j,type) Minimum reconversion of agricultural land (mio. ha)
+ oq22_reconversion_stock(t,j,type) Minimum growth of natural vegetation under reconversion (mio. ha)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
 

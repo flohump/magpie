@@ -15,3 +15,11 @@
           - sum((land_natveg,land_ag), vm_lu_transitions(j2,land_natveg,land_ag))
           =g=
           sum(ct, p22_reconv(ct,j2));
+
+*' Transitions are not unique (agricultural land to forestry can be booked via secondary forest),
+*' so natural vegetation in the cluster must also grow by at least the reconversion due.
+
+ q22_reconversion_stock(j2)$(sum(ct, p22_reconv(ct,j2)) > 0) ..
+          sum(land_natveg, vm_land(j2,land_natveg) - pcm_land(j2,land_natveg))
+          =g=
+          sum(ct, p22_reconv(ct,j2));

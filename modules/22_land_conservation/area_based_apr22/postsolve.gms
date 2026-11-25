@@ -6,10 +6,13 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
-* Reconversion counts net of conversion of natural vegetation to agricultural land
+* Reconversion counts net of conversion of natural vegetation to agricultural land and at most the growth of natural vegetation
+* (growth from transitions: pcm_land is already updated in module 10 postsolve)
   p22_reconv_net_shr(j) = sum((land_ag,land_reconv22), vm_lu_transitions.l(j,land_ag,land_reconv22));
   p22_reconv_net_shr(j)$(p22_reconv_net_shr(j) > 0) =
-        max(0, 1 - sum((land_natveg,land_ag), vm_lu_transitions.l(j,land_natveg,land_ag)) / p22_reconv_net_shr(j));
+        max(0, min(p22_reconv_net_shr(j) - sum((land_natveg,land_ag), vm_lu_transitions.l(j,land_natveg,land_ag)),
+                   sum((land,land_natveg), vm_lu_transitions.l(j,land,land_natveg) - vm_lu_transitions.l(j,land_natveg,land))))
+        / p22_reconv_net_shr(j);
   p22_reconv_done(j,land_reconv22) = p22_reconv_done(j,land_reconv22)
         + sum(land_ag, vm_lu_transitions.l(j,land_ag,land_reconv22)) * p22_reconv_net_shr(j);
 * Only reconversion up to the target is protected; abandonment beyond it stays unprotected
@@ -25,4 +28,8 @@ if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
  oq22_reconversion(t,j,"level")    = q22_reconversion.l(j);
  oq22_reconversion(t,j,"upper")    = q22_reconversion.up(j);
  oq22_reconversion(t,j,"lower")    = q22_reconversion.lo(j);
+ oq22_reconversion_stock(t,j,"marginal") = q22_reconversion_stock.m(j);
+ oq22_reconversion_stock(t,j,"level")    = q22_reconversion_stock.l(j);
+ oq22_reconversion_stock(t,j,"upper")    = q22_reconversion_stock.up(j);
+ oq22_reconversion_stock(t,j,"lower")    = q22_reconversion_stock.lo(j);
 *##################### R SECTION END (OUTPUT DEFINITIONS) ######################
