@@ -26,7 +26,9 @@ parameters
  i22_reconv_target(t,j,reconv_pool22)               Cumulative reconversion target (mio. ha)
  p22_reconv(t,j)                                    Agricultural land to be reconverted in current time step (mio. ha)
  p22_reconv_done(j,land_reconv22)                   Cumulative reconversion of agricultural land since start year (mio. ha)
- p22_reconv_net_shr(j)                              Share of reconversion not offset by conversion of natural vegetation (1)
+ p22_reconv_booked(j)                               Reconversion counted in the current time step (mio. ha)
+ p22_reconv_grow(j,land_reconv22)                   Net growth of natural land pools receiving reconversion (mio. ha)
+ p22_reconv_mature(j)                               Reconverted other land matured to secondary forest (mio. ha)
  pm_land_reconv(j)                                  Protected reconverted agricultural land (mio. ha)
  p22_reconv_shortfall(t,j,reconv_pool22)            Cumulative reconversion target not met (mio. ha)
  p22_forest_cap(j)                                  Secondary forest available for managed forest reconversion (mio. ha)
@@ -41,12 +43,14 @@ parameters
 equations
  q22_reconversion(j)                                Minimum reconversion of agricultural land (mio. ha)
  q22_reconversion_stock(j)                          Minimum growth of natural vegetation under reconversion (mio. ha)
+ q22_reconversion_ag(j)                             Minimum decline of agricultural land under reconversion (mio. ha)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  oq22_reconversion(t,j,type) Minimum reconversion of agricultural land (mio. ha)
  oq22_reconversion_stock(t,j,type) Minimum growth of natural vegetation under reconversion (mio. ha)
+ oq22_reconversion_ag(t,j,type) Minimum decline of agricultural land under reconversion (mio. ha)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
 
