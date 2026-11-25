@@ -30,9 +30,6 @@ cfg$input["regional"] <- "rev4.137_b9baff04_magpie.tgz"
 cfg$input["validation"] <- "rev4.137_b9baff04_92e02314_validation.tgz"
 cfg$input["calibration"] <- "calibration_AgMIP_FAO_16Nov26.tgz"
 
-# No CO2-price or NPI/NDC afforestation on existing secondary forest (all runs)
-cfg$gms$s32_aff_secdforest <- 0
-
 # GHG prices and 2nd gen bioenergy demand from ScenarioMIP (CMIP7)
 smip <- c(M = "SMIP7-M-SSP2-main", L = "SMIP7-L-SSP2-main", VL = "SMIP7-VL-SSP2-sens")
 mute <- c(M = "y2150", L = "y2030", VL = "y2030")

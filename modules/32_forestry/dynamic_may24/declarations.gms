@@ -103,7 +103,6 @@ equations
  q32_land_reduction_forestry(j,type32)             Forestry land reduction (mio. ha)
  q32_land_replant(j,harvest32)                     Harvested and replanted area in harvestable managed forestry (mio. ha)
  q32_co2p_aff_limit(j)                             Annual upper limit for re-afforestation (mio. ha per yr)
- q32_aff_secdforest(j)                             Secondary forest converted to forestry only for plantations (mio. ha)
 ;
 
 
@@ -158,6 +157,5 @@ parameters
  oq32_land_reduction_forestry(t,j,type32,type) Forestry land reduction (mio. ha)
  oq32_land_replant(t,j,harvest32,type)         Harvested and replanted area in harvestable managed forestry (mio. ha)
  oq32_co2p_aff_limit(t,j,type)                 Annual upper limit for re-afforestation (mio. ha per yr)
- oq32_aff_secdforest(t,j,type)                 Secondary forest converted to forestry only for plantations (mio. ha)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

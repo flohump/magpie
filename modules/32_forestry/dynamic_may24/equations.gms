@@ -85,11 +85,6 @@ sum(ac_est, v32_land(j2,"aff",ac_est)) =l= sum(ac, v32_land(j2,"aff",ac)) - sum(
   vm_landexpansion_forestry(j2,"aff") / m_timestep_length =l=
   s32_annual_aff_limit * sum(ct, pm_max_forest_est(ct,j2));
 
-*' With `s32_aff_secdforest` = 0, secondary forest converted to forestry can only become new plantations.
-
- q32_aff_secdforest(j2)$(s32_aff_secdforest = 0) ..
-  vm_lu_transitions(j2,"secdforest","forestry") =l= vm_landexpansion_forestry(j2,"plant");
-
 *' The constraint `q32_max_aff` accounts for the allowed maximum global endogenous
 *' afforestation defined in `i32_max_aff_area_glo`.
 *' The constraint `q32_max_aff_reg` accounts for the allowed maximum regional endogenous
