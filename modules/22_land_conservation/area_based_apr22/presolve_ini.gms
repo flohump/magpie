@@ -124,9 +124,14 @@ p22_reconv(t,j) = 0;
 if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
 * Agricultural land still to be reconverted, limited by the agricultural land available
 p22_reconv(t,j) = i22_reconv_target(t,j,"ag") - sum(land_reconv22, p22_reconv_done(j,land_reconv22));
-p22_reconv(t,j)$(p22_reconv(t,j) > pcm_land(j,"crop") - vm_land.lo(j,"crop") + pcm_land(j,"past") - pm_land_conservation(t,j,"past","protect")) =
-        pcm_land(j,"crop") - vm_land.lo(j,"crop") + pcm_land(j,"past") - pm_land_conservation(t,j,"past","protect");
+p22_reconv(t,j)$(p22_reconv(t,j) > pcm_land(j,"crop") - vm_land.lo(j,"crop") - vm_treecover.l(j) + pcm_land(j,"past") - pm_land_conservation(t,j,"past","protect")) =
+        pcm_land(j,"crop") - vm_land.lo(j,"crop") - vm_treecover.l(j) + pcm_land(j,"past") - pm_land_conservation(t,j,"past","protect");
 p22_reconv(t,j)$(p22_reconv(t,j) < 1e-6) = 0;
+* Reconverted other land that matured to secondary forest is tracked as secondary forest
+p22_reconv_mature(j) = min(p22_reconv_done(j,"other"),
+        max(0, pm_land_conservation(t,j,"other","protect") + p22_reconv_done(j,"other") - pcm_land(j,"other")));
+p22_reconv_done(j,"other") = p22_reconv_done(j,"other") - p22_reconv_mature(j);
+p22_reconv_done(j,"secdforest") = p22_reconv_done(j,"secdforest") + p22_reconv_mature(j);
 * Reconverted land stays natural
 pm_land_conservation(t,j,land_reconv22,"protect") =
         min(pcm_land(j,land_reconv22), pm_land_conservation(t,j,land_reconv22,"protect") + p22_reconv_done(j,land_reconv22));

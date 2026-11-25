@@ -6,15 +6,17 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
-* Reconversion counts net of conversion of natural vegetation to agricultural land and at most the growth of natural vegetation
-* (growth from transitions: pcm_land is already updated in module 10 postsolve)
-  p22_reconv_net_shr(j) = sum((land_ag,land_reconv22), vm_lu_transitions.l(j,land_ag,land_reconv22));
-  p22_reconv_net_shr(j)$(p22_reconv_net_shr(j) > 0) =
-        max(0, min(p22_reconv_net_shr(j) - sum((land_natveg,land_ag), vm_lu_transitions.l(j,land_natveg,land_ag)),
-                   sum((land,land_natveg), vm_lu_transitions.l(j,land,land_natveg) - vm_lu_transitions.l(j,land_natveg,land))))
-        / p22_reconv_net_shr(j);
-  p22_reconv_done(j,land_reconv22) = p22_reconv_done(j,land_reconv22)
-        + sum(land_ag, vm_lu_transitions.l(j,land_ag,land_reconv22)) * p22_reconv_net_shr(j);
+* Reconversion counted = min of net transitions, natural vegetation growth and agricultural decline,
+* split by the net growth of each receiving pool (stock changes from transitions: pcm_land is already updated)
+  p22_reconv_booked(j) = max(0, min(
+        sum((land_ag,land_reconv22), vm_lu_transitions.l(j,land_ag,land_reconv22))
+          - sum((land_natveg,land_ag), vm_lu_transitions.l(j,land_natveg,land_ag)),
+        sum((land,land_natveg), vm_lu_transitions.l(j,land,land_natveg) - vm_lu_transitions.l(j,land_natveg,land)),
+        sum((land_ag,land), vm_lu_transitions.l(j,land_ag,land) - vm_lu_transitions.l(j,land,land_ag))));
+  p22_reconv_grow(j,land_reconv22) = max(0, sum(land, vm_lu_transitions.l(j,land,land_reconv22) - vm_lu_transitions.l(j,land_reconv22,land)));
+  p22_reconv_done(j,land_reconv22)$(sum(land_reconv22_2, p22_reconv_grow(j,land_reconv22_2)) > 0) =
+        p22_reconv_done(j,land_reconv22)
+        + p22_reconv_booked(j) * p22_reconv_grow(j,land_reconv22) / sum(land_reconv22_2, p22_reconv_grow(j,land_reconv22_2));
 * Only reconversion up to the target is protected; abandonment beyond it stays unprotected
   pm_land_reconv(j) = sum(land_reconv22, p22_reconv_done(j,land_reconv22));
   p22_reconv_done(j,land_reconv22)$(pm_land_reconv(j) > i22_reconv_target(t,j,"ag")) =
@@ -32,4 +34,8 @@ if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
  oq22_reconversion_stock(t,j,"level")    = q22_reconversion_stock.l(j);
  oq22_reconversion_stock(t,j,"upper")    = q22_reconversion_stock.up(j);
  oq22_reconversion_stock(t,j,"lower")    = q22_reconversion_stock.lo(j);
+ oq22_reconversion_ag(t,j,"marginal") = q22_reconversion_ag.m(j);
+ oq22_reconversion_ag(t,j,"level")    = q22_reconversion_ag.l(j);
+ oq22_reconversion_ag(t,j,"upper")    = q22_reconversion_ag.up(j);
+ oq22_reconversion_ag(t,j,"lower")    = q22_reconversion_ag.lo(j);
 *##################### R SECTION END (OUTPUT DEFINITIONS) ######################
