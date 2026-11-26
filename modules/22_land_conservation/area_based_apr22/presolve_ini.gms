@@ -124,34 +124,43 @@ pm_land_conservation(t,j,land,"restore") = 0;
 p22_reconv(t,j) = 0;
 if(s22_reconversion = 1 AND m_year(t) > sm_fix_SSP2,
 * Agricultural land still to be reconverted, limited by the agricultural land available.
-* Targets above the available land of a cluster move to clusters of the same region; moved targets are kept.
+* Targets above the available land of a cluster move to clusters of the same region; moved targets are kept
+* and no longer count for the cluster they came from.
 p22_ag_cap(j) = max(0, pcm_land(j,"crop") - vm_land.lo(j,"crop") - vm_treecover.l(j) + pcm_land(j,"past") - pm_land_conservation(t,j,"past","protect"));
-p22_ag_due(j) = i22_reconv_target(t,j,"ag") + p22_reconv_ag_add(j) - sum(land_reconv22, p22_reconv_done(j,land_reconv22));
-p22_ag_gap(i) = max(0, sum(cell(i,j), i22_reconv_target(t,j,"ag") - sum(land_reconv22, p22_reconv_done(j,land_reconv22))
-        - min(p22_ag_cap(j), p22_ag_due(j))));
+p22_ag_due(j) = i22_reconv_target(t,j,"ag") - p22_reconv_ag_moved(j) + p22_reconv_ag_add(j) - sum(land_reconv22, p22_reconv_done(j,land_reconv22));
+p22_ag_gap(i) = sum(cell(i,j), max(0, p22_ag_due(j) - p22_ag_cap(j)));
 p22_ag_spare(j) = max(0, p22_ag_cap(j) - p22_ag_due(j));
 p22_ag_spare_reg(i) = sum(cell(i,j), p22_ag_spare(j));
 p22_reconv_ag_add(j) = p22_reconv_ag_add(j) + p22_ag_spare(j)
         * sum(cell(i,j)$(p22_ag_spare_reg(i) > 0), min(1, p22_ag_gap(i) / p22_ag_spare_reg(i)));
-p22_reconv(t,j) = min(p22_ag_cap(j), i22_reconv_target(t,j,"ag") + p22_reconv_ag_add(j) - sum(land_reconv22, p22_reconv_done(j,land_reconv22)));
+p22_reconv_ag_moved(j) = p22_reconv_ag_moved(j) + max(0, p22_ag_due(j) - p22_ag_cap(j))
+        * sum(cell(i,j)$(p22_ag_gap(i) > 0), min(1, p22_ag_spare_reg(i) / p22_ag_gap(i)));
+p22_reconv(t,j) = min(p22_ag_cap(j), i22_reconv_target(t,j,"ag") - p22_reconv_ag_moved(j) + p22_reconv_ag_add(j)
+        - sum(land_reconv22, p22_reconv_done(j,land_reconv22)));
 p22_reconv(t,j)$(p22_reconv(t,j) < 1e-6) = 0;
-* Reconverted other land that matured to secondary forest is tracked as secondary forest
-p22_reconv_mature(j) = min(p22_reconv_done(j,"other"),
+* Reconverted other land that matured to secondary forest is tracked as secondary forest, at most the
+* maturation measured in postsolve
+p22_other_prev(j) = pcm_land(j,"other");
+p22_reconv_mature(j) = min(p22_reconv_done(j,"other"), p22_mature_avl(j),
         max(0, pm_land_conservation(t,j,"other","protect") + p22_reconv_done(j,"other") - pcm_land(j,"other")));
+p22_mature_avl(j) = p22_mature_avl(j) - p22_reconv_mature(j);
 p22_reconv_done(j,"other") = p22_reconv_done(j,"other") - p22_reconv_mature(j);
 p22_reconv_done(j,"secdforest") = p22_reconv_done(j,"secdforest") + p22_reconv_mature(j);
 * Reconverted land stays natural
 pm_land_conservation(t,j,land_reconv22,"protect") =
         min(pcm_land(j,land_reconv22), pm_land_conservation(t,j,land_reconv22,"protect") + p22_reconv_done(j,land_reconv22));
 * Managed forest is reconverted by protecting secondary forest, which excludes it from harvest.
-* Targets above the unprotected secondary forest of a cluster move to clusters of the same region; moved targets are kept.
+* Targets above the unprotected secondary forest of a cluster move to clusters of the same region; moved targets
+* are kept and no longer count for the cluster they came from.
 p22_forest_cap(j) = max(0, pcm_land(j,"secdforest") - pm_land_conservation(t,j,"secdforest","protect"));
-p22_forest_gap(i) = max(0, sum(cell(i,j), i22_reconv_target(t,j,"forest")
-        - min(p22_forest_cap(j), i22_reconv_target(t,j,"forest") + p22_reconv_forest_add(j))));
-p22_forest_spare(j) = max(0, p22_forest_cap(j) - i22_reconv_target(t,j,"forest") - p22_reconv_forest_add(j));
+p22_forest_short(j) = max(0, i22_reconv_target(t,j,"forest") - p22_forest_moved(j) + p22_reconv_forest_add(j) - p22_forest_cap(j));
+p22_forest_gap(i) = sum(cell(i,j), p22_forest_short(j));
+p22_forest_spare(j) = max(0, p22_forest_cap(j) - i22_reconv_target(t,j,"forest") + p22_forest_moved(j) - p22_reconv_forest_add(j));
 p22_forest_spare_reg(i) = sum(cell(i,j), p22_forest_spare(j));
 p22_reconv_forest_add(j) = p22_reconv_forest_add(j) + p22_forest_spare(j)
         * sum(cell(i,j)$(p22_forest_spare_reg(i) > 0), min(1, p22_forest_gap(i) / p22_forest_spare_reg(i)));
+p22_forest_moved(j) = p22_forest_moved(j) + p22_forest_short(j)
+        * sum(cell(i,j)$(p22_forest_gap(i) > 0), min(1, p22_forest_spare_reg(i) / p22_forest_gap(i)));
 * Targets on managed forest in the conservation layer count against its protection and add none.
 * Targets above the conservation-layer forest of a cluster move to clusters of the same region.
 p22_forest_base(j) = min(pcm_land(j,"secdforest"), p22_wdpa_secdforest(t,j) + p22_reconv_done(j,"secdforest"));
@@ -161,16 +170,15 @@ p22_consv_spare(j) = max(0, p22_consv_cap(j) - i22_reconv_target(t,j,"forest_con
 p22_consv_spare_reg(i) = sum(cell(i,j), p22_consv_spare(j));
 * Regional remainder of the forest targets counts against conservation-layer forest left in the region;
 * the rest is reported in the clusters that miss their own target
-p22_forest_short(j) = max(0, i22_reconv_target(t,j,"forest") - p22_forest_cap(j));
-p22_forest_short_reg(i) = sum(cell(i,j), p22_forest_short(j));
-p22_reconv_shortfall(t,j,"forest") = p22_forest_short(j) * sum(cell(i,j)$(p22_forest_short_reg(i) > 0),
+p22_reconv_shortfall(t,j,"forest") = p22_forest_short(j) * sum(cell(i,j)$(p22_forest_gap(i) > 0),
         max(0, p22_forest_gap(i) - p22_forest_spare_reg(i) - max(0, p22_consv_spare_reg(i) - p22_consv_gap(i)))
-        / p22_forest_short_reg(i));
+        / p22_forest_gap(i));
 p22_reconv_shortfall(t,j,"forest_consv") = max(0, i22_reconv_target(t,j,"forest_consv") - p22_consv_cap(j))
         * sum(cell(i,j)$(p22_consv_gap(i) > 0), max(0, p22_consv_gap(i) - p22_consv_spare_reg(i)) / p22_consv_gap(i));
 p22_reconv_forest(t,j) = - pm_land_conservation(t,j,"secdforest","protect");
 pm_land_conservation(t,j,"secdforest","protect") = min(pcm_land(j,"secdforest"),
-        pm_land_conservation(t,j,"secdforest","protect") + i22_reconv_target(t,j,"forest") + p22_reconv_forest_add(j));
+        pm_land_conservation(t,j,"secdforest","protect") + i22_reconv_target(t,j,"forest") - p22_forest_moved(j)
+        + p22_reconv_forest_add(j));
 p22_reconv_forest(t,j) = p22_reconv_forest(t,j) + pm_land_conservation(t,j,"secdforest","protect")
         + min(p22_consv_cap(j), i22_reconv_target(t,j,"forest_consv"))
         + p22_consv_spare(j) * sum(cell(i,j)$(p22_consv_spare_reg(i) > 0), min(1,
