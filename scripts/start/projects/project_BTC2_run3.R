@@ -18,7 +18,7 @@ library(gms)
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
-cfg$info$flag <- "BTC2v09"
+cfg$info$flag <- "BTC2v10"
 cfg$results_folder <- "output/:title:"
 cfg$force_replace <- TRUE
 
