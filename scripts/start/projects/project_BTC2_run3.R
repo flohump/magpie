@@ -18,9 +18,10 @@ library(gms)
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
-cfg$info$flag <- "BTC2v11"
+cfg$info$flag <- "BTC2v12"
 cfg$results_folder <- "output/:title:"
 cfg$force_replace <- TRUE
+cfg$gms$c_timesteps <- "5year"
 
 # rev4.137, AgMIP regions; cellular data with the BTC2 protocol layers (consv_prio_areas incl. BTC2, f22_reconv_target)
 rev <- "rev4.137BTC2v5_b9baff04"
@@ -78,11 +79,11 @@ for (s in runs) {
   }
 
   if (isTRUE(x$prod)) {
-    # SSP1 production settings
+    # Production settings of the VLLO preset; SSP2 feed (SSP1 feed moves feed onto cropland)
     cfg$gms$c42_env_flow_policy <- "on"
-    cfg$gms$c50_scen_neff <- "baseeff_add3_add10_add20_max75"
+    cfg$gms$s42_efp_targetyear <- 2070
+    cfg$gms$c50_scen_neff <- "baseeff_add3_add15_add25_max75"
     cfg$gms$c55_scen_conf <- "ssp1"
-    cfg$gms$c70_feed_scen <- "ssp1"
   }
 
   if (isTRUE(x$phd)) {
