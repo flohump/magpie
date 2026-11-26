@@ -29,7 +29,7 @@ sets
   / protect, restore /
 
   reconv_pool22 Land pools with reconversion targets
-  / ag, forest /
+  / ag, forest, forest_consv /
 
   reconv_stage22 Milestones of reconversion targets
   / m1, m2 /
