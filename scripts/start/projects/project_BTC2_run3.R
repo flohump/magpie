@@ -18,13 +18,13 @@ library(gms)
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
-cfg$info$flag <- "BTC2v08"
+cfg$info$flag <- "BTC2v09"
 cfg$results_folder <- "output/:title:"
 cfg$force_replace <- TRUE
 cfg$qos <- if (length(system("squeue -u $USER -h -q priority -o %i", intern = TRUE)) < 5) "priority" else "standby"
 
 # rev4.137, AgMIP regions; cellular data with the BTC2 protocol layers (consv_prio_areas incl. BTC2, f22_reconv_target)
-rev <- "rev4.137BTC2v4_b9baff04"
+rev <- "rev4.137BTC2v5_b9baff04"
 cellHash <- c(ssp245 = "4b926f9a", ssp126 = "5033a1ce", ssp119 = "44b34b8f")
 cfg$input["regional"] <- "rev4.137_b9baff04_magpie.tgz"
 cfg$input["validation"] <- "rev4.137_b9baff04_92e02314_validation.tgz"
