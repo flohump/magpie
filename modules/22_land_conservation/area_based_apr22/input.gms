@@ -73,6 +73,12 @@ $offdelim
 ;
 
 $onEmpty
+table f22_consv_prio_btc2(j,consv_prio22,land) BTC2 conservation priority areas (mio. ha)
+$ondelim
+$if exist "./modules/22_land_conservation/input/consv_prio_btc2.cs3" $include "./modules/22_land_conservation/input/consv_prio_btc2.cs3"
+$offdelim
+;
+
 table f22_reconv_target(j,reconv_pool22,reconv_stage22) Cumulative reconversion targets since start year (mio. ha)
 $ondelim
 $if exist "./modules/22_land_conservation/input/f22_reconv_target.cs3" $include "./modules/22_land_conservation/input/f22_reconv_target.cs3"
