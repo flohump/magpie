@@ -39,7 +39,8 @@ m_sigmoid_time_interpol(p22_conservation_fader,s22_conservation_start,s22_conser
 p22_add_consv(t,j,consv22_all,land) = 0;
 
 * Get additional conservation area in conservation priority areas
-p22_add_consv(t,j,consv_prio22,land) = f22_consv_prio(j,consv_prio22,land)*p22_conservation_fader(t);
+p22_add_consv(t,j,consv_prio22,land) = (f22_consv_prio(j,consv_prio22,land) + f22_consv_prio_btc2(j,consv_prio22,land))
+                                       * p22_conservation_fader(t);
 
 
 ** Reconversion targets: linear from start year to first milestone, then to second milestone

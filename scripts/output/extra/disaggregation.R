@@ -190,6 +190,11 @@ land_consv_hr <- NULL
 if (file.exists(wdpa_hr_file)) {
   if (file.exists(consv_prio_hr_file)) {
     conservationPrioHr <- read.magpie(consv_prio_hr_file)
+    # the BTC2 option comes in its own file
+    btc2File <- file.path(outputdir, "consv_prio_btc2_0.5.mz")
+    if (file.exists(btc2File) && !("BTC2" %in% getItems(conservationPrioHr, dim = 3.1))) {
+      conservationPrioHr <- mbind(conservationPrioHr, read.magpie(btc2File))
+    }
   } else {
     warning("Future land conservation used in MAgPIE run but high resolution ",
             "conservation priority data for disaggregation not found.")
