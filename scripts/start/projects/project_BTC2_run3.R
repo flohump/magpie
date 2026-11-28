@@ -12,7 +12,6 @@
 
 # Usage: Rscript scripts/start/projects/project_BTC2_run3.R [INT_19 REF ...] (default: all runs)
 
-library(lucode2)
 library(gms)
 
 source("scripts/start_functions.R")
@@ -47,7 +46,9 @@ scenarios <- list(
 )
 
 runs <- commandArgs(trailingOnly = TRUE)
-if (length(runs) == 0) runs <- names(scenarios)
+if (length(runs) == 0) {
+  runs <- names(scenarios)
+}
 stopifnot(all(runs %in% names(scenarios)))
 
 cfg0 <- cfg
