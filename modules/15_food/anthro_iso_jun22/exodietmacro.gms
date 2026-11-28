@@ -577,10 +577,10 @@ elseif s15_exo_diet = 3,
 *       by the following calculations.
 
 * For cases where the intake in a EAT-Lancet food group is zero for a country
-* in a particular time step, a small amount is added to ensure no division by
+* in a time step with an active fader, a small amount is added to ensure no division by
 * zero. This way, all kfo-items in the respective food group are corrected by
 * the same amount.
-  p15_intake_detail(t,iso,kfo)$(sum(EATtar_kfo15(EAT_mtargets15_2,kfo),
+  p15_intake_detail(t,iso,kfo)$(i15_exo_foodscen_fader(t,iso) > 0 AND sum(EATtar_kfo15(EAT_mtargets15_2,kfo),
                                    sum(EATtar_kfo15_2(EAT_mtargets15_2,kfo2), p15_intake_detail(t,iso,kfo2))) = 0) =
                                    p15_intake_detail(t,iso,kfo) + 1e-6;
 
@@ -722,6 +722,7 @@ elseif s15_exo_diet = 3,
     if (s15_exo_pulses = 1,
        p15_intake_detailed_scen_target(t,iso,EAT_pulses15)$(sum(EAT_pulses15_2, p15_intake_detail(t,iso,EAT_pulses15_2))
                                                                  < f15_rec_EATLancet(iso,"%c15_exodiet_scen%","t_legumes","min")
+                                                                 AND sum(EAT_pulses15_2, p15_intake_detail(t,iso,EAT_pulses15_2)) > 0
                                                                ) =
             (p15_intake_detail(t,iso,EAT_pulses15) / sum(EAT_pulses15_2, p15_intake_detail(t,iso,EAT_pulses15_2)))
              * f15_rec_EATLancet(iso,"%c15_exodiet_scen%","t_legumes","min");
