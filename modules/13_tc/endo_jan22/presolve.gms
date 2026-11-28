@@ -35,7 +35,7 @@ if(m_year(t) > sm_fix_SSP2 AND s13_max_gdp_shr <> Inf,
 *** Share of cropland within conservation priority area
 p13_cropland_consv_shr(t,j) = 0;
 
-if(c13_croparea_consv = 1,
+if(c13_croparea_consv = 1 AND m_year(t) >= s13_croparea_consv_start,
 * the cropland area within conservation priority areas is provided by the interface `pm_land_conservation`
   p13_cropland_consv_shr(t,j)$(pcm_land(j,"crop") > 0) = sum(consv_type, pm_land_conservation(t,j,"crop",consv_type))/pcm_land(j,"crop");
   p13_cropland_consv_shr(t,j)$(p13_cropland_consv_shr(t,j) > 1) = 1;

@@ -18,7 +18,7 @@ library(gms)
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
-cfg$info$flag <- "BTC2v13"
+cfg$info$flag <- "BTC2v14"
 cfg$results_folder <- "output/:title:"
 cfg$force_replace <- TRUE
 cfg$gms$c_timesteps <- "5year"
